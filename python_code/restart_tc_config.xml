@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Restart_TC_Settings>
+    
+    <!-- log file name -->
+    <LogFile fname = "restart_tc.log" />
+    
+    <!-- this will be used to notify via email, value of [yes] is used, anything else is dropped -->
+    <Send_Email_Notice emailVal = "yes" />
+
+    <!-- time to sleep for shutdown and startup -->
+    <SleepTime sleepTimeVal="5" />
+    
+    <!-- this is a list of tomcat folders that will be restarted -->
+    <List_Of_TC_Dirs>
+        <dir_path>/usr/local/tomcat-6.0.20/bin</dir_path>
+        <dir_path>/usr/local/tomcat-6.0.20-stage/bin</dir_path>
+    </List_Of_TC_Dirs>
+    
+</Restart_TC_Settings>
