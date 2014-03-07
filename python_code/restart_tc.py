@@ -1,5 +1,11 @@
 #!/usr/bin/python
 
+#this file is for restarting tomcat instances gracefullu
+#and will kill the processes by id if they are still lingering around...
+#it will also send an email if a forced kill was done..
+
+#author Jimbo...
+
 #python file for restarting tc instances
 import xml.dom.minidom;#used for parsing xml files
 import os;#used for directory stuff
