@@ -89,11 +89,8 @@ def tcProcessing(list_of_dirs,logfile_name,tc_Command, sleepTimeVal):
 
 #this will get the pid and perform a kill on the process if we 
 #find a process for tomcat.
-def killTCProcess(logfile_name):
-    
-    #use global config obj
-    global MyConfigObj;
-            
+def killTCProcess(logfile_name, configObj):
+
     #do a ps -ef for linux
     ps = subprocess.Popen(("ps", "-ef"), stdout=subprocess.PIPE);
     output = ps.communicate()[0];#execute command
@@ -110,7 +107,7 @@ def killTCProcess(logfile_name):
         
         #this will interate over each dir name and check if the
         #this line contains that dir name, if it does then peform the kill.
-        for dir_name in MyConfigObj.listOfTCDirs:
+        for dir_name in configObj.listOfTCDirs:
             
             #if we find tomcat instance, then kill it...
             if line.find(dir_name) > -1:
@@ -132,7 +129,7 @@ def killTCProcess(logfile_name):
                     os.kill(pid_num,9);
                     break;#this will break from for loop of dir name in line.
         
-    if (bool_sendEmail == True and MyConfigObj.sendEmail == "yes"):
+    if (bool_sendEmail == True and configObj.sendEmail == "yes"):
         send_emailViaSendMail(list_of_tc_processes);#send email to notify that forced kill is required...
 
 #this works when you are not behind a proxy or firewall...
@@ -183,56 +180,61 @@ def send_emailViaSendMail(listOfTCProcesses):
     p.write(message);
     p.close();
 
-# Main program
-print "restart_tc...";
-
-#get a config obj...
-MyConfigObj = parseRestart_TC_Config("restart_tc_config.xml");
-
-#open log file to provide it to other functions.
-myLogFile = open(MyConfigObj.logFileName,"a");
-myLogFile.write("-----Restart  Begin-----\n");
-
-#get command line args if any.
-input1 = sys.argv;
-
-#check to see if we have exactly 2 args, the python file and the
-#path for the tomcat instance.
-if len(input1) == 2 :
-    myLogFile.write("command line args passed = "+ sys.argv[1]+"\n");
+#main()
+def main():
+    print "restart_tc...";
     
-    #loop over list of dirs and remove data from it.
-    while len(MyConfigObj.listOfTCDirs) > 0:
-        MyConfigObj.listOfTCDirs.pop();
+    #get a config obj...
+    MyConfigObj = parseRestart_TC_Config("restart_tc_config.xml");
+    
+    #open log file to provide it to other functions.
+    myLogFile = open(MyConfigObj.logFileName,"a");
+    myLogFile.write("-----Restart  Begin-----\n");
+    
+    #get command line args if any.
+    input1 = sys.argv;
+    
+    #check to see if we have exactly 2 args, the python file and the
+    #path for the tomcat instance.
+    if len(input1) == 2 :
+        myLogFile.write("command line args passed = "+ sys.argv[1]+"\n");
+        
+        #loop over list of dirs and remove data from it.
+        while len(MyConfigObj.listOfTCDirs) > 0:
+            MyConfigObj.listOfTCDirs.pop();
+    
+        #add new item from cmd line arg to list of dirs.
+        MyConfigObj.listOfTCDirs.append(sys.argv[1]);
+    
+    #add the [/bin] to list of dirs to allow for full path to the tc instance.
+    for index in range(len(MyConfigObj.listOfTCDirs)):
+        MyConfigObj.listOfTCDirs[index] += "/bin";
+      
+    #get local time to put into log file for shutdown.
+    localtime1 = time.asctime(time.localtime(time.time()));
+    myLogFile.write("shutdown started at => "+localtime1+"\n");
+       
+    #begin the shutdown process for tc...
+    tcProcessing(MyConfigObj.listOfTCDirs, myLogFile,"shutdown.sh",MyConfigObj.sleepTimeVal);
+       
+    #perform kill processing if needed
+    myLogFile.write("Check to see if there are TC processes still running and kill them if so.. \n");
+    killTCProcess(myLogFile,MyConfigObj);
+    time.sleep(int(MyConfigObj.sleepTimeVal));#sleep for config sleep time before restarting.
+       
+    #get local time to put into log file for startup.
+    localtime1 = time.asctime(time.localtime(time.time()));
+    myLogFile.write("startup started at => "+localtime1+"\n");
+       
+    #begin the startup process for tc...
+    tcProcessing(MyConfigObj.listOfTCDirs, myLogFile,"startup.sh", MyConfigObj.sleepTimeVal);
+    myLogFile.write("-----Restart End-----\n");
+    myLogFile.write("\n");
+    
+    #close log file.
+    myLogFile.close();
 
-    #add new item from cmd line arg to list of dirs.
-    MyConfigObj.listOfTCDirs.append(sys.argv[1]);
-
-#add the [/bin] to list of dirs to allow for full path to the tc instance.
-for index in range(len(MyConfigObj.listOfTCDirs)):
-    MyConfigObj.listOfTCDirs[index] += "/bin";
-  
-#get local time to put into log file for shutdown.
-localtime1 = time.asctime(time.localtime(time.time()));
-myLogFile.write("shutdown started at => "+localtime1+"\n");
-   
-#begin the shutdown process for tc...
-tcProcessing(MyConfigObj.listOfTCDirs, myLogFile,"shutdown.sh",MyConfigObj.sleepTimeVal);
-   
-#perform kill processing if needed
-myLogFile.write("Check to see if there are TC processes still running and kill them if so.. \n");
-killTCProcess(myLogFile);
-time.sleep(int(MyConfigObj.sleepTimeVal));#sleep for config sleep time before restarting.
-   
-#get local time to put into log file for startup.
-localtime1 = time.asctime(time.localtime(time.time()));
-myLogFile.write("startup started at => "+localtime1+"\n");
-   
-#begin the startup process for tc...
-tcProcessing(MyConfigObj.listOfTCDirs, myLogFile,"startup.sh", MyConfigObj.sleepTimeVal);
-myLogFile.write("-----Restart End-----\n");
-myLogFile.write("\n");
-
-#close log file.
-myLogFile.close();
+#invoke main program.
+if __name__ == "__main__":
+    main();
 
