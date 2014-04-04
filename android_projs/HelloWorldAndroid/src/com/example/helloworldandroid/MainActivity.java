@@ -21,6 +21,8 @@ import android.widget.Toast;
 import android.os.Build;
 import android.provider.SyncStateContract.Constants;
 
+//testing...
+
 public class MainActivity extends ActionBarActivity 
 //public class MainActivity extends Activity
 {
