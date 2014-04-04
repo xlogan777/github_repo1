@@ -1,0 +1,86 @@
+<!-- <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.helloworldandroid.MainActivity"
+    tools:ignore="MergeRootFrame" /> -->
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical" >
+	
+		<TextView android:id="@+id/text"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="@color/opaque_red"
+			 />
+		
+		<!-- adding a button with no callback for display purposes... -->
+		<Button android:id="@+id/button"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="@color/opaque_red"
+			android:text="@string/hello_world" />
+		
+		<!-- this button will start a service... -->
+		<Button android:id="@+id/btnStartService"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/start_service"
+			android:onClick="startService"/> <!-- this is the callback method tied to this button -->
+		
+		<!-- this button will stop a service... -->
+		<Button android:id="@+id/btnStopService"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/stop_service"
+			android:onClick="stopService" /><!-- this is the callback method tied to this button -->
+			
+		<!-- this is button to trigger custom broadcast intent. -->	
+		<Button android:id="@+id/btnStartBroadcast"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/broadcast_intent"
+			android:onClick="broadcastIntent"/>
+		
+		<TextView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/name" />
+		
+		<EditText
+			android:id="@+id/txtName"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent" 
+			android:hint="@string/name"/>
+		
+		<TextView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/grade" />
+		
+		<EditText
+			android:id="@+id/txtGrade"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent" 
+			android:hint="@string/grade"/>
+		
+		<Button
+			android:text="@string/add_name"
+			android:id="@+id/btnAdd"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:onClick="onClickAddName" />
+		
+		<Button
+			android:text="@string/retrieve_students"
+			android:id="@+id/btnRetrieve"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:onClick="onClickRetrieveStudents" />
+			
+
+</LinearLayout>
