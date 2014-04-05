@@ -57,9 +57,12 @@
         <provider
             android:name="com.example.helloworldandroid.HelloContentProvider"
             android:authorities="com.example.helloworldandroid.College"
-            android:enabled="true"/>
+            android:enabled="true"
+            android:exported="false"/>
 
         
     </application>
+    
+    <!-- android:authorities="com.example.helloworldandroid.College" -->
 
 </manifest>

@@ -20,7 +20,7 @@ public class HelloContentProvider extends ContentProvider
 {
 	private static final String MyTag = "HelloContentProvider";
 	
-	static final String PROVIDER_NAME = "com.example.helloworldandroid.College";
+	static final String PROVIDER_NAME = "com.example.helloworldandroid.College";	
 	
 	//this is the url at which the content provider is accessible for.
 	static final String URL = "content://" + PROVIDER_NAME + "/students";
@@ -85,20 +85,22 @@ public class HelloContentProvider extends ContentProvider
 		
 	}
 	
+	//function to drop table and close db connection.
 	public void closeDB()
 	{
 		db.execSQL("DROP TABLE IF EXISTS " + STUDENTS_TABLE_NAME);
 		db.close();
 	}
 	
-	public void dropAndCreate()
+	private void openDB()
 	{
-		//these will drop and create the table again..rather than deleting all the rows.
-		db.execSQL("DROP TABLE IF EXISTS " + STUDENTS_TABLE_NAME);
-		db.execSQL(CREATE_DB_TABLE);
-		Log.d(MyTag,"dropped and created");
+		if(db != null && !db.isOpen())
+		{
+			this.onCreate();
+			Log.d(MyTag,"check if db is open..");
+		}
 	}
-	
+
 	@Override
 	public int delete(Uri uri, String selection, String[] selectionArgs) 
 	{
@@ -153,13 +155,9 @@ public class HelloContentProvider extends ContentProvider
 	@Override
 	public Uri insert(Uri uri, ContentValues values) 
 	{
-		if(db != null && !db.isOpen())
-		{
-			this.onCreate();
-			Log.d(MyTag,"do onCreate() from insert...");
-		}
-		
-		
+		//open db if not opened.
+		this.openDB();
+				
 		/**
 		* Add a new student record
 		*/
@@ -196,14 +194,14 @@ public class HelloContentProvider extends ContentProvider
 		DatabaseHelper dbHelper = new DatabaseHelper(context);
 		
 		//save content provider to db helper.
-		dbHelper.setContentProvider(this);
+		//dbHelper.setContentProvider(this);
 		
 		/**
 		* Create a writeable database which will trigger its
 		* creation if it doesn't already exist.
 		*/
 		//this will actually create the db and call the onCreate function if the first time.
-		db = dbHelper.getWritableDatabase();//this should call the db onCreate function.
+		db = dbHelper.getWritableDatabase();//this should call the db onCreate function.		
 		dbHelper.onCreate(db);//call the onCreate  here when we close the db connection.
 		
 		boolean status = (db == null)? false:true;
@@ -218,11 +216,8 @@ public class HelloContentProvider extends ContentProvider
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) 
 	{
-		if(db != null && !db.isOpen())
-		{
-			this.onCreate();
-			Log.d(MyTag,"do onCreate() from query...");
-		}
+		//open db if not open..
+		this.openDB();
 		
 		//helper class that is used to build queries to be sent to sql_lite db.
 		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
@@ -305,7 +300,7 @@ public class HelloContentProvider extends ContentProvider
 	{
 		private static String MyTag = "DatabaseHelper";
 		
-		private HelloContentProvider provider;
+		//private HelloContentProvider provider;
 		
 		DatabaseHelper(Context context)
 		{
@@ -313,19 +308,14 @@ public class HelloContentProvider extends ContentProvider
 			//the context obj for this app. the db is not created here.
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		}
-		
-		public void setContentProvider(HelloContentProvider provider)
-		{
-			this.provider = provider;
-		}
-		
+				
 		@Override
 		public void onCreate(SQLiteDatabase db)
 		{
-			Log.d(DatabaseHelper.MyTag,"onCreate()");
-			
-			//utility function.
-			provider.dropAndCreate();
+			//drop and create db when this the db is opened.
+			db.execSQL("DROP TABLE IF EXISTS " + STUDENTS_TABLE_NAME);
+			db.execSQL(CREATE_DB_TABLE);
+			Log.d(DatabaseHelper.MyTag,"dropped and created");
 		}
 		
 		@Override
