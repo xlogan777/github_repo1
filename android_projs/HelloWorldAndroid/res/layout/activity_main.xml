@@ -12,18 +12,17 @@
 	android:layout_height="fill_parent"
 	android:orientation="vertical" >
 	
-		<TextView android:id="@+id/text"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textColor="@color/opaque_red"
-			 />
+<!-- 		<TextView android:id="@+id/text" -->
+<!-- 			android:layout_width="wrap_content" -->
+<!-- 			android:layout_height="wrap_content" -->
+<!-- 			android:textColor="@color/opaque_red"/>  -->
 		
-		<!-- adding a button with no callback for display purposes... -->
-		<Button android:id="@+id/button"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textColor="@color/opaque_red"
-			android:text="@string/hello_world" />
+ 		<!-- adding a button with no callback for display purposes... --> 
+<!-- 		<Button android:id="@+id/button" -->
+<!-- 			android:layout_width="wrap_content" -->
+<!-- 			android:layout_height="wrap_content" -->
+<!-- 			android:textColor="@color/opaque_red" -->
+<!-- 			android:text="@string/hello_world" /> -->
 		
 		<!-- this button will start a service... -->
 		<Button android:id="@+id/btnStartService"
@@ -81,6 +80,13 @@
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:onClick="onClickRetrieveStudents" />
-			
+
+		<!-- button for frag demo -->
+		<Button
+		    android:id="@+id/fragment_demo_button"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:text="@string/frag_demo" 
+		    android:onClick="onClickStartFragmentDemo"/>
 
 </LinearLayout>

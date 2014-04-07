@@ -41,11 +41,12 @@
         <!-- FOR THE RECEIVER, ALWAYS ENABLE THE ANDROID ATTRIBUTE IN THE XML..OTHERWISE THE RECEIVER WONT SEE THE EVENT. -->
         <receiver
             android:name="com.example.helloworldandroid.HelloReceiver"
-            android:enabled="true" >
+            android:enabled="true" android:exported="false">
+            
             <intent-filter>
 
                 <!-- listen for android is boot complete event. OS intent -->
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <!-- <action android:name="android.intent.action.BOOT_COMPLETED" /> -->
 
                 <!-- this is my own custom intent -->
                 <action android:name="com.example.helloworldandroid.CUSTOM_INTENT" />
@@ -58,11 +59,15 @@
             android:name="com.example.helloworldandroid.HelloContentProvider"
             android:authorities="com.example.helloworldandroid.College"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false" />
 
-        
+        <!-- added new activity for showing fragments samples. -->
+        <activity
+            android:name="com.example.helloworldandroid.SampleFragmentActivity"
+            android:label="@string/title_activity_sample_fragment" >
+        </activity>
     </application>
-    
+
     <!-- android:authorities="com.example.helloworldandroid.College" -->
 
 </manifest>

@@ -45,8 +45,8 @@ public class MainActivity extends ActionBarActivity
 		
 		//set the text view to string in strings.xml file.
 		//setting the text in the window pane.
-		TextView msgTextView = (TextView) findViewById(R.id.text);
-		msgTextView.setText(R.string.jimbo_hello);
+//		TextView msgTextView = (TextView) findViewById(R.id.text);
+//		msgTextView.setText(R.string.jimbo_hello);
 		
 		Log.d(MyTag, ""+R.string.jimbo_hello);
 				
@@ -210,6 +210,19 @@ public class MainActivity extends ActionBarActivity
 		
 		//close cursor obj.
 		c.close();
+	}
+	
+	/**
+	 * 
+	 * this will show the fragment demo stuff.
+	 */
+	public void onClickStartFragmentDemo(View view)
+	{
+		Log.d(MyTag,"hitting the fragment demo here...");
+		
+		//start new activity via intent object.
+		Intent intent = new Intent(this, SampleFragmentActivity.class);
+	    startActivity(intent);
 	}
 	
 	@Override

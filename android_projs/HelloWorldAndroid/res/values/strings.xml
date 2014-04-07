@@ -6,20 +6,29 @@
     <string name="hello_world">Hello world this is a test!</string>
     <string name="action_settings">Settings</string>
     <string name="jimbo_hello"> hello jimmy, here is am!!!</string>
+
     <color name="opaque_red">#f00</color> <!-- adding color constant. -->
-    
+
+
     <!-- adding for button to start and stop service. -->
     <string name="start_service">Start Service</string>
     <string name="stop_service">Stop Service</string>
-    
+
     <!-- string used for broadcast intent. -->
     <string name="broadcast_intent">Broadcast Intent</string>
-    
+
     <!-- strings used for content providers -->
     <string name="add_name">Add Name</string>
     <string name="retrieve_students">Retrieve Students</string>
     <string name="grade">Grade</string>
     <string name="name">Name</string>
+
+    <!-- fragment demo area -->
+    <string name="frag_demo">Start Fragment Demo</string>
+    <string name="title_activity_sample_fragment">SampleFragmentActivity</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     
-    
+    <string name="landscape_message">This is Landscape mode fragment</string>
+	<string name="portrait_message">This is Portrait mode fragment</string>
+
 </resources>
