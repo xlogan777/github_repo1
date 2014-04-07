@@ -25,41 +25,50 @@
 <!-- 			android:text="@string/hello_world" /> -->
 		
 		<!-- this button will start a service... -->
-		<Button android:id="@+id/btnStartService"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:text="@string/start_service"
-			android:onClick="startService"/> <!-- this is the callback method tied to this button -->
+
+		<Button
+		    android:id="@+id/btnStartService"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:onClick="startService"
+		    android:text="@string/start_service" />
+ <!-- this is the callback method tied to this button -->
 		
 		<!-- this button will stop a service... -->
-		<Button android:id="@+id/btnStopService"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:text="@string/stop_service"
-			android:onClick="stopService" /><!-- this is the callback method tied to this button -->
+
+		<Button
+		    android:id="@+id/btnStopService"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:onClick="stopService"
+		    android:text="@string/stop_service" />
+
+<!-- this is the callback method tied to this button -->
 			
 		<!-- this is button to trigger custom broadcast intent. -->	
-		<Button android:id="@+id/btnStartBroadcast"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:text="@string/broadcast_intent"
-			android:onClick="broadcastIntent"/>
+
+		<Button
+		    android:id="@+id/btnStartBroadcast"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:onClick="broadcastIntent"
+		    android:text="@string/broadcast_intent" />
 		
-		<TextView
+		<!-- <TextView
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:text="@string/name" />
+			android:text="@string/name" /> -->
 		
 		<EditText
-			android:id="@+id/txtName"
-			android:layout_height="wrap_content"
-			android:layout_width="fill_parent" 
-			android:hint="@string/name"/>
+		    android:id="@+id/txtName"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:hint="@string/name" />
 		
-		<TextView
+		<!-- <TextView
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:text="@string/grade" />
+			android:text="@string/grade" /> -->
 		
 		<EditText
 			android:id="@+id/txtGrade"
@@ -75,18 +84,28 @@
 			android:onClick="onClickAddName" />
 		
 		<Button
-			android:text="@string/retrieve_students"
-			android:id="@+id/btnRetrieve"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:onClick="onClickRetrieveStudents" />
+		    android:id="@+id/btnRetrieve"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:onClick="onClickRetrieveStudents"
+		    android:text="@string/retrieve_students" />
 
 		<!-- button for frag demo -->
+
 		<Button
 		    android:id="@+id/fragment_demo_button"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
-		    android:text="@string/frag_demo" 
-		    android:onClick="onClickStartFragmentDemo"/>
+		    android:onClick="onClickStartFragmentDemo"
+		    android:text="@string/frag_demo" />
+
+		<!-- this is for the demos areas...for intent objs. -->
+		<Button
+		    android:id="@+id/intent_demos"
+		    style="?android:attr/buttonStyleSmall"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="@string/intent_demos"
+		    android:onClick="onClickStartIntentDemos"/>
 
 </LinearLayout>

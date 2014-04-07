@@ -127,6 +127,7 @@ public class MainActivity extends ActionBarActivity
 	{
 		//call base class start service and provide the service class from this main activity
 		//provide it a Intent obj with the name of the service.
+		//this is a explicit intent with specific class to handle this intent.
 		super.startService(new Intent(this.getBaseContext(), HelloService.class));
 	}
 
@@ -134,6 +135,7 @@ public class MainActivity extends ActionBarActivity
 	{
 		//call base class stop service and provide the service class from this main activity
 		//provide it a Intent obj with the name of the service.
+		//this is a explicit intent with specific class to handle this intent.
 		super.stopService(new Intent(this.getBaseContext(), HelloService.class));		
 	}
 	
@@ -146,6 +148,8 @@ public class MainActivity extends ActionBarActivity
 		Intent intent = new Intent();
 		
 		//set custom action
+		//this is an implicit intent, doesn't name a specific component.
+		//in this case it is handled by a broadcast receiver.
 		intent.setAction("com.example.helloworldandroid.CUSTOM_INTENT");
 		
 		//start broadcast of custom intent.
@@ -213,8 +217,23 @@ public class MainActivity extends ActionBarActivity
 		Log.d(MyTag,"hitting the fragment demo here...");
 		
 		//start new activity via intent object.
+		//this is a explicit intent with specific class to handle this intent.
 		Intent intent = new Intent(this, SampleFragmentActivity.class);
 	    startActivity(intent);
+	}
+	
+	/**
+	 * 
+	 * this will call another activity to do the demo for web browser and
+	 * phone call test.
+	 */
+	public void onClickStartIntentDemos(View view)
+	{
+		Log.d(MyTag, "inside onClickStartIntentDemo");
+		
+		//call intent demo activity explicitly by setting up an intent obj explicitly.
+		Intent intent = new Intent(this, IntentDemoActivity.class);
+	    startActivity(intent);		
 	}
 	
 	@Override

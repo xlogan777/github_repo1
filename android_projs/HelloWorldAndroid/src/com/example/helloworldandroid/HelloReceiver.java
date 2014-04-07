@@ -22,7 +22,7 @@ public class HelloReceiver extends BroadcastReceiver
 	@Override
 	public void onReceive(Context context, Intent intent) 
 	{
-		Log.d(MyTag, "onReceive()...jimbo...");
+		Log.d(MyTag, "onReceive()...jimbo..."+intent.getAction());
 		
 		//perform action
 		Toast.makeText(context, "Intent Detected.", Toast.LENGTH_LONG).show();		
