@@ -17,7 +17,7 @@ public class CustomIntentFilterActivity extends ActionBarActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_custom_intent_filter);
-		Log.d("MyTag","This activity got called since it passed all the filters from intent filter.");
+		Log.d(MyTag,"This activity got called since it passed all the filters from intent filter.");
 
 		TextView label = (TextView) findViewById(R.id.show_data);
 		Uri url = getIntent().getData();
@@ -29,7 +29,7 @@ public class CustomIntentFilterActivity extends ActionBarActivity
 	{
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.custom_intent_filter, menu);
+		//getMenuInflater().inflate(R.menu.custom_intent_filter, menu);
 		return true;
 	}
 
