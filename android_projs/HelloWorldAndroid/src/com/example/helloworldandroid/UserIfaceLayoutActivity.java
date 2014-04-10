@@ -7,6 +7,8 @@ import java.util.Locale;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class UserIfaceLayoutActivity extends ActionBarActivity 
@@ -30,13 +32,20 @@ public class UserIfaceLayoutActivity extends ActionBarActivity
 		if(inputVal != null)
 		{				
 			if(inputVal.equalsIgnoreCase("Rel_layout"))		
-				layout_type = R.layout.activity_user_iface_layout_relative;		
+				layout_type = R.layout.activity_user_iface_layout_relative;
+			
 			else if(inputVal.equalsIgnoreCase("Tab_layout"))		
 				layout_type = R.layout.activity_user_iface_layout_table;
+			
 			else if(inputVal.equalsIgnoreCase("Abs_layout"))
 				layout_type = R.layout.activity_user_iface_layout_absolute;
+			
 			else if(inputVal.equalsIgnoreCase("Fme_layout"))
 				layout_type = R.layout.activity_user_iface_layout_frame;
+			
+			else if(inputVal.equalsIgnoreCase("list_view"))
+				layout_type = R.layout.activity_user_iface_layout_list_view;
+			
 			else//default is linear layout.
 				layout_type = R.layout.activity_user_iface_layout;
 			
@@ -55,11 +64,19 @@ public class UserIfaceLayoutActivity extends ActionBarActivity
 				case R.layout.activity_user_iface_layout_absolute:
 				case R.layout.activity_user_iface_layout:
 				case R.layout.activity_user_iface_layout_frame:
-					break;		
+					break;
+					
+				case R.layout.activity_user_iface_layout_list_view:
+					performListView();
+					break;
 			}
 		}
 	}
 	
+	/**
+	 * this function will do some basic processing after the view has been loaded to 
+	 * then update the UI..
+	 */
 	private void performRelLayoutProcessing()
 	{
 		//create simple date obj using this format, and us as locale.
@@ -84,5 +101,28 @@ public class UserIfaceLayoutActivity extends ActionBarActivity
 		//find txt field and set txt for time.
 		TextView timeView = (TextView)findViewById(R.id.times);
 		timeView.setText(nowTime);
+	}
+	
+	/**
+	 * this will have a string array and create an array adapter to then provide it to the list
+	 * view to setup a vertical scoll list on the ui.
+	 */
+	private void performListView()
+	{
+		// Array of strings...to be as a scrollable ui
+		String [] countryArray = {"India", "Pakistan", "USA", "UK"};
+		
+		//this is creating an array adapter of strings that will be used to create text views objs to then
+		//be setup in the list view ui display. the adapter makes the mapping from arrays of strings to
+		//text view objs..it does it by calling toString() on each array element.
+		ArrayAdapter<String> adapter = 
+				new ArrayAdapter<String>(this, R.layout.activity_user_iface_layout_listview_textfield, countryArray);
+		
+		//this will get the list view by the id
+		ListView listView = (ListView) findViewById(R.id.country_list);
+				
+		//setup the array adapter with the list view obj..this will now render the ui with array as list view for 
+		//text view objs.
+		listView.setAdapter(adapter);		
 	}
 }
