@@ -60,7 +60,7 @@
         android:ems="10"
         android:hint="enter layout type" >
 
-        <requestFocus />
+        <!-- <requestFocus /> -->
     </EditText>
 
 </LinearLayout>

@@ -1,0 +1,19 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	
+	<ImageView
+		android:src="@drawable/ic_launcher"
+		android:scaleType="fitCenter"
+		android:layout_height="250dp"
+		android:layout_width="250dp"/>
+	
+	<TextView
+		android:text="Frame Demo"
+		android:textSize="30sp"
+		android:textStyle="bold"
+		android:layout_height="fill_parent"
+		android:layout_width="fill_parent"
+		android:gravity="center"/>
+	
+</FrameLayout>

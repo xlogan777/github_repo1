@@ -1,11 +1,3 @@
-<!-- <FRAMELAYOUT XMLNS:ANDROID="HTTP://SCHEMAS.ANDROID.COM/APK/RES/ANDROID" -->
-<!--     XMLNS:TOOLS="HTTP://SCHEMAS.ANDROID.COM/TOOLS" -->
-<!--     ANDROID:ID="@+ID/CONTAINER" -->
-<!--     ANDROID:LAYOUT_WIDTH="MATCH_PARENT" -->
-<!--     ANDROID:LAYOUT_HEIGHT="MATCH_PARENT" -->
-<!--     TOOLS:CONTEXT="COM.EXAMPLE.HELLOWORLDANDROID.CUSTOMINTENTFILTERACTIVITY" -->
-<!--     TOOLS:IGNORE="MERGEROOTFRAME" /> -->
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical"
 	android:layout_width="fill_parent"

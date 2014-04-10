@@ -48,5 +48,7 @@
     <string name="start_service_UI_Sample">start_service_UI_Sample</string>
     <string name="stop_service_UI_Sample">stop_service_UI_Sample</string>
     <string name="UI_Sample_Demo_Activity">UISampleDemoActivity</string>
+    <string name="reminder">Enter your name</string>
+    <string name="done">Done</string>
 
 </resources>
