@@ -1,41 +1,66 @@
 <!-- <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" -->
-<!--     xmlns:tools="http://schemas.android.com/tools" -->
-<!--     android:id="@+id/container" -->
-<!--     android:layout_width="match_parent" -->
-<!--     android:layout_height="match_parent" -->
-<!--     tools:context="com.example.helloworldandroid.IntentDemoActivity" -->
-<!--     tools:ignore="MergeRootFrame" /> -->
+<!-- xmlns:tools="http://schemas.android.com/tools" -->
+<!-- android:id="@+id/container" -->
+<!-- android:layout_width="match_parent" -->
+<!-- android:layout_height="match_parent" -->
+<!-- tools:context="com.example.helloworldandroid.IntentDemoActivity" -->
+<!-- tools:ignore="MergeRootFrame" /> -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical" >
-	
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
     <!-- this is showing how intent for calling the browser or the phone is setup as UI. -->
-	<Button android:id="@+id/start_browser"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/start_browser"/>
-	
-	<Button android:id="@+id/start_phone"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/start_phone" />
-	
-<!-- this area is for intent filter demo... -->	
-	<Button android:id="@+id/start_browser_a"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/start_browser_a"/>
-	
-	<Button android:id="@+id/start_browser_b"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/start_browser_b"/>
-	
-	<Button android:id="@+id/start_browser_c"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/start_browser_c"/>
+
+    <Button
+        android:id="@+id/start_browser"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/start_browser" />
+
+    <Button
+        android:id="@+id/start_phone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/start_phone" />
+
+    <!-- this area is for intent filter demo... -->
+
+    <Button
+        android:id="@+id/start_browser_a"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/start_browser_a" />
+
+    <Button
+        android:id="@+id/start_browser_b"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/start_browser_b" />
+
+    <Button
+        android:id="@+id/start_browser_c"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/start_browser_c" />
+
+    <Button
+        android:id="@+id/UISampleDemo1"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickStartUISamplelayoutDemos"
+        android:text="@string/UI_Sample_Demo_Activity" />
+
+    <EditText
+        android:id="@+id/textInputlayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="enter layout type" >
+
+        <requestFocus />
+    </EditText>
 
 </LinearLayout>
