@@ -33,6 +33,10 @@ public class MainActivity extends ActionBarActivity
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
+		
+		//this below call is loading the layout type which is an xml file from /res/layout/activity_main.xml
+		//this is the formal way of loading the layout with view objs..buttons, text fields..etc.
+		//this is generally done in the onCreate method as such when the activity is first called.
 		setContentView(R.layout.activity_main);
 		
 		//set the text view to string in strings.xml file.

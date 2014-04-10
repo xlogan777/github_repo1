@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 /**
  * 
@@ -115,6 +116,29 @@ public class IntentDemoActivity extends ActionBarActivity
 		);
 //this is the intent with filters demo area..		
 		
+	}
+	
+//UI area demos code to kick off the activity for these demos.	
+	/**
+	 * 
+	 * 
+	 */
+	public void onClickStartUISamplelayoutDemos(View view)
+	{
+		Log.d(MyTag, "call the new activity to allow to render diff layouts.");
+		String input = ((EditText)this.findViewById(R.id.textInputlayout1)).getText().toString();
+		
+		//create intent for specific component, with this class as the context.
+		//base intent object that allows for more customization later.
+		Intent intent = new Intent(this, UserIfaceLayoutActivity.class);
+		
+		//this is a name/value pair of data to be used by the new activity class being started.
+		intent.putExtra("editField", input);
+		
+		//this call below does the same thing...by gettting the base context.
+		//Intent intent2 = new Intent(this.getBaseContext(), UserIfaceLayoutActivity.class);
+		
+	    startActivity(intent);//start new activity with intent obj tied to a specific class.	    
 	}
 
 	@Override
