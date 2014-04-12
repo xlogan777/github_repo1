@@ -34,5 +34,17 @@
 		android:layout_height="wrap_content"
 		android:text="@string/enter_text" 
 		android:inputType="text" />
+	
+	<Button
+		android:id="@+id/button_s"
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:text="@string/button_small"/>
+	
+	<Button
+		android:id="@+id/button_l"
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:text="@string/button_large"/>
    
 </LinearLayout>

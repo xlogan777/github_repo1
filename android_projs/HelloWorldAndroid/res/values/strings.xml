@@ -55,5 +55,9 @@
     <!-- UI controls chapter.. -->
     <string name="enter_text">Done</string>
     <string name="show_the_text">how_the_tex</string>
+    
+    <!-- used for event handler chapter -->
+    <string name="button_small">Small Font</string>
+	<string name="button_large">Large Font</string>
 
 </resources>

@@ -20,7 +20,7 @@ import android.widget.Toast;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-public class UserIfaceLayoutActivity extends ActionBarActivity 
+public class UserIfaceLayoutActivity extends ActionBarActivity implements OnClickListener
 {
 	private static String MyTag = "UserIfaceLayoutActivity";
 	
@@ -101,7 +101,8 @@ public class UserIfaceLayoutActivity extends ActionBarActivity
 		TextView txtView = (TextView) findViewById(R.id.text_id_linear_layout);
 		
 		final String Label = txtView.getText().toString();
-		
+
+/*this area is for UI controls and event handlers demos...with anonymous classes*/
 		txtView.setOnClickListener
 		( new View.OnClickListener() 
 			{
@@ -131,6 +132,18 @@ public class UserIfaceLayoutActivity extends ActionBarActivity
 				}
 			}
 		);
+/*this area is for UI controls and event handlers demos...with anonymous classes*/
+		
+		//this is event handling with activity class implementing OnClick iface.
+		//--- find both the buttons---
+		Button sButton = (Button) findViewById(R.id.button_s);
+		Button lButton = (Button) findViewById(R.id.button_l);
+		
+		// -- register click event with first button ---
+		sButton.setOnClickListener(this);
+		
+		// -- register click event with second button ---
+		lButton.setOnClickListener(this);
 	}
 	
 	/**
@@ -218,7 +231,22 @@ public class UserIfaceLayoutActivity extends ActionBarActivity
 					startActivity(i);
 				}
 			}
-		);
+		);	
+	}
+	
+	/**
+	 * function to be implemented from the onclickListener iface.
+	 */
+	public void onClick(View v)
+	{
+		if(v.getId() == R.id.button_s)
+		{
+			Toast.makeText(getBaseContext(), "Button S pressed handler via implements iface", Toast.LENGTH_LONG).show();
+		}
 		
+		else if(v.getId() == R.id.button_l)
+		{
+			Toast.makeText(getBaseContext(), "Button L pressed handler via implements iface", Toast.LENGTH_LONG).show();
+		}
 	}
 }
