@@ -128,11 +128,12 @@
         </activity>
         
         <!-- this is used for the sub view activity used in the UI example to show image clicked
-        	in full view using new activity. -->
+        	in full view using new activity. -->        
         <activity
             android:name="com.example.helloworldandroid.SingleViewActivity"
-            android:label="@string/title_activity_single_view" >
+            android:label="@string/title_activity_single_view"> 
         </activity>
+        
     </application>
 
 </manifest>
