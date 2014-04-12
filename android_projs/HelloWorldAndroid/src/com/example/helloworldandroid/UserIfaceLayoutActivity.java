@@ -11,10 +11,14 @@ import android.util.Log;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.view.View;
+import android.view.View.OnClickListener;
 
 public class UserIfaceLayoutActivity extends ActionBarActivity 
 {
@@ -67,11 +71,14 @@ public class UserIfaceLayoutActivity extends ActionBarActivity
 				case R.layout.activity_user_iface_layout_relative:
 					performRelLayoutProcessing();
 					break;
+					
+				case R.layout.activity_user_iface_layout:
+					performLinearLayoutProcessing();
+					break;
 
 				//these are just the same processing, show the ui.
 				case R.layout.activity_user_iface_layout_table:
-				case R.layout.activity_user_iface_layout_absolute:
-				case R.layout.activity_user_iface_layout:
+				case R.layout.activity_user_iface_layout_absolute:				
 				case R.layout.activity_user_iface_layout_frame:
 					break;
 					
@@ -84,6 +91,46 @@ public class UserIfaceLayoutActivity extends ActionBarActivity
 					break;
 			}
 		}
+	}
+	
+	/**
+	 * do some basic linear layout processing.
+	 */
+	private void performLinearLayoutProcessing()
+	{
+		TextView txtView = (TextView) findViewById(R.id.text_id_linear_layout);
+		
+		final String Label = txtView.getText().toString();
+		
+		txtView.setOnClickListener
+		( new View.OnClickListener() 
+			{
+				public void onClick(View v) 
+				{
+					Toast.makeText
+					   (getApplicationContext(), "You have clicked the Label : " + Label, Toast.LENGTH_LONG).show();
+				}
+			}
+		);
+		
+		final EditText eText;
+		final Button btn;
+		
+		eText = (EditText) findViewById(R.id.edittext_linear_layout);
+		btn = (Button) findViewById(R.id.button);
+		btn.setOnClickListener
+		( new OnClickListener() 
+			{
+				public void onClick(View v) 
+				{
+					String str = eText.getText().toString();
+					Toast msg = Toast.makeText(getBaseContext(),str,
+					Toast.LENGTH_LONG);
+					msg.show();
+					msg.show();
+				}
+			}
+		);
 	}
 	
 	/**

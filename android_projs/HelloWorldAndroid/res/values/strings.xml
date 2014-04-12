@@ -51,5 +51,9 @@
     <string name="reminder">Enter your name</string>
     <string name="done">Done</string>
     <string name="title_activity_single_view">SingleViewActivity</string> <!-- new item for single view image viewer -->
+    
+    <!-- UI controls chapter.. -->
+    <string name="enter_text">Done</string>
+    <string name="show_the_text">how_the_tex</string>
 
 </resources>

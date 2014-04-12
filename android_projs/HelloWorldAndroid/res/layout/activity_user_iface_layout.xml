@@ -3,14 +3,36 @@
    android:layout_height="fill_parent"
    android:orientation="vertical" >
    
-    <Button android:id="@+id/btnUISample1"
+    <Button 
+        android:id="@+id/btnUISample1"
 		android:layout_width="150dp"
 		android:layout_height="wrap_content"
 		android:text="@string/start_service_UI_Sample"/>
 				
-	<Button android:id="@+id/btnUISample2"
+	<Button 
+	    android:id="@+id/btnUISample2"
 		android:layout_width="150dp"
 		android:layout_height="wrap_content"
 		android:text="@string/stop_service_UI_Sample"/>
+	
+	<TextView
+		android:id="@+id/text_id_linear_layout"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"		
+		android:capitalize="characters"
+		android:text="@string/hello_world" />
+	
+	<Button
+		android:id="@+id/button"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/show_the_text" />
+	
+	<EditText
+		android:id="@+id/edittext_linear_layout"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/enter_text" 
+		android:inputType="text" />
    
 </LinearLayout>
