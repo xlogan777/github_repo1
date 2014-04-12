@@ -240,12 +240,24 @@ public class UserIfaceLayoutActivity extends ActionBarActivity implements OnClic
 	public void onClick(View v)
 	{
 		if(v.getId() == R.id.button_s)
-		{
+		{			
+			//get the text view item. 
+			TextView txtView = (TextView) findViewById(R.id.text_id_styles);
+			
+			// -- change text size --
+			txtView.setTextSize(20);
+			
 			Toast.makeText(getBaseContext(), "Button S pressed handler via implements iface", Toast.LENGTH_LONG).show();
 		}
 		
 		else if(v.getId() == R.id.button_l)
 		{
+			//get the text view item. 
+			TextView txtView = (TextView) findViewById(R.id.text_id_styles);
+			
+			// -- change text size --
+			txtView.setTextSize(40);
+			
 			Toast.makeText(getBaseContext(), "Button L pressed handler via implements iface", Toast.LENGTH_LONG).show();
 		}
 	}

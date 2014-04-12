@@ -16,5 +16,23 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    
+    <!-- this is the custom area for my own style to be used in different views...
+    	this is conceptually similar to CSS for web design. -->
+    <!-- Custom Style defined for the buttons. -->
+	<style name="CustomTextViewStyle">
+		<item name="android:layout_width">100dp</item>
+		<item name="android:layout_height">38dp</item>
+		<item name="android:capitalize">characters</item>
+		<item name="android:typeface">monospace</item>
+		<item name="android:shadowDx">1.2</item>
+		<item name="android:shadowDy">1.2</item>
+		<item name="android:shadowRadius">2</item>
+		<item name="android:textColor">#494948</item>/>
+		<item name="android:gravity" >center</item>
+		<item name="android:layout_margin" >3dp</item>
+		<item name="android:textSize" >5pt</item>
+		<item name="android:shadowColor" >#000000</item>
+	</style>
 
 </resources>
