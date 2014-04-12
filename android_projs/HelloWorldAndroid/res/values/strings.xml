@@ -42,7 +42,7 @@
     <string name="start_browser_a">Start Browser with VIEW action</string>
     <string name="start_browser_b">Start Browser with LAUNCH action</string>
     <string name="start_browser_c">Exception Condition</string>
-    
+
     <!-- this is for the UI layout examples. -->
     <string name="title_activity_user_iface_layout">UserIfaceLayoutActivity</string>
     <string name="start_service_UI_Sample">start_service_UI_Sample</string>
@@ -50,5 +50,6 @@
     <string name="UI_Sample_Demo_Activity">UISampleDemoActivity</string>
     <string name="reminder">Enter your name</string>
     <string name="done">Done</string>
+    <string name="title_activity_single_view">SingleViewActivity</string> <!-- new item for single view image viewer -->
 
 </resources>

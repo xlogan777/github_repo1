@@ -5,15 +5,21 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.view.View;
 
 public class UserIfaceLayoutActivity extends ActionBarActivity 
 {
 	private static String MyTag = "UserIfaceLayoutActivity";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
@@ -46,6 +52,9 @@ public class UserIfaceLayoutActivity extends ActionBarActivity
 			else if(inputVal.equalsIgnoreCase("list_view"))
 				layout_type = R.layout.activity_user_iface_layout_list_view;
 			
+			else if(inputVal.equalsIgnoreCase("grid_view"))
+				layout_type = R.layout.activity_user_iface_layout_grid_view;
+
 			else//default is linear layout.
 				layout_type = R.layout.activity_user_iface_layout;
 			
@@ -68,6 +77,10 @@ public class UserIfaceLayoutActivity extends ActionBarActivity
 					
 				case R.layout.activity_user_iface_layout_list_view:
 					performListView();
+					break;
+					
+				case R.layout.activity_user_iface_layout_grid_view:
+					performGridView();
 					break;
 			}
 		}
@@ -124,5 +137,41 @@ public class UserIfaceLayoutActivity extends ActionBarActivity
 		//setup the array adapter with the list view obj..this will now render the ui with array as list view for 
 		//text view objs.
 		listView.setAdapter(adapter);		
+	}
+	
+	/**
+	 * this will do the grid view processing to display 2D, (rows/cols)
+	 * for data.
+	 */
+	private void performGridView()
+	{
+		//get gride view obj from layout.
+		GridView gridview = (GridView) findViewById(R.id.gridview);
+		
+		//setup the image adapter to this grid view to allow to show the image under this activity.
+		//this one call does the display of all the image thumbnails to the gridview for display.
+		//it used the gridview id from the layout file to accomplish this.
+		gridview.setAdapter(new ImageAdapter(this));
+		
+		//anonymous class used when clicking of a particular image to show that one in full screen.		
+		gridview.setOnItemClickListener
+		( new OnItemClickListener() 
+			{
+				public void onItemClick(AdapterView<?> parent, View v, int position, long id) 
+				{
+					// Send intent to SingleViewActivity
+					Intent i = new Intent(getApplicationContext(), SingleViewActivity.class);
+					
+					// Pass image index in intent to allow for other activity to use it
+					//to find the image and place that image in the called activity for rendering.
+					//u have the position from the clicked thumnnail.
+					i.putExtra("id", position);
+					
+					//start the new activity
+					startActivity(i);
+				}
+			}
+		);
+		
 	}
 }
