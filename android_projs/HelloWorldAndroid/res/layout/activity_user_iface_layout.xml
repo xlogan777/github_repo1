@@ -1,4 +1,7 @@
+
+<!-- this xmlns:custom is to support custom attrib usage for date view custom objects -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/com.example.helloworldandroid"
    android:layout_width="fill_parent"
    android:layout_height="fill_parent"
    android:orientation="vertical" >
@@ -57,5 +60,25 @@
 		android:layout_height="wrap_content"
 		android:capitalize="characters"
 		android:text="@string/hello_world" />
-   
+
+	<!-- this is used to show the button for handling this demo kickoff -->
+
+	<Button
+	    android:id="@+id/custom_component_button_demo"
+	    style="?android:attr/buttonStyleSmall"
+	    android:layout_width="match_parent"
+	    android:layout_height="34dp"
+	    android:onClick="onClickCustomDemoRun"
+	    android:text="@string/custom_component_demo" />
+
+	<!-- delimiter and fancyText are custom attrib that exits in the /res/values/attrs.xml file -->
+	<com.example.helloworldandroid.DateView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textColor="#fff"
+		android:textSize="20sp"
+				
+		custom:delimiter="-"
+		custom:fancyText="true"	/>
+	
 </LinearLayout>

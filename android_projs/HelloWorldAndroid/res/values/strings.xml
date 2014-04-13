@@ -59,5 +59,8 @@
     <!-- used for event handler chapter -->
     <string name="button_small">Small Font</string>
 	<string name="button_large">Large Font</string>
+	
+	<!-- custom component demo -->	
+	<string name="custom_component_demo">Jimmy custom component</string>
 
 </resources>

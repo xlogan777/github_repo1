@@ -261,4 +261,16 @@ public class UserIfaceLayoutActivity extends ActionBarActivity implements OnClic
 			Toast.makeText(getBaseContext(), "Button L pressed handler via implements iface", Toast.LENGTH_LONG).show();
 		}
 	}
+	
+	public void onClickCustomDemoRun(View view)
+	{
+		Log.d(MyTag, "run sample custom component demos");
+		//run new custom view here...
+		
+		//-- Create DateView instance and set it in layout.
+		DateView dateView = new DateView(this);
+		
+		//this will override the xml based layout done in the onCreate of this activity.
+		setContentView(dateView);		
+	}
 }

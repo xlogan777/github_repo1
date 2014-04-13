@@ -1,0 +1,11 @@
+
+<!-- this is a new resource file that allows for custom attrib to be added
+	to any new custom view object i create. it needs to be placed in the /res/values folder. -->
+<resources>
+    <!-- this is stating which class is associated with this dateview object attrib type -->
+	<declare-styleable name="DateView">
+	    <!-- this is setting up the name of this attrib and the data type for it to be matched with.. -->
+		<attr name="delimiter" format="string"/>
+		<attr name="fancyText" format="boolean"/>
+	</declare-styleable>
+</resources>
