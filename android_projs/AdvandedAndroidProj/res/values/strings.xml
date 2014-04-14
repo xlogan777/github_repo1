@@ -4,5 +4,9 @@
     <string name="app_name">AdvandedAndroidProj</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    
+    <!-- here the demo starts.. -->
+    <string name="button_name">button1</string>
+    
 
 </resources>
