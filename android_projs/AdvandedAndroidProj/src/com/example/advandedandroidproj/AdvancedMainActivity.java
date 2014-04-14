@@ -1,22 +1,22 @@
 package com.example.advandedandroidproj;
 
 import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 public class AdvancedMainActivity extends ActionBarActivity 
 {
+	private static String LogTagClassName = "AdvancedMainActivity";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_advanced_main);
+		
+		Log.d(LogTagClassName, "In the Main activity for the new project.");
 	}
 
 	@Override
@@ -34,8 +34,10 @@ public class AdvancedMainActivity extends ActionBarActivity
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
+		
 		if (id == R.id.action_settings) 
 		{
+			Log.d(LogTagClassName, "Clicked the action settings menu item.");
 			return true;
 		}
 		
