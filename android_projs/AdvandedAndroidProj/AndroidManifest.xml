@@ -4,8 +4,11 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
+    <!-- this is what my app started with but, to continue with the demos, changing to minSdkVersion = 11 -->
+    <!--  android:minSdkVersion="8" -->
+    
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="11"
         android:targetSdkVersion="19" />
 
     <application

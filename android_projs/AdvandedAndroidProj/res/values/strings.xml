@@ -8,5 +8,7 @@
     <!-- here the demo starts.. -->
     <string name="button_name">button1</string>
     
+    <!-- drag and drop demo. -->
+    <string name="drag_drop">Click on the image to drag and drop</string>
 
 </resources>
