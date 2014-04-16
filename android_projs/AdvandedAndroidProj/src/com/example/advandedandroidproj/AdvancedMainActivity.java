@@ -1,7 +1,13 @@
 package com.example.advandedandroidproj;
 
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBarActivity;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.ClipData;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.DragEvent;
@@ -10,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
 import android.view.View.OnDragListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.content.ClipDescription;
@@ -24,6 +31,11 @@ public class AdvancedMainActivity extends ActionBarActivity
 		
 	//vars to hold the layout when being dragged.
 	private android.widget.RelativeLayout.LayoutParams layoutParams;
+	
+	/* class vars needed for notification demo.*/
+	private NotificationManager mNotificationManager;
+	private int notificationID = 100;
+	private int numMessages = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -33,7 +45,10 @@ public class AdvancedMainActivity extends ActionBarActivity
 		
 		Log.d(LogTagClassName, "In the Main activity for the new project.");
 		
+		//do the processing for the drag and drop..
 		this.performDragAndDropProcessing();
+		
+		this.peformNotificationProcessing();
 	}
 
 	@Override
@@ -181,5 +196,143 @@ public class AdvancedMainActivity extends ActionBarActivity
 				}//onDrag
 			}//listener
 		);
+	}
+	
+	/**
+	 * this will do the notification processing.
+	 */
+	public void peformNotificationProcessing()
+	{
+		//find the start button via id
+		Button startBtn = (Button) findViewById(R.id.start);
+		
+		//setup the listener to call the display notification
+		startBtn.setOnClickListener
+		( 	new View.OnClickListener() 
+			{
+				public void onClick(View view) 
+				{
+					displayNotification();
+				}
+			}
+		);
+		
+		//find the cancel button via id
+		Button cancelBtn = (Button) findViewById(R.id.cancel);
+		
+		//setup the listener to call the cancel notification
+		cancelBtn.setOnClickListener
+		(	new View.OnClickListener() 
+			{
+				public void onClick(View view) 
+				{
+					cancelNotification();
+				}
+			}
+		);
+		
+		//find the update button via id
+		Button updateBtn = (Button) findViewById(R.id.update);
+		
+		//setup the listener to call the update notification
+		updateBtn.setOnClickListener
+		(	new View.OnClickListener() 
+			{
+				public void onClick(View view) 
+				{
+					updateNotification();
+				}
+			}
+		);	
+	}
+	
+	protected void displayNotification() 
+	{
+		Log.d("Start", "notification");
+		
+		/* Invoking the default notification service  with this context*/
+		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+		
+		/* this will setup the notification window with the title, and msg for the notification with the image.*/
+		mBuilder.setContentTitle("New Message");
+		mBuilder.setContentText("You've received new message.");
+		mBuilder.setTicker("New Message Alert!");
+		mBuilder.setSmallIcon(R.drawable.images3);
+		
+		/* Increase notification number every time a new notification arrives */
+		mBuilder.setNumber(++numMessages);
+		
+		/* Creates an explicit intent for an Activity in your app */
+		Intent resultIntent = new Intent(this, NotificationViewActivity.class);
+		
+		//create a task stack builder with this context and provide it the activity to call back on.
+		TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+		stackBuilder.addParentStack(NotificationViewActivity.class);
+		
+		/* Adds the Intent that starts the Activity to the top of the stack */
+		stackBuilder.addNextIntent(resultIntent);
+		
+		//get a result pending intent to provide that to the builder.
+		PendingIntent resultPendingIntent =	
+		stackBuilder.getPendingIntent
+		(
+		  0,
+		  PendingIntent.FLAG_UPDATE_CURRENT
+		);
+		
+		//setup the intent as a pending intent to get invoked only when it is clicked 
+		mBuilder.setContentIntent(resultPendingIntent);
+		
+		//get the specific mgr for the notification svc.
+		mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		
+		
+		/* notificationID allows you to update the notification later on. */
+		//creates a new notification obj, from the notofication builder and provides the id for it. to be managed
+		//by the notification mgr.
+		mNotificationManager.notify(notificationID, mBuilder.build());
+	}
+	
+	protected void cancelNotification() 
+	{
+		Log.i("Cancel", "notification");
+		mNotificationManager.cancel(notificationID);
+	}
+	
+	protected void updateNotification() 
+	{
+		Log.i("Update", "notification");
+		
+		/* Invoking the default notification service */
+		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+		mBuilder.setContentTitle("Updated Message");
+		mBuilder.setContentText("You've got updated message.");
+		mBuilder.setTicker("Updated Message Alert!");
+		mBuilder.setSmallIcon(R.drawable.images3);
+		
+		/* Increase notification number every time a new notification arrives */
+		mBuilder.setNumber(++numMessages);
+		
+		/* Creates an explicit intent for an Activity in your app */
+		Intent resultIntent = new Intent(this, NotificationViewActivity.class);
+		TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+		stackBuilder.addParentStack(NotificationViewActivity.class);
+		
+		/* Adds the Intent that starts the Activity to the top of the stack */
+		stackBuilder.addNextIntent(resultIntent);
+		
+		PendingIntent resultPendingIntent =
+		stackBuilder.getPendingIntent
+		(
+			0,
+			PendingIntent.FLAG_UPDATE_CURRENT
+		);
+		
+		mBuilder.setContentIntent(resultPendingIntent);
+		
+		mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		
+		/* Update the existing notification using same notification ID */
+		mNotificationManager.notify(notificationID, mBuilder.build());
 	}
 }
