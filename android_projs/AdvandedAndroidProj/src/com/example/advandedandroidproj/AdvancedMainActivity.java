@@ -43,7 +43,7 @@ public class AdvancedMainActivity extends ActionBarActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_advanced_main);
 		
-		Log.d(LogTagClassName, "In the Main activity for the new project.");
+		Log.d(LogTagClassName, "In the Main activity for the new project. TESTING");
 		
 		//do the processing for the drag and drop..
 		this.performDragAndDropProcessing();
