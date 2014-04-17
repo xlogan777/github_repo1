@@ -48,4 +48,16 @@
         android:layout_below="@+id/update"
         android:text="@string/cancel_note" />
 
+    <!-- this will start the location based demo -->
+    <Button
+        android:id="@+id/location_demo"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/start"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/cancel"
+        android:text="location_demo"
+        android:onClick="onClickLocationDemo" />
+
 </RelativeLayout>

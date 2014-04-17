@@ -372,4 +372,16 @@ public class AdvancedMainActivity extends ActionBarActivity
 		/* Update the existing notification using same notification ID */
 		mNotificationManager.notify(notificationID, mBuilder.build());
 	}
+	
+	/**
+	 * this will do the kick off to another activity that starts the demo for location services.
+	 * 
+	 */
+	public void onClickLocationDemo(View view)
+	{
+		Log.d(LogTagClassName,"starting the location based services");
+		
+		//this will kick off the new activity
+		this.startActivity(new Intent(this,LocationBasedDemoActivity.class));
+	}
 }

@@ -7,17 +7,26 @@
     <!-- this is what my app started with but, to continue with the demos, changing to minSdkVersion = 11 -->
     <!-- android:minSdkVersion="8" -->
 
-   <!-- started to go to min api version 16 to support notification demo that uses TaskStackBuilder -->
-   <!-- android:minSdkVersion="11" -->
+
+    <!-- started to go to min api version 16 to support notification demo that uses TaskStackBuilder -->
+    <!-- android:minSdkVersion="11" -->
     <uses-sdk
         android:minSdkVersion="16"
         android:targetSdkVersion="19" />
-
+    
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        
+       <!-- added for location based services demo -->
+	    <!-- <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/> -->
+	    
+	    <!-- needed now for new google play services. -->
+       <meta-data android:name="com.google.android.gms.version"
+           android:value="@integer/google_play_services_version" />
+    
         <activity
             android:name="com.example.advandedandroidproj.AdvancedMainActivity"
             android:label="@string/app_name" >
@@ -27,12 +36,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
+
         <!-- this is for notification demo samples... -->
         <activity
             android:name="com.example.advandedandroidproj.NotificationViewActivity"
             android:label="@string/title_activity_notification_view" >
         </activity>
+        
+        <!-- location based demo -->
+        <activity
+            android:name="com.example.advandedandroidproj.LocationBasedDemoActivity"
+            android:label="@string/title_activity_location_based_demo" >
+        </activity>
+        
     </application>
 
 </manifest>
