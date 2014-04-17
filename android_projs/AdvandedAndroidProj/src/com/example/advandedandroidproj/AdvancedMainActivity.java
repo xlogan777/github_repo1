@@ -48,6 +48,7 @@ public class AdvancedMainActivity extends ActionBarActivity
 		//do the processing for the drag and drop..
 		this.performDragAndDropProcessing();
 		
+		//do the notification processing.
 		this.peformNotificationProcessing();
 	}
 
@@ -76,7 +77,7 @@ public class AdvancedMainActivity extends ActionBarActivity
 		return super.onOptionsItemSelected(item);
 	}
 	
-	public void performDragAndDropProcessing()
+	private void performDragAndDropProcessing()
 	{
 		//get the id of the image.
 		ima = (ImageView)findViewById(R.id.iv_logo);
@@ -201,7 +202,7 @@ public class AdvancedMainActivity extends ActionBarActivity
 	/**
 	 * this will do the notification processing.
 	 */
-	public void peformNotificationProcessing()
+	private void peformNotificationProcessing()
 	{
 		//find the start button via id
 		Button startBtn = (Button) findViewById(R.id.start);
@@ -246,9 +247,9 @@ public class AdvancedMainActivity extends ActionBarActivity
 		);	
 	}
 	
-	protected void displayNotification() 
+	private void displayNotification() 
 	{
-		Log.d("Start", "notification");
+		Log.d("Start", "notification started");
 		
 		/* Invoking the default notification service  with this context*/
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
@@ -261,6 +262,9 @@ public class AdvancedMainActivity extends ActionBarActivity
 		
 		/* Increase notification number every time a new notification arrives */
 		mBuilder.setNumber(++numMessages);
+		
+		//add the big notification view to this builder.
+		this.addBigViewNotificationConfig(mBuilder);
 		
 		/* Creates an explicit intent for an Activity in your app */
 		Intent resultIntent = new Intent(this, NotificationViewActivity.class);
@@ -293,15 +297,48 @@ public class AdvancedMainActivity extends ActionBarActivity
 		mNotificationManager.notify(notificationID, mBuilder.build());
 	}
 	
-	protected void cancelNotification() 
+	//this will all the big view notification to the main builder.
+	private void addBigViewNotificationConfig(NotificationCompat.Builder mBuilder)
 	{
-		Log.i("Cancel", "notification");
-		mNotificationManager.cancel(notificationID);
+		/* Add Big View Specific Configuration */
+		NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+		
+		//create array and events for this array..
+		String[] events = new String[6];
+		
+		events[0] = new String("This is first line....");
+		events[1] = new String("This is second line...");
+		events[2] = new String("This is third line...");
+		events[3] = new String("This is 4th line...");
+		events[4] = new String("This is 5th line...");
+		events[5] = new String("This is 6th line...");
+		
+		// Sets a title for the Inbox style big view
+		inboxStyle.setBigContentTitle("Big Title Details:");
+		
+		// Moves events into the big view
+		for (int i=0; i < events.length; i++) 
+			inboxStyle.addLine(events[i]);
+		
+		//save the inbox style to the main builder.
+		mBuilder.setStyle(inboxStyle);
 	}
 	
-	protected void updateNotification() 
+	private void cancelNotification() 
+	{				
+		if(mNotificationManager != null)
+		{
+			Log.d("Cancel", "notification cancelled");
+			
+			//cancel the notification using the notification id.
+			
+			mNotificationManager.cancel(notificationID);
+		}
+	}
+	
+	private void updateNotification() 
 	{
-		Log.i("Update", "notification");
+		Log.d("Update", "notification updated");
 		
 		/* Invoking the default notification service */
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
