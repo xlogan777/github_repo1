@@ -3,6 +3,14 @@
     package="com.example.advandedandroidproj"
     android:versionCode="1"
     android:versionName="1.0" >
+    
+    <!-- these are permissions needed when using the google play svc for location operations. 
+    	this allows for the "LocationBasedDemoActivity" class to use the gps location svcs
+    	and to use it within the application. 
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+	<!-- used for google play svcs with activity -->
 
     <!-- this is what my app started with but, to continue with the demos, changing to minSdkVersion = 11 -->
     <!-- android:minSdkVersion="8" -->
@@ -48,7 +56,9 @@
             android:name="com.example.advandedandroidproj.LocationBasedDemoActivity"
             android:label="@string/title_activity_location_based_demo" >
         </activity>
-        
+
     </application>
+    
+	<!-- <uses-permission android:name="android.permission.INTERNET"></uses-permission>-->
 
 </manifest>
