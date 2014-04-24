@@ -8,6 +8,7 @@ import android.app.TaskStackBuilder;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.DragEvent;
@@ -19,6 +20,7 @@ import android.view.View.OnDragListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import android.content.ClipDescription;
 
 public class AdvancedMainActivity extends ActionBarActivity 
@@ -50,6 +52,9 @@ public class AdvancedMainActivity extends ActionBarActivity
 		
 		//do the notification processing.
 		this.peformNotificationProcessing();
+		
+		//do email processing.
+		this.performEmailProcessing();
 	}
 
 	@Override
@@ -383,5 +388,64 @@ public class AdvancedMainActivity extends ActionBarActivity
 		
 		//this will kick off the new activity
 		this.startActivity(new Intent(this,LocationBasedDemoActivity.class));
+	}
+	
+	//function to do the email processing for this demo.
+	private void performEmailProcessing()
+	{
+		//get button, and hook in anonymous class for on click processing.
+		Button startBtn = (Button) findViewById(R.id.sendEmail);
+		
+		//add listener and call the sendEmail function.
+		startBtn.setOnClickListener
+		( new View.OnClickListener() 
+			{
+				public void onClick(View view) 
+				{
+					sendEmail();
+				}
+			}
+		);
+	}
+	
+	/*
+	 * this will be called to send an email using an android email client with default settings.
+	 */
+	private void sendEmail() 
+	{
+		Log.d(LogTagClassName, "Sending email ...");
+		
+		//setup the email addresses to send and cc this email
+		String[] TO = {"xlogan777@yahoo.com"};
+		String[] CC = {"jimmy.mena@gmail.com"};
+		
+		//create intent obj to have an action send. this will send email (call an email client)
+		Intent emailIntent = new Intent(Intent.ACTION_SEND);
+		
+		//setup the uri and data type for this intent.
+		emailIntent.setData(Uri.parse("mailto:"));
+		emailIntent.setType("text/plain");
+		
+		//config different types of the email body..by setting the correct extra features.
+		emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
+		emailIntent.putExtra(Intent.EXTRA_CC, CC);
+		emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject");
+		emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message goes here");
+		
+		try 
+		{
+			//this will wrap the given intent and supply a title for the intent.
+			//this wrapped intent gets passed to the activity to start it.
+			this.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+			
+			//call this when ur email activity is done.
+			this.finish();
+			
+			Log.d("Finished sending email...", "");
+		} 
+		catch (android.content.ActivityNotFoundException ex) 
+		{
+			Toast.makeText(AdvancedMainActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
+		}
 	}
 }

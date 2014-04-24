@@ -60,4 +60,13 @@
         android:text="location_demo"
         android:onClick="onClickLocationDemo" />
 
+    <Button
+        android:id="@+id/sendEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/location_demo"
+        android:layout_marginRight="21dp"
+        android:text="@string/send_email" />
+
 </RelativeLayout>
