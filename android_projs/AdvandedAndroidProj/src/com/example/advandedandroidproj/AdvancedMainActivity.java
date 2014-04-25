@@ -448,4 +448,14 @@ public class AdvancedMainActivity extends ActionBarActivity
 			Toast.makeText(AdvancedMainActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
 		}
 	}
+	
+	/*
+	 * run the sms demo activity here.
+	 */
+	public void onClickRunSmsDemo(View view)
+	{
+		Log.d(LogTagClassName, "Running the sms demo now.");
+		
+		this.startActivity(new Intent(this,SmsDemoActivity.class));
+	}
 }

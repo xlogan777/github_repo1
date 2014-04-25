@@ -3,14 +3,23 @@
     package="com.example.advandedandroidproj"
     android:versionCode="1"
     android:versionName="1.0" >
-    
-    <!-- these are permissions needed when using the google play svc for location operations. 
+
+    <!--
+       these are permissions needed when using the google play svc for location operations. 
     	this allows for the "LocationBasedDemoActivity" class to use the gps location svcs
-    	and to use it within the application. 
+    	and to use it within the application. 
     -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
-	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
-	<!-- used for google play svcs with activity -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    
+    <!-- allows to send sms msgs... -->
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    
+    <!-- this is used for using phone app in the phone with intent. -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    
+    <!-- used for google play svcs with activity -->
+
 
     <!-- this is what my app started with but, to continue with the demos, changing to minSdkVersion = 11 -->
     <!-- android:minSdkVersion="8" -->
@@ -21,20 +30,22 @@
     <uses-sdk
         android:minSdkVersion="16"
         android:targetSdkVersion="19" />
-    
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        
-       <!-- added for location based services demo -->
-	    <!-- <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/> -->
-	    
-	    <!-- needed now for new google play services. -->
-       <meta-data android:name="com.google.android.gms.version"
-           android:value="@integer/google_play_services_version" />
-    
+
+        <!-- added for location based services demo -->
+        <!-- <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/> -->
+
+
+        <!-- needed now for new google play services. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
         <activity
             android:name="com.example.advandedandroidproj.AdvancedMainActivity"
             android:label="@string/app_name" >
@@ -50,15 +61,20 @@
             android:name="com.example.advandedandroidproj.NotificationViewActivity"
             android:label="@string/title_activity_notification_view" >
         </activity>
-        
+
         <!-- location based demo -->
         <activity
             android:name="com.example.advandedandroidproj.LocationBasedDemoActivity"
             android:label="@string/title_activity_location_based_demo" >
         </activity>
-
+        
+        <!-- this will do the sms demo stuff. -->
+        <activity
+            android:name="com.example.advandedandroidproj.SmsDemoActivity"
+            android:label="@string/title_activity_sms_demo" >
+        </activity>
     </application>
-    
-	<!-- <uses-permission android:name="android.permission.INTERNET"></uses-permission>-->
+
+    <!-- <uses-permission android:name="android.permission.INTERNET"></uses-permission> -->
 
 </manifest>

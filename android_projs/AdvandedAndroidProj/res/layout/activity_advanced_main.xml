@@ -69,4 +69,16 @@
         android:layout_marginRight="21dp"
         android:text="@string/send_email" />
 
+    <Button
+        android:id="@+id/sms_button"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/sendEmail"
+        android:layout_alignRight="@+id/sendEmail"
+        android:layout_below="@+id/sendEmail"
+        android:layout_marginLeft="17dp"
+        android:text="@string/sms_my_button"
+        android:onClick="onClickRunSmsDemo" />
+
 </RelativeLayout>

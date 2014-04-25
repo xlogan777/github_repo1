@@ -17,13 +17,23 @@
     <string name="cancel_note">Cancel Notification</string>
     <string name="update_note">Update Notification</string>
     <string name="title_activity_location_based_demo">LocationBasedDemoActivity</string>
-    
+
     <!-- location based svcs -->
     <string name="get_location">Get Location</string>
-	 <string name="disconnect">Disconnect Service</string>
-	 <string name="connect">Connect Service</string>
+    <string name="disconnect">Disconnect Service</string>
+    <string name="connect">Connect Service</string>
+
+    <!-- email based demo -->
+    <string name="send_email">Send email</string>
+
+    <!-- sms demos -->
+    <string name="sms_my_button">Send send sms</string>
+    <string name="title_activity_sms_demo">SmsDemoActivity</string>
+    <string name="phone_label">Enter Phone Number:</string>
+	 <string name="sms_label">Enter SMS Message:</string>
+	 <string name="send_sms_label">Send SMS</string>
 	 
-	 <!-- email based demo -->
-	<string name="send_email">Send email</string>
+	 <!-- make call demo -->
+	 <string name="make_call">Make Call</string>
 
 </resources>
