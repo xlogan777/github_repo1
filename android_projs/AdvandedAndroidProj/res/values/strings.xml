@@ -30,16 +30,21 @@
     <string name="sms_my_button">Send send sms</string>
     <string name="title_activity_sms_demo">SmsDemoActivity</string>
     <string name="phone_label">Enter Phone Number:</string>
-	<string name="sms_label">Enter SMS Message:</string>
-	<string name="send_sms_label">Send SMS</string>
-	 
-	 <!-- make call demo -->
-	 <string name="make_call">Make Call</string>
-	 
-	 <!-- diaglog demos -->
-	 <string name="diag_button">Diaglog Button</string>
-	 <string name="decision">Make a Decision</string>
-	 <string name="yes_ans">YES</string>
-	 <string name="no_ans">No</string>
+    <string name="sms_label">Enter SMS Message:</string>
+    <string name="send_sms_label">Send SMS</string>
+
+    <!-- make call demo -->
+    <string name="make_call">Make Call</string>
+
+    <!-- diaglog demos -->
+    <string name="diag_button">Diaglog Button</string>
+    <string name="decision">Make a Decision</string>
+    <string name="yes_ans">YES</string>
+    <string name="no_ans">No</string>
+    
+    <!-- file io example. -->
+    <string name="title_activity_file_io">FileIOActivity</string>
+    <string name="saveButton">saveButton</string>
+    <string name="readButton">readButton</string>
 
 </resources>

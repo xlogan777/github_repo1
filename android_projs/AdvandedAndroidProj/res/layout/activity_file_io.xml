@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent" >
+
+	<Button
+		android:id="@+id/button1"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:onClick="save"
+		android:text="@string/saveButton" />
+	
+	<Button
+		android:id="@+id/button2"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:onClick="read"
+		android:text="@string/readButton" />
+	
+	<EditText
+		android:id="@+id/editText1"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:ems="10"
+		android:inputType="textMultiLine" >
+	
+		<requestFocus />
+	
+	</EditText>
+	
+</LinearLayout>

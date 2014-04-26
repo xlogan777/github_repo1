@@ -156,4 +156,10 @@ public class SmsDemoActivity extends Activity
 			ex.printStackTrace();
 		}
 	}
+	
+	public void onClickFileIO(View view)
+	{
+		Log.d("SmsDemoActivity", "starting the file io demo");
+		startActivity(new Intent(this,FileIOActivity.class));
+	}
 }

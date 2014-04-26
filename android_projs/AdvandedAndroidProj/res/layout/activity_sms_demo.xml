@@ -38,5 +38,14 @@
 	    android:layout_width="192dp"
 	    android:layout_height="wrap_content"
 	    android:text="@string/make_call" />
+
+	<!-- on click file io -->
+	<Button
+	    android:id="@+id/button222"
+	    style="?android:attr/buttonStyleSmall"
+	    android:layout_width="137dp"
+	    android:layout_height="wrap_content"
+	    android:text="file_io_demo" 
+	    android:onClick="onClickFileIO"/>
 	
 </LinearLayout>
