@@ -2,11 +2,13 @@ package com.example.advandedandroidproj;
 
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBarActivity;
+import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.ClipData;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -457,5 +459,57 @@ public class AdvancedMainActivity extends ActionBarActivity
 		Log.d(LogTagClassName, "Running the sms demo now.");
 		
 		this.startActivity(new Intent(this,SmsDemoActivity.class));
+	}
+	
+	/*
+	 * function will do the call back for click of diag demo button.
+	 */
+	public void onClickDiagButton(View view)
+	{
+		Log.d(LogTagClassName, "Running the alert dialog demo.");
+		
+		//create the alert dialog builder with a reference to this activity.
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		
+		//provide a msg for this alert
+		alertDialogBuilder.setMessage(R.string.decision);		
+		
+		//setup the diff button choices for the positive event and process this event.
+		alertDialogBuilder.setPositiveButton
+		( R.string.yes_ans,
+			//below is an anonymous class for Diag interface..to hook in the click event for the yes decision
+			new DialogInterface.OnClickListener() 
+			{
+				@Override
+				public void onClick(DialogInterface arg0, int arg1) 
+				{
+					//Intent positveActivity = new Intent(getApplicationContext(),com.example.alertdialog.PositiveActivity.class);
+					//startActivity(positveActivity);
+					Log.d(LogTagClassName, "Doing the Positive portion of the alert window.");
+				}
+			}
+		);
+		
+		//setup the diff button choices for the negative event and process this event.
+		alertDialogBuilder.setNegativeButton
+		(R.string.no_ans,
+			//below is an anonymous class for Diag interface..to hook in the click event for the yes decision
+			new DialogInterface.OnClickListener() 
+			{
+				@Override
+				public void onClick(DialogInterface dialog, int which) 
+				{
+					//Intent negativeActivity = new Intent(getApplicationContext(),com.example.alertdialog.NegativeActivity.class);
+					//startActivity(negativeActivity);
+					Log.d(LogTagClassName, "Doing the Negative portion of the alert window.");
+				}
+			}
+		);
+		
+		//create the builder obj..
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		
+		//display the dialog, return control back to the activity once it is done.
+		alertDialog.show();
 	}
 }

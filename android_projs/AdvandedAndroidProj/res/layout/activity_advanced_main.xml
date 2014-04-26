@@ -60,6 +60,7 @@
         android:text="location_demo"
         android:onClick="onClickLocationDemo" />
 
+    <!-- buttons for email demos. -->
     <Button
         android:id="@+id/sendEmail"
         android:layout_width="wrap_content"
@@ -69,6 +70,7 @@
         android:layout_marginRight="21dp"
         android:text="@string/send_email" />
 
+    <!-- button for sms demos -->
     <Button
         android:id="@+id/sms_button"
         style="?android:attr/buttonStyleSmall"
@@ -80,5 +82,16 @@
         android:layout_marginLeft="17dp"
         android:text="@string/sms_my_button"
         android:onClick="onClickRunSmsDemo" />
+
+    <!-- button for dialog demos. -->
+    <Button
+        android:id="@+id/alert_dialog_button"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/sms_button"
+        android:layout_below="@+id/sms_button"
+        android:text="@string/diag_button" 
+        android:onClick="onClickDiagButton"/>
 
 </RelativeLayout>
