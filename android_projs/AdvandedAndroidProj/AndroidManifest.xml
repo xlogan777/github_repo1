@@ -9,6 +9,7 @@
     	this allows for the "LocationBasedDemoActivity" class to use the gps location svcs
     	and to use it within the application. 
     -->
+    <!-- used for google play svcs with activity -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
@@ -17,8 +18,9 @@
 
     <!-- this is used for using phone app in the phone with intent. -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
-    <!-- used for google play svcs with activity -->
+    
+    <!-- used for access to things like facebook. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
 
 
     <!-- this is what my app started with but, to continue with the demos, changing to minSdkVersion = 11 -->
@@ -76,6 +78,10 @@
         <activity
             android:name="com.example.advandedandroidproj.FileIOActivity"
             android:label="@string/title_activity_file_io" >
+        </activity>
+        <activity
+            android:name="com.example.advandedandroidproj.FacebookIntActivity"
+            android:label="@string/title_activity_facebook_int" >
         </activity>
     </application>
 

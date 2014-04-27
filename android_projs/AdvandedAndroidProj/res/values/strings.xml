@@ -41,10 +41,16 @@
     <string name="decision">Make a Decision</string>
     <string name="yes_ans">YES</string>
     <string name="no_ans">No</string>
-    
+
     <!-- file io example. -->
     <string name="title_activity_file_io">FileIOActivity</string>
     <string name="saveButton">saveButton</string>
     <string name="readButton">readButton</string>
+    
+    <!--  facebook integration -->
+    <string name="title_activity_facebook_int">FacebookIntActivity</string>
+    <string name="facebookButton">Facebook test</string>
+    <string name="welcome">Welcome </string>
+    <string name="enter">Log in to Facebook</string>
 
 </resources>

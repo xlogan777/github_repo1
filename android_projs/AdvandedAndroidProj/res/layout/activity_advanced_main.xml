@@ -94,4 +94,15 @@
         android:text="@string/diag_button" 
         android:onClick="onClickDiagButton"/>
 
+    <Button
+        android:id="@+id/facebook_button"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/sendEmail"
+        android:layout_alignBottom="@+id/sendEmail"
+        android:layout_toRightOf="@+id/iv_logo"
+        android:text="@string/facebookButton"
+        android:onClick="onClickFacebookTest" />
+
 </RelativeLayout>

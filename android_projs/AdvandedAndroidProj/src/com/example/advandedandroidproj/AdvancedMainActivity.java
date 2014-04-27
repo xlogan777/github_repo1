@@ -512,4 +512,12 @@ public class AdvancedMainActivity extends ActionBarActivity
 		//display the dialog, return control back to the activity once it is done.
 		alertDialog.show();
 	}
+	
+	//this function will kick off the facebook integration test.
+	public void onClickFacebookTest(View view)
+	{
+		Log.d(LogTagClassName, "doing facebook test.");
+		
+		startActivity(new Intent(this, FacebookIntActivity.class));
+	}
 }
