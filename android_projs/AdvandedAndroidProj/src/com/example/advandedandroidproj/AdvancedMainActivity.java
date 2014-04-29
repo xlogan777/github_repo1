@@ -520,4 +520,12 @@ public class AdvancedMainActivity extends ActionBarActivity
 		
 		startActivity(new Intent(this, FacebookIntActivity.class));
 	}
+	
+	//start the json parser demo.
+	public void onClickParseJson(View view)
+	{
+		Log.d(LogTagClassName, "doing json weather parser  test.");
+		
+		startActivity(new Intent(this, JsonParserActivity.class));
+	}
 }

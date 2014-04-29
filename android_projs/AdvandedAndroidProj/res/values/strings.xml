@@ -46,11 +46,20 @@
     <string name="title_activity_file_io">FileIOActivity</string>
     <string name="saveButton">saveButton</string>
     <string name="readButton">readButton</string>
-    
-    <!--  facebook integration -->
+
+    <!-- facebook integration -->
     <string name="title_activity_facebook_int">FacebookIntActivity</string>
     <string name="facebookButton">Facebook test</string>
     <string name="welcome">Welcome </string>
     <string name="enter">Log in to Facebook</string>
+    
+    <!-- json demo example...with weather access google api. -->
+    <string name="title_activity_json_parser">JsonParserActivity</string>
+    <string name="location">Location</string>
+	 <string name="country">Country:</string>
+	 <string name="temperature">Temperature:</string>
+	 <string name="humidity">Humidity:</string>
+	 <string name="pressure">Pressure:</string>
+	 <string name="weather">Weather</string>
 
 </resources>

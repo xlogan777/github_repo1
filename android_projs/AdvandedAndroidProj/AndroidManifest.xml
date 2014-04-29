@@ -7,7 +7,7 @@
     <!--
        these are permissions needed when using the google play svc for location operations. 
     	this allows for the "LocationBasedDemoActivity" class to use the gps location svcs
-    	and to use it within the application. 
+    	and to use it within the application. 
     -->
     <!-- used for google play svcs with activity -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -18,10 +18,9 @@
 
     <!-- this is used for using phone app in the phone with intent. -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    
-    <!-- used for access to things like facebook. -->
-    <uses-permission android:name="android.permission.INTERNET"/>
 
+    <!-- used for access to things like facebook. -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- this is what my app started with but, to continue with the demos, changing to minSdkVersion = 11 -->
     <!-- android:minSdkVersion="8" -->
@@ -82,6 +81,12 @@
         <activity
             android:name="com.example.advandedandroidproj.FacebookIntActivity"
             android:label="@string/title_activity_facebook_int" >
+        </activity>
+        
+        <!-- json parser demo. -->
+        <activity
+            android:name="com.example.advandedandroidproj.JsonParserActivity"
+            android:label="@string/title_activity_json_parser" >
         </activity>
     </application>
 
