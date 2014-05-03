@@ -67,8 +67,14 @@ public class JsonParserActivity extends Activity
 		obj.fetchJSON();//get the json data
 		
 		//empty while loop to allow for getting json data and then showing
-		//it to the user...this is very bad...dont do it like this..only for demo.
-		while(obj.parsingComplete);
+		//it to the user
+		while(obj.parsingComplete)
+		{
+			//sleep for 1 sec...to then allow for json data.
+			try{Thread.sleep(1000);}
+			catch(Exception e){}
+			
+		}
 		
 		//if we get here then we properly parsed json data, and display it on the activity.
 		country.setText(obj.getCountry());
