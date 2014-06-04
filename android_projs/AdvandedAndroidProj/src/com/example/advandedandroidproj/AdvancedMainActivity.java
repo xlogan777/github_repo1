@@ -28,6 +28,8 @@ import android.content.ClipDescription;
 /*
  * this is the main class for the android advanced concepts.
  * J.M.
+ * 
+ * this is a new test...
  */
 public class AdvancedMainActivity extends ActionBarActivity 
 {
