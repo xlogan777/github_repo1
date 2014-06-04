@@ -25,6 +25,10 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.content.ClipDescription;
 
+/*
+ * this is the main class for the android advanced concepts.
+ * J.M.
+ */
 public class AdvancedMainActivity extends ActionBarActivity 
 {
 	//logging field that allows for tag name display in the logcat.
