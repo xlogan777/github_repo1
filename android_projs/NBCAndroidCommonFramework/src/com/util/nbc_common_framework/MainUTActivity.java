@@ -28,7 +28,7 @@ public class MainUTActivity extends ActionBarActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_ut);
-		
+
 		String data = this.readJsonData();
 		
 		TextView tv = (TextView)findViewById(R.id.my_text_view);
@@ -83,6 +83,10 @@ public class MainUTActivity extends ActionBarActivity
 			String ans = "JM...full_title = "+fullTitle+" metadata.leadMediaThumbnail = "+leadMediaThumbnail;
 			
 			Log.d(MainUTActivityTAG, ans);
+			
+			//close input stream.
+			is.close();			
+			
 			return ans;
 		}
 		catch(Exception e)
