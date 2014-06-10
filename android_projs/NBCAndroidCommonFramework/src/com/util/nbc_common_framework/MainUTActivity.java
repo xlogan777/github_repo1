@@ -7,7 +7,9 @@ import org.json.JSONObject;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
+import android.content.Context;
 import android.content.res.AssetManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,18 +23,22 @@ import android.os.Build;
 
 public class MainUTActivity extends ActionBarActivity 
 {
-	private static String MainUTActivityTAG = "MainUTActivity";
+	private String MainUTActivityTAG = "MainUTActivity";
+	
+	//sql lite db
+	private SQLiteDatabase nbc_db = null;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) 
+	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_ut);
 
-		String data = this.readJsonData();
+		//create db.
+		this.createDB();
 		
 		TextView tv = (TextView)findViewById(R.id.my_text_view);
-		tv.setText(data);
+		tv.setText("");
 
 		/*if (savedInstanceState == null) 
 		{
@@ -41,60 +47,20 @@ public class MainUTActivity extends ActionBarActivity
 		}*/
 	}
 	
-	/*
-	 * this function will read json data from the assets folder in the project.
-	 */
-	private String readJsonData()
+	public void createDB()
 	{
-		try
+		//start db here.
+		if(nbc_db == null)
 		{
-			//1 get the asset mgr that allows to read files from asset folder.
-			AssetManager am = this.getAssets();
+			//get the application context since it spans more than this activity
+			Context context = this.getApplicationContext();
 			
-			//2.open the input stream, for the file.
-			InputStream is = am.open("my_contet_obj.json");
+			//create the DB now.
+			NBCDataBaseHelper helper = new NBCDataBaseHelper(context);
 			
-			//3 create buff to save read data.
-			byte [] buff = new byte[1024];
-			
-			//4 create output buffer to save all read data.
-			ByteArrayOutputStream out_buff = new ByteArrayOutputStream();
-			
-			//5 read in the data from the file, and save to byte stream.
-			int data_read = 0;
-			while( (data_read = is.read(buff, 0, 1024)) > 0)
-			{
-				out_buff.write(buff, 0, data_read);
-			}
-			
-			//6 create string from byte array.
-			String s = new String(out_buff.toByteArray());
-			
-			//7 create json obj reader with string
-			JSONObject reader = new JSONObject(s);
-			
-			//create json obj from sys key name
-			//get country field from this obj.				
-			String fullTitle = reader.getString("fullTitle");
-			
-			//get json object from main key
-			JSONObject metadata = reader.getJSONObject("metadata");
-			String leadMediaThumbnail = metadata.getString("leadMediaThumbnail");
-			String ans = "JM...full_title = "+fullTitle+" metadata.leadMediaThumbnail = "+leadMediaThumbnail;
-			
-			Log.d(MainUTActivityTAG, ans);
-			
-			//close input stream.
-			is.close();			
-			
-			return ans;
+			//calls the onCreate of the helper class...save the ref in this activity.
+			nbc_db = helper.getWritableDatabase();
 		}
-		catch(Exception e)
-		{
-			Log.d(MainUTActivityTAG, e.getMessage());
-		}
-		
-		return null;
 	}
 
 	@Override
