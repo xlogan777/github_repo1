@@ -24,9 +24,7 @@ import android.os.Build;
 public class MainUTActivity extends ActionBarActivity 
 {
 	private String MainUTActivityTAG = "MainUTActivity";
-	
-	//sql lite db
-	private SQLiteDatabase nbc_db = null;
+	private NBCDataBaseHelper helper = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -34,6 +32,7 @@ public class MainUTActivity extends ActionBarActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_ut);
 
+		Log.d(MainUTActivityTAG, "inside the onCreate");
 		//create db.
 		this.createDB();
 		
@@ -50,16 +49,19 @@ public class MainUTActivity extends ActionBarActivity
 	public void createDB()
 	{
 		//start db here.
-		if(nbc_db == null)
+		if(helper == null)
 		{
 			//get the application context since it spans more than this activity
 			Context context = this.getApplicationContext();
 			
-			//create the DB now.
-			NBCDataBaseHelper helper = new NBCDataBaseHelper(context);
+			//create the DB now. save this in the bundle obj...
+			helper = new NBCDataBaseHelper(context);
 			
-			//calls the onCreate of the helper class...save the ref in this activity.
-			nbc_db = helper.getWritableDatabase();
+			//perform the db operations here..CRUD
+			//helper.insert()
+			//helper.update()
+			//helper.delete()
+			//helper.select()
 		}
 	}
 

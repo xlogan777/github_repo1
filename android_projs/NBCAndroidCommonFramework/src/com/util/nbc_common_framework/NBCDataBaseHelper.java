@@ -31,8 +31,9 @@ public class NBCDataBaseHelper extends SQLiteOpenHelper
 	//sql to create the tables in the DB.
 	private final String sql_gallery_table = 
 			" CREATE TABLE " + GALLERY_IMAGES_TABLE_NAME +
-			" (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-			" gal_cid INTEGER NOT NULL UNIQUE, " +
+			//" (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+			//" gal_cid INTEGER NOT NULL UNIQUE, " +			
+			" (gal_cid INTEGER PRIMARY KEY, " +
 			" gal_imageHeight TEXT NOT NULL, " +
 			" gal_index TEXT NOT NULL, " +
 			" gal_imagePath TEXT NOT NULL, " +
@@ -42,8 +43,9 @@ public class NBCDataBaseHelper extends SQLiteOpenHelper
 	
 	private final String sql_related_items_table = 
 			" CREATE TABLE " + RELATED_ITEMS_TABLE_NAME +
-			" (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-			" rel_parentCid INTEGER NOT NULL UNIQUE, " +
+			//" (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+			//" rel_parentCid INTEGER NOT NULL UNIQUE, " +		
+			" (rel_parentCid INTEGER PRIMARY KEY, " +			
 			" rel_typeName TEXT NOT NULL, " +
 			" rel_cid TEXT NOT NULL, " +
 			" rel_title TEXT NOT NULL, " +
@@ -101,6 +103,8 @@ public class NBCDataBaseHelper extends SQLiteOpenHelper
 			createTables(db);
 		}
 	}
+	
+	
 	
 	/*
 	 * this is a private function that will perform all the DB operations to create tables.
