@@ -1,0 +1,60 @@
+1. install latest eclipse for ur OS. 
+https://www.eclipse.org/downloads/
+pick the IDE for Java EE developers.
+
+1.1 Github plugin
+use the eclipse marketplace for this. so that you can setup correctly the plugin.
+1.2 download the github client for ur system to have this work correctly with eclipse
+https://help.github.com/articles/getting-started-with-github-for-windows
+
+
+2. Android SDK
+http://developer.android.com/sdk/index.html
+download android sdk here
+select the download for other platforms, sdk tools only. pick ur OS.
+run the sdk manager and download the latest SDK tools for andriod using the sdk manager.
+SAVE THE HOME FOLDER OF WHERE THE SDK MANAGER IS.
+
+
+2.1 - AVD manager
+run the AVD manager and create a emulator type of device. I like the Nexus 7
+keep the memory no more than 768, otherwise the emulator has issues.
+dont use SD card memory.
+Give it a name of the emulator, and use the ARM architecture.
+
+
+3. eclipse ADT plugin
+http://developer.android.com/sdk/installing/installing-adt.html
+once the plugin is setup, u need to setup the root path for the android SDK. 
+that will be home of the SDK area to install the SDK pkg
+
+
+4. install ERMaster plugin for eclipse
+follow the plugin install, has the tutorial there as well.
+this is needed for the ER diagrams for the data model of the android projects.
+http://ermaster.sourceforge.net/
+
+
+5. Green DAO. -- used for DB interactions.
+go do documentation and download source.
+a. download the code from github. download the jar files from maven.
+b. import the projects as android projects for it to work correctly. some of them are just java projs.
+c. u may need to switch between google apis to android apis in the projects android option for properties.
+d. include in the projects, java projects the jar files downloaded so the project builds.
+http://greendao-orm.com/
+
+get freemake 2.3.20 jar file for dao generator
+http://mvnrepository.com/artifact/org.freemarker/freemarker/2.3.20
+
+
+6. download modelio for UML modeling -- android apps.
+go to dowloads. it is a zip file and will unzip as eclipse poroject.
+http://www.modelio.org/
+
+these are tips of where to find stuff when u run modelio. default workspace is here.
+this is the workspace of where projects get placed, when they are created.
+C:\Users\206422643\modelio\workspace
+
+FOR NOW JUST USE FOR MODELLING, MAYBE TO CODE GENERATE...NOT SURE YET..
+to generate java code from files, it will tag a file as a type of java code. 
+then do a generate for that file.
