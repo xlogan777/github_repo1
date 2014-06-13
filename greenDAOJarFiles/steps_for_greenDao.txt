@@ -1,0 +1,16 @@
+step 1 
+http://mvnrepository.com/artifact/org.freemarker/freemarker/2.3.20
+download freemaker-2.3.20.jar to allow the DaoGenerator project to build.
+
+step 2
+http://greendao-orm.com/download-and-source/
+download jar files for greendao-1.3.7.jar, greendao-generator-1.3.1.jar
+these are the jar files that will be included in your android project.
+
+step 3.
+DaoGenerator project needs to reference freemaker.jar file downloaded previously.
+
+step 4.
+all android projects will have issues building if u bring them in a eclipse project.
+bring them in as android projects...and it should resolve themselve...if not 
+then in the project properties -> android -> project build target -> pick the google APIS for them.
