@@ -28,6 +28,10 @@ http://developer.android.com/sdk/installing/installing-adt.html
 once the plugin is setup, u need to setup the root path for the android SDK. 
 that will be home of the SDK area to install the SDK pkg
 
+3.5 json editor plugin for eclipse
+download the zip file and install it locally for new software for eclipse.
+http://sourceforge.net/projects/eclipsejsonedit/
+
 
 4. install ERMaster plugin for eclipse
 follow the plugin install, has the tutorial there as well.
