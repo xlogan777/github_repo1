@@ -1,4 +1,4 @@
-package com.util.nbc_common_framework;
+package com.util.nbc_data_layer;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

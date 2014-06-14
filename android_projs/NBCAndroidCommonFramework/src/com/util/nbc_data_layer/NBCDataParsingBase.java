@@ -1,4 +1,4 @@
-package com.util.nbc_common_framework;
+package com.util.nbc_data_layer;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;

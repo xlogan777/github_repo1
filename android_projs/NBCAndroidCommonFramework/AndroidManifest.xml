@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.util.nbc_common_framework.MainUTActivity"
+            android:name="com.util.nbc_cmn_framework_UT.MainUTActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
