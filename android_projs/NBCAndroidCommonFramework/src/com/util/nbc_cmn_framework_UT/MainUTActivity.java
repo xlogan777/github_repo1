@@ -1,8 +1,11 @@
-package com.util.nbc_common_framework;
+package com.util.nbc_cmn_framework_UT;
 
 import java.io.*;
 
 import org.json.JSONObject;
+
+import com.util.nbc_common_framework.R;
+import com.util.nbc_data_layer.NBCDataBaseHelper;
 
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
