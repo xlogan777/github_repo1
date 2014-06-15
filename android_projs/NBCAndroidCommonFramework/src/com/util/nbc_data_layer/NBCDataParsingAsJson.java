@@ -43,17 +43,17 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 		
 		//get fields from detail content fields
 		String detailContentFields_contentTargetPath = detailContentFields.getString("contentTargetPath");
-		//String detailContentFields_displayTimestamp = detailContentFields.getString("displayTimestamp");
+		String detailContentFields_displayTimestamp = detailContentFields.getString("displayTimestamp");
 		String detailContentFields_thumbnailUrl = detailContentFields.getString("thumbnailUrl");
 		String detailContentFields_contentTypeCssName = detailContentFields.getString("contentTypeCssName");
-		//String detailContentFields_contentSectionName = detailContentFields.getString("contentSectionName");
+		String detailContentFields_contentSectionName = detailContentFields.getString("contentSectionName");
 		String detailContentFields_contentSubsectionName = detailContentFields.getString("contentSubsectionName");
-		//String detailContentFields_contentSubsectionCssName = detailContentFields.getString("contentSubsectionCssName");
+		String detailContentFields_contentSubsectionCssName = detailContentFields.getString("contentSubsectionCssName");
 		//String detailContentFields_thumbMarginLeft = detailContentFields.getString("thumbMarginLeft");
 		String detailContentFields_imageCredit = detailContentFields.getString("imageCredit");
 		String detailContentFields_flag = detailContentFields.getString("flag");
-		//String detailContentFields_usingPlaceholderImg = detailContentFields.getString("usingPlaceholderImg");
-		//String detailContentFields_usWorldTarget = detailContentFields.getString("usWorldTarget");
+		String detailContentFields_usingPlaceholderImg = detailContentFields.getString("usingPlaceholderImg");
+		String detailContentFields_usWorldTarget = detailContentFields.getString("usWorldTarget");
 		
 //3. media thumbnail
 		JSONObject mediaThumbnail = obj.getJSONObject("mediaThumbnail");
@@ -78,12 +78,12 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 		String fullTitle = obj.getString("fullTitle");
 		String subTitle = obj.getString("subTitle");
 		String link = obj.getString("link");
-		//String guid = obj.getString("guid");
+		String guid = obj.getString("guid");//abs path to the content item.
 		String pubDate = obj.getString("pubDate");
 		String pubDateDisplay = obj.getString("pubDateDisplay");		
 		//JSONArray customCategory_array = obj.getJSONArray("customCategory");
 		String description = obj.getString("description");
-		String photoThumbnail = obj.getString("customCategory");
+		String photoThumbnail = obj.getString("photoThumbnail");
 		
 				
 		//TODO: create obj that holds this data.
