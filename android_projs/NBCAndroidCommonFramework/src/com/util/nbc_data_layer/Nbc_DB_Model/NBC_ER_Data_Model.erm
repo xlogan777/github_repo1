@@ -97,7 +97,7 @@
 			<id></id>
 			<height>-1</height>
 			<width>-1</width>
-				<font_name>Cantarell</font_name>
+				<font_name>Segoe UI</font_name>
 				<font_size>9</font_size>
 			<x>50</x>
 			<y>50</y>
@@ -110,7 +110,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2014-06-13 12:33:24</creation_date>
-			<updated_date>2014-06-15 19:36:50</updated_date>
+			<updated_date>2014-06-17 17:32:12</updated_date>
 			<model_property>
 				<name>Project Name</name>
 				<value></value>
@@ -667,13 +667,28 @@
 			<zerofill>false</zerofill>
 			<binary>false</binary>
 			<args></args>
+			<description>url location of where this content can be accessed.</description>
+			<logical_name>SharingUrl</logical_name>
+			<physical_name>SharingUrl</physical_name>
+			<type>varchar(n)</type>
+		</word>
+		<word>
+			<id>35</id>
+			<length>255</length>
+			<decimal>null</decimal>
+			<array>false</array>
+			<array_dimension>null</array_dimension>
+			<unsigned>false</unsigned>
+			<zerofill>false</zerofill>
+			<binary>false</binary>
+			<args></args>
 			<description>keyword search for this content item.</description>
 			<logical_name>SlugKeyword</logical_name>
 			<physical_name>SlugKeyword</physical_name>
 			<type>varchar(n)</type>
 		</word>
 		<word>
-			<id>35</id>
+			<id>36</id>
 			<length>255</length>
 			<decimal>null</decimal>
 			<array>false</array>
@@ -688,7 +703,7 @@
 			<type>varchar(n)</type>
 		</word>
 		<word>
-			<id>36</id>
+			<id>37</id>
 			<length>null</length>
 			<decimal>null</decimal>
 			<array>false</array>
@@ -703,7 +718,7 @@
 			<type>boolean</type>
 		</word>
 		<word>
-			<id>37</id>
+			<id>38</id>
 			<length>null</length>
 			<decimal>null</decimal>
 			<array>false</array>
@@ -718,7 +733,7 @@
 			<type>boolean</type>
 		</word>
 		<word>
-			<id>38</id>
+			<id>39</id>
 			<length>255</length>
 			<decimal>null</decimal>
 			<array>false</array>
@@ -733,7 +748,7 @@
 			<type>varchar(n)</type>
 		</word>
 		<word>
-			<id>39</id>
+			<id>40</id>
 			<length>255</length>
 			<decimal>null</decimal>
 			<array>false</array>
@@ -748,7 +763,7 @@
 			<type>varchar(n)</type>
 		</word>
 		<word>
-			<id>40</id>
+			<id>41</id>
 			<length>255</length>
 			<decimal>null</decimal>
 			<array>false</array>
@@ -763,7 +778,7 @@
 			<type>varchar(n)</type>
 		</word>
 		<word>
-			<id>41</id>
+			<id>42</id>
 			<length>255</length>
 			<decimal>null</decimal>
 			<array>false</array>
@@ -778,7 +793,7 @@
 			<type>varchar(n)</type>
 		</word>
 		<word>
-			<id>42</id>
+			<id>43</id>
 			<length>255</length>
 			<decimal>null</decimal>
 			<array>false</array>
@@ -793,7 +808,7 @@
 			<type>varchar(n)</type>
 		</word>
 		<word>
-			<id>43</id>
+			<id>44</id>
 			<length>null</length>
 			<decimal>null</decimal>
 			<array>false</array>
@@ -808,7 +823,7 @@
 			<type>integer</type>
 		</word>
 		<word>
-			<id>44</id>
+			<id>45</id>
 			<length>255</length>
 			<decimal>null</decimal>
 			<array>false</array>
@@ -823,7 +838,7 @@
 			<type>varchar(n)</type>
 		</word>
 		<word>
-			<id>45</id>
+			<id>46</id>
 			<length>255</length>
 			<decimal>null</decimal>
 			<array>false</array>
@@ -835,21 +850,6 @@
 			<description>url path of the media item for this content item.</description>
 			<logical_name>Url</logical_name>
 			<physical_name>Url</physical_name>
-			<type>varchar(n)</type>
-		</word>
-		<word>
-			<id>46</id>
-			<length>255</length>
-			<decimal>null</decimal>
-			<array>false</array>
-			<array_dimension>null</array_dimension>
-			<unsigned>false</unsigned>
-			<zerofill>false</zerofill>
-			<binary>false</binary>
-			<args></args>
-			<description>url location of where this content can be accessed.</description>
-			<logical_name>urlSharing</logical_name>
-			<physical_name>urlSharing</physical_name>
 			<type>varchar(n)</type>
 		</word>
 		<word>
@@ -1055,7 +1055,7 @@
 				</relation>
 				<relation>
 					<id>1</id>
-					<source>0</source>
+					<source>6</source>
 					<target>1</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -1099,7 +1099,7 @@
 				</relation>
 				<relation>
 					<id>3</id>
-					<source>2</source>
+					<source>0</source>
 					<target>1</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -1121,7 +1121,7 @@
 				</relation>
 				<relation>
 					<id>4</id>
-					<source>6</source>
+					<source>2</source>
 					<target>1</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -1152,7 +1152,7 @@
 				<normal_column>
 					<id>2</id>
 					<referenced_column>0</referenced_column>
-					<relation>1</relation>
+					<relation>3</relation>
 					<description>id of the image table</description>
 					<unique_key_name></unique_key_name>
 					<logical_name>ImgTableFnameID</logical_name>
@@ -1186,7 +1186,7 @@
 				<normal_column>
 					<id>3</id>
 					<referenced_column>8</referenced_column>
-					<relation>3</relation>
+					<relation>4</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>GalTableFnameID</logical_name>
@@ -1288,7 +1288,7 @@
 				<normal_column>
 					<id>6</id>
 					<referenced_column>41</referenced_column>
-					<relation>4</relation>
+					<relation>1</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>ContentItemMediaId</logical_name>
@@ -1381,28 +1381,6 @@
 			<connections>
 				<relation>
 					<id>5</id>
-					<source>3</source>
-					<target>2</target>
-						<source_xp>-1</source_xp>
-						<source_yp>-1</source_yp>
-						<target_xp>-1</target_xp>
-						<target_yp>-1</target_yp>
-						<color>
-							<r>0</r>
-							<g>0</g>
-							<b>0</b>
-						</color>
-					<child_cardinality>1..n</child_cardinality>
-					<parent_cardinality>1</parent_cardinality>
-					<reference_for_pk>true</reference_for_pk>
-					<name></name>
-					<on_delete_action>RESTRICT</on_delete_action>
-					<on_update_action>RESTRICT</on_update_action>
-					<referenced_column>null</referenced_column>
-					<referenced_complex_unique_key>null</referenced_complex_unique_key>
-				</relation>
-				<relation>
-					<id>6</id>
 					<source>4</source>
 					<target>2</target>
 						<source_xp>-1</source_xp>
@@ -1423,6 +1401,28 @@
 					<referenced_column>null</referenced_column>
 					<referenced_complex_unique_key>null</referenced_complex_unique_key>
 				</relation>
+				<relation>
+					<id>6</id>
+					<source>3</source>
+					<target>2</target>
+						<source_xp>-1</source_xp>
+						<source_yp>-1</source_yp>
+						<target_xp>-1</target_xp>
+						<target_yp>-1</target_yp>
+						<color>
+							<r>0</r>
+							<g>0</g>
+							<b>0</b>
+						</color>
+					<child_cardinality>1..n</child_cardinality>
+					<parent_cardinality>1</parent_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<name></name>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+					<referenced_column>null</referenced_column>
+					<referenced_complex_unique_key>null</referenced_complex_unique_key>
+				</relation>
 			</connections>
 			<physical_name>Gallery_Content_Table</physical_name>
 			<logical_name>Gallery_Content_Table</logical_name>
@@ -1434,7 +1434,7 @@
 				<normal_column>
 					<id>8</id>
 					<referenced_column>26</referenced_column>
-					<relation>6</relation>
+					<relation>5</relation>
 					<description>id of this gallery list of images.</description>
 					<unique_key_name></unique_key_name>
 					<logical_name>GalCmsID</logical_name>
@@ -1666,7 +1666,7 @@
 				<normal_column>
 					<id>15</id>
 					<referenced_column>16</referenced_column>
-					<relation>5</relation>
+					<relation>6</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -1788,7 +1788,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>44</word_id>
+					<word_id>45</word_id>
 					<id>17</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -1821,7 +1821,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>42</word_id>
+					<word_id>43</word_id>
 					<id>18</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -1854,7 +1854,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>37</word_id>
+					<word_id>38</word_id>
 					<id>19</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -1887,7 +1887,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>35</word_id>
+					<word_id>36</word_id>
 					<id>20</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -1953,7 +1953,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>38</word_id>
+					<word_id>39</word_id>
 					<id>22</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -1986,7 +1986,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>46</word_id>
+					<word_id>34</word_id>
 					<id>23</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -2019,7 +2019,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>43</word_id>
+					<word_id>44</word_id>
 					<id>24</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -2187,7 +2187,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>36</word_id>
+					<word_id>37</word_id>
 					<id>28</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -2385,7 +2385,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>34</word_id>
+					<word_id>35</word_id>
 					<id>34</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -2765,7 +2765,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>45</word_id>
+					<word_id>46</word_id>
 					<id>42</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -2930,7 +2930,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>40</word_id>
+					<word_id>41</word_id>
 					<id>47</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -3120,7 +3120,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>41</word_id>
+					<word_id>42</word_id>
 					<id>51</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
@@ -3186,7 +3186,7 @@
 					</sequence>
 				</normal_column>
 				<normal_column>
-					<word_id>39</word_id>
+					<word_id>40</word_id>
 					<id>53</id>
 					<description></description>
 					<unique_key_name></unique_key_name>
