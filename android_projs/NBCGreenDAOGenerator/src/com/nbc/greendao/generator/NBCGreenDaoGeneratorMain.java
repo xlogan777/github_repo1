@@ -1,5 +1,7 @@
 package com.nbc.greendao.generator;
 
+import java.util.*;
+
 import de.greenrobot.daogenerator.DaoGenerator;
 import de.greenrobot.daogenerator.Entity;
 import de.greenrobot.daogenerator.Property;
@@ -17,7 +19,7 @@ import de.greenrobot.daogenerator.Schema;
  */
 public class NBCGreenDaoGeneratorMain 
 {
-	public static void main(String[] args) 
+	public static void main(String[] args)
 	{
 		//create green dao schema obj with version number, and pkg for the generated files.
 		int db_version_number = 1;
@@ -29,11 +31,7 @@ public class NBCGreenDaoGeneratorMain
         //this will allow for keep sections to be generated for all entities under this schema.
         //you can place your code in here...to keep after each generation of the code.
         schema.enableKeepSectionsByDefault();
-        
-        //create the image association table
-        //System.out.println("create createImgFileAccessTable");
-        //createImgFileAccessTable(schema);
-		
+
 		//create the image table that holds the location of the actual image file name
 		//on the file system.
 		System.out.println("create createImgFnameTable");
@@ -41,39 +39,27 @@ public class NBCGreenDaoGeneratorMain
 				
 		// create the gallery table
 		System.out.println("create createGalleryContentTable");
-		Entity entity_gallery_table = createGalleryContentTable(schema, entity_img_file_table);
-		
+		Entity entity_gallery_table = createGalleryContentTable(schema);
+				
 		//create the related items table.
 		System.out.println("create createRelatedItemsTable");
-		Entity related_item_table = createRelatedItemsTable(schema, entity_img_file_table, entity_gallery_table);
+		Entity related_item_table = createRelatedItemsTable(schema);
 		
 		System.out.println("create createContentItemLeadMediaTable");
-		Entity content_item_lead_media_table = createContentItemLeadMediaTable(schema, entity_img_file_table);
+		Entity content_item_lead_media_table = createContentItemLeadMediaTable(schema);
 		
 		System.out.println("create createContentItemMediaTable");
-		Entity content_item_media_table = createContentItemMediaTable(schema, entity_img_file_table);
+		Entity content_item_media_table = createContentItemMediaTable(schema);
 		
 		System.out.println("create createContentItemDetailTable");
 		Entity content_item_detail_table = createContentItemDetailTable(schema);
 		
 		System.out.println("create createContentItemsTable");
-		/*
-	  	  Schema schema
-		  Entity contentItemMediaLead,
-		  Entity contentItemMedia, 
-		  Entity contentItemDetail, 
-		  Entity galleryTable,
-		  Entity relatedItems	  
-		 */
-		createContentItemsTable
-		( 
-		  schema,
-		  content_item_lead_media_table,
-		  content_item_media_table,
-		  content_item_detail_table,
-		  entity_gallery_table,
-		  related_item_table 
-		);
+		Entity content_items_table = createContentItemsTable(schema);
+		
+		//setup the content item with its sub details relationships.
+		NBCGreenDaoTableRelationships.createRelationshipContentItemsToDetails
+		(content_items_table, content_item_lead_media_table, content_item_media_table, content_item_detail_table);
 		
 		//generate the source code.
 		try
@@ -97,21 +83,6 @@ public class NBCGreenDaoGeneratorMain
  * this will use the schema to create entity and contain the appropriate 
  * properties for the entity. the entity will also contain the DB relationships as needed.
  */
-	/*
-	 * add the file access table that does the tracking of the image files
-	 * on the disk. this is a relationship table.
-	 */
-	/*public static void createImgFileAccessTable(Schema schema)
-	{
-		//table name
-		Entity ImgFileAccessTable = schema.addEntity("ImgFileAccessTable");
-		
-		//this is pk		
-		ImgFileAccessTable.addIntProperty("ImgTableFnameID").primaryKey().notNull();
-		
-		//non pk columns.
-		ImgFileAccessTable.addIntProperty("ImgFileRefCount").notNull();
-	}*/
 	
 	/*
 	 * this will take in a schema obj and create the entity for the image filename table
@@ -125,26 +96,26 @@ public class NBCGreenDaoGeneratorMain
 		Entity ImgFnameTable = schema.addEntity("ImgFnameTable");
 		
 		//this is the PK, which cant be null.
-		ImgFnameTable.addIntProperty("ImgFnameID").primaryKey().notNull();
+		ImgFnameTable.addLongProperty("ImgFnameID").primaryKey().autoincrement().notNull();
 		
 		//add the non-PK columns.
 		ImgFnameTable.addStringProperty("ImageFname").notNull();
 		ImgFnameTable.addIntProperty("ImgFileRefCount").notNull();
-		
+
 		return ImgFnameTable;
 	}
 	
 	/*
 	 * add the specific gallery content table type.
-	 * will have 1:1 relationship to image file table.
+	 * will have 1:n relationship to image file table.
 	 */
-	public static Entity createGalleryContentTable(Schema schema, Entity ImageFileTable)
+	public static Entity createGalleryContentTable(Schema schema)
 	{
 		//table name.
 		Entity GalleryContentTable = schema.addEntity("GalleryContentTable");
 		
 		//this is pk.
-		GalleryContentTable.addIntProperty("GalCmsID").primaryKey().notNull();
+		GalleryContentTable.addIntProperty("GalCmsID").primaryKey().notNull().getProperty();
 		
 		//add non pk columns.
 		GalleryContentTable.addIntProperty("ImgHeight").notNull();
@@ -153,14 +124,7 @@ public class NBCGreenDaoGeneratorMain
 		GalleryContentTable.addStringProperty("ImgPath").notNull();
 		GalleryContentTable.addStringProperty("ImgCaption").notNull();
 		GalleryContentTable.addStringProperty("ImgCredit").notNull();
-		
-		//add table relationships here. this should be a 1:1 relationship
-		//get the pk for the image table.
-		Property img_table_id = ImageFileTable.getPkProperty();
-		
-		//make the 1:1 association from the gallery table to the image table.
-		GalleryContentTable.addToOne(ImageFileTable, img_table_id);
-		
+
 		//return entity item.
 		return GalleryContentTable;
 	}
@@ -170,7 +134,7 @@ public class NBCGreenDaoGeneratorMain
 	 * will have relationship to image file table. 1:1
 	 * will have a relationship to the gallery table. 1:n
 	 */
-	public static Entity createRelatedItemsTable(Schema schema, Entity ImageFileTable, Entity GalleryTable)
+	public static Entity createRelatedItemsTable(Schema schema)
 	{
 		//table name
 		Entity RelatedItemsTable = schema.addEntity("RelatedItemsTable");
@@ -188,21 +152,7 @@ public class NBCGreenDaoGeneratorMain
 		RelatedItemsTable.addStringProperty("StoryThumbnailUrl").notNull();
 		RelatedItemsTable.addStringProperty("SharingUrl").notNull();
 		RelatedItemsTable.addIntProperty("TypeID").notNull();
-		
-		//add table relationships here. this should be a 1:1 relationship
-		//get the pk for the image table.
-		Property img_table_id = ImageFileTable.getPkProperty();
-		
-		//make the 1:1 association from the related items table to the image table.
-		RelatedItemsTable.addToOne(ImageFileTable, img_table_id);
-		
-		//make relationship with gallery table.
-		//get the pk for this item.
-		Property gallery_table_id = GalleryTable.getPkProperty();
-		
-		//make the 1:n relationship between the related items table and the gallery table.
-		RelatedItemsTable.addToMany(GalleryTable, gallery_table_id);
-		
+				
 		//return entity.
 		return RelatedItemsTable;
 	}
@@ -211,7 +161,7 @@ public class NBCGreenDaoGeneratorMain
 	 * this is the lead media table for a content item.
 	 * will have a relationship to image table. 1:1.
 	 */
-	public static Entity createContentItemLeadMediaTable(Schema schema, Entity ImageFileTable)
+	public static Entity createContentItemLeadMediaTable(Schema schema)
 	{
 		//table name
 		Entity ContentItemLeadMediaTable = schema.addEntity("ContentItemLeadMediaTable");
@@ -224,14 +174,7 @@ public class NBCGreenDaoGeneratorMain
 		ContentItemLeadMediaTable.addStringProperty("LeadMediaThumbnail").notNull();
 		ContentItemLeadMediaTable.addStringProperty("LeadMediaExtID").notNull();
 		ContentItemLeadMediaTable.addStringProperty("LeadEmbeddedVideo").notNull();
-		
-		//add table relationships here. this should be a 1:1 relationship
-		//get the pk for the image table.
-		Property img_table_id = ImageFileTable.getPkProperty();
-		
-		//make the 1:1 association from the content items lead media table to the image table.
-		ContentItemLeadMediaTable.addToOne(ImageFileTable, img_table_id);
-		
+
 		//return entity
 		return ContentItemLeadMediaTable;
 	}
@@ -240,7 +183,7 @@ public class NBCGreenDaoGeneratorMain
 	 * this is the content item media table for a content item.
 	 * will have a relationship to the image file table. 1:1. 
 	 */
-	public static Entity createContentItemMediaTable(Schema schema, Entity ImageFileTable)
+	public static Entity createContentItemMediaTable(Schema schema)
 	{
 		//table name
 		Entity ContentItemMediaTable = schema.addEntity("ContentItemMediaTable");
@@ -255,14 +198,7 @@ public class NBCGreenDaoGeneratorMain
 		ContentItemMediaTable.addStringProperty("ImageCredit").notNull();
 		ContentItemMediaTable.addStringProperty("PhotoThumbnail").notNull();
 		ContentItemMediaTable.addStringProperty("Thumbnail").notNull();
-		
-		//add table relationships here. this should be a 1:1 relationship
-		//get the pk for the image table.
-		Property img_table_id = ImageFileTable.getPkProperty();
-		
-		//make the 1:1 association from the content item media table to the image table.
-		ContentItemMediaTable.addToOne(ImageFileTable, img_table_id);
-		
+
 		//return entity
 		return ContentItemMediaTable;
 	}
@@ -302,20 +238,12 @@ public class NBCGreenDaoGeneratorMain
 	 * this is the main content item that will contain most of the relevant data.
 	 * will have relationship with content item lead media table. 1:1
 	 * will have relationship with content item media table. 1:1
-	 * will have relationship with content item detail table. 1:1 
+	 * will have relationship with content item detail table. 1:1
+	 * will have relationship with gallery content table. 1:1 
 	 * will have relationship with related items table. 1:n
-	 * will have relationship with gallery content table. 1:1
 	 * 
 	 */
-	public static void createContentItemsTable
-	(
-	  Schema schema,
-	  Entity contentItemMediaLead,
-	  Entity contentItemMedia, 
-	  Entity contentItemDetail, 
-	  Entity galleryTable,
-	  Entity relatedItems
-	)
+	public static Entity createContentItemsTable(Schema schema)
 	{
 		//table name
 		Entity ContentItemsTable = schema.addEntity("ContentItemsTable");
@@ -334,8 +262,8 @@ public class NBCGreenDaoGeneratorMain
 		ContentItemsTable.addStringProperty("SlugKeyword").notNull();
 		ContentItemsTable.addStringProperty("ContentTargetPath").notNull();
 		
-		//TODO: make all the table relationships here...
-		
+		//return entity
+		return ContentItemsTable;
 	}
 	
 /**
