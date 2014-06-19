@@ -24,15 +24,15 @@ public class NBCGreenDaoTableRelationships
 		//specific items details of the content item outside of the content item table.
 		
 		//create FK relationship with lead_media table
-		Property fk_cntLeadMediaID = cntItem.addIntProperty("cntLeadMediaID").notNull().getProperty();
+		Property fk_cntLeadMediaID = cntItem.addLongProperty("cntLeadMediaID").notNull().getProperty();
 		cntItem.addToOne(cntLeadMedia, fk_cntLeadMediaID);
 		
 		//create FK relationship with content media table
-		Property fk_cntMediaID = cntItem.addIntProperty("cntMediaID").notNull().getProperty();
+		Property fk_cntMediaID = cntItem.addLongProperty("cntMediaID").notNull().getProperty();
 		cntItem.addToOne(cntMedia, fk_cntMediaID);
 		
 		//create FK relationship with content detail table
-		Property fk_cntItemDetailID = cntItem.addIntProperty("cntItemDetailID").notNull().getProperty();
+		Property fk_cntItemDetailID = cntItem.addLongProperty("cntItemDetailID").notNull().getProperty();
 		cntItem.addToOne(cntItemDetail, fk_cntItemDetailID);
 //simulate the 1:1 table relationship
 	}

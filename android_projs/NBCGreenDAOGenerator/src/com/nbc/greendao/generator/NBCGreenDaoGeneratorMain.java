@@ -115,7 +115,7 @@ public class NBCGreenDaoGeneratorMain
 		Entity GalleryContentTable = schema.addEntity("GalleryContentTable");
 		
 		//this is pk.
-		GalleryContentTable.addIntProperty("GalCmsID").primaryKey().notNull().getProperty();
+		GalleryContentTable.addLongProperty("GalCmsID").primaryKey().notNull().getProperty();
 		
 		//add non pk columns.
 		GalleryContentTable.addIntProperty("ImgHeight").notNull();
@@ -140,7 +140,7 @@ public class NBCGreenDaoGeneratorMain
 		Entity RelatedItemsTable = schema.addEntity("RelatedItemsTable");
 		
 		//this is the pk.
-		RelatedItemsTable.addIntProperty("ParentCmsID").primaryKey().notNull();
+		RelatedItemsTable.addLongProperty("ParentCmsID").primaryKey().notNull();
 		
 		//add non pk fields here.
 		RelatedItemsTable.addIntProperty("RelCmsID").notNull();
@@ -167,7 +167,7 @@ public class NBCGreenDaoGeneratorMain
 		Entity ContentItemLeadMediaTable = schema.addEntity("ContentItemLeadMediaTable");
 		
 		//add pk
-		ContentItemLeadMediaTable.addIntProperty("CmsID").primaryKey().notNull();
+		ContentItemLeadMediaTable.addLongProperty("CmsID").primaryKey().notNull();
 		
 		//add non pk fields.
 		ContentItemLeadMediaTable.addStringProperty("LeadMediaContentType").notNull();
@@ -189,7 +189,7 @@ public class NBCGreenDaoGeneratorMain
 		Entity ContentItemMediaTable = schema.addEntity("ContentItemMediaTable");
 		
 		//add pk.
-		ContentItemMediaTable.addIntProperty("CmsID").primaryKey().notNull();
+		ContentItemMediaTable.addLongProperty("CmsID").primaryKey().notNull();
 		
 		//add non pk fields.
 		ContentItemMediaTable.addStringProperty("Url").notNull();
@@ -213,7 +213,7 @@ public class NBCGreenDaoGeneratorMain
 		Entity ContentItemDetailTable = schema.addEntity("ContentItemDetailTable");
 		
 		//add pk.
-		ContentItemDetailTable.addIntProperty("CmsID").primaryKey().notNull();
+		ContentItemDetailTable.addLongProperty("CmsID").primaryKey().notNull();
 		
 		//add non pk fields.
 		ContentItemDetailTable.addStringProperty("DisplayTimeStamp").notNull();
@@ -249,7 +249,7 @@ public class NBCGreenDaoGeneratorMain
 		Entity ContentItemsTable = schema.addEntity("ContentItemsTable");
 		
 		//add pk
-		ContentItemsTable.addIntProperty("CmsID").primaryKey().notNull();
+		ContentItemsTable.addLongProperty("CmsID").primaryKey().notNull();
 		
 		//add non pk fields.
 		ContentItemsTable.addStringProperty("ContentType").notNull();
