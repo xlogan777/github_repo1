@@ -3,6 +3,9 @@ package com.util.nbc_data_layer;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
+import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoSession;
+
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 /**
@@ -85,7 +88,7 @@ public abstract class NBCDataParsingBase
 	 * processing dependent on the type. the error handling is the same... 
 	 * 
 	 */
-	public void parseDataType(String inputString, BasicContentTypes type)
+	public void parseAndStoreDataType(String inputString, BasicContentTypes type, DaoSession daoSession)
 	{
 		try
 		{
@@ -93,15 +96,15 @@ public abstract class NBCDataParsingBase
 			switch(type)
 			{
 				case CONTENT_ITEM_TYPE:
-					parseContentData(inputString);
+					parseAndStoreContentData(inputString, daoSession);
 					break;
 				
 				case RELATED_ITEM_TYPE:
-					parseRelatedItemsData(inputString);
+					parseAndStoreRelatedItemsData(inputString, daoSession);
 					break;
 					
 				case GALLERY_ITEM_TYPE:					
-					parseGalleryContentData(inputString);
+					parseAndStoreGalleryContentData(inputString, daoSession);
 					break;
 			}
 		}
@@ -116,7 +119,7 @@ public abstract class NBCDataParsingBase
 	 * input string. each method handle a specific type of data from the input string. that can
 	 * throw an exception if an error occurs.
 	 */
-	protected abstract void parseContentData(String inputString) throws Exception;
-	protected abstract void parseRelatedItemsData(String inputString) throws Exception;
-	protected abstract void parseGalleryContentData(String inputString)throws Exception;
+	protected abstract void parseAndStoreContentData(String inputString, DaoSession daoSession) throws Exception;
+	protected abstract void parseAndStoreRelatedItemsData(String inputString, DaoSession daoSession) throws Exception;
+	protected abstract void parseAndStoreGalleryContentData(String inputString, DaoSession daoSession)throws Exception;
 }
