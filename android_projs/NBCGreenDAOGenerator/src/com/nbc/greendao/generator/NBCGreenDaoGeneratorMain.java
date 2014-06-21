@@ -1,6 +1,6 @@
 package com.nbc.greendao.generator;
 
-import java.util.*;
+//import java.util.*;
 
 import de.greenrobot.daogenerator.DaoGenerator;
 import de.greenrobot.daogenerator.Entity;
@@ -32,16 +32,18 @@ public class NBCGreenDaoGeneratorMain
         //you can place your code in here...to keep after each generation of the code.
         schema.enableKeepSectionsByDefault();
 
-		//create the image table that holds the location of the actual image file name
-		//on the file system.
+        System.out.println("create createImgDetailsTable");
+        Entity entity_img_details_table = createImgDetailsTable(schema);
+
 		System.out.println("create createImgFnameTable");
 		Entity entity_img_file_table = createImgFnameTable(schema);
+		
+		System.out.println("create createUrlImgFileTable");
+		Entity entity_url_img_file_table = createUrlImgFileTable(schema);
 				
-		// create the gallery table
 		System.out.println("create createGalleryContentTable");
 		Entity entity_gallery_table = createGalleryContentTable(schema);
-				
-		//create the related items table.
+
 		System.out.println("create createRelatedItemsTable");
 		Entity related_item_table = createRelatedItemsTable(schema);
 		
@@ -57,9 +59,13 @@ public class NBCGreenDaoGeneratorMain
 		System.out.println("create createContentItemsTable");
 		Entity content_items_table = createContentItemsTable(schema);
 		
+		//setup image table relationships
+		NBCGreenDaoTableRelationships.createRelationshipsImgFnameToImgDetails
+		(entity_url_img_file_table,entity_img_file_table,entity_img_details_table);
+		
 		//setup the content item with its sub details relationships.
 		NBCGreenDaoTableRelationships.createRelationshipContentItemsToDetails
-		(content_items_table, content_item_lead_media_table, content_item_media_table, content_item_detail_table);
+		(content_items_table, content_item_lead_media_table, content_item_media_table, content_item_detail_table,entity_url_img_file_table);
 		
 		//generate the source code.
 		try
@@ -85,6 +91,27 @@ public class NBCGreenDaoGeneratorMain
  */
 	
 	/*
+	 * this will create a table that keeps track of the info about an image file
+	 */
+	public static Entity createImgDetailsTable(Schema schema)
+	{
+		//create entity obj.
+		Entity ImgDetailsTable = schema.addEntity("ImgDetailsTable");
+		
+		//setup pk
+		ImgDetailsTable.addIdProperty().autoincrement().primaryKey().notNull();
+		
+		//setup non- pk
+		ImgDetailsTable.addLongProperty("ImgHeight").notNull();
+		ImgDetailsTable.addLongProperty("ImgWidth").notNull();
+		ImgDetailsTable.addStringProperty("ImgCredit").notNull();
+		ImgDetailsTable.addStringProperty("ImgCaption").notNull();
+		ImgDetailsTable.addStringProperty("ImgExtension").notNull();
+		
+		return ImgDetailsTable;
+	}
+	
+	/*
 	 * this will take in a schema obj and create the entity for the image filename table
 	 * this will keep track of the image file name on the file system.
 	 */
@@ -95,14 +122,33 @@ public class NBCGreenDaoGeneratorMain
 		//table name.
 		Entity ImgFnameTable = schema.addEntity("ImgFnameTable");
 		
-		//this is the PK, which cant be null.
-		ImgFnameTable.addLongProperty("ImgFnameID").primaryKey().autoincrement().notNull();
 		
-		//add the non-PK columns.
+		//this is the PK, which cant be null.
+		ImgFnameTable.addIdProperty().autoincrement().primaryKey().notNull();
+				
+		//add the non-PK columns.		
 		ImgFnameTable.addStringProperty("ImageFname").notNull();
-		ImgFnameTable.addIntProperty("ImgFileRefCount").notNull();
 
 		return ImgFnameTable;
+	}
+	
+	/*
+	 * this will create a table that maps the cms-urltype to and img-fname id with
+	 * a url location.
+	 */
+	public static Entity createUrlImgFileTable(Schema schema)
+	{
+		//create entity
+		Entity UrlImgFileTable = schema.addEntity("UrlImgFileTable");
+		
+		//create pk
+		UrlImgFileTable.addIdProperty().autoincrement().primaryKey().notNull();
+		
+		//create non-pk fields.
+		UrlImgFileTable.addLongProperty("UrlTypeID").notNull();
+		UrlImgFileTable.addStringProperty("UrlLocation").notNull();
+		
+		return UrlImgFileTable;
 	}
 	
 	/*
@@ -118,12 +164,12 @@ public class NBCGreenDaoGeneratorMain
 		GalleryContentTable.addLongProperty("GalCmsID").primaryKey().notNull().getProperty();
 		
 		//add non pk columns.
-		GalleryContentTable.addIntProperty("ImgHeight").notNull();
-		GalleryContentTable.addIntProperty("ImgWidth").notNull();
+		//GalleryContentTable.addIntProperty("ImgHeight").notNull();
+		//GalleryContentTable.addIntProperty("ImgWidth").notNull();
 		GalleryContentTable.addIntProperty("ImgIndex").notNull();		
 		GalleryContentTable.addStringProperty("ImgPath").notNull();
-		GalleryContentTable.addStringProperty("ImgCaption").notNull();
-		GalleryContentTable.addStringProperty("ImgCredit").notNull();
+		//GalleryContentTable.addStringProperty("ImgCaption").notNull();
+		//GalleryContentTable.addStringProperty("ImgCredit").notNull();
 
 		//return entity item.
 		return GalleryContentTable;
@@ -174,6 +220,7 @@ public class NBCGreenDaoGeneratorMain
 		ContentItemLeadMediaTable.addStringProperty("LeadMediaThumbnail").notNull();
 		ContentItemLeadMediaTable.addStringProperty("LeadMediaExtID").notNull();
 		ContentItemLeadMediaTable.addStringProperty("LeadEmbeddedVideo").notNull();
+		ContentItemLeadMediaTable.addLongProperty("LeadMediaThumbnailType").notNull();
 
 		//return entity
 		return ContentItemLeadMediaTable;
@@ -192,12 +239,16 @@ public class NBCGreenDaoGeneratorMain
 		ContentItemMediaTable.addLongProperty("CmsID").primaryKey().notNull();
 		
 		//add non pk fields.
-		ContentItemMediaTable.addStringProperty("Url").notNull();
-		ContentItemMediaTable.addIntProperty("Width").notNull();
-		ContentItemMediaTable.addIntProperty("Height").notNull();
-		ContentItemMediaTable.addStringProperty("ImageCredit").notNull();
-		ContentItemMediaTable.addStringProperty("PhotoThumbnail").notNull();
-		ContentItemMediaTable.addStringProperty("Thumbnail").notNull();
+		ContentItemMediaTable.addLongProperty("MediaUrlType").notNull();
+		
+	//these belonged to the url field from the media area of json...moved to another table
+		//ContentItemMediaTable.addIntProperty("Width").notNull();
+		//ContentItemMediaTable.addIntProperty("Height").notNull();
+		//ContentItemMediaTable.addStringProperty("ImageCredit").notNull();
+	//these belonged to the url field from the media area of json...moved to another table
+		
+		ContentItemMediaTable.addLongProperty("MediaPhotoThumbnailUrlType").notNull();
+		ContentItemMediaTable.addStringProperty("MediaThumbnailUrlType").notNull();
 
 		//return entity
 		return ContentItemMediaTable;
