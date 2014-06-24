@@ -28,7 +28,7 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 	 * things like, Article, Video_Release, etc.
 	 */
 	@Override
-	protected void parseAndStoreContentData(String inputString, DaoSession daoSession) throws Exception
+	protected void parseAndStoreContentData(String inputString, SqliteDBAbstractIface dbIface) throws Exception
 	{
 		//root obj for the json tree.
 		JSONObject obj = new JSONObject(inputString);
@@ -145,22 +145,29 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 		content_items_table_bean.setSlugKeyword(metadata_slugKeyword);
 		content_items_table_bean.setSponsored(metadata_sponsored);
 
-		//update the foreign key associations for the content item table entry.
-		//save the update via there respective dao. update the content item obj new sub bean obj.
-		daoSession.getContentItemLeadMediaTableDao().insertOrReplace(cnt_lead_media_table_bean);
-		content_items_table_bean.setContentItemLeadMediaTable(cnt_lead_media_table_bean);
-		
-		daoSession.getContentItemMediaTableDao().insertOrReplace(cnt_media_table_bean);
-		content_items_table_bean.setContentItemMediaTable(cnt_media_table_bean);
-		
-		daoSession.getContentItemDetailTableDao().insertOrReplace(cnt_item_detail_table_bean);
-		content_items_table_bean.setContentItemDetailTable(cnt_item_detail_table_bean);		
-		
-		//update content item obj.
-		daoSession.getContentItemsTableDao().insertOrReplace(content_items_table_bean);
-		
-		//TODO: still need to find the correct filename location based on the id of the url..
-		//need to keep track of the actual filename.
+		//check what type the session obj if and cast accordingly.
+		if(dbIface.getSessionType() == SqliteDBAbstractIface.T_Session_Type.E_GREEN_DAO)
+		{
+			//cast to green dao session obj.
+			DaoSession daoSession = (DaoSession)dbIface.getDBSession();
+			
+			//update the foreign key associations for the content item table entry.
+			//save the update via there respective dao. update the content item obj new sub bean obj.
+			daoSession.getContentItemLeadMediaTableDao().insertOrReplace(cnt_lead_media_table_bean);
+			content_items_table_bean.setContentItemLeadMediaTable(cnt_lead_media_table_bean);
+			
+			daoSession.getContentItemMediaTableDao().insertOrReplace(cnt_media_table_bean);
+			content_items_table_bean.setContentItemMediaTable(cnt_media_table_bean);
+			
+			daoSession.getContentItemDetailTableDao().insertOrReplace(cnt_item_detail_table_bean);
+			content_items_table_bean.setContentItemDetailTable(cnt_item_detail_table_bean);		
+			
+			//update content item obj.
+			daoSession.getContentItemsTableDao().insertOrReplace(content_items_table_bean);
+			
+			//TODO: still need to find the correct filename location based on the id of the url..
+			//need to keep track of the actual filename.			
+		}
 	}
 	
 	/*
@@ -170,7 +177,7 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 	 * json_obj{ json_array[ json_obj{}, json_obj{}...etc ] }
 	 */
 	@Override
-	protected void parseAndStoreRelatedItemsData(String inputString, DaoSession daoSession) throws Exception
+	protected void parseAndStoreRelatedItemsData(String inputString, SqliteDBAbstractIface dbIface) throws Exception
 	{
 		//create json obj from input string. this is the root of the json data tree.
 		JSONObject obj = new JSONObject(inputString);
@@ -214,7 +221,7 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 	 *    
 	 */
 	@Override
-	protected void parseAndStoreGalleryContentData(String inputString, DaoSession daoSession)throws Exception
+	protected void parseAndStoreGalleryContentData(String inputString, SqliteDBAbstractIface dbIface)throws Exception
 	{
 		//create json array from json string. this the root for gallery content item.
 		JSONArray json_array_gallery = new JSONArray(inputString);

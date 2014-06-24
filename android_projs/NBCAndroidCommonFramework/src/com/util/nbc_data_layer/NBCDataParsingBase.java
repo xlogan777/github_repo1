@@ -88,7 +88,7 @@ public abstract class NBCDataParsingBase
 	 * processing dependent on the type. the error handling is the same... 
 	 * 
 	 */
-	public void parseAndStoreDataType(String inputString, BasicContentTypes type, DaoSession daoSession)
+	public void parseAndStoreDataType(String inputString, BasicContentTypes type, SqliteDBAbstractIface dbIface)
 	{
 		try
 		{
@@ -96,15 +96,15 @@ public abstract class NBCDataParsingBase
 			switch(type)
 			{
 				case CONTENT_ITEM_TYPE:
-					parseAndStoreContentData(inputString, daoSession);
+					parseAndStoreContentData(inputString, dbIface);
 					break;
 				
 				case RELATED_ITEM_TYPE:
-					parseAndStoreRelatedItemsData(inputString, daoSession);
+					parseAndStoreRelatedItemsData(inputString, dbIface);
 					break;
 					
 				case GALLERY_ITEM_TYPE:					
-					parseAndStoreGalleryContentData(inputString, daoSession);
+					parseAndStoreGalleryContentData(inputString, dbIface);
 					break;
 			}
 		}
@@ -119,7 +119,7 @@ public abstract class NBCDataParsingBase
 	 * input string. each method handle a specific type of data from the input string. that can
 	 * throw an exception if an error occurs.
 	 */
-	protected abstract void parseAndStoreContentData(String inputString, DaoSession daoSession) throws Exception;
-	protected abstract void parseAndStoreRelatedItemsData(String inputString, DaoSession daoSession) throws Exception;
-	protected abstract void parseAndStoreGalleryContentData(String inputString, DaoSession daoSession)throws Exception;
+	protected abstract void parseAndStoreContentData(String inputString, SqliteDBAbstractIface dbIface) throws Exception;
+	protected abstract void parseAndStoreRelatedItemsData(String inputString, SqliteDBAbstractIface dbIface) throws Exception;
+	protected abstract void parseAndStoreGalleryContentData(String inputString, SqliteDBAbstractIface dbIface)throws Exception;
 }
