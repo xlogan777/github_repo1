@@ -28,6 +28,7 @@ public abstract class SqliteDBAbstractIface
 	protected CursorFactory factory;//cursor factory.
 	protected T_Session_Type sessionType;//session type.
     protected boolean initialized = false;//tracks if successfully initialized or not.
+    protected Object sessionObj = null;//obj to track the session obj.
 	
 	//constructor to setup class members
 	public SqliteDBAbstractIface(Context context, String dbName, CursorFactory factory, T_Session_Type sessionType)
@@ -54,6 +55,14 @@ public abstract class SqliteDBAbstractIface
 	public T_Session_Type getSessionType()
 	{
 		return this.sessionType;
+	}
+	
+	/*
+	 * this will return the current session obj. caller needs to check for null before using the obj.
+	 */
+	public Object getDBSession()
+	{	
+		return sessionObj;
 	}
 	
 	/*
@@ -100,5 +109,4 @@ public abstract class SqliteDBAbstractIface
 	
 	//override these functions since they will be implementation dependent.
 	public abstract void initializeDB();
-	public abstract Object getDBSession();
 }

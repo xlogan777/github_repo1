@@ -21,9 +21,8 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 	private String MyTag = "SqliteDBGreenDaoIface";
 	
 	//these are the class members that are from green dao. 
-    private DaoMaster daoMaster;//this holds the DB connection
-    private DaoSession daoSession;//this holds caching for all the entities for a particular session.    
-    private DevOpenHelper helper;//helper obj that creates the db connection and provides the db connection.
+    private DaoMaster daoMaster;//this holds the DB connection    
+    private NBCDataBaseHelper helper;//helper obj that creates the db connection and provides the db connection.
 
 	public SqliteDBGreenDaoIface(Context context, String dbName, CursorFactory factory, T_Session_Type sessionType)
 	{
@@ -43,7 +42,7 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 			try
 			{
 				//create a new helper obj that does most of the DB initialization.
-		        helper = new DaoMaster.DevOpenHelper(this.context, this.dbName, this.factory);
+		        helper = new NBCDataBaseHelper(this.context, this.dbName, this.factory);
 		        	        
 		        //get reference to writable DB.
 		        db = helper.getWritableDatabase();
@@ -51,8 +50,8 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 		        //get master obj as entry point for green dao.
 		        daoMaster = new DaoMaster(db);
 		        
-		        //get session obj for schema created previously.
-		        daoSession = daoMaster.newSession();
+		        //get session obj from the schema and save the obj.		        
+		        sessionObj = daoMaster.newSession();
 		        
 		        //setup init flag to no longer initialize anymore.
 		        initialized = true;
@@ -64,16 +63,5 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 				Log.d(MyTag, "JM...error = "+e.getMessage());
 			}			
 		}
-	}
-
-	@Override
-	/*
-	 * return specific session object. caller will have to cast the returned instance to their
-	 * specific implementation type.
-	 * 
-	 */
-	public Object getDBSession()
-	{	
-		return daoSession;
 	}
 }
