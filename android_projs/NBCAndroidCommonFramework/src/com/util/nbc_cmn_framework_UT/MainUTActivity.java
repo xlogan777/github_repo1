@@ -3,9 +3,8 @@ package com.util.nbc_cmn_framework_UT;
 import java.io.*;
 
 import com.util.nbc_common_framework.R;
-import com.util.nbc_data_layer.NBCDataBaseHelper;
 import com.util.nbc_data_layer.NBCDataParsingAsJson;
-import com.util.nbc_data_layer.NBCDataParsingBase;
+import com.util.nbc_data_layer.SqliteDBAbstractIface;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemDetailTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemsTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoMaster;
@@ -33,13 +32,9 @@ public class MainUTActivity extends ActionBarActivity
 {
 	private String MainUTActivityTAG = "MainUTActivity";
 	
-	//these are the class members that are from green dao. 
-    private DaoMaster daoMaster;//this holds the DB connection
-    private DaoSession daoSession;//this holds caching for all the entities for a particular session.    
-    private DevOpenHelper helper;//helper obj that creates the db connection and provides the db connection.
-    
-    private SQLiteDatabase db;//db connection obj
-	
+	//class member for db iface with green dao.
+	private SqliteDBAbstractIface dbIface;
+   	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -48,26 +43,16 @@ public class MainUTActivity extends ActionBarActivity
 		
 		TextView tv = (TextView)findViewById(R.id.my_text_view);
 		tv.setText("");
-				
-		//create a new helper obj that does most of the DB initialization.
-        helper = new DaoMaster.DevOpenHelper(this, "NBC_Content_DB_Test.db", null);
-        
-        //get reference to writable DB.
-        db = helper.getWritableDatabase();
-        
-        //get master obj as entry point for green dao.
-        daoMaster = new DaoMaster(db);
-        
-        //get session obj for schema created previously.
-        daoSession = daoMaster.newSession();
-                
-        //create tables now if they don't exists, if it does
-        //then it wont create it again..
-        DaoMaster.createAllTables(db, true);
-        
-        //ALSO this helper version will drop all tables and create then when
-        //using DevOpenHelper class, supposed to be used for dev only.
-                
+
+		//create specific db iface implementation via factory method.
+		//this will also do the initialization of the iface.
+		dbIface = SqliteDBAbstractIface.createSqliteIface
+					(this, "NBC_Content_DB_Test.db", null, SqliteDBAbstractIface.T_Session_Type.E_GREEN_DAO);
+
+		//get the session obj and cast to specific one.
+		//should be getting session type and then cast to specific one...
+		DaoSession daoSession = (DaoSession)dbIface.getDBSession();
+                        
         //get the asset manager and load the json file to it.
         AssetManager asset_mgr = getAssets();
         
