@@ -30,9 +30,9 @@ public class ContentItemsTable {
     private String SlugKeyword;
     /** Not-null value. */
     private String ContentTargetPath;
-    private long cntLeadMediaID;
-    private long cntMediaID;
-    private long cntItemDetailID;
+    private long cntLeadMediaCmsID;
+    private long cntMediaCmsID;
+    private long cntItemDetailCmsID;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
@@ -60,7 +60,7 @@ public class ContentItemsTable {
         this.CmsID = CmsID;
     }
 
-    public ContentItemsTable(long CmsID, String ContentType, boolean Sponsored, String ShareUrl, String Link, String Guid, String PubDate, String PubDisplayDate, String SlugKeyword, String ContentTargetPath, long cntLeadMediaID, long cntMediaID, long cntItemDetailID) {
+    public ContentItemsTable(long CmsID, String ContentType, boolean Sponsored, String ShareUrl, String Link, String Guid, String PubDate, String PubDisplayDate, String SlugKeyword, String ContentTargetPath, long cntLeadMediaCmsID, long cntMediaCmsID, long cntItemDetailCmsID) {
         this.CmsID = CmsID;
         this.ContentType = ContentType;
         this.Sponsored = Sponsored;
@@ -71,9 +71,9 @@ public class ContentItemsTable {
         this.PubDisplayDate = PubDisplayDate;
         this.SlugKeyword = SlugKeyword;
         this.ContentTargetPath = ContentTargetPath;
-        this.cntLeadMediaID = cntLeadMediaID;
-        this.cntMediaID = cntMediaID;
-        this.cntItemDetailID = cntItemDetailID;
+        this.cntLeadMediaCmsID = cntLeadMediaCmsID;
+        this.cntMediaCmsID = cntMediaCmsID;
+        this.cntItemDetailCmsID = cntItemDetailCmsID;
     }
 
     /** called by internal mechanisms, do not call yourself. */
@@ -178,33 +178,33 @@ public class ContentItemsTable {
         this.ContentTargetPath = ContentTargetPath;
     }
 
-    public long getCntLeadMediaID() {
-        return cntLeadMediaID;
+    public long getCntLeadMediaCmsID() {
+        return cntLeadMediaCmsID;
     }
 
-    public void setCntLeadMediaID(long cntLeadMediaID) {
-        this.cntLeadMediaID = cntLeadMediaID;
+    public void setCntLeadMediaCmsID(long cntLeadMediaCmsID) {
+        this.cntLeadMediaCmsID = cntLeadMediaCmsID;
     }
 
-    public long getCntMediaID() {
-        return cntMediaID;
+    public long getCntMediaCmsID() {
+        return cntMediaCmsID;
     }
 
-    public void setCntMediaID(long cntMediaID) {
-        this.cntMediaID = cntMediaID;
+    public void setCntMediaCmsID(long cntMediaCmsID) {
+        this.cntMediaCmsID = cntMediaCmsID;
     }
 
-    public long getCntItemDetailID() {
-        return cntItemDetailID;
+    public long getCntItemDetailCmsID() {
+        return cntItemDetailCmsID;
     }
 
-    public void setCntItemDetailID(long cntItemDetailID) {
-        this.cntItemDetailID = cntItemDetailID;
+    public void setCntItemDetailCmsID(long cntItemDetailCmsID) {
+        this.cntItemDetailCmsID = cntItemDetailCmsID;
     }
 
     /** To-one relationship, resolved on first access. */
     public ContentItemLeadMediaTable getContentItemLeadMediaTable() {
-        long __key = this.cntLeadMediaID;
+        long __key = this.cntLeadMediaCmsID;
         if (contentItemLeadMediaTable__resolvedKey == null || !contentItemLeadMediaTable__resolvedKey.equals(__key)) {
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
@@ -221,18 +221,18 @@ public class ContentItemsTable {
 
     public void setContentItemLeadMediaTable(ContentItemLeadMediaTable contentItemLeadMediaTable) {
         if (contentItemLeadMediaTable == null) {
-            throw new DaoException("To-one property 'cntLeadMediaID' has not-null constraint; cannot set to-one to null");
+            throw new DaoException("To-one property 'cntLeadMediaCmsID' has not-null constraint; cannot set to-one to null");
         }
         synchronized (this) {
             this.contentItemLeadMediaTable = contentItemLeadMediaTable;
-            cntLeadMediaID = contentItemLeadMediaTable.getCmsID();
-            contentItemLeadMediaTable__resolvedKey = cntLeadMediaID;
+            cntLeadMediaCmsID = contentItemLeadMediaTable.getCmsID();
+            contentItemLeadMediaTable__resolvedKey = cntLeadMediaCmsID;
         }
     }
 
     /** To-one relationship, resolved on first access. */
     public ContentItemMediaTable getContentItemMediaTable() {
-        long __key = this.cntMediaID;
+        long __key = this.cntMediaCmsID;
         if (contentItemMediaTable__resolvedKey == null || !contentItemMediaTable__resolvedKey.equals(__key)) {
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
@@ -249,18 +249,18 @@ public class ContentItemsTable {
 
     public void setContentItemMediaTable(ContentItemMediaTable contentItemMediaTable) {
         if (contentItemMediaTable == null) {
-            throw new DaoException("To-one property 'cntMediaID' has not-null constraint; cannot set to-one to null");
+            throw new DaoException("To-one property 'cntMediaCmsID' has not-null constraint; cannot set to-one to null");
         }
         synchronized (this) {
             this.contentItemMediaTable = contentItemMediaTable;
-            cntMediaID = contentItemMediaTable.getCmsID();
-            contentItemMediaTable__resolvedKey = cntMediaID;
+            cntMediaCmsID = contentItemMediaTable.getCmsID();
+            contentItemMediaTable__resolvedKey = cntMediaCmsID;
         }
     }
 
     /** To-one relationship, resolved on first access. */
     public ContentItemDetailTable getContentItemDetailTable() {
-        long __key = this.cntItemDetailID;
+        long __key = this.cntItemDetailCmsID;
         if (contentItemDetailTable__resolvedKey == null || !contentItemDetailTable__resolvedKey.equals(__key)) {
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
@@ -277,12 +277,12 @@ public class ContentItemsTable {
 
     public void setContentItemDetailTable(ContentItemDetailTable contentItemDetailTable) {
         if (contentItemDetailTable == null) {
-            throw new DaoException("To-one property 'cntItemDetailID' has not-null constraint; cannot set to-one to null");
+            throw new DaoException("To-one property 'cntItemDetailCmsID' has not-null constraint; cannot set to-one to null");
         }
         synchronized (this) {
             this.contentItemDetailTable = contentItemDetailTable;
-            cntItemDetailID = contentItemDetailTable.getCmsID();
-            contentItemDetailTable__resolvedKey = cntItemDetailID;
+            cntItemDetailCmsID = contentItemDetailTable.getCmsID();
+            contentItemDetailTable__resolvedKey = cntItemDetailCmsID;
         }
     }
 

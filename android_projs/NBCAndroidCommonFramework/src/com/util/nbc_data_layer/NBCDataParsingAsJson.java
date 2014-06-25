@@ -96,24 +96,33 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 		//JSONArray customCategory_array = obj.getJSONArray("customCategory");
 		String description = obj.getString("description");//DONE
 		String photoThumbnail = obj.getString("photoThumbnail");//DONE
-				
+
+//start of db iface with json data interactions.		
+		
 		//create pojo for cnt lead media table
 		ContentItemLeadMediaTable cnt_lead_media_table_bean = new ContentItemLeadMediaTable();
 		cnt_lead_media_table_bean.setCmsID(metadata_contentId);
 		cnt_lead_media_table_bean.setLeadEmbeddedVideo(metadata_leadEmbeddedVideo);
 		cnt_lead_media_table_bean.setLeadMediaContentType(metadata_leadMediaType);
 		cnt_lead_media_table_bean.setLeadMediaExtID(metadata_leadMediaExtID);
-		cnt_lead_media_table_bean.setLeadMediaThumbnail(metadata_leadMediaThumbnail);
+		
+		//converted to url type.
+		//cnt_lead_media_table_bean.setLeadMediaThumbnail(metadata_leadMediaThumbnail);
 		
 		//create pojo for cnt media table
 		ContentItemMediaTable cnt_media_table_bean = new ContentItemMediaTable();
 		cnt_media_table_bean.setCmsID(metadata_contentId);
-		cnt_media_table_bean.setHeight(mediaThumbnail_height);
-		cnt_media_table_bean.setImageCredit(detailContentFields_imageCredit);
-		cnt_media_table_bean.setPhotoThumbnail(photoThumbnail);
-		cnt_media_table_bean.setThumbnail(detailContentFields_thumbnailUrl);
-		cnt_media_table_bean.setUrl(mediaThumbnail_url);
-		cnt_media_table_bean.setWidth(mediaThumbnail_width);
+		
+		//all got moved to img details table.
+		//cnt_media_table_bean.setHeight(mediaThumbnail_height);
+		//cnt_media_table_bean.setImageCredit(detailContentFields_imageCredit);
+		//cnt_media_table_bean.setWidth(mediaThumbnail_width);
+		
+		//these were all replaced with url types
+		//cnt_media_table_bean.setPhotoThumbnail(photoThumbnail);
+		//cnt_media_table_bean.setThumbnail(detailContentFields_thumbnailUrl);
+		//cnt_media_table_bean.setUrl(mediaThumbnail_url);
+		
 		
 		//create pojo for cnt detail table
 		ContentItemDetailTable cnt_item_detail_table_bean = new ContentItemDetailTable();

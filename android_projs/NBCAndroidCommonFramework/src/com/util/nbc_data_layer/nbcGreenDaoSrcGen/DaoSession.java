@@ -9,7 +9,9 @@ import de.greenrobot.dao.AbstractDaoSession;
 import de.greenrobot.dao.identityscope.IdentityScopeType;
 import de.greenrobot.dao.internal.DaoConfig;
 
+import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ImgDetailsTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ImgFnameTable;
+import com.util.nbc_data_layer.nbcGreenDaoSrcGen.UrlImgFileTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.GalleryContentTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.RelatedItemsTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemLeadMediaTable;
@@ -17,7 +19,9 @@ import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemMediaTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemDetailTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemsTable;
 
+import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ImgDetailsTableDao;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ImgFnameTableDao;
+import com.util.nbc_data_layer.nbcGreenDaoSrcGen.UrlImgFileTableDao;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.GalleryContentTableDao;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.RelatedItemsTableDao;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemLeadMediaTableDao;
@@ -34,7 +38,9 @@ import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemsTableDao;
  */
 public class DaoSession extends AbstractDaoSession {
 
+    private final DaoConfig imgDetailsTableDaoConfig;
     private final DaoConfig imgFnameTableDaoConfig;
+    private final DaoConfig urlImgFileTableDaoConfig;
     private final DaoConfig galleryContentTableDaoConfig;
     private final DaoConfig relatedItemsTableDaoConfig;
     private final DaoConfig contentItemLeadMediaTableDaoConfig;
@@ -42,7 +48,9 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig contentItemDetailTableDaoConfig;
     private final DaoConfig contentItemsTableDaoConfig;
 
+    private final ImgDetailsTableDao imgDetailsTableDao;
     private final ImgFnameTableDao imgFnameTableDao;
+    private final UrlImgFileTableDao urlImgFileTableDao;
     private final GalleryContentTableDao galleryContentTableDao;
     private final RelatedItemsTableDao relatedItemsTableDao;
     private final ContentItemLeadMediaTableDao contentItemLeadMediaTableDao;
@@ -54,8 +62,14 @@ public class DaoSession extends AbstractDaoSession {
             daoConfigMap) {
         super(db);
 
+        imgDetailsTableDaoConfig = daoConfigMap.get(ImgDetailsTableDao.class).clone();
+        imgDetailsTableDaoConfig.initIdentityScope(type);
+
         imgFnameTableDaoConfig = daoConfigMap.get(ImgFnameTableDao.class).clone();
         imgFnameTableDaoConfig.initIdentityScope(type);
+
+        urlImgFileTableDaoConfig = daoConfigMap.get(UrlImgFileTableDao.class).clone();
+        urlImgFileTableDaoConfig.initIdentityScope(type);
 
         galleryContentTableDaoConfig = daoConfigMap.get(GalleryContentTableDao.class).clone();
         galleryContentTableDaoConfig.initIdentityScope(type);
@@ -75,7 +89,9 @@ public class DaoSession extends AbstractDaoSession {
         contentItemsTableDaoConfig = daoConfigMap.get(ContentItemsTableDao.class).clone();
         contentItemsTableDaoConfig.initIdentityScope(type);
 
+        imgDetailsTableDao = new ImgDetailsTableDao(imgDetailsTableDaoConfig, this);
         imgFnameTableDao = new ImgFnameTableDao(imgFnameTableDaoConfig, this);
+        urlImgFileTableDao = new UrlImgFileTableDao(urlImgFileTableDaoConfig, this);
         galleryContentTableDao = new GalleryContentTableDao(galleryContentTableDaoConfig, this);
         relatedItemsTableDao = new RelatedItemsTableDao(relatedItemsTableDaoConfig, this);
         contentItemLeadMediaTableDao = new ContentItemLeadMediaTableDao(contentItemLeadMediaTableDaoConfig, this);
@@ -83,7 +99,9 @@ public class DaoSession extends AbstractDaoSession {
         contentItemDetailTableDao = new ContentItemDetailTableDao(contentItemDetailTableDaoConfig, this);
         contentItemsTableDao = new ContentItemsTableDao(contentItemsTableDaoConfig, this);
 
+        registerDao(ImgDetailsTable.class, imgDetailsTableDao);
         registerDao(ImgFnameTable.class, imgFnameTableDao);
+        registerDao(UrlImgFileTable.class, urlImgFileTableDao);
         registerDao(GalleryContentTable.class, galleryContentTableDao);
         registerDao(RelatedItemsTable.class, relatedItemsTableDao);
         registerDao(ContentItemLeadMediaTable.class, contentItemLeadMediaTableDao);
@@ -93,7 +111,9 @@ public class DaoSession extends AbstractDaoSession {
     }
     
     public void clear() {
+        imgDetailsTableDaoConfig.getIdentityScope().clear();
         imgFnameTableDaoConfig.getIdentityScope().clear();
+        urlImgFileTableDaoConfig.getIdentityScope().clear();
         galleryContentTableDaoConfig.getIdentityScope().clear();
         relatedItemsTableDaoConfig.getIdentityScope().clear();
         contentItemLeadMediaTableDaoConfig.getIdentityScope().clear();
@@ -102,8 +122,16 @@ public class DaoSession extends AbstractDaoSession {
         contentItemsTableDaoConfig.getIdentityScope().clear();
     }
 
+    public ImgDetailsTableDao getImgDetailsTableDao() {
+        return imgDetailsTableDao;
+    }
+
     public ImgFnameTableDao getImgFnameTableDao() {
         return imgFnameTableDao;
+    }
+
+    public UrlImgFileTableDao getUrlImgFileTableDao() {
+        return urlImgFileTableDao;
     }
 
     public GalleryContentTableDao getGalleryContentTableDao() {

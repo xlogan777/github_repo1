@@ -10,15 +10,9 @@ package com.util.nbc_data_layer.nbcGreenDaoSrcGen;
 public class GalleryContentTable {
 
     private long GalCmsID;
-    private int ImgHeight;
-    private int ImgWidth;
     private int ImgIndex;
     /** Not-null value. */
     private String ImgPath;
-    /** Not-null value. */
-    private String ImgCaption;
-    /** Not-null value. */
-    private String ImgCredit;
 
     // KEEP FIELDS - put your custom fields here
     // KEEP FIELDS END
@@ -30,14 +24,10 @@ public class GalleryContentTable {
         this.GalCmsID = GalCmsID;
     }
 
-    public GalleryContentTable(long GalCmsID, int ImgHeight, int ImgWidth, int ImgIndex, String ImgPath, String ImgCaption, String ImgCredit) {
+    public GalleryContentTable(long GalCmsID, int ImgIndex, String ImgPath) {
         this.GalCmsID = GalCmsID;
-        this.ImgHeight = ImgHeight;
-        this.ImgWidth = ImgWidth;
         this.ImgIndex = ImgIndex;
         this.ImgPath = ImgPath;
-        this.ImgCaption = ImgCaption;
-        this.ImgCredit = ImgCredit;
     }
 
     public long getGalCmsID() {
@@ -46,22 +36,6 @@ public class GalleryContentTable {
 
     public void setGalCmsID(long GalCmsID) {
         this.GalCmsID = GalCmsID;
-    }
-
-    public int getImgHeight() {
-        return ImgHeight;
-    }
-
-    public void setImgHeight(int ImgHeight) {
-        this.ImgHeight = ImgHeight;
-    }
-
-    public int getImgWidth() {
-        return ImgWidth;
-    }
-
-    public void setImgWidth(int ImgWidth) {
-        this.ImgWidth = ImgWidth;
     }
 
     public int getImgIndex() {
@@ -80,26 +54,6 @@ public class GalleryContentTable {
     /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setImgPath(String ImgPath) {
         this.ImgPath = ImgPath;
-    }
-
-    /** Not-null value. */
-    public String getImgCaption() {
-        return ImgCaption;
-    }
-
-    /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setImgCaption(String ImgCaption) {
-        this.ImgCaption = ImgCaption;
-    }
-
-    /** Not-null value. */
-    public String getImgCredit() {
-        return ImgCredit;
-    }
-
-    /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setImgCredit(String ImgCredit) {
-        this.ImgCredit = ImgCredit;
     }
 
     // KEEP METHODS - put your custom methods here

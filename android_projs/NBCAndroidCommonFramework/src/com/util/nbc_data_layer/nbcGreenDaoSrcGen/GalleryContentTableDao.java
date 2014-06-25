@@ -24,12 +24,8 @@ public class GalleryContentTableDao extends AbstractDao<GalleryContentTable, Lon
     */
     public static class Properties {
         public final static Property GalCmsID = new Property(0, long.class, "GalCmsID", true, "GAL_CMS_ID");
-        public final static Property ImgHeight = new Property(1, int.class, "ImgHeight", false, "IMG_HEIGHT");
-        public final static Property ImgWidth = new Property(2, int.class, "ImgWidth", false, "IMG_WIDTH");
-        public final static Property ImgIndex = new Property(3, int.class, "ImgIndex", false, "IMG_INDEX");
-        public final static Property ImgPath = new Property(4, String.class, "ImgPath", false, "IMG_PATH");
-        public final static Property ImgCaption = new Property(5, String.class, "ImgCaption", false, "IMG_CAPTION");
-        public final static Property ImgCredit = new Property(6, String.class, "ImgCredit", false, "IMG_CREDIT");
+        public final static Property ImgIndex = new Property(1, int.class, "ImgIndex", false, "IMG_INDEX");
+        public final static Property ImgPath = new Property(2, String.class, "ImgPath", false, "IMG_PATH");
     };
 
 
@@ -46,12 +42,8 @@ public class GalleryContentTableDao extends AbstractDao<GalleryContentTable, Lon
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "'GALLERY_CONTENT_TABLE' (" + //
                 "'GAL_CMS_ID' INTEGER PRIMARY KEY NOT NULL ," + // 0: GalCmsID
-                "'IMG_HEIGHT' INTEGER NOT NULL ," + // 1: ImgHeight
-                "'IMG_WIDTH' INTEGER NOT NULL ," + // 2: ImgWidth
-                "'IMG_INDEX' INTEGER NOT NULL ," + // 3: ImgIndex
-                "'IMG_PATH' TEXT NOT NULL ," + // 4: ImgPath
-                "'IMG_CAPTION' TEXT NOT NULL ," + // 5: ImgCaption
-                "'IMG_CREDIT' TEXT NOT NULL );"); // 6: ImgCredit
+                "'IMG_INDEX' INTEGER NOT NULL ," + // 1: ImgIndex
+                "'IMG_PATH' TEXT NOT NULL );"); // 2: ImgPath
     }
 
     /** Drops the underlying database table. */
@@ -65,12 +57,8 @@ public class GalleryContentTableDao extends AbstractDao<GalleryContentTable, Lon
     protected void bindValues(SQLiteStatement stmt, GalleryContentTable entity) {
         stmt.clearBindings();
         stmt.bindLong(1, entity.getGalCmsID());
-        stmt.bindLong(2, entity.getImgHeight());
-        stmt.bindLong(3, entity.getImgWidth());
-        stmt.bindLong(4, entity.getImgIndex());
-        stmt.bindString(5, entity.getImgPath());
-        stmt.bindString(6, entity.getImgCaption());
-        stmt.bindString(7, entity.getImgCredit());
+        stmt.bindLong(2, entity.getImgIndex());
+        stmt.bindString(3, entity.getImgPath());
     }
 
     /** @inheritdoc */
@@ -84,12 +72,8 @@ public class GalleryContentTableDao extends AbstractDao<GalleryContentTable, Lon
     public GalleryContentTable readEntity(Cursor cursor, int offset) {
         GalleryContentTable entity = new GalleryContentTable( //
             cursor.getLong(offset + 0), // GalCmsID
-            cursor.getInt(offset + 1), // ImgHeight
-            cursor.getInt(offset + 2), // ImgWidth
-            cursor.getInt(offset + 3), // ImgIndex
-            cursor.getString(offset + 4), // ImgPath
-            cursor.getString(offset + 5), // ImgCaption
-            cursor.getString(offset + 6) // ImgCredit
+            cursor.getInt(offset + 1), // ImgIndex
+            cursor.getString(offset + 2) // ImgPath
         );
         return entity;
     }
@@ -98,12 +82,8 @@ public class GalleryContentTableDao extends AbstractDao<GalleryContentTable, Lon
     @Override
     public void readEntity(Cursor cursor, GalleryContentTable entity, int offset) {
         entity.setGalCmsID(cursor.getLong(offset + 0));
-        entity.setImgHeight(cursor.getInt(offset + 1));
-        entity.setImgWidth(cursor.getInt(offset + 2));
-        entity.setImgIndex(cursor.getInt(offset + 3));
-        entity.setImgPath(cursor.getString(offset + 4));
-        entity.setImgCaption(cursor.getString(offset + 5));
-        entity.setImgCredit(cursor.getString(offset + 6));
+        entity.setImgIndex(cursor.getInt(offset + 1));
+        entity.setImgPath(cursor.getString(offset + 2));
      }
     
     /** @inheritdoc */

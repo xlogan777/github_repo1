@@ -1,11 +1,14 @@
 package com.util.nbc_data_layer.nbcGreenDaoSrcGen;
 
+import java.util.List;
+import java.util.ArrayList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
+import de.greenrobot.dao.internal.SqlUtils;
 import de.greenrobot.dao.internal.DaoConfig;
 
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemMediaTable;
@@ -24,13 +27,13 @@ public class ContentItemMediaTableDao extends AbstractDao<ContentItemMediaTable,
     */
     public static class Properties {
         public final static Property CmsID = new Property(0, long.class, "CmsID", true, "CMS_ID");
-        public final static Property Url = new Property(1, String.class, "Url", false, "URL");
-        public final static Property Width = new Property(2, int.class, "Width", false, "WIDTH");
-        public final static Property Height = new Property(3, int.class, "Height", false, "HEIGHT");
-        public final static Property ImageCredit = new Property(4, String.class, "ImageCredit", false, "IMAGE_CREDIT");
-        public final static Property PhotoThumbnail = new Property(5, String.class, "PhotoThumbnail", false, "PHOTO_THUMBNAIL");
-        public final static Property Thumbnail = new Property(6, String.class, "Thumbnail", false, "THUMBNAIL");
+        public final static Property MediaUrlType = new Property(1, long.class, "MediaUrlType", false, "MEDIA_URL_TYPE");
+        public final static Property MediaPhotoThumbnailUrlType = new Property(2, long.class, "MediaPhotoThumbnailUrlType", false, "MEDIA_PHOTO_THUMBNAIL_URL_TYPE");
+        public final static Property MediaThumbnailUrlType = new Property(3, String.class, "MediaThumbnailUrlType", false, "MEDIA_THUMBNAIL_URL_TYPE");
+        public final static Property MediaCmsID = new Property(4, long.class, "mediaCmsID", false, "MEDIA_CMS_ID");
     };
+
+    private DaoSession daoSession;
 
 
     public ContentItemMediaTableDao(DaoConfig config) {
@@ -39,6 +42,7 @@ public class ContentItemMediaTableDao extends AbstractDao<ContentItemMediaTable,
     
     public ContentItemMediaTableDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
+        this.daoSession = daoSession;
     }
 
     /** Creates the underlying database table. */
@@ -46,12 +50,10 @@ public class ContentItemMediaTableDao extends AbstractDao<ContentItemMediaTable,
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "'CONTENT_ITEM_MEDIA_TABLE' (" + //
                 "'CMS_ID' INTEGER PRIMARY KEY NOT NULL ," + // 0: CmsID
-                "'URL' TEXT NOT NULL ," + // 1: Url
-                "'WIDTH' INTEGER NOT NULL ," + // 2: Width
-                "'HEIGHT' INTEGER NOT NULL ," + // 3: Height
-                "'IMAGE_CREDIT' TEXT NOT NULL ," + // 4: ImageCredit
-                "'PHOTO_THUMBNAIL' TEXT NOT NULL ," + // 5: PhotoThumbnail
-                "'THUMBNAIL' TEXT NOT NULL );"); // 6: Thumbnail
+                "'MEDIA_URL_TYPE' INTEGER NOT NULL ," + // 1: MediaUrlType
+                "'MEDIA_PHOTO_THUMBNAIL_URL_TYPE' INTEGER NOT NULL ," + // 2: MediaPhotoThumbnailUrlType
+                "'MEDIA_THUMBNAIL_URL_TYPE' TEXT NOT NULL ," + // 3: MediaThumbnailUrlType
+                "'MEDIA_CMS_ID' INTEGER NOT NULL );"); // 4: mediaCmsID
     }
 
     /** Drops the underlying database table. */
@@ -65,12 +67,16 @@ public class ContentItemMediaTableDao extends AbstractDao<ContentItemMediaTable,
     protected void bindValues(SQLiteStatement stmt, ContentItemMediaTable entity) {
         stmt.clearBindings();
         stmt.bindLong(1, entity.getCmsID());
-        stmt.bindString(2, entity.getUrl());
-        stmt.bindLong(3, entity.getWidth());
-        stmt.bindLong(4, entity.getHeight());
-        stmt.bindString(5, entity.getImageCredit());
-        stmt.bindString(6, entity.getPhotoThumbnail());
-        stmt.bindString(7, entity.getThumbnail());
+        stmt.bindLong(2, entity.getMediaUrlType());
+        stmt.bindLong(3, entity.getMediaPhotoThumbnailUrlType());
+        stmt.bindString(4, entity.getMediaThumbnailUrlType());
+        stmt.bindLong(5, entity.getMediaCmsID());
+    }
+
+    @Override
+    protected void attachEntity(ContentItemMediaTable entity) {
+        super.attachEntity(entity);
+        entity.__setDaoSession(daoSession);
     }
 
     /** @inheritdoc */
@@ -84,12 +90,10 @@ public class ContentItemMediaTableDao extends AbstractDao<ContentItemMediaTable,
     public ContentItemMediaTable readEntity(Cursor cursor, int offset) {
         ContentItemMediaTable entity = new ContentItemMediaTable( //
             cursor.getLong(offset + 0), // CmsID
-            cursor.getString(offset + 1), // Url
-            cursor.getInt(offset + 2), // Width
-            cursor.getInt(offset + 3), // Height
-            cursor.getString(offset + 4), // ImageCredit
-            cursor.getString(offset + 5), // PhotoThumbnail
-            cursor.getString(offset + 6) // Thumbnail
+            cursor.getLong(offset + 1), // MediaUrlType
+            cursor.getLong(offset + 2), // MediaPhotoThumbnailUrlType
+            cursor.getString(offset + 3), // MediaThumbnailUrlType
+            cursor.getLong(offset + 4) // mediaCmsID
         );
         return entity;
     }
@@ -98,12 +102,10 @@ public class ContentItemMediaTableDao extends AbstractDao<ContentItemMediaTable,
     @Override
     public void readEntity(Cursor cursor, ContentItemMediaTable entity, int offset) {
         entity.setCmsID(cursor.getLong(offset + 0));
-        entity.setUrl(cursor.getString(offset + 1));
-        entity.setWidth(cursor.getInt(offset + 2));
-        entity.setHeight(cursor.getInt(offset + 3));
-        entity.setImageCredit(cursor.getString(offset + 4));
-        entity.setPhotoThumbnail(cursor.getString(offset + 5));
-        entity.setThumbnail(cursor.getString(offset + 6));
+        entity.setMediaUrlType(cursor.getLong(offset + 1));
+        entity.setMediaPhotoThumbnailUrlType(cursor.getLong(offset + 2));
+        entity.setMediaThumbnailUrlType(cursor.getString(offset + 3));
+        entity.setMediaCmsID(cursor.getLong(offset + 4));
      }
     
     /** @inheritdoc */
@@ -129,4 +131,97 @@ public class ContentItemMediaTableDao extends AbstractDao<ContentItemMediaTable,
         return true;
     }
     
+    private String selectDeep;
+
+    protected String getSelectDeep() {
+        if (selectDeep == null) {
+            StringBuilder builder = new StringBuilder("SELECT ");
+            SqlUtils.appendColumns(builder, "T", getAllColumns());
+            builder.append(',');
+            SqlUtils.appendColumns(builder, "T0", daoSession.getUrlImgFileTableDao().getAllColumns());
+            builder.append(" FROM CONTENT_ITEM_MEDIA_TABLE T");
+            builder.append(" LEFT JOIN URL_IMG_FILE_TABLE T0 ON T.'MEDIA_CMS_ID'=T0.'_id'");
+            builder.append(' ');
+            selectDeep = builder.toString();
+        }
+        return selectDeep;
+    }
+    
+    protected ContentItemMediaTable loadCurrentDeep(Cursor cursor, boolean lock) {
+        ContentItemMediaTable entity = loadCurrent(cursor, 0, lock);
+        int offset = getAllColumns().length;
+
+        UrlImgFileTable urlImgFileTable = loadCurrentOther(daoSession.getUrlImgFileTableDao(), cursor, offset);
+         if(urlImgFileTable != null) {
+            entity.setUrlImgFileTable(urlImgFileTable);
+        }
+
+        return entity;    
+    }
+
+    public ContentItemMediaTable loadDeep(Long key) {
+        assertSinglePk();
+        if (key == null) {
+            return null;
+        }
+
+        StringBuilder builder = new StringBuilder(getSelectDeep());
+        builder.append("WHERE ");
+        SqlUtils.appendColumnsEqValue(builder, "T", getPkColumns());
+        String sql = builder.toString();
+        
+        String[] keyArray = new String[] { key.toString() };
+        Cursor cursor = db.rawQuery(sql, keyArray);
+        
+        try {
+            boolean available = cursor.moveToFirst();
+            if (!available) {
+                return null;
+            } else if (!cursor.isLast()) {
+                throw new IllegalStateException("Expected unique result, but count was " + cursor.getCount());
+            }
+            return loadCurrentDeep(cursor, true);
+        } finally {
+            cursor.close();
+        }
+    }
+    
+    /** Reads all available rows from the given cursor and returns a list of new ImageTO objects. */
+    public List<ContentItemMediaTable> loadAllDeepFromCursor(Cursor cursor) {
+        int count = cursor.getCount();
+        List<ContentItemMediaTable> list = new ArrayList<ContentItemMediaTable>(count);
+        
+        if (cursor.moveToFirst()) {
+            if (identityScope != null) {
+                identityScope.lock();
+                identityScope.reserveRoom(count);
+            }
+            try {
+                do {
+                    list.add(loadCurrentDeep(cursor, false));
+                } while (cursor.moveToNext());
+            } finally {
+                if (identityScope != null) {
+                    identityScope.unlock();
+                }
+            }
+        }
+        return list;
+    }
+    
+    protected List<ContentItemMediaTable> loadDeepAllAndCloseCursor(Cursor cursor) {
+        try {
+            return loadAllDeepFromCursor(cursor);
+        } finally {
+            cursor.close();
+        }
+    }
+    
+
+    /** A raw-style query where you can pass any WHERE clause and arguments. */
+    public List<ContentItemMediaTable> queryDeep(String where, String... selectionArg) {
+        Cursor cursor = db.rawQuery(getSelectDeep() + where, selectionArg);
+        return loadDeepAllAndCloseCursor(cursor);
+    }
+ 
 }

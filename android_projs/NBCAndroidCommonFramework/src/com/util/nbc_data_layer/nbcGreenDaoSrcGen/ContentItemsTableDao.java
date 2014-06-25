@@ -36,9 +36,9 @@ public class ContentItemsTableDao extends AbstractDao<ContentItemsTable, Long> {
         public final static Property PubDisplayDate = new Property(7, String.class, "PubDisplayDate", false, "PUB_DISPLAY_DATE");
         public final static Property SlugKeyword = new Property(8, String.class, "SlugKeyword", false, "SLUG_KEYWORD");
         public final static Property ContentTargetPath = new Property(9, String.class, "ContentTargetPath", false, "CONTENT_TARGET_PATH");
-        public final static Property CntLeadMediaID = new Property(10, long.class, "cntLeadMediaID", false, "CNT_LEAD_MEDIA_ID");
-        public final static Property CntMediaID = new Property(11, long.class, "cntMediaID", false, "CNT_MEDIA_ID");
-        public final static Property CntItemDetailID = new Property(12, long.class, "cntItemDetailID", false, "CNT_ITEM_DETAIL_ID");
+        public final static Property CntLeadMediaCmsID = new Property(10, long.class, "cntLeadMediaCmsID", false, "CNT_LEAD_MEDIA_CMS_ID");
+        public final static Property CntMediaCmsID = new Property(11, long.class, "cntMediaCmsID", false, "CNT_MEDIA_CMS_ID");
+        public final static Property CntItemDetailCmsID = new Property(12, long.class, "cntItemDetailCmsID", false, "CNT_ITEM_DETAIL_CMS_ID");
     };
 
     private DaoSession daoSession;
@@ -67,9 +67,9 @@ public class ContentItemsTableDao extends AbstractDao<ContentItemsTable, Long> {
                 "'PUB_DISPLAY_DATE' TEXT NOT NULL ," + // 7: PubDisplayDate
                 "'SLUG_KEYWORD' TEXT NOT NULL ," + // 8: SlugKeyword
                 "'CONTENT_TARGET_PATH' TEXT NOT NULL ," + // 9: ContentTargetPath
-                "'CNT_LEAD_MEDIA_ID' INTEGER NOT NULL ," + // 10: cntLeadMediaID
-                "'CNT_MEDIA_ID' INTEGER NOT NULL ," + // 11: cntMediaID
-                "'CNT_ITEM_DETAIL_ID' INTEGER NOT NULL );"); // 12: cntItemDetailID
+                "'CNT_LEAD_MEDIA_CMS_ID' INTEGER NOT NULL ," + // 10: cntLeadMediaCmsID
+                "'CNT_MEDIA_CMS_ID' INTEGER NOT NULL ," + // 11: cntMediaCmsID
+                "'CNT_ITEM_DETAIL_CMS_ID' INTEGER NOT NULL );"); // 12: cntItemDetailCmsID
     }
 
     /** Drops the underlying database table. */
@@ -92,9 +92,9 @@ public class ContentItemsTableDao extends AbstractDao<ContentItemsTable, Long> {
         stmt.bindString(8, entity.getPubDisplayDate());
         stmt.bindString(9, entity.getSlugKeyword());
         stmt.bindString(10, entity.getContentTargetPath());
-        stmt.bindLong(11, entity.getCntLeadMediaID());
-        stmt.bindLong(12, entity.getCntMediaID());
-        stmt.bindLong(13, entity.getCntItemDetailID());
+        stmt.bindLong(11, entity.getCntLeadMediaCmsID());
+        stmt.bindLong(12, entity.getCntMediaCmsID());
+        stmt.bindLong(13, entity.getCntItemDetailCmsID());
     }
 
     @Override
@@ -123,9 +123,9 @@ public class ContentItemsTableDao extends AbstractDao<ContentItemsTable, Long> {
             cursor.getString(offset + 7), // PubDisplayDate
             cursor.getString(offset + 8), // SlugKeyword
             cursor.getString(offset + 9), // ContentTargetPath
-            cursor.getLong(offset + 10), // cntLeadMediaID
-            cursor.getLong(offset + 11), // cntMediaID
-            cursor.getLong(offset + 12) // cntItemDetailID
+            cursor.getLong(offset + 10), // cntLeadMediaCmsID
+            cursor.getLong(offset + 11), // cntMediaCmsID
+            cursor.getLong(offset + 12) // cntItemDetailCmsID
         );
         return entity;
     }
@@ -143,9 +143,9 @@ public class ContentItemsTableDao extends AbstractDao<ContentItemsTable, Long> {
         entity.setPubDisplayDate(cursor.getString(offset + 7));
         entity.setSlugKeyword(cursor.getString(offset + 8));
         entity.setContentTargetPath(cursor.getString(offset + 9));
-        entity.setCntLeadMediaID(cursor.getLong(offset + 10));
-        entity.setCntMediaID(cursor.getLong(offset + 11));
-        entity.setCntItemDetailID(cursor.getLong(offset + 12));
+        entity.setCntLeadMediaCmsID(cursor.getLong(offset + 10));
+        entity.setCntMediaCmsID(cursor.getLong(offset + 11));
+        entity.setCntItemDetailCmsID(cursor.getLong(offset + 12));
      }
     
     /** @inheritdoc */
@@ -184,9 +184,9 @@ public class ContentItemsTableDao extends AbstractDao<ContentItemsTable, Long> {
             builder.append(',');
             SqlUtils.appendColumns(builder, "T2", daoSession.getContentItemDetailTableDao().getAllColumns());
             builder.append(" FROM CONTENT_ITEMS_TABLE T");
-            builder.append(" LEFT JOIN CONTENT_ITEM_LEAD_MEDIA_TABLE T0 ON T.'CNT_LEAD_MEDIA_ID'=T0.'CMS_ID'");
-            builder.append(" LEFT JOIN CONTENT_ITEM_MEDIA_TABLE T1 ON T.'CNT_MEDIA_ID'=T1.'CMS_ID'");
-            builder.append(" LEFT JOIN CONTENT_ITEM_DETAIL_TABLE T2 ON T.'CNT_ITEM_DETAIL_ID'=T2.'CMS_ID'");
+            builder.append(" LEFT JOIN CONTENT_ITEM_LEAD_MEDIA_TABLE T0 ON T.'CNT_LEAD_MEDIA_CMS_ID'=T0.'CMS_ID'");
+            builder.append(" LEFT JOIN CONTENT_ITEM_MEDIA_TABLE T1 ON T.'CNT_MEDIA_CMS_ID'=T1.'CMS_ID'");
+            builder.append(" LEFT JOIN CONTENT_ITEM_DETAIL_TABLE T2 ON T.'CNT_ITEM_DETAIL_CMS_ID'=T2.'CMS_ID'");
             builder.append(' ');
             selectDeep = builder.toString();
         }

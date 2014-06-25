@@ -8,45 +8,47 @@ import de.greenrobot.dao.DaoException;
 // KEEP INCLUDES - put your custom includes here
 // KEEP INCLUDES END
 /**
- * Entity mapped to table IMG_FNAME_TABLE.
+ * Entity mapped to table URL_IMG_FILE_TABLE.
  */
-public class ImgFnameTable {
+public class UrlImgFileTable {
 
     private long id;
+    private long UrlTypeID;
     /** Not-null value. */
-    private String ImageFname;
-    private long ImgDetailsID;
+    private String UrlLocation;
+    private long ImgFnameID;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
 
     /** Used for active entity operations. */
-    private transient ImgFnameTableDao myDao;
+    private transient UrlImgFileTableDao myDao;
 
-    private ImgDetailsTable imgDetailsTable;
-    private Long imgDetailsTable__resolvedKey;
+    private ImgFnameTable imgFnameTable;
+    private Long imgFnameTable__resolvedKey;
 
 
     // KEEP FIELDS - put your custom fields here
     // KEEP FIELDS END
 
-    public ImgFnameTable() {
+    public UrlImgFileTable() {
     }
 
-    public ImgFnameTable(long id) {
+    public UrlImgFileTable(long id) {
         this.id = id;
     }
 
-    public ImgFnameTable(long id, String ImageFname, long ImgDetailsID) {
+    public UrlImgFileTable(long id, long UrlTypeID, String UrlLocation, long ImgFnameID) {
         this.id = id;
-        this.ImageFname = ImageFname;
-        this.ImgDetailsID = ImgDetailsID;
+        this.UrlTypeID = UrlTypeID;
+        this.UrlLocation = UrlLocation;
+        this.ImgFnameID = ImgFnameID;
     }
 
     /** called by internal mechanisms, do not call yourself. */
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getImgFnameTableDao() : null;
+        myDao = daoSession != null ? daoSession.getUrlImgFileTableDao() : null;
     }
 
     public long getId() {
@@ -57,49 +59,57 @@ public class ImgFnameTable {
         this.id = id;
     }
 
+    public long getUrlTypeID() {
+        return UrlTypeID;
+    }
+
+    public void setUrlTypeID(long UrlTypeID) {
+        this.UrlTypeID = UrlTypeID;
+    }
+
     /** Not-null value. */
-    public String getImageFname() {
-        return ImageFname;
+    public String getUrlLocation() {
+        return UrlLocation;
     }
 
     /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setImageFname(String ImageFname) {
-        this.ImageFname = ImageFname;
+    public void setUrlLocation(String UrlLocation) {
+        this.UrlLocation = UrlLocation;
     }
 
-    public long getImgDetailsID() {
-        return ImgDetailsID;
+    public long getImgFnameID() {
+        return ImgFnameID;
     }
 
-    public void setImgDetailsID(long ImgDetailsID) {
-        this.ImgDetailsID = ImgDetailsID;
+    public void setImgFnameID(long ImgFnameID) {
+        this.ImgFnameID = ImgFnameID;
     }
 
     /** To-one relationship, resolved on first access. */
-    public ImgDetailsTable getImgDetailsTable() {
-        long __key = this.ImgDetailsID;
-        if (imgDetailsTable__resolvedKey == null || !imgDetailsTable__resolvedKey.equals(__key)) {
+    public ImgFnameTable getImgFnameTable() {
+        long __key = this.ImgFnameID;
+        if (imgFnameTable__resolvedKey == null || !imgFnameTable__resolvedKey.equals(__key)) {
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
-            ImgDetailsTableDao targetDao = daoSession.getImgDetailsTableDao();
-            ImgDetailsTable imgDetailsTableNew = targetDao.load(__key);
+            ImgFnameTableDao targetDao = daoSession.getImgFnameTableDao();
+            ImgFnameTable imgFnameTableNew = targetDao.load(__key);
             synchronized (this) {
-                imgDetailsTable = imgDetailsTableNew;
-            	imgDetailsTable__resolvedKey = __key;
+                imgFnameTable = imgFnameTableNew;
+            	imgFnameTable__resolvedKey = __key;
             }
         }
-        return imgDetailsTable;
+        return imgFnameTable;
     }
 
-    public void setImgDetailsTable(ImgDetailsTable imgDetailsTable) {
-        if (imgDetailsTable == null) {
-            throw new DaoException("To-one property 'ImgDetailsID' has not-null constraint; cannot set to-one to null");
+    public void setImgFnameTable(ImgFnameTable imgFnameTable) {
+        if (imgFnameTable == null) {
+            throw new DaoException("To-one property 'ImgFnameID' has not-null constraint; cannot set to-one to null");
         }
         synchronized (this) {
-            this.imgDetailsTable = imgDetailsTable;
-            ImgDetailsID = imgDetailsTable.getId();
-            imgDetailsTable__resolvedKey = ImgDetailsID;
+            this.imgFnameTable = imgFnameTable;
+            ImgFnameID = imgFnameTable.getId();
+            imgFnameTable__resolvedKey = ImgFnameID;
         }
     }
 
