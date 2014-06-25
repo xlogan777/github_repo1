@@ -217,7 +217,6 @@ public class NBCGreenDaoGeneratorMain
 		
 		//add non pk fields.
 		ContentItemLeadMediaTable.addStringProperty("LeadMediaContentType").notNull();
-		ContentItemLeadMediaTable.addStringProperty("LeadMediaThumbnail").notNull();
 		ContentItemLeadMediaTable.addStringProperty("LeadMediaExtID").notNull();
 		ContentItemLeadMediaTable.addStringProperty("LeadEmbeddedVideo").notNull();
 		ContentItemLeadMediaTable.addLongProperty("LeadMediaThumbnailType").notNull();
