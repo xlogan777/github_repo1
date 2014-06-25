@@ -3,12 +3,11 @@ package com.util.nbc_cmn_framework_UT;
 import java.io.*;
 
 import com.util.nbc_common_framework.R;
+import com.util.nbc_data_layer.NBCDataParsingBase;
 import com.util.nbc_data_layer.NBCDataParsingAsJson;
 import com.util.nbc_data_layer.SqliteDBAbstractIface;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemDetailTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemsTable;
-import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoMaster;
-import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoMaster.DevOpenHelper;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoSession;
 
 import android.support.v7.app.ActionBarActivity;
@@ -68,33 +67,35 @@ public class MainUTActivity extends ActionBarActivity
 	        String json_string = parse_json.readDataFromInputStream(input_stream);
 	        	        
 	        //invoke specific parsing type based on enum and save it to DB.
-	        //parse_json.parseAndStoreDataType(json_string, NBCDataParsingBase.BasicContentTypes.CONTENT_ITEM_TYPE, daoSession);
+	        parse_json.parseAndStoreDataType(json_string, NBCDataParsingBase.BasicContentTypes.CONTENT_ITEM_TYPE, dbIface);
 	        
 	        //get the content data using the content id. this loads a bean obj.
 	        long id = 253794761;
 	        ContentItemsTable content_items_table_bean = daoSession.getContentItemsTableDao().load(id);
-	        	        
+
+	        String log = "JM...cms id "+content_items_table_bean.getCmsID()+
+	        		" type = "+content_items_table_bean.getContentType() + " title of article = "+
+	        		content_items_table_bean.getContentItemDetailTable().getTitle();
 	        //log content item data.
 	        //display data saved from the parser and gotten from DB.
-	        Log.d(MainUTActivityTAG, "JM...cms id "+content_items_table_bean.getCmsID()+
-	        		" type = "+content_items_table_bean.getContentType() + " title of article = "+
-	        		content_items_table_bean.getContentItemDetailTable().getTitle());
+	        Log.d(MainUTActivityTAG, log);
 	        
 	        //make a change to the title of the article..
 	        ContentItemDetailTable tmp2 = content_items_table_bean.getContentItemDetailTable();
 	        tmp2.setTitle("JIMBO TITLE NOW IN THE BEAN FOR CNT ITEM DETAILS POJO");
 	        daoSession.getContentItemDetailTableDao().insertOrReplace(tmp2);
-	        
-	        //save the entity bean back to DB now...with either insert or replace. via bean obj.
-	        //daoSession.getContentItemsTableDao().insertOrReplace(content_items_table_bean);
-	        	        
+
 	        //display that change from the DAO. by getting the updated bean.
 	        ContentItemsTable tmp_bean = daoSession.getContentItemsTableDao().load(id);
 	        
-	        //display results.
-	        Log.d(MainUTActivityTAG, "JM...cms id "+tmp_bean.getCmsID()+
+	        log = "JM...cms id "+tmp_bean.getCmsID()+
 	        		" type = "+tmp_bean.getContentType() + " title of article = "+
-	        		tmp_bean.getContentItemDetailTable().getTitle());
+	        		tmp_bean.getContentItemDetailTable().getTitle();
+	        
+	        //display results.
+	        Log.d(MainUTActivityTAG, log);
+	        
+	        tv.setText(tv.getText()+"\n"+log);
 	        
         }
         catch(Exception e)
