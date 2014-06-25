@@ -3,9 +3,6 @@ package com.util.nbc_data_layer;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
-import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoSession;
-
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 /**
@@ -21,11 +18,11 @@ public abstract class NBCDataParsingBase
 	
 	//enum type that allows for the same error handling when parsing 
 	//data from the input stream.
-	public enum BasicContentTypes
+	public enum T_BasicContentTypes
 	{
-		CONTENT_ITEM_TYPE,
-		RELATED_ITEM_TYPE,
-		GALLERY_ITEM_TYPE
+		E_CONTENT_ITEM_TYPE,
+		E_RELATED_ITEM_TYPE,
+		E_GALLERY_ITEM_TYPE
 	}
 	
 	//constructor
@@ -88,22 +85,22 @@ public abstract class NBCDataParsingBase
 	 * processing dependent on the type. the error handling is the same... 
 	 * 
 	 */
-	public void parseAndStoreDataType(String inputString, BasicContentTypes type, SqliteDBAbstractIface dbIface)
+	public void parseAndStoreDataType(String inputString, T_BasicContentTypes type, SqliteDBAbstractIface dbIface)
 	{
 		try
 		{
 			//switch on the specific types to handle accordingly.
 			switch(type)
 			{
-				case CONTENT_ITEM_TYPE:
+				case E_CONTENT_ITEM_TYPE:
 					parseAndStoreContentData(inputString, dbIface);
 					break;
 				
-				case RELATED_ITEM_TYPE:
+				case E_RELATED_ITEM_TYPE:
 					parseAndStoreRelatedItemsData(inputString, dbIface);
 					break;
 					
-				case GALLERY_ITEM_TYPE:					
+				case E_GALLERY_ITEM_TYPE:					
 					parseAndStoreGalleryContentData(inputString, dbIface);
 					break;
 			}

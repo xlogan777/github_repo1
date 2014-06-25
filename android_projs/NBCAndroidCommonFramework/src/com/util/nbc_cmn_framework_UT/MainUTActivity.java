@@ -67,7 +67,7 @@ public class MainUTActivity extends ActionBarActivity
 	        String json_string = parse_json.readDataFromInputStream(input_stream);
 	        	        
 	        //invoke specific parsing type based on enum and save it to DB.
-	        parse_json.parseAndStoreDataType(json_string, NBCDataParsingBase.BasicContentTypes.CONTENT_ITEM_TYPE, dbIface);
+	        parse_json.parseAndStoreDataType(json_string, NBCDataParsingBase.T_BasicContentTypes.E_CONTENT_ITEM_TYPE, dbIface);
 	        
 	        //get the content data using the content id. this loads a bean obj.
 	        long id = 253794761;

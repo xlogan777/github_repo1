@@ -3,13 +3,10 @@ package com.util.nbc_data_layer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.util.Log;
-
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemDetailTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemLeadMediaTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemMediaTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemsTable;
-import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemsTableDao;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoSession;
 
 /**

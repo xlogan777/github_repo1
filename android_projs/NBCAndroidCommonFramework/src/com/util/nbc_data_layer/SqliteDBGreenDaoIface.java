@@ -1,8 +1,6 @@
 package com.util.nbc_data_layer;
 
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoMaster;
-import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoSession;
-import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoMaster.DevOpenHelper;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
