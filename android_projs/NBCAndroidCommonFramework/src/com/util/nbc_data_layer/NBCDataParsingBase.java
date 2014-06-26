@@ -32,15 +32,15 @@ public abstract class NBCDataParsingBase
 	}
 	
 	/*
-	 * this method will take in an input stream and read data from it.
-	 * it will return a string as a byte stream to be parsed later.
+	 * this method will take in an input stream and read data from it at a fixed size 1kb for now.
+	 * it will return a byte_array_output_stream obj, so the caller can do with it as they please.
 	 * this will not close the input stream. the caller needs to do this!!!
 	 * 
-	 * return valid string obj or NULL.
+	 * return valid byte_array_outstream obj or NULL.
 	 */
-	public String readDataFromInputStream(InputStream inputStream)
+	public ByteArrayOutputStream readDataFromInputStream(InputStream inputStream)
 	{
-		String outputString = null;
+		ByteArrayOutputStream out_buff = null;
 		
 		try
 		{
@@ -49,7 +49,7 @@ public abstract class NBCDataParsingBase
 			byte [] buff = new byte[buff_len];
 			
 			//create final buffer that will hold read data from the input stream. 
-			ByteArrayOutputStream out_buff = new ByteArrayOutputStream();
+			out_buff = new ByteArrayOutputStream();
 			
 			//num bytes read.
 			int data_read = 0;
@@ -63,13 +63,6 @@ public abstract class NBCDataParsingBase
 				//and use data read to write that much only
 				out_buff.write(buff, 0, data_read);
 			}
-			
-			//create a string obj using the output buffer to return an
-			//array of bytes to be converted to a string
-			outputString = new String(out_buff.toByteArray());
-
-			//set output buff to null
-			out_buff =  null;
 		}
 		catch(Exception e)
 		{
@@ -77,7 +70,7 @@ public abstract class NBCDataParsingBase
 		}
 		
 		//return the json obj reader back to the caller.
-		return outputString;
+		return out_buff;
 	}
 	
 	/*

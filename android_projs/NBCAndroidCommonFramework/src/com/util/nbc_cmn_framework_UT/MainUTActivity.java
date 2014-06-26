@@ -63,8 +63,11 @@ public class MainUTActivity extends ActionBarActivity
 	        //initiate parsing of json obj in asset folder for content obj.        
 	        NBCDataParsingAsJson parse_json = new NBCDataParsingAsJson();
 	        
-	        //read data from input stream
-	        String json_string = parse_json.readDataFromInputStream(input_stream);
+	        //read data which returns a byte array ostream obj. and get the raw array to create a string from it.
+	        String json_string = new String(parse_json.readDataFromInputStream(input_stream).toByteArray());	
+	        
+	        //close the input stream...
+	        input_stream.close();
 	        	        
 	        //invoke specific parsing type based on enum and save it to DB.
 	        parse_json.parseAndStoreDataType(json_string, NBCDataParsingBase.T_BasicContentTypes.E_CONTENT_ITEM_TYPE, dbIface);
