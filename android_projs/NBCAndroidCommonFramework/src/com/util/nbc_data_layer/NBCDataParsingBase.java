@@ -105,6 +105,62 @@ public abstract class NBCDataParsingBase
 	}
 	
 	/*
+	 * this will receive a url like this "http://media.nbcnewyork.com/images/213*120/mta-service-increase.jpg"
+	 * and get the image dimensions and the filename.
+	 */
+    public void parseUrlString(String urlInput, long defaultWidth, long defaultHeight)
+	{    	
+    	String fwd_slash = "/";
+    	
+    	//preset with and height with something valid.
+    	long width = defaultWidth;
+		long height = defaultHeight;
+		String filename = null;
+    	
+    	//for now valid url...
+		if(urlInput.indexOf("http://") > -1 )
+		{
+			//get last forward slash from the end of the string...
+			//then get the filename from there.
+			int end_fwd_slash_idx = urlInput.lastIndexOf(fwd_slash);
+			
+			if( end_fwd_slash_idx > -1)
+			{
+				//get the filename from the next char after the fwd slash.
+				filename = urlInput.substring(end_fwd_slash_idx+1);
+				
+				//get index of the enclosing slash from the dimensions
+				int next_fwd_slash = urlInput.lastIndexOf(fwd_slash, end_fwd_slash_idx-1);
+				
+				if(next_fwd_slash > -1)
+				{
+					//get the dimension string from url
+					String dimension_of_img = urlInput.substring(next_fwd_slash+1,end_fwd_slash_idx);
+					
+					//split based on * to separate the width and height.
+					//need to escape the * with \\* for regex to use the * as a split char.
+					String [] img_dimen = dimension_of_img.split("\\*");
+					
+					if(img_dimen.length == 2)
+					{
+						try
+						{
+							width = Long.parseLong(img_dimen[0]);
+							height = Long.parseLong(img_dimen[1]);
+						}
+						catch(Exception e)
+						{
+							Log.d(FILETAGNAME,"JM... use the defaults now...error = "+e.getMessage());
+						}
+					}
+				}
+			}
+		}
+		
+		System.out.println("fname = "+filename+", width = "+width+", height = "+height+",");
+	}
+	
+	/*
 	 * these methods are the entry point to define your own parsing scheme for data from the
 	 * input string. each method handle a specific type of data from the input string. that can
 	 * throw an exception if an error occurs.
