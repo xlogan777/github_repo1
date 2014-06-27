@@ -106,9 +106,11 @@ public abstract class NBCDataParsingBase
 	
 	/*
 	 * this will receive a url like this "http://media.nbcnewyork.com/images/213*120/mta-service-increase.jpg"
-	 * and get the image dimensions and the filename.
+	 * and get the image dimensions and the filename from it. this method will return POJO to the caller
+	 * that contains specifics about the image.
+	 * 
 	 */
-    public void parseUrlString(String urlInput, long defaultWidth, long defaultHeight)
+    public ImgFileUrlSpecs parseUrlString(String urlInput, long defaultWidth, long defaultHeight)
 	{    	
     	String fwd_slash = "/";
     	
@@ -157,7 +159,9 @@ public abstract class NBCDataParsingBase
 			}
 		}
 		
-		System.out.println("fname = "+filename+", width = "+width+", height = "+height+",");
+		Log.d(FILETAGNAME,"fname = "+filename+", width = "+width+", height = "+height+",");
+		
+		return new ImgFileUrlSpecs(filename, width, height);
 	}
 	
 	/*
