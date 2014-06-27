@@ -27,6 +27,10 @@ public class NBCDataBaseHelper extends OpenHelper
 	 */
 	public enum T_UrlTypeToId
 	{
+		//this is a default condition that is returned when
+		//invalid id - reverse loop up is done
+		E_NOT_VALID_MEDIA_URL_TYPE(0),
+		
 		//taken from lead media table types
 		E_LEAD_MEDIA_THUMBNAIL_URL_TYPE(1),
 		
@@ -66,6 +70,9 @@ public class NBCDataBaseHelper extends OpenHelper
 				//and the enum type associated with that value.
 				lookupEnumTable.put(url_type.getUrlTypeID(),url_type);
 			}
+			
+			//remove the E_NOT_VALID_MEDIA_URL_TYPE from the map..
+			lookupEnumTable.remove(E_NOT_VALID_MEDIA_URL_TYPE.getUrlTypeID());
 		}
 		
 		/*
@@ -82,7 +89,20 @@ public class NBCDataBaseHelper extends OpenHelper
 		 */
 		public static T_UrlTypeToId getEnumFromID(long id)
 		{
-			return lookupEnumTable.get(id);
+			//tmp return value.
+			T_UrlTypeToId rv;
+			
+			//get the item using the key.
+			rv = lookupEnumTable.get(id);
+			
+			//if no value enum type returned. return default to
+			//indicate that u passed in bad key.
+			if(rv == null)
+			{
+				rv = E_NOT_VALID_MEDIA_URL_TYPE;
+			}
+			
+			return rv;
 		}
 	}
 	
