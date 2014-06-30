@@ -27,9 +27,10 @@ public class UrlImgFileTableDao extends AbstractDao<UrlImgFileTable, Long> {
     */
     public static class Properties {
         public final static Property Id = new Property(0, long.class, "id", true, "_id");
-        public final static Property UrlTypeID = new Property(1, long.class, "UrlTypeID", false, "URL_TYPE_ID");
-        public final static Property UrlLocation = new Property(2, String.class, "UrlLocation", false, "URL_LOCATION");
-        public final static Property ImgFnameID = new Property(3, long.class, "ImgFnameID", false, "IMG_FNAME_ID");
+        public final static Property CmsID = new Property(1, long.class, "CmsID", false, "CMS_ID");
+        public final static Property UrlTypeID = new Property(2, long.class, "UrlTypeID", false, "URL_TYPE_ID");
+        public final static Property UrlLocation = new Property(3, String.class, "UrlLocation", false, "URL_LOCATION");
+        public final static Property ImgFnameID = new Property(4, long.class, "ImgFnameID", false, "IMG_FNAME_ID");
     };
 
     private DaoSession daoSession;
@@ -49,9 +50,10 @@ public class UrlImgFileTableDao extends AbstractDao<UrlImgFileTable, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "'URL_IMG_FILE_TABLE' (" + //
                 "'_id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ," + // 0: id
-                "'URL_TYPE_ID' INTEGER NOT NULL ," + // 1: UrlTypeID
-                "'URL_LOCATION' TEXT NOT NULL ," + // 2: UrlLocation
-                "'IMG_FNAME_ID' INTEGER NOT NULL );"); // 3: ImgFnameID
+                "'CMS_ID' INTEGER NOT NULL ," + // 1: CmsID
+                "'URL_TYPE_ID' INTEGER NOT NULL ," + // 2: UrlTypeID
+                "'URL_LOCATION' TEXT NOT NULL ," + // 3: UrlLocation
+                "'IMG_FNAME_ID' INTEGER NOT NULL );"); // 4: ImgFnameID
     }
 
     /** Drops the underlying database table. */
@@ -65,9 +67,10 @@ public class UrlImgFileTableDao extends AbstractDao<UrlImgFileTable, Long> {
     protected void bindValues(SQLiteStatement stmt, UrlImgFileTable entity) {
         stmt.clearBindings();
         stmt.bindLong(1, entity.getId());
-        stmt.bindLong(2, entity.getUrlTypeID());
-        stmt.bindString(3, entity.getUrlLocation());
-        stmt.bindLong(4, entity.getImgFnameID());
+        stmt.bindLong(2, entity.getCmsID());
+        stmt.bindLong(3, entity.getUrlTypeID());
+        stmt.bindString(4, entity.getUrlLocation());
+        stmt.bindLong(5, entity.getImgFnameID());
     }
 
     @Override
@@ -87,9 +90,10 @@ public class UrlImgFileTableDao extends AbstractDao<UrlImgFileTable, Long> {
     public UrlImgFileTable readEntity(Cursor cursor, int offset) {
         UrlImgFileTable entity = new UrlImgFileTable( //
             cursor.getLong(offset + 0), // id
-            cursor.getLong(offset + 1), // UrlTypeID
-            cursor.getString(offset + 2), // UrlLocation
-            cursor.getLong(offset + 3) // ImgFnameID
+            cursor.getLong(offset + 1), // CmsID
+            cursor.getLong(offset + 2), // UrlTypeID
+            cursor.getString(offset + 3), // UrlLocation
+            cursor.getLong(offset + 4) // ImgFnameID
         );
         return entity;
     }
@@ -98,9 +102,10 @@ public class UrlImgFileTableDao extends AbstractDao<UrlImgFileTable, Long> {
     @Override
     public void readEntity(Cursor cursor, UrlImgFileTable entity, int offset) {
         entity.setId(cursor.getLong(offset + 0));
-        entity.setUrlTypeID(cursor.getLong(offset + 1));
-        entity.setUrlLocation(cursor.getString(offset + 2));
-        entity.setImgFnameID(cursor.getLong(offset + 3));
+        entity.setCmsID(cursor.getLong(offset + 1));
+        entity.setUrlTypeID(cursor.getLong(offset + 2));
+        entity.setUrlLocation(cursor.getString(offset + 3));
+        entity.setImgFnameID(cursor.getLong(offset + 4));
      }
     
     /** @inheritdoc */

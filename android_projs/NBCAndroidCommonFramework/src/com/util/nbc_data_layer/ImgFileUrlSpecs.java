@@ -48,5 +48,4 @@ public class ImgFileUrlSpecs
 	{
 		return this.height;
 	}
-	
 }
