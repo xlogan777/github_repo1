@@ -10,14 +10,10 @@ package com.util.nbc_data_layer.nbcGreenDaoSrcGen;
 public class ImgDetailsTable {
 
     private long id;
-    private long ImgHeight;
-    private long ImgWidth;
     /** Not-null value. */
     private String ImgCredit;
     /** Not-null value. */
     private String ImgCaption;
-    /** Not-null value. */
-    private String ImgExtension;
 
     // KEEP FIELDS - put your custom fields here
     // KEEP FIELDS END
@@ -29,13 +25,10 @@ public class ImgDetailsTable {
         this.id = id;
     }
 
-    public ImgDetailsTable(long id, long ImgHeight, long ImgWidth, String ImgCredit, String ImgCaption, String ImgExtension) {
+    public ImgDetailsTable(long id, String ImgCredit, String ImgCaption) {
         this.id = id;
-        this.ImgHeight = ImgHeight;
-        this.ImgWidth = ImgWidth;
         this.ImgCredit = ImgCredit;
         this.ImgCaption = ImgCaption;
-        this.ImgExtension = ImgExtension;
     }
 
     public long getId() {
@@ -44,22 +37,6 @@ public class ImgDetailsTable {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getImgHeight() {
-        return ImgHeight;
-    }
-
-    public void setImgHeight(long ImgHeight) {
-        this.ImgHeight = ImgHeight;
-    }
-
-    public long getImgWidth() {
-        return ImgWidth;
-    }
-
-    public void setImgWidth(long ImgWidth) {
-        this.ImgWidth = ImgWidth;
     }
 
     /** Not-null value. */
@@ -80,16 +57,6 @@ public class ImgDetailsTable {
     /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setImgCaption(String ImgCaption) {
         this.ImgCaption = ImgCaption;
-    }
-
-    /** Not-null value. */
-    public String getImgExtension() {
-        return ImgExtension;
-    }
-
-    /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setImgExtension(String ImgExtension) {
-        this.ImgExtension = ImgExtension;
     }
 
     // KEEP METHODS - put your custom methods here

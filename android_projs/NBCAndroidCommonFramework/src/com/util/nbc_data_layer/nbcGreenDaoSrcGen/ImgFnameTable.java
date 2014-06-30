@@ -15,6 +15,8 @@ public class ImgFnameTable {
     private long id;
     /** Not-null value. */
     private String ImageFname;
+    private long ImgHeight;
+    private long ImgWidth;
     private long ImgDetailsID;
 
     /** Used to resolve relations */
@@ -37,9 +39,11 @@ public class ImgFnameTable {
         this.id = id;
     }
 
-    public ImgFnameTable(long id, String ImageFname, long ImgDetailsID) {
+    public ImgFnameTable(long id, String ImageFname, long ImgHeight, long ImgWidth, long ImgDetailsID) {
         this.id = id;
         this.ImageFname = ImageFname;
+        this.ImgHeight = ImgHeight;
+        this.ImgWidth = ImgWidth;
         this.ImgDetailsID = ImgDetailsID;
     }
 
@@ -65,6 +69,22 @@ public class ImgFnameTable {
     /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setImageFname(String ImageFname) {
         this.ImageFname = ImageFname;
+    }
+
+    public long getImgHeight() {
+        return ImgHeight;
+    }
+
+    public void setImgHeight(long ImgHeight) {
+        this.ImgHeight = ImgHeight;
+    }
+
+    public long getImgWidth() {
+        return ImgWidth;
+    }
+
+    public void setImgWidth(long ImgWidth) {
+        this.ImgWidth = ImgWidth;
     }
 
     public long getImgDetailsID() {
