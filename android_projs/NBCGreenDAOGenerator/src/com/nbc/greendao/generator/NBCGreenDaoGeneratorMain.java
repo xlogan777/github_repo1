@@ -1,10 +1,7 @@
 package com.nbc.greendao.generator;
 
-//import java.util.*;
-
 import de.greenrobot.daogenerator.DaoGenerator;
 import de.greenrobot.daogenerator.Entity;
-import de.greenrobot.daogenerator.Property;
 import de.greenrobot.daogenerator.Schema;
 
 /**
@@ -102,12 +99,9 @@ public class NBCGreenDaoGeneratorMain
 		ImgDetailsTable.addIdProperty().autoincrement().primaryKey().notNull();
 		
 		//setup non- pk
-		ImgDetailsTable.addLongProperty("ImgHeight").notNull();
-		ImgDetailsTable.addLongProperty("ImgWidth").notNull();
 		ImgDetailsTable.addStringProperty("ImgCredit").notNull();
 		ImgDetailsTable.addStringProperty("ImgCaption").notNull();
-		ImgDetailsTable.addStringProperty("ImgExtension").notNull();
-		
+
 		return ImgDetailsTable;
 	}
 	
@@ -128,6 +122,8 @@ public class NBCGreenDaoGeneratorMain
 				
 		//add the non-PK columns.		
 		ImgFnameTable.addStringProperty("ImageFname").notNull();
+		ImgFnameTable.addLongProperty("ImgHeight").notNull();
+		ImgFnameTable.addLongProperty("ImgWidth").notNull();
 
 		return ImgFnameTable;
 	}
