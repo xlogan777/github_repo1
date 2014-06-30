@@ -141,6 +141,7 @@ public class NBCGreenDaoGeneratorMain
 		UrlImgFileTable.addIdProperty().autoincrement().primaryKey().notNull();
 		
 		//create non-pk fields.
+		UrlImgFileTable.addLongProperty("CmsID").notNull();
 		UrlImgFileTable.addLongProperty("UrlTypeID").notNull();
 		UrlImgFileTable.addStringProperty("UrlLocation").notNull();
 		
