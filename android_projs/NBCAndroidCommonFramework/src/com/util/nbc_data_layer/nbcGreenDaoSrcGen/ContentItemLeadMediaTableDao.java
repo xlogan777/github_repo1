@@ -31,7 +31,7 @@ public class ContentItemLeadMediaTableDao extends AbstractDao<ContentItemLeadMed
         public final static Property LeadMediaExtID = new Property(2, String.class, "LeadMediaExtID", false, "LEAD_MEDIA_EXT_ID");
         public final static Property LeadEmbeddedVideo = new Property(3, String.class, "LeadEmbeddedVideo", false, "LEAD_EMBEDDED_VIDEO");
         public final static Property LeadMediaThumbnailType = new Property(4, long.class, "LeadMediaThumbnailType", false, "LEAD_MEDIA_THUMBNAIL_TYPE");
-        public final static Property LeadMediaCmsID = new Property(5, long.class, "leadMediaCmsID", false, "LEAD_MEDIA_CMS_ID");
+        public final static Property LeadMediaThumbnailUrlImgTypeRowID = new Property(5, long.class, "leadMediaThumbnailUrlImgTypeRowID", false, "LEAD_MEDIA_THUMBNAIL_URL_IMG_TYPE_ROW_ID");
     };
 
     private DaoSession daoSession;
@@ -55,7 +55,7 @@ public class ContentItemLeadMediaTableDao extends AbstractDao<ContentItemLeadMed
                 "'LEAD_MEDIA_EXT_ID' TEXT NOT NULL ," + // 2: LeadMediaExtID
                 "'LEAD_EMBEDDED_VIDEO' TEXT NOT NULL ," + // 3: LeadEmbeddedVideo
                 "'LEAD_MEDIA_THUMBNAIL_TYPE' INTEGER NOT NULL ," + // 4: LeadMediaThumbnailType
-                "'LEAD_MEDIA_CMS_ID' INTEGER NOT NULL );"); // 5: leadMediaCmsID
+                "'LEAD_MEDIA_THUMBNAIL_URL_IMG_TYPE_ROW_ID' INTEGER NOT NULL );"); // 5: leadMediaThumbnailUrlImgTypeRowID
     }
 
     /** Drops the underlying database table. */
@@ -73,7 +73,7 @@ public class ContentItemLeadMediaTableDao extends AbstractDao<ContentItemLeadMed
         stmt.bindString(3, entity.getLeadMediaExtID());
         stmt.bindString(4, entity.getLeadEmbeddedVideo());
         stmt.bindLong(5, entity.getLeadMediaThumbnailType());
-        stmt.bindLong(6, entity.getLeadMediaCmsID());
+        stmt.bindLong(6, entity.getLeadMediaThumbnailUrlImgTypeRowID());
     }
 
     @Override
@@ -97,7 +97,7 @@ public class ContentItemLeadMediaTableDao extends AbstractDao<ContentItemLeadMed
             cursor.getString(offset + 2), // LeadMediaExtID
             cursor.getString(offset + 3), // LeadEmbeddedVideo
             cursor.getLong(offset + 4), // LeadMediaThumbnailType
-            cursor.getLong(offset + 5) // leadMediaCmsID
+            cursor.getLong(offset + 5) // leadMediaThumbnailUrlImgTypeRowID
         );
         return entity;
     }
@@ -110,7 +110,7 @@ public class ContentItemLeadMediaTableDao extends AbstractDao<ContentItemLeadMed
         entity.setLeadMediaExtID(cursor.getString(offset + 2));
         entity.setLeadEmbeddedVideo(cursor.getString(offset + 3));
         entity.setLeadMediaThumbnailType(cursor.getLong(offset + 4));
-        entity.setLeadMediaCmsID(cursor.getLong(offset + 5));
+        entity.setLeadMediaThumbnailUrlImgTypeRowID(cursor.getLong(offset + 5));
      }
     
     /** @inheritdoc */
@@ -145,7 +145,7 @@ public class ContentItemLeadMediaTableDao extends AbstractDao<ContentItemLeadMed
             builder.append(',');
             SqlUtils.appendColumns(builder, "T0", daoSession.getUrlImgFileTableDao().getAllColumns());
             builder.append(" FROM CONTENT_ITEM_LEAD_MEDIA_TABLE T");
-            builder.append(" LEFT JOIN URL_IMG_FILE_TABLE T0 ON T.'LEAD_MEDIA_CMS_ID'=T0.'_id'");
+            builder.append(" LEFT JOIN URL_IMG_FILE_TABLE T0 ON T.'LEAD_MEDIA_THUMBNAIL_URL_IMG_TYPE_ROW_ID'=T0.'_id'");
             builder.append(' ');
             selectDeep = builder.toString();
         }

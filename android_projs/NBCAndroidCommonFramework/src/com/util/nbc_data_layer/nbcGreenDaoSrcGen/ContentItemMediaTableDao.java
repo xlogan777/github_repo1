@@ -29,8 +29,10 @@ public class ContentItemMediaTableDao extends AbstractDao<ContentItemMediaTable,
         public final static Property CmsID = new Property(0, long.class, "CmsID", true, "CMS_ID");
         public final static Property MediaUrlType = new Property(1, long.class, "MediaUrlType", false, "MEDIA_URL_TYPE");
         public final static Property MediaPhotoThumbnailUrlType = new Property(2, long.class, "MediaPhotoThumbnailUrlType", false, "MEDIA_PHOTO_THUMBNAIL_URL_TYPE");
-        public final static Property MediaThumbnailUrlType = new Property(3, String.class, "MediaThumbnailUrlType", false, "MEDIA_THUMBNAIL_URL_TYPE");
-        public final static Property MediaCmsID = new Property(4, long.class, "mediaCmsID", false, "MEDIA_CMS_ID");
+        public final static Property MediaThumbnailUrlType = new Property(3, long.class, "MediaThumbnailUrlType", false, "MEDIA_THUMBNAIL_URL_TYPE");
+        public final static Property MediaUrlImgTypeRowID = new Property(4, long.class, "mediaUrlImgTypeRowID", false, "MEDIA_URL_IMG_TYPE_ROW_ID");
+        public final static Property MediaPhotoThumbnailUrlImgTypeRowID = new Property(5, long.class, "mediaPhotoThumbnailUrlImgTypeRowID", false, "MEDIA_PHOTO_THUMBNAIL_URL_IMG_TYPE_ROW_ID");
+        public final static Property MediaThumbnailUrlImgTypeRowID = new Property(6, long.class, "mediaThumbnailUrlImgTypeRowID", false, "MEDIA_THUMBNAIL_URL_IMG_TYPE_ROW_ID");
     };
 
     private DaoSession daoSession;
@@ -52,8 +54,10 @@ public class ContentItemMediaTableDao extends AbstractDao<ContentItemMediaTable,
                 "'CMS_ID' INTEGER PRIMARY KEY NOT NULL ," + // 0: CmsID
                 "'MEDIA_URL_TYPE' INTEGER NOT NULL ," + // 1: MediaUrlType
                 "'MEDIA_PHOTO_THUMBNAIL_URL_TYPE' INTEGER NOT NULL ," + // 2: MediaPhotoThumbnailUrlType
-                "'MEDIA_THUMBNAIL_URL_TYPE' TEXT NOT NULL ," + // 3: MediaThumbnailUrlType
-                "'MEDIA_CMS_ID' INTEGER NOT NULL );"); // 4: mediaCmsID
+                "'MEDIA_THUMBNAIL_URL_TYPE' INTEGER NOT NULL ," + // 3: MediaThumbnailUrlType
+                "'MEDIA_URL_IMG_TYPE_ROW_ID' INTEGER NOT NULL ," + // 4: mediaUrlImgTypeRowID
+                "'MEDIA_PHOTO_THUMBNAIL_URL_IMG_TYPE_ROW_ID' INTEGER NOT NULL ," + // 5: mediaPhotoThumbnailUrlImgTypeRowID
+                "'MEDIA_THUMBNAIL_URL_IMG_TYPE_ROW_ID' INTEGER NOT NULL );"); // 6: mediaThumbnailUrlImgTypeRowID
     }
 
     /** Drops the underlying database table. */
@@ -69,8 +73,10 @@ public class ContentItemMediaTableDao extends AbstractDao<ContentItemMediaTable,
         stmt.bindLong(1, entity.getCmsID());
         stmt.bindLong(2, entity.getMediaUrlType());
         stmt.bindLong(3, entity.getMediaPhotoThumbnailUrlType());
-        stmt.bindString(4, entity.getMediaThumbnailUrlType());
-        stmt.bindLong(5, entity.getMediaCmsID());
+        stmt.bindLong(4, entity.getMediaThumbnailUrlType());
+        stmt.bindLong(5, entity.getMediaUrlImgTypeRowID());
+        stmt.bindLong(6, entity.getMediaPhotoThumbnailUrlImgTypeRowID());
+        stmt.bindLong(7, entity.getMediaThumbnailUrlImgTypeRowID());
     }
 
     @Override
@@ -92,8 +98,10 @@ public class ContentItemMediaTableDao extends AbstractDao<ContentItemMediaTable,
             cursor.getLong(offset + 0), // CmsID
             cursor.getLong(offset + 1), // MediaUrlType
             cursor.getLong(offset + 2), // MediaPhotoThumbnailUrlType
-            cursor.getString(offset + 3), // MediaThumbnailUrlType
-            cursor.getLong(offset + 4) // mediaCmsID
+            cursor.getLong(offset + 3), // MediaThumbnailUrlType
+            cursor.getLong(offset + 4), // mediaUrlImgTypeRowID
+            cursor.getLong(offset + 5), // mediaPhotoThumbnailUrlImgTypeRowID
+            cursor.getLong(offset + 6) // mediaThumbnailUrlImgTypeRowID
         );
         return entity;
     }
@@ -104,8 +112,10 @@ public class ContentItemMediaTableDao extends AbstractDao<ContentItemMediaTable,
         entity.setCmsID(cursor.getLong(offset + 0));
         entity.setMediaUrlType(cursor.getLong(offset + 1));
         entity.setMediaPhotoThumbnailUrlType(cursor.getLong(offset + 2));
-        entity.setMediaThumbnailUrlType(cursor.getString(offset + 3));
-        entity.setMediaCmsID(cursor.getLong(offset + 4));
+        entity.setMediaThumbnailUrlType(cursor.getLong(offset + 3));
+        entity.setMediaUrlImgTypeRowID(cursor.getLong(offset + 4));
+        entity.setMediaPhotoThumbnailUrlImgTypeRowID(cursor.getLong(offset + 5));
+        entity.setMediaThumbnailUrlImgTypeRowID(cursor.getLong(offset + 6));
      }
     
     /** @inheritdoc */
@@ -139,8 +149,14 @@ public class ContentItemMediaTableDao extends AbstractDao<ContentItemMediaTable,
             SqlUtils.appendColumns(builder, "T", getAllColumns());
             builder.append(',');
             SqlUtils.appendColumns(builder, "T0", daoSession.getUrlImgFileTableDao().getAllColumns());
+            builder.append(',');
+            SqlUtils.appendColumns(builder, "T1", daoSession.getUrlImgFileTableDao().getAllColumns());
+            builder.append(',');
+            SqlUtils.appendColumns(builder, "T2", daoSession.getUrlImgFileTableDao().getAllColumns());
             builder.append(" FROM CONTENT_ITEM_MEDIA_TABLE T");
-            builder.append(" LEFT JOIN URL_IMG_FILE_TABLE T0 ON T.'MEDIA_CMS_ID'=T0.'_id'");
+            builder.append(" LEFT JOIN URL_IMG_FILE_TABLE T0 ON T.'MEDIA_URL_IMG_TYPE_ROW_ID'=T0.'_id'");
+            builder.append(" LEFT JOIN URL_IMG_FILE_TABLE T1 ON T.'MEDIA_PHOTO_THUMBNAIL_URL_IMG_TYPE_ROW_ID'=T1.'_id'");
+            builder.append(" LEFT JOIN URL_IMG_FILE_TABLE T2 ON T.'MEDIA_THUMBNAIL_URL_IMG_TYPE_ROW_ID'=T2.'_id'");
             builder.append(' ');
             selectDeep = builder.toString();
         }
@@ -151,9 +167,21 @@ public class ContentItemMediaTableDao extends AbstractDao<ContentItemMediaTable,
         ContentItemMediaTable entity = loadCurrent(cursor, 0, lock);
         int offset = getAllColumns().length;
 
-        UrlImgFileTable urlImgFileTable = loadCurrentOther(daoSession.getUrlImgFileTableDao(), cursor, offset);
-         if(urlImgFileTable != null) {
-            entity.setUrlImgFileTable(urlImgFileTable);
+        UrlImgFileTable mediaUrlImgType = loadCurrentOther(daoSession.getUrlImgFileTableDao(), cursor, offset);
+         if(mediaUrlImgType != null) {
+            entity.setMediaUrlImgType(mediaUrlImgType);
+        }
+        offset += daoSession.getUrlImgFileTableDao().getAllColumns().length;
+
+        UrlImgFileTable mediaPhotoThumbnailUrlImgType = loadCurrentOther(daoSession.getUrlImgFileTableDao(), cursor, offset);
+         if(mediaPhotoThumbnailUrlImgType != null) {
+            entity.setMediaPhotoThumbnailUrlImgType(mediaPhotoThumbnailUrlImgType);
+        }
+        offset += daoSession.getUrlImgFileTableDao().getAllColumns().length;
+
+        UrlImgFileTable mediaThumbnailUrlImgType = loadCurrentOther(daoSession.getUrlImgFileTableDao(), cursor, offset);
+         if(mediaThumbnailUrlImgType != null) {
+            entity.setMediaThumbnailUrlImgType(mediaThumbnailUrlImgType);
         }
 
         return entity;    

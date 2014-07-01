@@ -15,9 +15,10 @@ public class ContentItemMediaTable {
     private long CmsID;
     private long MediaUrlType;
     private long MediaPhotoThumbnailUrlType;
-    /** Not-null value. */
-    private String MediaThumbnailUrlType;
-    private long mediaCmsID;
+    private long MediaThumbnailUrlType;
+    private long mediaUrlImgTypeRowID;
+    private long mediaPhotoThumbnailUrlImgTypeRowID;
+    private long mediaThumbnailUrlImgTypeRowID;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
@@ -25,8 +26,14 @@ public class ContentItemMediaTable {
     /** Used for active entity operations. */
     private transient ContentItemMediaTableDao myDao;
 
-    private UrlImgFileTable urlImgFileTable;
-    private Long urlImgFileTable__resolvedKey;
+    private UrlImgFileTable mediaUrlImgType;
+    private Long mediaUrlImgType__resolvedKey;
+
+    private UrlImgFileTable mediaPhotoThumbnailUrlImgType;
+    private Long mediaPhotoThumbnailUrlImgType__resolvedKey;
+
+    private UrlImgFileTable mediaThumbnailUrlImgType;
+    private Long mediaThumbnailUrlImgType__resolvedKey;
 
 
     // KEEP FIELDS - put your custom fields here
@@ -39,12 +46,14 @@ public class ContentItemMediaTable {
         this.CmsID = CmsID;
     }
 
-    public ContentItemMediaTable(long CmsID, long MediaUrlType, long MediaPhotoThumbnailUrlType, String MediaThumbnailUrlType, long mediaCmsID) {
+    public ContentItemMediaTable(long CmsID, long MediaUrlType, long MediaPhotoThumbnailUrlType, long MediaThumbnailUrlType, long mediaUrlImgTypeRowID, long mediaPhotoThumbnailUrlImgTypeRowID, long mediaThumbnailUrlImgTypeRowID) {
         this.CmsID = CmsID;
         this.MediaUrlType = MediaUrlType;
         this.MediaPhotoThumbnailUrlType = MediaPhotoThumbnailUrlType;
         this.MediaThumbnailUrlType = MediaThumbnailUrlType;
-        this.mediaCmsID = mediaCmsID;
+        this.mediaUrlImgTypeRowID = mediaUrlImgTypeRowID;
+        this.mediaPhotoThumbnailUrlImgTypeRowID = mediaPhotoThumbnailUrlImgTypeRowID;
+        this.mediaThumbnailUrlImgTypeRowID = mediaThumbnailUrlImgTypeRowID;
     }
 
     /** called by internal mechanisms, do not call yourself. */
@@ -77,49 +86,119 @@ public class ContentItemMediaTable {
         this.MediaPhotoThumbnailUrlType = MediaPhotoThumbnailUrlType;
     }
 
-    /** Not-null value. */
-    public String getMediaThumbnailUrlType() {
+    public long getMediaThumbnailUrlType() {
         return MediaThumbnailUrlType;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setMediaThumbnailUrlType(String MediaThumbnailUrlType) {
+    public void setMediaThumbnailUrlType(long MediaThumbnailUrlType) {
         this.MediaThumbnailUrlType = MediaThumbnailUrlType;
     }
 
-    public long getMediaCmsID() {
-        return mediaCmsID;
+    public long getMediaUrlImgTypeRowID() {
+        return mediaUrlImgTypeRowID;
     }
 
-    public void setMediaCmsID(long mediaCmsID) {
-        this.mediaCmsID = mediaCmsID;
+    public void setMediaUrlImgTypeRowID(long mediaUrlImgTypeRowID) {
+        this.mediaUrlImgTypeRowID = mediaUrlImgTypeRowID;
+    }
+
+    public long getMediaPhotoThumbnailUrlImgTypeRowID() {
+        return mediaPhotoThumbnailUrlImgTypeRowID;
+    }
+
+    public void setMediaPhotoThumbnailUrlImgTypeRowID(long mediaPhotoThumbnailUrlImgTypeRowID) {
+        this.mediaPhotoThumbnailUrlImgTypeRowID = mediaPhotoThumbnailUrlImgTypeRowID;
+    }
+
+    public long getMediaThumbnailUrlImgTypeRowID() {
+        return mediaThumbnailUrlImgTypeRowID;
+    }
+
+    public void setMediaThumbnailUrlImgTypeRowID(long mediaThumbnailUrlImgTypeRowID) {
+        this.mediaThumbnailUrlImgTypeRowID = mediaThumbnailUrlImgTypeRowID;
     }
 
     /** To-one relationship, resolved on first access. */
-    public UrlImgFileTable getUrlImgFileTable() {
-        long __key = this.mediaCmsID;
-        if (urlImgFileTable__resolvedKey == null || !urlImgFileTable__resolvedKey.equals(__key)) {
+    public UrlImgFileTable getMediaUrlImgType() {
+        long __key = this.mediaUrlImgTypeRowID;
+        if (mediaUrlImgType__resolvedKey == null || !mediaUrlImgType__resolvedKey.equals(__key)) {
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
             UrlImgFileTableDao targetDao = daoSession.getUrlImgFileTableDao();
-            UrlImgFileTable urlImgFileTableNew = targetDao.load(__key);
+            UrlImgFileTable mediaUrlImgTypeNew = targetDao.load(__key);
             synchronized (this) {
-                urlImgFileTable = urlImgFileTableNew;
-            	urlImgFileTable__resolvedKey = __key;
+                mediaUrlImgType = mediaUrlImgTypeNew;
+            	mediaUrlImgType__resolvedKey = __key;
             }
         }
-        return urlImgFileTable;
+        return mediaUrlImgType;
     }
 
-    public void setUrlImgFileTable(UrlImgFileTable urlImgFileTable) {
-        if (urlImgFileTable == null) {
-            throw new DaoException("To-one property 'mediaCmsID' has not-null constraint; cannot set to-one to null");
+    public void setMediaUrlImgType(UrlImgFileTable mediaUrlImgType) {
+        if (mediaUrlImgType == null) {
+            throw new DaoException("To-one property 'mediaUrlImgTypeRowID' has not-null constraint; cannot set to-one to null");
         }
         synchronized (this) {
-            this.urlImgFileTable = urlImgFileTable;
-            mediaCmsID = urlImgFileTable.getId();
-            urlImgFileTable__resolvedKey = mediaCmsID;
+            this.mediaUrlImgType = mediaUrlImgType;
+            mediaUrlImgTypeRowID = mediaUrlImgType.getId();
+            mediaUrlImgType__resolvedKey = mediaUrlImgTypeRowID;
+        }
+    }
+
+    /** To-one relationship, resolved on first access. */
+    public UrlImgFileTable getMediaPhotoThumbnailUrlImgType() {
+        long __key = this.mediaPhotoThumbnailUrlImgTypeRowID;
+        if (mediaPhotoThumbnailUrlImgType__resolvedKey == null || !mediaPhotoThumbnailUrlImgType__resolvedKey.equals(__key)) {
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            UrlImgFileTableDao targetDao = daoSession.getUrlImgFileTableDao();
+            UrlImgFileTable mediaPhotoThumbnailUrlImgTypeNew = targetDao.load(__key);
+            synchronized (this) {
+                mediaPhotoThumbnailUrlImgType = mediaPhotoThumbnailUrlImgTypeNew;
+            	mediaPhotoThumbnailUrlImgType__resolvedKey = __key;
+            }
+        }
+        return mediaPhotoThumbnailUrlImgType;
+    }
+
+    public void setMediaPhotoThumbnailUrlImgType(UrlImgFileTable mediaPhotoThumbnailUrlImgType) {
+        if (mediaPhotoThumbnailUrlImgType == null) {
+            throw new DaoException("To-one property 'mediaPhotoThumbnailUrlImgTypeRowID' has not-null constraint; cannot set to-one to null");
+        }
+        synchronized (this) {
+            this.mediaPhotoThumbnailUrlImgType = mediaPhotoThumbnailUrlImgType;
+            mediaPhotoThumbnailUrlImgTypeRowID = mediaPhotoThumbnailUrlImgType.getId();
+            mediaPhotoThumbnailUrlImgType__resolvedKey = mediaPhotoThumbnailUrlImgTypeRowID;
+        }
+    }
+
+    /** To-one relationship, resolved on first access. */
+    public UrlImgFileTable getMediaThumbnailUrlImgType() {
+        long __key = this.mediaThumbnailUrlImgTypeRowID;
+        if (mediaThumbnailUrlImgType__resolvedKey == null || !mediaThumbnailUrlImgType__resolvedKey.equals(__key)) {
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            UrlImgFileTableDao targetDao = daoSession.getUrlImgFileTableDao();
+            UrlImgFileTable mediaThumbnailUrlImgTypeNew = targetDao.load(__key);
+            synchronized (this) {
+                mediaThumbnailUrlImgType = mediaThumbnailUrlImgTypeNew;
+            	mediaThumbnailUrlImgType__resolvedKey = __key;
+            }
+        }
+        return mediaThumbnailUrlImgType;
+    }
+
+    public void setMediaThumbnailUrlImgType(UrlImgFileTable mediaThumbnailUrlImgType) {
+        if (mediaThumbnailUrlImgType == null) {
+            throw new DaoException("To-one property 'mediaThumbnailUrlImgTypeRowID' has not-null constraint; cannot set to-one to null");
+        }
+        synchronized (this) {
+            this.mediaThumbnailUrlImgType = mediaThumbnailUrlImgType;
+            mediaThumbnailUrlImgTypeRowID = mediaThumbnailUrlImgType.getId();
+            mediaThumbnailUrlImgType__resolvedKey = mediaThumbnailUrlImgTypeRowID;
         }
     }
 
