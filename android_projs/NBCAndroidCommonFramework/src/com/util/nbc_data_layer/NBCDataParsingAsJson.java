@@ -1,7 +1,5 @@
 package com.util.nbc_data_layer;
 
-import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -9,16 +7,10 @@ import android.util.Log;
 
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemDetailTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemLeadMediaTable;
-import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemLeadMediaTableDao;
-import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemLeadMediaTableDao.Properties;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemMediaTable;
-import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemMediaTableDao;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemsTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoSession;
-import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ImgFnameTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.UrlImgFileTable;
-
-import de.greenrobot.dao.query.QueryBuilder;
 
 /**
  * this class will have different parsing schemes for each type of content data
@@ -117,24 +109,24 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 			(NBCDataBaseHelper.T_UrlTypeToId.E_LEAD_MEDIA_THUMBNAIL_URL_TYPE.getUrlTypeID());
 		
 		//parse the url here and get the meta data needed.
-		//converted to url type.
+		//converted to url type. setup defaults for width and height.
 		ImgFileUrlSpecs tmp_img_file = this.parseUrlString(metadata_leadMediaThumbnail, 100,100);
 						
-		//find the row that matches the cms_id and the url_type_id in the url-img-table
-		long cms_id_lead_media = metadata_contentId;
-		long url_type_id = cnt_lead_media_table_bean.getLeadMediaThumbnailType();
-
-		//get back entity obj to be used to associate back to leadmedia content entity.
-		//dont provide the img file details since we dont have that data for lead media urls files.
+		// this will be the entity obj for the img-url table. need to be cast since
+		//return value is an object type to keep interface generic.
 		UrlImgFileTable url_img_entity = 
 			(UrlImgFileTable)dbIface.imgFileTableEntryAndAssociationProcessing
-				(tmp_img_file,null,cms_id_lead_media,url_type_id,metadata_leadMediaThumbnail);
+				(
+				 tmp_img_file,
+				 null,
+				 metadata_contentId,
+				 cnt_lead_media_table_bean.getLeadMediaThumbnailType(),
+				 metadata_leadMediaThumbnail
+				);
 	
 		//make the association with cms id to url-img obj here.
-		cnt_lead_media_table_bean.setLeadMediaCmsID(cms_id_lead_media);
-		cnt_lead_media_table_bean.setUrlImgFileTable(url_img_entity);
-		
-		
+		cnt_lead_media_table_bean.setLeadMediaCmsID(metadata_contentId);
+		cnt_lead_media_table_bean.setUrlImgFileTable(url_img_entity);		
 		
 		//TODO: continue here with the rest of the code.
 

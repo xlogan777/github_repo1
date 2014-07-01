@@ -2,13 +2,13 @@ package com.util.nbc_data_layer;
 
 import java.util.List;
 
-import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemLeadMediaTable;
-import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemLeadMediaTableDao;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoMaster;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoSession;
+import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ImgDetailsTable;
+import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ImgDetailsTableDao;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ImgFnameTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.UrlImgFileTable;
-import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemLeadMediaTableDao.Properties;
+import com.util.nbc_data_layer.nbcGreenDaoSrcGen.UrlImgFileTableDao;
 
 import de.greenrobot.dao.query.QueryBuilder;
 import android.content.Context;
@@ -73,8 +73,10 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 	}
 	
 	/*
-	 * this function will create the the img file table entry and associate it that to the url_img table
-	 * it may also create the img_details table is necessary. 
+	 * this method will use the dao of the url-img table to find a cmsID & url_type match
+	 * if it doest find it, then we return this info back to the caller. if not then we 
+	 * need to make the entries in the img_fname table, url-img table, and potentially the 
+	 * img-details table if the obj for it is not null...
 	 */
 	@Override
 	public Object imgFileTableEntryAndAssociationProcessing
@@ -86,65 +88,107 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 		//use the session dao here.
 		DaoSession dao_session = ((DaoSession)sessionObj);
 		
-		//get dao for specific table. in this case the content item lead media table.
-		ContentItemLeadMediaTableDao dao = dao_session.getContentItemLeadMediaTableDao();
+		//get dao for specific table, in the case the url-img table.
+		UrlImgFileTableDao url_img_dao = dao_session.getUrlImgFileTableDao();
 		
-		//get a list of items for the leadMediaContent table. should be no more than one.
-		//if we find an item in the list then use it...otherwise create new item.
-		List <ContentItemLeadMediaTable> items = 
-		   dao.queryBuilder().where(Properties.CmsID.eq(cmsID), Properties.LeadMediaThumbnailType.eq(urlTypeID)).list();
+		//get the list of items from the table matching with the cms_id&url_type by querying the dao.
+		List <UrlImgFileTable> items = 
+		   url_img_dao.queryBuilder().where
+		   (
+			   UrlImgFileTableDao.Properties.CmsID.eq(cmsID), 
+			   UrlImgFileTableDao.Properties.UrlTypeID.eq(urlTypeID)
+			).list();		
 		
-		//add logging features to see what we get.
+		//add logging features to see what we get. this is for debugging purposes only.
 		QueryBuilder.LOG_SQL = true;
 		QueryBuilder.LOG_VALUES = true;
 		
 		Log.d(MyTag, "JM...size of list for the query is "+items.size());
 		
-		if(items.size() == 1)
+		//need to add the url-img table and img_fname table entries accordingly.
+		if(items.size() == 0)
 		{
+			ImgDetailsTable img_details_entity_val = null;
+			long row_num = 0;
+			
+			if(imgFileDetails != null)
+			{
+				//create entity obj here and setup with specific java bean  here.
+				ImgDetailsTable img_details_entity = new ImgDetailsTable();
+				img_details_entity.setImgCredit(imgFileDetails.getCredit());
+				img_details_entity.setImgCaption(imgFileDetails.getCaption());
+
+				//get dao for img details table.
+				ImgDetailsTableDao img_details_dao = dao_session.getImgDetailsTableDao();
+				
+				//make a query to see if we have a img details row that macthes this potentially new
+				//item 
+				List <ImgDetailsTable> item_list = 
+				   img_details_dao.queryBuilder().where
+				   (
+					ImgDetailsTableDao.Properties.ImgCredit.eq(imgFileDetails.getCredit()),
+					ImgDetailsTableDao.Properties.ImgCaption.eq(imgFileDetails.getCaption())
+				   ).list();
+				
+				//add new entry to this table.
+				if(item_list.size() == 0)
+				{
+					row_num = img_details_dao.insertOrReplace(img_details_entity);
+					img_details_entity_val = img_details_entity;
+				}
+				//get  the obj for this item..and tie it to the img-fname table.
+				else if(item_list.size() == 1)
+				{
+					img_details_entity_val = item_list.get(0);
+					row_num = img_details_entity_val.getId();
+				}
+				else
+				{
+					Log.d(MyTag, "JM...hit error with finding more items in the item details table. handle this situation.");
+				}
+			}
+			
+			//create entity obj here and setup with specifics of the java bean.
+			ImgFnameTable img_fname_entity = new ImgFnameTable();
+			img_fname_entity.setImageFname(imgFileSepcs.getFname());
+			img_fname_entity.setImgHeight(imgFileSepcs.getHeight());
+			img_fname_entity.setImgWidth(imgFileSepcs.getWidth());
+			
+			//association here to img-details table.
+			img_fname_entity.setImgDetailsID(row_num);
+			img_fname_entity.setImgDetailsTable(img_details_entity_val);//not needed for now.
+			
+			//create row in img-fname table
+			long row_id = dao_session.getImgFnameTableDao().insertOrReplace(img_fname_entity);
+			
+			//create entity obj here and setup with specifics of the java bean.
+			UrlImgFileTable url_img_entity = new UrlImgFileTable();
+			url_img_entity.setCmsID(cmsID);
+			url_img_entity.setUrlTypeID(urlTypeID);
+			url_img_entity.setUrlLocation(urlLocation);
+			
+			//association here to img-url table here.
+			url_img_entity.setImgFnameID(row_id);
+			url_img_entity.setImgFnameTable(img_fname_entity);
+			
+			//create row here in the img-url table
+			long row_id_2 = dao_session.getUrlImgFileTableDao().insertOrReplace(url_img_entity);
+									
+			rv = url_img_entity;
+			
+			//TODO: need to create the actual image file here...!!!
+			Log.d(MyTag, "JM...table entries for img-fname, img-url tables...create actual img-file on file system now.");
+		}
+		else if(items.size() == 1)
+		{
+			//return the first entry of the list to user.
 			rv = items.get(0);
 			Log.d(MyTag, "JM...found one entry, need to return this back.");
 		}
 		else
 		{
-			if(imgFileDetails != null)
-			{
-				//TODO: create the img details table entry here and provide link to img file table entity.
-				//create row in img_details table if have info for that stuff. save row id. make association if needed to img-fname table.
-				//not needed for now.
-			}
-			
-			//create row in the img-fname table with the specs from the img-url obj, save row id.
-			ImgFnameTable img_fname = new ImgFnameTable();
-			img_fname.setImageFname(imgFileSepcs.getFname());
-			img_fname.setImgHeight(imgFileSepcs.getHeight());
-			img_fname.setImgWidth(imgFileSepcs.getWidth());
-						
-			//association here.
-			img_fname.setImgDetailsID(0);//for now set to zero..
-			//img_fname.setImgDetailsTable(null);//not needed for now.
-			
-	//TODO: need to create the actual image file here...!!!
-			
-			//create row in img-fname table
-			long row_id = dao_session.getImgFnameTableDao().insertOrReplace(img_fname);			
-			
-			//create url-img row in this table.
-			UrlImgFileTable url_img = new UrlImgFileTable();
-			url_img.setCmsID(cmsID);
-			url_img.setUrlTypeID(urlTypeID);
-			url_img.setUrlLocation(urlLocation);
-			
-			//association here
-			url_img.setImgFnameID(row_id);
-			url_img.setImgFnameTable(img_fname);
-			
-			//create row here.
-			long row_id_2 = dao_session.getUrlImgFileTableDao().insertOrReplace(url_img);
-			
-			Log.d(MyTag, "JM...created img file entry and url_img file entry...return user obj back.");
-			
-			rv = url_img;
+			//TODO.. handle in a common way this error...should never happen.
+			Log.d(MyTag, "JM...	MAJOR ERROR, NEED TO HANDLE THIS ACCORDINGLY.");
 		}
 		
 		return rv;
