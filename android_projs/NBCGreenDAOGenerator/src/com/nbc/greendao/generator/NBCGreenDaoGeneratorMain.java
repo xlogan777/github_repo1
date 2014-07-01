@@ -244,7 +244,7 @@ public class NBCGreenDaoGeneratorMain
 	//these belonged to the url field from the media area of json...moved to another table
 		
 		ContentItemMediaTable.addLongProperty("MediaPhotoThumbnailUrlType").notNull();
-		ContentItemMediaTable.addStringProperty("MediaThumbnailUrlType").notNull();
+		ContentItemMediaTable.addLongProperty("MediaThumbnailUrlType").notNull();
 
 		//return entity
 		return ContentItemMediaTable;

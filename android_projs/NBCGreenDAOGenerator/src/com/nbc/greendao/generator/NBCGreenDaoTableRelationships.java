@@ -35,12 +35,19 @@ public class NBCGreenDaoTableRelationships
 	(Entity cntItem, Entity cntLeadMedia, Entity cntMedia, Entity cntItemDetail, Entity UrlImgFileTable)
 	{
 		//setup the lead media table to have a fk with url-img file table.
-		Property fk_leadMediaCmsID = cntLeadMedia.addLongProperty("leadMediaCmsID").notNull().getProperty();
-		cntLeadMedia.addToOne(UrlImgFileTable, fk_leadMediaCmsID);
+		Property fk_leadMediaThumbnailUrlImgTypeRowID = cntLeadMedia.addLongProperty("leadMediaThumbnailUrlImgTypeRowID").notNull().getProperty();
+		cntLeadMedia.addToOne(UrlImgFileTable, fk_leadMediaThumbnailUrlImgTypeRowID);
 		
 		//setup the media table to have a fk with url-img file table.
-		Property fk_mediaCmsID = cntMedia.addLongProperty("mediaCmsID").notNull().getProperty();
-		cntMedia.addToOne(UrlImgFileTable, fk_mediaCmsID);
+		Property fk_mediaUrlImgTypeRowID = cntMedia.addLongProperty("mediaUrlImgTypeRowID").notNull().getProperty();
+		cntMedia.addToOne(UrlImgFileTable, fk_mediaUrlImgTypeRowID,"mediaUrlImgType");
+		
+		Property fk_mediaPhotoThumbnailUrlImgTypeRowID = cntMedia.addLongProperty("mediaPhotoThumbnailUrlImgTypeRowID").notNull().getProperty();
+		cntMedia.addToOne(UrlImgFileTable, fk_mediaPhotoThumbnailUrlImgTypeRowID,"mediaPhotoThumbnailUrlImgType");
+		
+		Property fk_mediaThumbnailUrlImgTypeRowID = cntMedia.addLongProperty("mediaThumbnailUrlImgTypeRowID").notNull().getProperty();
+		cntMedia.addToOne(UrlImgFileTable, fk_mediaThumbnailUrlImgTypeRowID,"mediaThumbnailUrlImgType");
+		
 		
 		//setup the media table to have a fk with url-img file table.
 		
