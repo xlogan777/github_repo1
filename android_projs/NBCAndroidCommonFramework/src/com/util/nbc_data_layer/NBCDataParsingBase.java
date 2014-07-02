@@ -171,5 +171,5 @@ public abstract class NBCDataParsingBase
 	 */
 	protected abstract void parseAndStoreContentData(String inputString, SqliteDBAbstractIface dbIface) throws Exception;
 	protected abstract void parseAndStoreRelatedItemsData(String inputString, SqliteDBAbstractIface dbIface) throws Exception;
-	protected abstract void parseAndStoreGalleryContentData(String inputString, SqliteDBAbstractIface dbIface)throws Exception;
+	protected abstract void parseAndStoreGalleryContentData(String inputString, SqliteDBAbstractIface dbIface)throws Exception;	
 }

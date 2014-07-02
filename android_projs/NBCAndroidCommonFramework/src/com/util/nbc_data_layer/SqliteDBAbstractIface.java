@@ -109,7 +109,11 @@ public abstract class SqliteDBAbstractIface
 	
 	//override these functions since they will be implementation dependent.
 	public abstract void initializeDB();
+	
 	public abstract Object imgFileTableEntryAndAssociationProcessing
 	(ImgFileUrlSpecs imgFileSepcs, ImgFileDetails imgFileDetails, long cmsID, long urlTypeID, String urlLocation);
+	
+	public abstract void peformUrlStringToTableAssociations
+	(String urlInput, long cmsID, NBCDataBaseHelper.T_UrlTypeToId typeID, Object entityObj, NBCDataParsingBase parsingObj);
 	
 }

@@ -2,6 +2,7 @@ package com.util.nbc_data_layer;
 
 import java.util.List;
 
+import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemLeadMediaTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoMaster;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoSession;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ImgDetailsTable;
@@ -192,5 +193,75 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 		}
 		
 		return rv;
+	}
+	
+	/*
+	 * this is an internal function will do most of the common processing for 
+	 * 1.parsing the url path
+	 * 2.getting the url-img entity obj from DB.
+	 * 3.Do the table associations accordingly based on type.
+	 */
+	public void peformUrlStringToTableAssociations
+	(String urlInput, long cmsID, NBCDataBaseHelper.T_UrlTypeToId typeID, Object entityObj, NBCDataParsingBase parsingObj)
+	{
+		//setup default width and height for images specs.
+		final long defaultWidth = 100;
+		final long defaultHeight = 100;
+		
+		//parse the url here and get the meta data needed.
+		//converted to url type. setup defaults for width and height.
+		ImgFileUrlSpecs tmp_img_file = parsingObj.parseUrlString(urlInput, defaultWidth,defaultHeight);
+						
+		// this will be the entity obj for the img-url table. need to be cast since
+		//return value is an object type to keep interface generic.
+		UrlImgFileTable url_img_entity = 
+			(UrlImgFileTable)this.imgFileTableEntryAndAssociationProcessing
+				(
+				 tmp_img_file,
+				 null,
+				 cmsID,
+				 typeID.getUrlTypeID(),
+				 urlInput
+				);
+		
+		//provide switch to appropriately provide the correct type of associations here.
+		switch(typeID)
+		{
+			case E_NOT_VALID_MEDIA_URL_TYPE:
+				break;
+			
+			//taken from lead media table types
+			case E_LEAD_MEDIA_THUMBNAIL_URL_TYPE:
+				
+				//cast entity obj to specific java bean type to make appropriate associations.
+				ContentItemLeadMediaTable cnt_lead_media_table_bean = (ContentItemLeadMediaTable)entityObj;
+				
+				//make the association with cms id to url-img obj here.
+				cnt_lead_media_table_bean.setLeadMediaThumbnailUrlImgTypeRowID(url_img_entity.getId());
+				cnt_lead_media_table_bean.setUrlImgFileTable(url_img_entity);
+				
+				break;
+			
+			//taken from media table types
+			case E_MEDIA_URL_TYPE:
+				break;
+				
+			case E_MEDIA_PHOTO_THUMBNAIL_URL_TYPE:
+				break;
+				
+			case E_MEDIA_THUMBNAIL_URL_TYPE:
+				break;
+			
+			//taken from related item table types
+			case E_REL_ITEM_MOBILE_THUMBNAIL_URL_TYPE:
+				break;
+				
+			case E_REL_ITEM_STORY_THUMBNAIL_URL_TYPE:
+				break;
+			
+			//taken from gallery img table types
+			case E_GAL_IMG_PATH_URL_TYPE:
+				break;
+		}
 	}
 }
