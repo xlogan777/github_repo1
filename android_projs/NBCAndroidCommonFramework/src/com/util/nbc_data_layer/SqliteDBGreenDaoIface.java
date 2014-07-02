@@ -2,7 +2,10 @@ package com.util.nbc_data_layer;
 
 import java.util.List;
 
+import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemDetailTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemLeadMediaTable;
+import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemMediaTable;
+import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemsTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoMaster;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoSession;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ImgDetailsTable;
@@ -201,6 +204,7 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 	 * 2.getting the url-img entity obj from DB.
 	 * 3.Do the table associations accordingly based on type.
 	 */
+	@Override
 	public void peformUrlStringToTableAssociations
 	(String urlInput, long cmsID, NBCDataBaseHelper.T_UrlTypeToId typeID, Object entityObj, NBCDataParsingBase parsingObj)
 	{
@@ -244,24 +248,83 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 			
 			//taken from media table types
 			case E_MEDIA_URL_TYPE:
+				
+				//cast entity obj to be specific to defined entity obj type.
+				ContentItemMediaTable tmp1_cnt_media_table_bean = (ContentItemMediaTable)entityObj;
+				
+				//make associations here specific to defined entity obj type.
+				tmp1_cnt_media_table_bean.setMediaUrlImgTypeRowID(url_img_entity.getId());
+				tmp1_cnt_media_table_bean.setMediaUrlImgType(url_img_entity);
+				
 				break;
 				
 			case E_MEDIA_PHOTO_THUMBNAIL_URL_TYPE:
+				
+				//cast entity obj to be specific to defined entity obj type.
+				ContentItemMediaTable tmp2_cnt_media_table_bean = (ContentItemMediaTable)entityObj;
+				
+				//make associations here specific to defined entity obj type.
+				tmp2_cnt_media_table_bean.setMediaPhotoThumbnailUrlImgTypeRowID(url_img_entity.getId());
+				tmp2_cnt_media_table_bean.setMediaPhotoThumbnailUrlImgType(url_img_entity);
+
 				break;
 				
 			case E_MEDIA_THUMBNAIL_URL_TYPE:
+				
+				//cast entity obj to be specific to defined entity obj type.
+				ContentItemMediaTable tmp3_cnt_media_table_bean = (ContentItemMediaTable)entityObj;
+				
+				//make associations here specific to defined entity obj type.
+				tmp3_cnt_media_table_bean.setMediaThumbnailUrlImgTypeRowID(url_img_entity.getId());
+				tmp3_cnt_media_table_bean.setMediaThumbnailUrlImgType(url_img_entity);
+				
 				break;
 			
 			//taken from related item table types
 			case E_REL_ITEM_MOBILE_THUMBNAIL_URL_TYPE:
+				//TODO
 				break;
 				
 			case E_REL_ITEM_STORY_THUMBNAIL_URL_TYPE:
+				//TODO
 				break;
 			
 			//taken from gallery img table types
 			case E_GAL_IMG_PATH_URL_TYPE:
+				//TODO
 				break;
 		}
+	}
+	
+	/*
+	 * this will take in a set of entity tables and perform the necessary associations for them
+	 * it will also do the db insertions as needed.
+	 */
+	@Override
+	public void contentItemTableAssociationProcessing
+	(Object cntItemsTableBean, Object cntItemDetailTableBean, Object cntMediaTableBean, Object cntLeadMediaTableBean)
+	{
+		//cast to green dao session obj from generic session obj type.
+		DaoSession daoSession = (DaoSession)this.sessionObj;
+		
+		//cast to specific bean obj type here.
+		ContentItemsTable content_items_table_bean = (ContentItemsTable)cntItemsTableBean;
+		
+		//update the foreign key associations for the content item table entry.
+		//save the update via there respective dao. update the content item obj new sub bean obj.
+		ContentItemLeadMediaTable cnt_lead_media_table_bean = (ContentItemLeadMediaTable)cntLeadMediaTableBean;
+		daoSession.getContentItemLeadMediaTableDao().insertOrReplace(cnt_lead_media_table_bean);
+		content_items_table_bean.setContentItemLeadMediaTable(cnt_lead_media_table_bean);
+				
+		ContentItemMediaTable cnt_media_table_bean = (ContentItemMediaTable)cntMediaTableBean;
+		daoSession.getContentItemMediaTableDao().insertOrReplace(cnt_media_table_bean);
+		content_items_table_bean.setContentItemMediaTable(cnt_media_table_bean);
+		
+		ContentItemDetailTable cnt_item_detail_table_bean = (ContentItemDetailTable)cntItemDetailTableBean;
+		daoSession.getContentItemDetailTableDao().insertOrReplace(cnt_item_detail_table_bean);
+		content_items_table_bean.setContentItemDetailTable(cnt_item_detail_table_bean);
+		
+		//update content item obj.
+		daoSession.getContentItemsTableDao().insertOrReplace(content_items_table_bean);
 	}
 }

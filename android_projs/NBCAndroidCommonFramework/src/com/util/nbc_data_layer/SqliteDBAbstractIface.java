@@ -106,7 +106,7 @@ public abstract class SqliteDBAbstractIface
 		//return ref obj of iface.
 		return tmp_db_iface;
 	}
-	
+		
 	//override these functions since they will be implementation dependent.
 	public abstract void initializeDB();
 	
@@ -115,5 +115,8 @@ public abstract class SqliteDBAbstractIface
 	
 	public abstract void peformUrlStringToTableAssociations
 	(String urlInput, long cmsID, NBCDataBaseHelper.T_UrlTypeToId typeID, Object entityObj, NBCDataParsingBase parsingObj);
+		
+	public abstract void contentItemTableAssociationProcessing
+	(Object cntItemsTableBean, Object cntItemDetailTableBean, Object cntMediaTableBean, Object cntLeadMediaTableBean);
 	
 }

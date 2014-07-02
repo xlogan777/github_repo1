@@ -10,7 +10,6 @@ import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemLeadMediaTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemMediaTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemsTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoSession;
-import com.util.nbc_data_layer.nbcGreenDaoSrcGen.UrlImgFileTable;
 
 /**
  * this class will have different parsing schemes for each type of content data
@@ -86,7 +85,7 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 		//String obj_in_mediaContent_type = obj_in_mediaContent.getString("type");
 		//String obj_in_mediaContent_mediaTitle = obj_in_mediaContent.getString("mediaTitle");
 		
-//5 overall obj
+//5. overall obj
 		String title = obj.getString("title");//DONE
 		String fullTitle = obj.getString("fullTitle");//DONE
 		String subTitle = obj.getString("subTitle");//DONE
@@ -97,10 +96,10 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 		//JSONArray customCategory_array = obj.getJSONArray("customCategory");
 		String description = obj.getString("description");//DONE
 		String photoThumbnail = obj.getString("photoThumbnail");//DONE
-
-//start of db iface with json data interactions.		
 		
-		//create pojo for cnt lead media table
+		Log.d(NBCDataParsingAsJsonTAG, "JM...finished parsing nbc content item data.");
+
+//create pojo for cnt lead media table
 		ContentItemLeadMediaTable cnt_lead_media_table_bean = new ContentItemLeadMediaTable();
 		cnt_lead_media_table_bean.setCmsID(metadata_contentId);
 		cnt_lead_media_table_bean.setLeadMediaContentType(metadata_leadMediaType);
@@ -118,43 +117,53 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 		 cnt_lead_media_table_bean, 
 		 this
 		);
+//create pojo for cnt lead media table		
 
-		//create pojo for cnt media table
+//create pojo for cnt media table
 		ContentItemMediaTable cnt_media_table_bean = new ContentItemMediaTable();
 		cnt_media_table_bean.setCmsID(metadata_contentId);
 		
-		cnt_media_table_bean.setMediaUrlType(NBCDataBaseHelper.T_UrlTypeToId.E_MEDIA_URL_TYPE.getUrlTypeID());
-		//get the img specs obj for this url and perform the appropriate processing.
-		
-		cnt_media_table_bean.setMediaPhotoThumbnailUrlType(NBCDataBaseHelper.T_UrlTypeToId.E_MEDIA_PHOTO_THUMBNAIL_URL_TYPE.getUrlTypeID());
-		cnt_media_table_bean.setMediaThumbnailUrlType(NBCDataBaseHelper.T_UrlTypeToId.E_MEDIA_THUMBNAIL_URL_TYPE.getUrlTypeID());		
-		
-
-
+		cnt_media_table_bean.setMediaUrlType(NBCDataBaseHelper.T_UrlTypeToId.E_MEDIA_URL_TYPE.getUrlTypeID());		
+		//TODO: finish this here also.
+		//wont need the height and width since i get that from the url of the image file.
+		//cnt_media_table_bean.setUrl(mediaThumbnail_url);
 		//cnt_media_table_bean.setHeight(mediaThumbnail_height);
 		//cnt_media_table_bean.setWidth(mediaThumbnail_width);
-		//cnt_media_table_bean.setUrl(mediaThumbnail_url);
-		
+		dbIface.peformUrlStringToTableAssociations
+		(
+		 mediaThumbnail_url, 
+		 metadata_contentId, 
+		 NBCDataBaseHelper.T_UrlTypeToId.E_MEDIA_URL_TYPE, 
+		 cnt_media_table_bean, 
+		 this
+		);
+				
+		cnt_media_table_bean.setMediaPhotoThumbnailUrlType(NBCDataBaseHelper.T_UrlTypeToId.E_MEDIA_PHOTO_THUMBNAIL_URL_TYPE.getUrlTypeID());		
 		//these were all replaced with url types
 		//cnt_media_table_bean.setPhotoThumbnail(photoThumbnail);
-		
+		dbIface.peformUrlStringToTableAssociations
+		(
+		 photoThumbnail, 
+		 metadata_contentId, 
+		 NBCDataBaseHelper.T_UrlTypeToId.E_MEDIA_PHOTO_THUMBNAIL_URL_TYPE,
+		 cnt_media_table_bean, 
+		 this
+		);
+
 		//cnt_media_table_bean.setImageCredit(detailContentFields_imageCredit);
 		//cnt_media_table_bean.setThumbnail(detailContentFields_thumbnailUrl);
-		
-		//TODO: to be set correctly.
-		//cnt_media_table_bean.setMediaCmsID(metadata_contentId);
-		//cnt_media_table_bean.setUrlImgFileTable(null);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		//create pojo for cnt detail table
+		cnt_media_table_bean.setMediaThumbnailUrlType(NBCDataBaseHelper.T_UrlTypeToId.E_MEDIA_THUMBNAIL_URL_TYPE.getUrlTypeID());		
+		dbIface.peformUrlStringToTableAssociations
+		(
+		 detailContentFields_thumbnailUrl,
+		 metadata_contentId, 
+		 NBCDataBaseHelper.T_UrlTypeToId.E_MEDIA_THUMBNAIL_URL_TYPE, 
+		 cnt_media_table_bean, 
+		 this
+		);
+//create pojo for cnt media table		
+
+//create pojo for cnt detail table
 		ContentItemDetailTable cnt_item_detail_table_bean = new ContentItemDetailTable();
 		cnt_item_detail_table_bean.setCmsID(metadata_contentId);
 		cnt_item_detail_table_bean.setContentSectionName(detailContentFields_contentSectionName);
@@ -170,8 +179,9 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 		cnt_item_detail_table_bean.setUsingPlaceholderImg(detailContentFields_usingPlaceholderImg);
 		cnt_item_detail_table_bean.setUSWorldTarget(detailContentFields_usWorldTarget);
 		cnt_item_detail_table_bean.setVideoLength(metadata_videoLength);
+//create pojo for cnt detail table		
 				
-		//create pojo for cnt items table
+//create pojo for cnt item table
 		ContentItemsTable content_items_table_bean = new ContentItemsTable();
 		content_items_table_bean.setCmsID(metadata_contentId);
 		content_items_table_bean.setContentTargetPath(detailContentFields_contentTargetPath);
@@ -183,32 +193,12 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 		content_items_table_bean.setShareUrl(metadata_shareURL);
 		content_items_table_bean.setSlugKeyword(metadata_slugKeyword);
 		content_items_table_bean.setSponsored(metadata_sponsored);
-		
-		Log.d(NBCDataParsingAsJsonTAG, "finished parsing.");
+//create pojo for cnt items table
 
-		//check what type the session obj if and cast accordingly.
-		if(dbIface.getSessionType() == SqliteDBAbstractIface.T_Session_Type.E_GREEN_DAO)
-		{
-			//cast to green dao session obj.
-			DaoSession daoSession = (DaoSession)dbIface.getDBSession();
-			
-			//update the foreign key associations for the content item table entry.
-			//save the update via there respective dao. update the content item obj new sub bean obj.
-			daoSession.getContentItemLeadMediaTableDao().insertOrReplace(cnt_lead_media_table_bean);
-			content_items_table_bean.setContentItemLeadMediaTable(cnt_lead_media_table_bean);
-			
-			daoSession.getContentItemMediaTableDao().insertOrReplace(cnt_media_table_bean);
-			content_items_table_bean.setContentItemMediaTable(cnt_media_table_bean);
-			
-			daoSession.getContentItemDetailTableDao().insertOrReplace(cnt_item_detail_table_bean);
-			content_items_table_bean.setContentItemDetailTable(cnt_item_detail_table_bean);		
-			
-			//update content item obj.
-			daoSession.getContentItemsTableDao().insertOrReplace(content_items_table_bean);
-			
-			//TODO: still need to find the correct filename location based on the id of the url..
-			//need to keep track of the actual filename.			
-		}
+		//perform the necessary table associations and updated for the beans
+		//that are for the content item and its specific detail types.
+		dbIface.contentItemTableAssociationProcessing
+		(content_items_table_bean, cnt_item_detail_table_bean, cnt_media_table_bean, cnt_lead_media_table_bean);
 	}
 	
 	/*
