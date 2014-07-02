@@ -206,7 +206,14 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 	 */
 	@Override
 	public void peformUrlStringToTableAssociations
-	(String urlInput, long cmsID, NBCDataBaseHelper.T_UrlTypeToId typeID, Object entityObj, NBCDataParsingBase parsingObj)
+	(
+	 String urlInput, 
+	 ImgFileDetails imgDetails,
+	 long cmsID, 
+	 NBCDataBaseHelper.T_UrlTypeToId typeID, 
+	 Object entityObj, 
+	 NBCDataParsingBase parsingObj
+	)
 	{
 		//setup default width and height for images specs.
 		final long defaultWidth = 100;

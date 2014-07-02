@@ -9,7 +9,6 @@ import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemDetailTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemLeadMediaTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemMediaTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemsTable;
-import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoSession;
 
 /**
  * this class will have different parsing schemes for each type of content data
@@ -111,7 +110,8 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 		//perform the urlstring to table associations. this all gets saved in the entity obj type.
 		dbIface.peformUrlStringToTableAssociations
 		(
-		 metadata_leadMediaThumbnail, 
+		 metadata_leadMediaThumbnail,
+		 null,
 		 metadata_contentId, 
 		 NBCDataBaseHelper.T_UrlTypeToId.E_LEAD_MEDIA_THUMBNAIL_URL_TYPE, 
 		 cnt_lead_media_table_bean, 
@@ -131,7 +131,8 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 		//cnt_media_table_bean.setWidth(mediaThumbnail_width);
 		dbIface.peformUrlStringToTableAssociations
 		(
-		 mediaThumbnail_url, 
+		 mediaThumbnail_url,
+		 null,
 		 metadata_contentId, 
 		 NBCDataBaseHelper.T_UrlTypeToId.E_MEDIA_URL_TYPE, 
 		 cnt_media_table_bean, 
@@ -143,7 +144,8 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 		//cnt_media_table_bean.setPhotoThumbnail(photoThumbnail);
 		dbIface.peformUrlStringToTableAssociations
 		(
-		 photoThumbnail, 
+		 photoThumbnail,
+		 null,
 		 metadata_contentId, 
 		 NBCDataBaseHelper.T_UrlTypeToId.E_MEDIA_PHOTO_THUMBNAIL_URL_TYPE,
 		 cnt_media_table_bean, 
@@ -152,10 +154,13 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 
 		//cnt_media_table_bean.setImageCredit(detailContentFields_imageCredit);
 		//cnt_media_table_bean.setThumbnail(detailContentFields_thumbnailUrl);
+		//create img details obj since we have some from the main json content obj.
+		ImgFileDetails img_details = new ImgFileDetails(detailContentFields_imageCredit,"");
 		cnt_media_table_bean.setMediaThumbnailUrlType(NBCDataBaseHelper.T_UrlTypeToId.E_MEDIA_THUMBNAIL_URL_TYPE.getUrlTypeID());		
 		dbIface.peformUrlStringToTableAssociations
 		(
 		 detailContentFields_thumbnailUrl,
+		 img_details,
 		 metadata_contentId, 
 		 NBCDataBaseHelper.T_UrlTypeToId.E_MEDIA_THUMBNAIL_URL_TYPE, 
 		 cnt_media_table_bean, 

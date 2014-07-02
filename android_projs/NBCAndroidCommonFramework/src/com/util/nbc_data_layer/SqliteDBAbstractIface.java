@@ -114,7 +114,14 @@ public abstract class SqliteDBAbstractIface
 	(ImgFileUrlSpecs imgFileSepcs, ImgFileDetails imgFileDetails, long cmsID, long urlTypeID, String urlLocation);
 	
 	public abstract void peformUrlStringToTableAssociations
-	(String urlInput, long cmsID, NBCDataBaseHelper.T_UrlTypeToId typeID, Object entityObj, NBCDataParsingBase parsingObj);
+	(
+	 String urlInput, 
+	 ImgFileDetails imgDetails, 
+	 long cmsID, 
+	 NBCDataBaseHelper.T_UrlTypeToId typeID, 
+	 Object entityObj, 
+	 NBCDataParsingBase parsingObj
+	);
 		
 	public abstract void contentItemTableAssociationProcessing
 	(Object cntItemsTableBean, Object cntItemDetailTableBean, Object cntMediaTableBean, Object cntLeadMediaTableBean);
