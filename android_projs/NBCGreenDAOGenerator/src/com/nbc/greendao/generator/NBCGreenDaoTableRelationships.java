@@ -19,7 +19,7 @@ public class NBCGreenDaoTableRelationships
 	public static void createRelationshipsImgFnameToImgDetails(Entity urlImgFileTable, Entity imgFnameTable, Entity imgDetailsTable)
 	{
 		//create fk relationship between image fname table an img details table.
-		Property fk_imgDetailsID = imgFnameTable.addLongProperty("ImgDetailsID").notNull().getProperty();
+		Property fk_imgDetailsID = imgFnameTable.addLongProperty("ImgDetailsID").notNull().getProperty();		
 		imgFnameTable.addToOne(imgDetailsTable, fk_imgDetailsID);
 		
 		//create fk relationship between url_img table to img_fname table.
