@@ -12,7 +12,7 @@ import de.greenrobot.dao.DaoException;
  */
 public class ImgFnameTable {
 
-    private long id;
+    private Long id;
     /** Not-null value. */
     private String ImageFname;
     private long ImgHeight;
@@ -35,11 +35,11 @@ public class ImgFnameTable {
     public ImgFnameTable() {
     }
 
-    public ImgFnameTable(long id) {
+    public ImgFnameTable(Long id) {
         this.id = id;
     }
 
-    public ImgFnameTable(long id, String ImageFname, long ImgHeight, long ImgWidth, long ImgDetailsID) {
+    public ImgFnameTable(Long id, String ImageFname, long ImgHeight, long ImgWidth, long ImgDetailsID) {
         this.id = id;
         this.ImageFname = ImageFname;
         this.ImgHeight = ImgHeight;
@@ -53,11 +53,11 @@ public class ImgFnameTable {
         myDao = daoSession != null ? daoSession.getImgFnameTableDao() : null;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

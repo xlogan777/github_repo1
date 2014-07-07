@@ -23,7 +23,7 @@ public class ImgDetailsTableDao extends AbstractDao<ImgDetailsTable, Long> {
      * Can be used for QueryBuilder and for referencing column names.
     */
     public static class Properties {
-        public final static Property Id = new Property(0, long.class, "id", true, "_id");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property ImgCredit = new Property(1, String.class, "ImgCredit", false, "IMG_CREDIT");
         public final static Property ImgCaption = new Property(2, String.class, "ImgCaption", false, "IMG_CAPTION");
     };
@@ -41,7 +41,7 @@ public class ImgDetailsTableDao extends AbstractDao<ImgDetailsTable, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "'IMG_DETAILS_TABLE' (" + //
-                "'_id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ," + // 0: id
+                "'_id' INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "'IMG_CREDIT' TEXT NOT NULL ," + // 1: ImgCredit
                 "'IMG_CAPTION' TEXT NOT NULL );"); // 2: ImgCaption
     }
@@ -56,7 +56,11 @@ public class ImgDetailsTableDao extends AbstractDao<ImgDetailsTable, Long> {
     @Override
     protected void bindValues(SQLiteStatement stmt, ImgDetailsTable entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
         stmt.bindString(2, entity.getImgCredit());
         stmt.bindString(3, entity.getImgCaption());
     }
@@ -64,14 +68,14 @@ public class ImgDetailsTableDao extends AbstractDao<ImgDetailsTable, Long> {
     /** @inheritdoc */
     @Override
     public Long readKey(Cursor cursor, int offset) {
-        return cursor.getLong(offset + 0);
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     /** @inheritdoc */
     @Override
     public ImgDetailsTable readEntity(Cursor cursor, int offset) {
         ImgDetailsTable entity = new ImgDetailsTable( //
-            cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getString(offset + 1), // ImgCredit
             cursor.getString(offset + 2) // ImgCaption
         );
@@ -81,7 +85,7 @@ public class ImgDetailsTableDao extends AbstractDao<ImgDetailsTable, Long> {
     /** @inheritdoc */
     @Override
     public void readEntity(Cursor cursor, ImgDetailsTable entity, int offset) {
-        entity.setId(cursor.getLong(offset + 0));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setImgCredit(cursor.getString(offset + 1));
         entity.setImgCaption(cursor.getString(offset + 2));
      }

@@ -9,7 +9,7 @@ package com.util.nbc_data_layer.nbcGreenDaoSrcGen;
  */
 public class ImgDetailsTable {
 
-    private long id;
+    private Long id;
     /** Not-null value. */
     private String ImgCredit;
     /** Not-null value. */
@@ -21,21 +21,21 @@ public class ImgDetailsTable {
     public ImgDetailsTable() {
     }
 
-    public ImgDetailsTable(long id) {
+    public ImgDetailsTable(Long id) {
         this.id = id;
     }
 
-    public ImgDetailsTable(long id, String ImgCredit, String ImgCaption) {
+    public ImgDetailsTable(Long id, String ImgCredit, String ImgCaption) {
         this.id = id;
         this.ImgCredit = ImgCredit;
         this.ImgCaption = ImgCaption;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

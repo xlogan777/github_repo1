@@ -34,6 +34,11 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 	//these are the class members that are from green dao. 
     private DaoMaster daoMaster;//this holds the DB connection    
     private NBCDataBaseHelper helper;//helper obj that creates the db connection and provides the db connection.
+    
+    //these variables will be used to temporarily set in the img details table
+    //its a way of pointing to null details until we get details to override it with.
+    private final String tmpCredit = "JM...NO CREDIT YET";
+    private final String tmpCaption = "JM...NO CAPTION YET";
 
 	public SqliteDBGreenDaoIface(Context context, String dbName, CursorFactory factory, T_Session_Type sessionType)
 	{
@@ -104,8 +109,8 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 			).list();		
 		
 		//add logging features to see what we get. this is for debugging purposes only.
-		QueryBuilder.LOG_SQL = true;
-		QueryBuilder.LOG_VALUES = true;
+		//QueryBuilder.LOG_SQL = true;
+		//QueryBuilder.LOG_VALUES = true;
 		
 		Log.d(MyTag, "JM...size of list for the query is "+items.size());
 		
@@ -137,7 +142,7 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 				//add new entry to this table.
 				if(item_list.size() == 0)
 				{
-					row_num = img_details_dao.insertOrReplace(img_details_entity);
+					row_num = img_details_dao.insert(img_details_entity);
 					img_details_entity_val = img_details_entity;
 				}
 				//get  the obj for this item..and tie it to the img-fname table.
@@ -149,6 +154,39 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 				else
 				{
 					Log.d(MyTag, "JM...hit error with finding more items in the item details table. handle this situation.");
+				}
+			}
+			//handle the null img details special.
+			else
+			{
+				//make emtpy association now if needed.
+				//check to see if we did this already..if so use that row id as the id..
+				//if not then make new entry now...
+				img_details_entity_val = new ImgDetailsTable();
+				img_details_entity_val.setImgCredit(tmpCredit);
+				img_details_entity_val.setImgCaption(tmpCaption);
+				
+				//get dao of img details table.
+				ImgDetailsTableDao img_details_dao = dao_session.getImgDetailsTableDao();
+				
+				//make a query to see if we have a img details row that matches this potentially new
+				//item 
+				List <ImgDetailsTable> item_list = 
+				   img_details_dao.queryBuilder().where
+				   (
+					ImgDetailsTableDao.Properties.ImgCredit.eq(img_details_entity_val.getImgCredit()),
+					ImgDetailsTableDao.Properties.ImgCaption.eq(img_details_entity_val.getImgCaption())
+				   ).list();
+				
+				//make the first null emtpy row location for details.
+				if(item_list.size() == 0)
+				{					
+					row_num = img_details_dao.insert(img_details_entity_val);
+				}
+				else
+				{
+					row_num = item_list.get(0).getId();
+					img_details_entity_val = item_list.get(0);
 				}
 			}
 			
@@ -163,7 +201,7 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 			img_fname_entity.setImgDetailsTable(img_details_entity_val);//not needed for now.
 			
 			//create row in img-fname table
-			long row_id = dao_session.getImgFnameTableDao().insertOrReplace(img_fname_entity);
+			long row_id = dao_session.getImgFnameTableDao().insert(img_fname_entity);
 			
 			//create entity obj here and setup with specifics of the java bean.
 			UrlImgFileTable url_img_entity = new UrlImgFileTable();
@@ -176,7 +214,7 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 			url_img_entity.setImgFnameTable(img_fname_entity);
 			
 			//create row here in the img-url table
-			long row_id_2 = dao_session.getUrlImgFileTableDao().insertOrReplace(url_img_entity);
+			long row_id_2 = dao_session.getUrlImgFileTableDao().insert(url_img_entity);
 									
 			rv = url_img_entity;
 			
@@ -221,7 +259,7 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 		
 		//parse the url here and get the meta data needed.
 		//converted to url type. setup defaults for width and height.
-		ImgFileUrlSpecs tmp_img_file = parsingObj.parseUrlString(urlInput, defaultWidth,defaultHeight);
+		ImgFileUrlSpecs tmp_img_file = parsingObj.parseUrlString(urlInput, defaultWidth, defaultHeight);
 						
 		// this will be the entity obj for the img-url table. need to be cast since
 		//return value is an object type to keep interface generic.
@@ -229,7 +267,7 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 			(UrlImgFileTable)this.imgFileTableEntryAndAssociationProcessing
 				(
 				 tmp_img_file,
-				 null,
+				 imgDetails,
 				 cmsID,
 				 typeID.getUrlTypeID(),
 				 urlInput
@@ -306,6 +344,7 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 	/*
 	 * this will take in a set of entity tables and perform the necessary associations for them
 	 * it will also do the db insertions as needed.
+	 * these db insert/updates need to be done like this since a content id is unique..
 	 */
 	@Override
 	public void contentItemTableAssociationProcessing

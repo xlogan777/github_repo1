@@ -12,7 +12,7 @@ import de.greenrobot.dao.DaoException;
  */
 public class UrlImgFileTable {
 
-    private long id;
+    private Long id;
     private long CmsID;
     private long UrlTypeID;
     /** Not-null value. */
@@ -35,11 +35,11 @@ public class UrlImgFileTable {
     public UrlImgFileTable() {
     }
 
-    public UrlImgFileTable(long id) {
+    public UrlImgFileTable(Long id) {
         this.id = id;
     }
 
-    public UrlImgFileTable(long id, long CmsID, long UrlTypeID, String UrlLocation, long ImgFnameID) {
+    public UrlImgFileTable(Long id, long CmsID, long UrlTypeID, String UrlLocation, long ImgFnameID) {
         this.id = id;
         this.CmsID = CmsID;
         this.UrlTypeID = UrlTypeID;
@@ -53,11 +53,11 @@ public class UrlImgFileTable {
         myDao = daoSession != null ? daoSession.getUrlImgFileTableDao() : null;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

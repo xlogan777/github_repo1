@@ -26,7 +26,7 @@ public class ImgFnameTableDao extends AbstractDao<ImgFnameTable, Long> {
      * Can be used for QueryBuilder and for referencing column names.
     */
     public static class Properties {
-        public final static Property Id = new Property(0, long.class, "id", true, "_id");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property ImageFname = new Property(1, String.class, "ImageFname", false, "IMAGE_FNAME");
         public final static Property ImgHeight = new Property(2, long.class, "ImgHeight", false, "IMG_HEIGHT");
         public final static Property ImgWidth = new Property(3, long.class, "ImgWidth", false, "IMG_WIDTH");
@@ -49,7 +49,7 @@ public class ImgFnameTableDao extends AbstractDao<ImgFnameTable, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "'IMG_FNAME_TABLE' (" + //
-                "'_id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ," + // 0: id
+                "'_id' INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "'IMAGE_FNAME' TEXT NOT NULL ," + // 1: ImageFname
                 "'IMG_HEIGHT' INTEGER NOT NULL ," + // 2: ImgHeight
                 "'IMG_WIDTH' INTEGER NOT NULL ," + // 3: ImgWidth
@@ -66,7 +66,11 @@ public class ImgFnameTableDao extends AbstractDao<ImgFnameTable, Long> {
     @Override
     protected void bindValues(SQLiteStatement stmt, ImgFnameTable entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
         stmt.bindString(2, entity.getImageFname());
         stmt.bindLong(3, entity.getImgHeight());
         stmt.bindLong(4, entity.getImgWidth());
@@ -82,14 +86,14 @@ public class ImgFnameTableDao extends AbstractDao<ImgFnameTable, Long> {
     /** @inheritdoc */
     @Override
     public Long readKey(Cursor cursor, int offset) {
-        return cursor.getLong(offset + 0);
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     /** @inheritdoc */
     @Override
     public ImgFnameTable readEntity(Cursor cursor, int offset) {
         ImgFnameTable entity = new ImgFnameTable( //
-            cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getString(offset + 1), // ImageFname
             cursor.getLong(offset + 2), // ImgHeight
             cursor.getLong(offset + 3), // ImgWidth
@@ -101,7 +105,7 @@ public class ImgFnameTableDao extends AbstractDao<ImgFnameTable, Long> {
     /** @inheritdoc */
     @Override
     public void readEntity(Cursor cursor, ImgFnameTable entity, int offset) {
-        entity.setId(cursor.getLong(offset + 0));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setImageFname(cursor.getString(offset + 1));
         entity.setImgHeight(cursor.getLong(offset + 2));
         entity.setImgWidth(cursor.getLong(offset + 3));
