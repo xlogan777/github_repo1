@@ -14,7 +14,6 @@ import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ImgFnameTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.UrlImgFileTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.UrlImgFileTableDao;
 
-import de.greenrobot.dao.query.QueryBuilder;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.util.Log;
@@ -39,6 +38,9 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
     //its a way of pointing to null details until we get details to override it with.
     private final String tmpCredit = "JM...NO CREDIT YET";
     private final String tmpCaption = "JM...NO CAPTION YET";
+     
+	//create the visitor obj to be used by each entity obj.
+	private final EntityVisitorIface visitor = new EntityRelationshipVisitor();
 
 	public SqliteDBGreenDaoIface(Context context, String dbName, CursorFactory factory, T_Session_Type sessionType)
 	{
@@ -273,72 +275,79 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 				 urlInput
 				);
 		
-		//provide switch to appropriately provide the correct type of associations here.
-		switch(typeID)
-		{
-			case E_NOT_VALID_MEDIA_URL_TYPE:
-				break;
-			
-			//taken from lead media table types
-			case E_LEAD_MEDIA_THUMBNAIL_URL_TYPE:
-				
-				//cast entity obj to specific java bean type to make appropriate associations.
-				ContentItemLeadMediaTable cnt_lead_media_table_bean = (ContentItemLeadMediaTable)entityObj;
-				
-				//make the association with cms id to url-img obj here.
-				cnt_lead_media_table_bean.setLeadMediaThumbnailUrlImgTypeRowID(url_img_entity.getId());
-				cnt_lead_media_table_bean.setUrlImgFileTable(url_img_entity);
-				
-				break;
-			
-			//taken from media table types
-			case E_MEDIA_URL_TYPE:
-				
-				//cast entity obj to be specific to defined entity obj type.
-				ContentItemMediaTable tmp1_cnt_media_table_bean = (ContentItemMediaTable)entityObj;
-				
-				//make associations here specific to defined entity obj type.
-				tmp1_cnt_media_table_bean.setMediaUrlImgTypeRowID(url_img_entity.getId());
-				tmp1_cnt_media_table_bean.setMediaUrlImgType(url_img_entity);
-				
-				break;
-				
-			case E_MEDIA_PHOTO_THUMBNAIL_URL_TYPE:
-				
-				//cast entity obj to be specific to defined entity obj type.
-				ContentItemMediaTable tmp2_cnt_media_table_bean = (ContentItemMediaTable)entityObj;
-				
-				//make associations here specific to defined entity obj type.
-				tmp2_cnt_media_table_bean.setMediaPhotoThumbnailUrlImgTypeRowID(url_img_entity.getId());
-				tmp2_cnt_media_table_bean.setMediaPhotoThumbnailUrlImgType(url_img_entity);
-
-				break;
-				
-			case E_MEDIA_THUMBNAIL_URL_TYPE:
-				
-				//cast entity obj to be specific to defined entity obj type.
-				ContentItemMediaTable tmp3_cnt_media_table_bean = (ContentItemMediaTable)entityObj;
-				
-				//make associations here specific to defined entity obj type.
-				tmp3_cnt_media_table_bean.setMediaThumbnailUrlImgTypeRowID(url_img_entity.getId());
-				tmp3_cnt_media_table_bean.setMediaThumbnailUrlImgType(url_img_entity);
-				
-				break;
-			
-			//taken from related item table types
-			case E_REL_ITEM_MOBILE_THUMBNAIL_URL_TYPE:
-				//TODO
-				break;
-				
-			case E_REL_ITEM_STORY_THUMBNAIL_URL_TYPE:
-				//TODO
-				break;
-			
-			//taken from gallery img table types
-			case E_GAL_IMG_PATH_URL_TYPE:
-				//TODO
-				break;
-		}
+		//cast the entity obj to the visitor iface for each entity obj.
+		EntityItemIface entity_item = (EntityItemIface) entityObj;
+		
+		//use the visitor iface to rcv the visitor obj to allow for specific processing for
+		//each entity obj.
+		entity_item.accept(visitor, typeID, url_img_entity);
+		
+//		//provide switch to appropriately provide the correct type of associations here.
+//		switch(typeID)
+//		{
+//			case E_NOT_VALID_MEDIA_URL_TYPE:
+//				break;
+//			
+//			//taken from lead media table types
+//			case E_LEAD_MEDIA_THUMBNAIL_URL_TYPE:
+//				
+//				//cast entity obj to specific java bean type to make appropriate associations.
+//				ContentItemLeadMediaTable cnt_lead_media_table_bean = (ContentItemLeadMediaTable)entityObj;
+//				
+//				//make the association with cms id to url-img obj here.
+//				cnt_lead_media_table_bean.setLeadMediaThumbnailUrlImgTypeRowID(url_img_entity.getId());
+//				cnt_lead_media_table_bean.setUrlImgFileTable(url_img_entity);
+//				
+//				break;
+//			
+//			//taken from media table types
+//			case E_MEDIA_URL_TYPE:
+//				
+//				//cast entity obj to be specific to defined entity obj type.
+//				ContentItemMediaTable tmp1_cnt_media_table_bean = (ContentItemMediaTable)entityObj;
+//				
+//				//make associations here specific to defined entity obj type.
+//				tmp1_cnt_media_table_bean.setMediaUrlImgTypeRowID(url_img_entity.getId());
+//				tmp1_cnt_media_table_bean.setMediaUrlImgType(url_img_entity);
+//				
+//				break;
+//				
+//			case E_MEDIA_PHOTO_THUMBNAIL_URL_TYPE:
+//				
+//				//cast entity obj to be specific to defined entity obj type.
+//				ContentItemMediaTable tmp2_cnt_media_table_bean = (ContentItemMediaTable)entityObj;
+//				
+//				//make associations here specific to defined entity obj type.
+//				tmp2_cnt_media_table_bean.setMediaPhotoThumbnailUrlImgTypeRowID(url_img_entity.getId());
+//				tmp2_cnt_media_table_bean.setMediaPhotoThumbnailUrlImgType(url_img_entity);
+//
+//				break;
+//				
+//			case E_MEDIA_THUMBNAIL_URL_TYPE:
+//				
+//				//cast entity obj to be specific to defined entity obj type.
+//				ContentItemMediaTable tmp3_cnt_media_table_bean = (ContentItemMediaTable)entityObj;
+//				
+//				//make associations here specific to defined entity obj type.
+//				tmp3_cnt_media_table_bean.setMediaThumbnailUrlImgTypeRowID(url_img_entity.getId());
+//				tmp3_cnt_media_table_bean.setMediaThumbnailUrlImgType(url_img_entity);
+//				
+//				break;
+//			
+//			//taken from related item table types
+//			case E_REL_ITEM_MOBILE_THUMBNAIL_URL_TYPE:
+//				//TODO
+//				break;
+//				
+//			case E_REL_ITEM_STORY_THUMBNAIL_URL_TYPE:
+//				//TODO
+//				break;
+//			
+//			//taken from gallery img table types
+//			case E_GAL_IMG_PATH_URL_TYPE:
+//				//TODO
+//				break;
+//		}
 	}
 	
 	/*
