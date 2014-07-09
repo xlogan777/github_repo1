@@ -96,7 +96,6 @@ public class NBCGreenDaoGeneratorMain
 		Entity ImgDetailsTable = schema.addEntity("ImgDetailsTable");
 		
 		//setup pk
-		//ImgDetailsTable.addIdProperty().autoincrement().primaryKey().notNull();
 		ImgDetailsTable.addIdProperty().autoincrement().primaryKey();
 		
 		//setup non- pk
@@ -119,7 +118,6 @@ public class NBCGreenDaoGeneratorMain
 		
 		
 		//this is the PK, which cant be null.
-		//ImgFnameTable.addIdProperty().autoincrement().primaryKey().notNull();
 		ImgFnameTable.addIdProperty().autoincrement().primaryKey();
 				
 		//add the non-PK columns.		
@@ -140,7 +138,6 @@ public class NBCGreenDaoGeneratorMain
 		Entity UrlImgFileTable = schema.addEntity("UrlImgFileTable");
 		
 		//create pk
-		//UrlImgFileTable.addIdProperty().autoincrement().primaryKey().notNull();
 		UrlImgFileTable.addIdProperty().autoincrement().primaryKey();
 		
 		//create non-pk fields.
