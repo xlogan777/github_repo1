@@ -1,5 +1,7 @@
 package com.util.nbc_data_layer;
 
+import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemsTable;
+import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoSession;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.UrlImgFileTable;
 
 /**
@@ -8,6 +10,15 @@ import com.util.nbc_data_layer.nbcGreenDaoSrcGen.UrlImgFileTable;
  */
 public interface EntityItemIface 
 {
+	/*
+	 * this is used to associate the image table entity types to content item entity tables
+	 */
 	public void accept
 	(EntityVisitorIface entityVisitorIface, NBCDataBaseHelper.T_UrlTypeToId typeID, UrlImgFileTable urlImgFileTable);
+	
+	/*
+	 * this is used to associate the different content types to the main content entity type.
+	 */
+	public void accept
+	(EntityVisitorIface entityVisitorIface, DaoSession daoSession, ContentItemsTable cntItemsTable);
 }

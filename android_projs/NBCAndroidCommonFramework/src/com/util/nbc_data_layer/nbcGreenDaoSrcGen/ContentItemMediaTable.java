@@ -240,6 +240,12 @@ public class ContentItemMediaTable implements EntityItemIface{
 	{
 		entityVisitorIface.visit(this,typeID,urlImgFileTable);
 	}
+	
+	@Override
+	public void accept(EntityVisitorIface entityVisitorIface, DaoSession daoSession, ContentItemsTable cntItemsTable) 
+	{
+		entityVisitorIface.visit(this, daoSession, cntItemsTable);
+	}
     // KEEP METHODS END
 
 }

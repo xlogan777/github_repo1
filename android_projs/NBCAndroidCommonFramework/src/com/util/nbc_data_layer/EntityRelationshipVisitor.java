@@ -57,23 +57,23 @@ public class EntityRelationshipVisitor implements EntityVisitorIface
 	}
 
 	@Override
-	public void visit(ContentItemsTable cntItemsTable, ContentItemLeadMediaTable cntLeadMediaTable, DaoSession daoSession) 
+	public void visit(ContentItemLeadMediaTable cntLeadMediaTable, DaoSession daoSession, ContentItemsTable cntItemsTable) 
 	{
-	
-		
+		daoSession.getContentItemLeadMediaTableDao().insertOrReplace(cntLeadMediaTable);
+		cntItemsTable.setContentItemLeadMediaTable(cntLeadMediaTable);	
 	}
 
 	@Override
-	public void visit(ContentItemsTable cntItemsTable, ContentItemMediaTable cntItemMediaTable, DaoSession daoSession) 
+	public void visit(ContentItemMediaTable cntItemMediaTable, DaoSession daoSession, ContentItemsTable cntItemsTable) 
 	{
-	
-		
+		daoSession.getContentItemMediaTableDao().insertOrReplace(cntItemMediaTable);
+		cntItemsTable.setContentItemMediaTable(cntItemMediaTable);
 	}
 
 	@Override
-	public void visit(ContentItemsTable cntItemsTable, ContentItemDetailTable cntItemDetailTable, DaoSession daoSession) 
+	public void visit(ContentItemDetailTable cntItemDetailTable, DaoSession daoSession, ContentItemsTable cntItemsTable) 
 	{
-	
-		
+		daoSession.getContentItemDetailTableDao().insertOrReplace(cntItemDetailTable);
+		cntItemsTable.setContentItemDetailTable(cntItemDetailTable);
 	}
 }

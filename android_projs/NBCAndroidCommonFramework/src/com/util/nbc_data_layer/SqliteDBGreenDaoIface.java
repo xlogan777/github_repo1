@@ -2,9 +2,6 @@ package com.util.nbc_data_layer;
 
 import java.util.List;
 
-import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemDetailTable;
-import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemLeadMediaTable;
-import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemMediaTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemsTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoMaster;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoSession;
@@ -365,19 +362,46 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 		//cast to specific bean obj type here.
 		ContentItemsTable content_items_table_bean = (ContentItemsTable)cntItemsTableBean;
 		
+	//perform the entity table association and db transaction for cnt_lead_media_table_bean	
+		//cast the entity obj to the visitor iface for each entity obj.
+		EntityItemIface entity_item = (EntityItemIface)cntLeadMediaTableBean;
+		
+		//use the visitor iface to rcv the visitor obj to allow for specific processing for
+		//each entity obj.
+		entity_item.accept(visitor,daoSession,content_items_table_bean);
+	//perform the entity table association and db transaction for cnt_lead_media_table_bean
+		
+	//perform the entity table association and db transaction for cnt_lead_media_table_bean	
+		//cast the entity obj to the visitor iface for each entity obj.
+		entity_item = (EntityItemIface)cntMediaTableBean;
+		
+		//use the visitor iface to rcv the visitor obj to allow for specific processing for
+		//each entity obj.
+		entity_item.accept(visitor,daoSession,content_items_table_bean);
+	//perform the entity table association and db transaction for cnt_lead_media_table_bean
+		
+	//perform the entity table association and db transaction for cnt_item_detail_table_bean	
+		//cast the entity obj to the visitor iface for each entity obj.
+		entity_item = (EntityItemIface)cntItemDetailTableBean;
+		
+		//use the visitor iface to rcv the visitor obj to allow for specific processing for
+		//each entity obj.
+		entity_item.accept(visitor,daoSession,content_items_table_bean);
+	//perform the entity table association and db transaction for cnt_item_detail_table_bean
+	
 		//update the foreign key associations for the content item table entry.
 		//save the update via there respective dao. update the content item obj new sub bean obj.
-		ContentItemLeadMediaTable cnt_lead_media_table_bean = (ContentItemLeadMediaTable)cntLeadMediaTableBean;
+		/*ContentItemLeadMediaTable cnt_lead_media_table_bean = (ContentItemLeadMediaTable)cntLeadMediaTableBean;
 		daoSession.getContentItemLeadMediaTableDao().insertOrReplace(cnt_lead_media_table_bean);
-		content_items_table_bean.setContentItemLeadMediaTable(cnt_lead_media_table_bean);
+		content_items_table_bean.setContentItemLeadMediaTable(cnt_lead_media_table_bean);*/
 				
-		ContentItemMediaTable cnt_media_table_bean = (ContentItemMediaTable)cntMediaTableBean;
+		/*ContentItemMediaTable cnt_media_table_bean = (ContentItemMediaTable)cntMediaTableBean;
 		daoSession.getContentItemMediaTableDao().insertOrReplace(cnt_media_table_bean);
-		content_items_table_bean.setContentItemMediaTable(cnt_media_table_bean);
+		content_items_table_bean.setContentItemMediaTable(cnt_media_table_bean);*/
 		
-		ContentItemDetailTable cnt_item_detail_table_bean = (ContentItemDetailTable)cntItemDetailTableBean;
+		/*ContentItemDetailTable cnt_item_detail_table_bean = (ContentItemDetailTable)cntItemDetailTableBean;
 		daoSession.getContentItemDetailTableDao().insertOrReplace(cnt_item_detail_table_bean);
-		content_items_table_bean.setContentItemDetailTable(cnt_item_detail_table_bean);
+		content_items_table_bean.setContentItemDetailTable(cnt_item_detail_table_bean);*/
 		
 		//update content item obj.
 		daoSession.getContentItemsTableDao().insertOrReplace(content_items_table_bean);

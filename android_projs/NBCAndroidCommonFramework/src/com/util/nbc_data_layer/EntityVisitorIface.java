@@ -26,7 +26,7 @@ public interface EntityVisitorIface
 	/*
 	 * visitor section of the content items with specific associations.
 	 */
-	public void visit(ContentItemsTable cntItemsTable, ContentItemLeadMediaTable cntLeadMediaTable, DaoSession daoSession);
-	public void visit(ContentItemsTable cntItemsTable, ContentItemMediaTable cntItemMediaTable, DaoSession daoSession);
-	public void visit(ContentItemsTable cntItemsTable, ContentItemDetailTable cntItemDetailTable, DaoSession daoSession);
+	public void visit(ContentItemLeadMediaTable cntLeadMediaTable, DaoSession daoSession, ContentItemsTable cntItemsTable);
+	public void visit(ContentItemMediaTable cntItemMediaTable, DaoSession daoSession, ContentItemsTable cntItemsTable);
+	public void visit(ContentItemDetailTable cntItemDetailTable, DaoSession daoSession, ContentItemsTable cntItemsTable);	
 }
