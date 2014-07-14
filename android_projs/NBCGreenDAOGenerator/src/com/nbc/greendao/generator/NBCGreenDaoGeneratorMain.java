@@ -248,8 +248,8 @@ public class NBCGreenDaoGeneratorMain
 		ContentItemMediaTable.addLongProperty("MediaUrlType").notNull();
 		
 	//these belonged to the url field from the media area of json...moved to another table
-		//ContentItemMediaTable.addIntProperty("Width").notNull();
-		//ContentItemMediaTable.addIntProperty("Height").notNull();
+		//ContentItemMediaTable.addLongProperty("Width").notNull();
+		//ContentItemMediaTable.addLongProperty("Height").notNull();
 		//ContentItemMediaTable.addStringProperty("ImageCredit").notNull();
 	//these belonged to the url field from the media area of json...moved to another table
 		
@@ -279,7 +279,7 @@ public class NBCGreenDaoGeneratorMain
 		ContentItemDetailTable.addStringProperty("FullTitle").notNull();
 		ContentItemDetailTable.addStringProperty("SubTitle").notNull();
 		ContentItemDetailTable.addStringProperty("Description").notNull();
-		ContentItemDetailTable.addIntProperty("VideoLength").notNull();
+		ContentItemDetailTable.addLongProperty("VideoLength").notNull();
 		ContentItemDetailTable.addBooleanProperty("UsingPlaceholderImg").notNull();
 		ContentItemDetailTable.addBooleanProperty("USWorldTarget").notNull();
 		ContentItemDetailTable.addStringProperty("ContentSectionName").notNull();
