@@ -13,6 +13,9 @@ import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemsTable;
 /**
  * this class will have different parsing schemes for each type of content data
  * received from the caller. in this class we only handle JSON format.
+ * this class is specific to parsing the json data streams for content data, related items
+ * gallery types...as well as the data insertion of the data to the data layer via green dao
+ * by using the generic iface feature.
  * 
  * Author J.Mena
  *
@@ -40,14 +43,14 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 		String metadata_leadMediaThumbnail = metadata.getString("leadMediaThumbnail");//DONE
 		String metadata_leadMediaType = metadata.getString("leadMediaType");//DONE
 		
-		int metadata_videoLength = metadata.optInt("videoLength");//DONE
+		long metadata_videoLength = metadata.optLong("videoLength");//DONE
 		
 		String metadata_slugKeyword = metadata.getString("slugKeyword");//DONE
 		String metadata_leadEmbeddedVideo = metadata.getString("leadEmbeddedVideo");//DONE
 		String metadata_contentType = metadata.getString("contentType");//DONE
 		boolean metadata_sponsored = metadata.optBoolean("sponsored");//DONE
 		String metadata_leadMediaExtID = metadata.getString("leadMediaExtID");//DONE
-		int metadata_contentId = metadata.optInt("contentId");//DONE
+		long metadata_contentId = metadata.optLong("contentId");//DONE		
 		
 //2. detail content fields
 		JSONObject detailContentFields = obj.getJSONObject("detailContentFields");
@@ -71,8 +74,8 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 		
 		//get fields from media thumnail obj.
 		String mediaThumbnail_url = mediaThumbnail.getString("url");//DONE
-		int mediaThumbnail_width = mediaThumbnail.optInt("width");//DONE
-		int mediaThumbnail_height = mediaThumbnail.optInt("height");//DONE
+		long mediaThumbnail_width = mediaThumbnail.optLong("width");//DONE
+		long mediaThumbnail_height = mediaThumbnail.optLong("height");//DONE
 				
 //4. media content
 		JSONArray mediaContent = obj.getJSONArray("mediaContent");//get array for this item
@@ -220,7 +223,7 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 		
 		//get the content id associated to this json obj.
 		//this id is most likely an artcle content type.
-		int contentId = obj.getInt("contentId"); 
+		long parentCmsId = obj.optLong("contentId"); 
 		
 		//get json array from json obj.
 		JSONArray json_array = obj.getJSONArray("relatedContent");
@@ -235,15 +238,15 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 			JSONObject json_obj = json_array.getJSONObject(i);
 			
 			//get the data for each json obj at the specific json array index.
-			String typeName = json_obj.getString("typeName");
-			String id = json_obj.getString("id");
+			String contentType = json_obj.getString("typeName");
+			long relCmsId = json_obj.optLong("id");
 			String title = json_obj.getString("title");
 			String source = json_obj.getString("source");
 			String mobileThumbnailUrl = json_obj.getString("mobileThumbnailUrl");
 			String storyThumbnailUrl = json_obj.getString("storyThumbnailUrl");
 			boolean sponsored = json_obj.getBoolean("sponsored");
 			String url = json_obj.getString("url");
-			String typeID = json_obj.getString("typeID");
+			long typeID = json_obj.optLong("typeID");
 			
 			//TODO: create obj that holds this data.
 			//will need to be array list of (POJO-java_bean or hashmap objs).

@@ -6,11 +6,11 @@ package com.util.nbc_data_layer.nbcGreenDaoSrcGen;
 import com.util.nbc_data_layer.EntityItemIface;
 import com.util.nbc_data_layer.EntityVisitorIface;
 import com.util.nbc_data_layer.NBCDataBaseHelper.T_UrlTypeToId;
-// KEEP INCLUDES END
 /**
  * Entity mapped to table CONTENT_ITEM_DETAIL_TABLE.
  */
 public class ContentItemDetailTable implements EntityItemIface{
+// KEEP INCLUDES END
 
     private long CmsID;
     /** Not-null value. */
@@ -24,7 +24,7 @@ public class ContentItemDetailTable implements EntityItemIface{
     private String SubTitle;
     /** Not-null value. */
     private String Description;
-    private int VideoLength;
+    private long VideoLength;
     private boolean UsingPlaceholderImg;
     private boolean USWorldTarget;
     /** Not-null value. */
@@ -46,7 +46,7 @@ public class ContentItemDetailTable implements EntityItemIface{
         this.CmsID = CmsID;
     }
 
-    public ContentItemDetailTable(long CmsID, String DisplayTimeStamp, boolean Flag, String Title, String FullTitle, String SubTitle, String Description, int VideoLength, boolean UsingPlaceholderImg, boolean USWorldTarget, String ContentSectionName, String ContentSectionNameCss, String ContentSubSectionName, String ContentSubSectionNameCss) {
+    public ContentItemDetailTable(long CmsID, String DisplayTimeStamp, boolean Flag, String Title, String FullTitle, String SubTitle, String Description, long VideoLength, boolean UsingPlaceholderImg, boolean USWorldTarget, String ContentSectionName, String ContentSectionNameCss, String ContentSubSectionName, String ContentSubSectionNameCss) {
         this.CmsID = CmsID;
         this.DisplayTimeStamp = DisplayTimeStamp;
         this.Flag = Flag;
@@ -129,11 +129,11 @@ public class ContentItemDetailTable implements EntityItemIface{
         this.Description = Description;
     }
 
-    public int getVideoLength() {
+    public long getVideoLength() {
         return VideoLength;
     }
 
-    public void setVideoLength(int VideoLength) {
+    public void setVideoLength(long VideoLength) {
         this.VideoLength = VideoLength;
     }
 

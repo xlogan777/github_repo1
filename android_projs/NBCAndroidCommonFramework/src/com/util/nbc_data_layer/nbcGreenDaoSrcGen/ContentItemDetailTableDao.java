@@ -30,7 +30,7 @@ public class ContentItemDetailTableDao extends AbstractDao<ContentItemDetailTabl
         public final static Property FullTitle = new Property(4, String.class, "FullTitle", false, "FULL_TITLE");
         public final static Property SubTitle = new Property(5, String.class, "SubTitle", false, "SUB_TITLE");
         public final static Property Description = new Property(6, String.class, "Description", false, "DESCRIPTION");
-        public final static Property VideoLength = new Property(7, int.class, "VideoLength", false, "VIDEO_LENGTH");
+        public final static Property VideoLength = new Property(7, long.class, "VideoLength", false, "VIDEO_LENGTH");
         public final static Property UsingPlaceholderImg = new Property(8, boolean.class, "UsingPlaceholderImg", false, "USING_PLACEHOLDER_IMG");
         public final static Property USWorldTarget = new Property(9, boolean.class, "USWorldTarget", false, "USWORLD_TARGET");
         public final static Property ContentSectionName = new Property(10, String.class, "ContentSectionName", false, "CONTENT_SECTION_NAME");
@@ -111,7 +111,7 @@ public class ContentItemDetailTableDao extends AbstractDao<ContentItemDetailTabl
             cursor.getString(offset + 4), // FullTitle
             cursor.getString(offset + 5), // SubTitle
             cursor.getString(offset + 6), // Description
-            cursor.getInt(offset + 7), // VideoLength
+            cursor.getLong(offset + 7), // VideoLength
             cursor.getShort(offset + 8) != 0, // UsingPlaceholderImg
             cursor.getShort(offset + 9) != 0, // USWorldTarget
             cursor.getString(offset + 10), // ContentSectionName
@@ -132,7 +132,7 @@ public class ContentItemDetailTableDao extends AbstractDao<ContentItemDetailTabl
         entity.setFullTitle(cursor.getString(offset + 4));
         entity.setSubTitle(cursor.getString(offset + 5));
         entity.setDescription(cursor.getString(offset + 6));
-        entity.setVideoLength(cursor.getInt(offset + 7));
+        entity.setVideoLength(cursor.getLong(offset + 7));
         entity.setUsingPlaceholderImg(cursor.getShort(offset + 8) != 0);
         entity.setUSWorldTarget(cursor.getShort(offset + 9) != 0);
         entity.setContentSectionName(cursor.getString(offset + 10));
