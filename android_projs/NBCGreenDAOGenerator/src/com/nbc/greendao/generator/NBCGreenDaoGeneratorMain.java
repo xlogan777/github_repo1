@@ -64,6 +64,10 @@ public class NBCGreenDaoGeneratorMain
 		NBCGreenDaoTableRelationships.createRelationshipContentItemsToDetails
 		(content_items_table, content_item_lead_media_table, content_item_media_table, content_item_detail_table,entity_url_img_file_table);
 		
+		//setup the related_items/gallery to img table relationships
+		NBCGreenDaoTableRelationships.createRelationshipsRelatedItemsAndGalleryToImgDetails
+		(related_item_table, entity_gallery_table, entity_url_img_file_table);
+		
 		//generate the source code.
 		try
 		{
@@ -150,7 +154,7 @@ public class NBCGreenDaoGeneratorMain
 	
 	/*
 	 * add the specific gallery content table type.
-	 * will have 1:n relationship to image file table.
+	 * will have 1:1 relationship to image file table.
 	 */
 	public static Entity createGalleryContentTable(Schema schema)
 	{
@@ -158,13 +162,19 @@ public class NBCGreenDaoGeneratorMain
 		Entity GalleryContentTable = schema.addEntity("GalleryContentTable");
 		
 		//this is pk.
-		GalleryContentTable.addLongProperty("GalCmsID").primaryKey().notNull();
+		GalleryContentTable.addIdProperty().autoincrement().primaryKey();
 		
 		//add non pk columns.
-		//GalleryContentTable.addIntProperty("ImgHeight").notNull();
-		//GalleryContentTable.addIntProperty("ImgWidth").notNull();
-		GalleryContentTable.addIntProperty("ImgIndex").notNull();		
-		GalleryContentTable.addStringProperty("ImgPath").notNull();
+		GalleryContentTable.addLongProperty("GalCmsID").notNull();
+		
+		//will be in the img_fname_table, will either associate or create.
+		//GalleryContentTable.addLongProperty("ImgHeight").notNull();
+		//GalleryContentTable.addLongProperty("ImgWidth").notNull();
+		
+		GalleryContentTable.addLongProperty("ImgIndex").notNull();		
+		GalleryContentTable.addLongProperty("GalleryImgPathUrlType").notNull();
+		
+		//will be in the img_details_table, will either associate or create.
 		//GalleryContentTable.addStringProperty("ImgCaption").notNull();
 		//GalleryContentTable.addStringProperty("ImgCredit").notNull();
 
@@ -175,7 +185,6 @@ public class NBCGreenDaoGeneratorMain
 	/*
 	 * this is responsible for the creation of the related item table.
 	 * will have relationship to image file table. 1:1
-	 * will have a relationship to the gallery table. 1:n
 	 */
 	public static Entity createRelatedItemsTable(Schema schema)
 	{
@@ -183,18 +192,19 @@ public class NBCGreenDaoGeneratorMain
 		Entity RelatedItemsTable = schema.addEntity("RelatedItemsTable");
 		
 		//this is the pk.
-		RelatedItemsTable.addLongProperty("ParentCmsID").primaryKey().notNull();
+		RelatedItemsTable.addIdProperty().autoincrement().primaryKey();
 		
 		//add non pk fields here.
-		RelatedItemsTable.addIntProperty("RelCmsID").notNull();
+		RelatedItemsTable.addLongProperty("ParentCmsID").notNull();
+		RelatedItemsTable.addLongProperty("RelCmsID").notNull();
 		RelatedItemsTable.addStringProperty("ContentType").notNull();
 		RelatedItemsTable.addStringProperty("Title").notNull();
 		RelatedItemsTable.addBooleanProperty("Sponsored").notNull();
 		RelatedItemsTable.addStringProperty("Source").notNull();
-		RelatedItemsTable.addStringProperty("MobileThumbnailUrl").notNull();
-		RelatedItemsTable.addStringProperty("StoryThumbnailUrl").notNull();
+		RelatedItemsTable.addLongProperty("RelItemMobileThumbnailUrlType").notNull();
+		RelatedItemsTable.addLongProperty("RelItemStoryThumbnailUrlType").notNull();
 		RelatedItemsTable.addStringProperty("SharingUrl").notNull();
-		RelatedItemsTable.addIntProperty("TypeID").notNull();
+		RelatedItemsTable.addLongProperty("TypeID").notNull();
 				
 		//return entity.
 		return RelatedItemsTable;
