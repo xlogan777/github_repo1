@@ -11,7 +11,6 @@ import com.util.nbc_data_layer.EntityVisitorIface;
 import com.util.nbc_data_layer.NBCDataBaseHelper;
 //public class ContentItemMediaTable implements EntityItemIface{
 // KEEP INCLUDES END
-
 /**
  * Entity mapped to table CONTENT_ITEM_MEDIA_TABLE.
  */
