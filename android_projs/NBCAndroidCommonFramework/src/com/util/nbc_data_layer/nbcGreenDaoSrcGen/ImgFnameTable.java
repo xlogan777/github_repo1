@@ -17,7 +17,7 @@ public class ImgFnameTable {
     private String ImageFname;
     private long ImgHeight;
     private long ImgWidth;
-    private long ImgDetailsID;
+    private long imgDetailsID;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
@@ -39,12 +39,12 @@ public class ImgFnameTable {
         this.id = id;
     }
 
-    public ImgFnameTable(Long id, String ImageFname, long ImgHeight, long ImgWidth, long ImgDetailsID) {
+    public ImgFnameTable(Long id, String ImageFname, long ImgHeight, long ImgWidth, long imgDetailsID) {
         this.id = id;
         this.ImageFname = ImageFname;
         this.ImgHeight = ImgHeight;
         this.ImgWidth = ImgWidth;
-        this.ImgDetailsID = ImgDetailsID;
+        this.imgDetailsID = imgDetailsID;
     }
 
     /** called by internal mechanisms, do not call yourself. */
@@ -88,16 +88,16 @@ public class ImgFnameTable {
     }
 
     public long getImgDetailsID() {
-        return ImgDetailsID;
+        return imgDetailsID;
     }
 
-    public void setImgDetailsID(long ImgDetailsID) {
-        this.ImgDetailsID = ImgDetailsID;
+    public void setImgDetailsID(long imgDetailsID) {
+        this.imgDetailsID = imgDetailsID;
     }
 
     /** To-one relationship, resolved on first access. */
     public ImgDetailsTable getImgDetailsTable() {
-        long __key = this.ImgDetailsID;
+        long __key = this.imgDetailsID;
         if (imgDetailsTable__resolvedKey == null || !imgDetailsTable__resolvedKey.equals(__key)) {
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
@@ -114,12 +114,12 @@ public class ImgFnameTable {
 
     public void setImgDetailsTable(ImgDetailsTable imgDetailsTable) {
         if (imgDetailsTable == null) {
-            throw new DaoException("To-one property 'ImgDetailsID' has not-null constraint; cannot set to-one to null");
+            throw new DaoException("To-one property 'imgDetailsID' has not-null constraint; cannot set to-one to null");
         }
         synchronized (this) {
             this.imgDetailsTable = imgDetailsTable;
-            ImgDetailsID = imgDetailsTable.getId();
-            imgDetailsTable__resolvedKey = ImgDetailsID;
+            imgDetailsID = imgDetailsTable.getId();
+            imgDetailsTable__resolvedKey = imgDetailsID;
         }
     }
 

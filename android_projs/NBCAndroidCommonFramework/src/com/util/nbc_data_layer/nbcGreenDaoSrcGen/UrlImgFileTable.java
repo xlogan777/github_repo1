@@ -17,7 +17,7 @@ public class UrlImgFileTable {
     private long UrlTypeID;
     /** Not-null value. */
     private String UrlLocation;
-    private long ImgFnameID;
+    private long imgFnameID;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
@@ -39,12 +39,12 @@ public class UrlImgFileTable {
         this.id = id;
     }
 
-    public UrlImgFileTable(Long id, long CmsID, long UrlTypeID, String UrlLocation, long ImgFnameID) {
+    public UrlImgFileTable(Long id, long CmsID, long UrlTypeID, String UrlLocation, long imgFnameID) {
         this.id = id;
         this.CmsID = CmsID;
         this.UrlTypeID = UrlTypeID;
         this.UrlLocation = UrlLocation;
-        this.ImgFnameID = ImgFnameID;
+        this.imgFnameID = imgFnameID;
     }
 
     /** called by internal mechanisms, do not call yourself. */
@@ -88,16 +88,16 @@ public class UrlImgFileTable {
     }
 
     public long getImgFnameID() {
-        return ImgFnameID;
+        return imgFnameID;
     }
 
-    public void setImgFnameID(long ImgFnameID) {
-        this.ImgFnameID = ImgFnameID;
+    public void setImgFnameID(long imgFnameID) {
+        this.imgFnameID = imgFnameID;
     }
 
     /** To-one relationship, resolved on first access. */
     public ImgFnameTable getImgFnameTable() {
-        long __key = this.ImgFnameID;
+        long __key = this.imgFnameID;
         if (imgFnameTable__resolvedKey == null || !imgFnameTable__resolvedKey.equals(__key)) {
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
@@ -114,12 +114,12 @@ public class UrlImgFileTable {
 
     public void setImgFnameTable(ImgFnameTable imgFnameTable) {
         if (imgFnameTable == null) {
-            throw new DaoException("To-one property 'ImgFnameID' has not-null constraint; cannot set to-one to null");
+            throw new DaoException("To-one property 'imgFnameID' has not-null constraint; cannot set to-one to null");
         }
         synchronized (this) {
             this.imgFnameTable = imgFnameTable;
-            ImgFnameID = imgFnameTable.getId();
-            imgFnameTable__resolvedKey = ImgFnameID;
+            imgFnameID = imgFnameTable.getId();
+            imgFnameTable__resolvedKey = imgFnameID;
         }
     }
 

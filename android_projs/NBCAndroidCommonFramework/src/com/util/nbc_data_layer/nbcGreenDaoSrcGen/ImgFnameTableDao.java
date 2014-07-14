@@ -30,7 +30,7 @@ public class ImgFnameTableDao extends AbstractDao<ImgFnameTable, Long> {
         public final static Property ImageFname = new Property(1, String.class, "ImageFname", false, "IMAGE_FNAME");
         public final static Property ImgHeight = new Property(2, long.class, "ImgHeight", false, "IMG_HEIGHT");
         public final static Property ImgWidth = new Property(3, long.class, "ImgWidth", false, "IMG_WIDTH");
-        public final static Property ImgDetailsID = new Property(4, long.class, "ImgDetailsID", false, "IMG_DETAILS_ID");
+        public final static Property ImgDetailsID = new Property(4, long.class, "imgDetailsID", false, "IMG_DETAILS_ID");
     };
 
     private DaoSession daoSession;
@@ -53,7 +53,7 @@ public class ImgFnameTableDao extends AbstractDao<ImgFnameTable, Long> {
                 "'IMAGE_FNAME' TEXT NOT NULL ," + // 1: ImageFname
                 "'IMG_HEIGHT' INTEGER NOT NULL ," + // 2: ImgHeight
                 "'IMG_WIDTH' INTEGER NOT NULL ," + // 3: ImgWidth
-                "'IMG_DETAILS_ID' INTEGER NOT NULL );"); // 4: ImgDetailsID
+                "'IMG_DETAILS_ID' INTEGER NOT NULL );"); // 4: imgDetailsID
     }
 
     /** Drops the underlying database table. */
@@ -97,7 +97,7 @@ public class ImgFnameTableDao extends AbstractDao<ImgFnameTable, Long> {
             cursor.getString(offset + 1), // ImageFname
             cursor.getLong(offset + 2), // ImgHeight
             cursor.getLong(offset + 3), // ImgWidth
-            cursor.getLong(offset + 4) // ImgDetailsID
+            cursor.getLong(offset + 4) // imgDetailsID
         );
         return entity;
     }
