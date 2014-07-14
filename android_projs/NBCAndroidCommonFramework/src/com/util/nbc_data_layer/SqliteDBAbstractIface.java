@@ -126,4 +126,7 @@ public abstract class SqliteDBAbstractIface
 	public abstract void contentItemTableAssociationProcessing
 	(Object cntItemsTableBean, Object cntItemDetailTableBean, Object cntMediaTableBean, Object cntLeadMediaTableBean);
 	
+	public abstract void relatedItemsTableAssociationProcessing(Object relatedItemsTableBean);
+	
+	public abstract void galleryTableAssociationProcessing(Object galleryItemsTableBean);
 }

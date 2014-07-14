@@ -21,4 +21,10 @@ public interface EntityItemIface
 	 */
 	public void accept
 	(EntityVisitorIface entityVisitorIface, DaoSession daoSession, ContentItemsTable cntItemsTable);
+	
+	/*
+	 * this is used for either related items/gallery/content items entity tables.
+	 */
+	public void accept
+	(EntityVisitorIface entityVisitorIface, DaoSession daoSession);
 }

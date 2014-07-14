@@ -388,6 +388,15 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 		//each entity obj.
 		entity_item.accept(visitor,daoSession,content_items_table_bean);
 	//perform the entity table association and db transaction for cnt_item_detail_table_bean
+		
+	//perform the entity table association and db transaction for cnt_item_detail_table_bean	
+		//cast the entity obj to the visitor iface for each entity obj.
+		entity_item = (EntityItemIface)cntItemsTableBean;
+		
+		//use the visitor iface to rcv the visitor obj to allow for specific processing for
+		//each entity obj.
+		entity_item.accept(visitor,daoSession);
+	//perform the entity table association and db transaction for cnt_item_detail_table_bean
 	
 		//update the foreign key associations for the content item table entry.
 		//save the update via there respective dao. update the content item obj new sub bean obj.
@@ -402,8 +411,46 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 		/*ContentItemDetailTable cnt_item_detail_table_bean = (ContentItemDetailTable)cntItemDetailTableBean;
 		daoSession.getContentItemDetailTableDao().insertOrReplace(cnt_item_detail_table_bean);
 		content_items_table_bean.setContentItemDetailTable(cnt_item_detail_table_bean);*/
-		
+				
 		//update content item obj.
-		daoSession.getContentItemsTableDao().insertOrReplace(content_items_table_bean);
+		//daoSession.getContentItemsTableDao().insertOrReplace(content_items_table_bean);
+	}
+	
+	/*
+	 * this will perform the data insertion from the related items bean to the db layer.
+	 * 
+	 */
+	public void relatedItemsTableAssociationProcessing(Object relatedItemsTableBean)
+	{
+		//cast to green dao session obj from generic session obj type.
+		DaoSession daoSession = (DaoSession)this.sessionObj;
+		
+		//perform the entity table association and db transaction for related_items_table_bean	
+		//cast the entity obj to the visitor iface for each entity obj.
+		EntityItemIface entity_item = (EntityItemIface)relatedItemsTableBean;
+		
+		//use the visitor iface to rcv the visitor obj to allow for specific processing for
+		//each entity obj.
+		entity_item.accept(visitor,daoSession);
+		//perform the entity table association and db transaction for related_items_table_bean
+	}
+	
+	/*
+	 * this will perform the data insertion from the gallery items bean to the db layer.
+	 * 
+	 */
+	public void galleryTableAssociationProcessing(Object galleryItemsTableBean)
+	{
+		//cast to green dao session obj from generic session obj type.
+		DaoSession daoSession = (DaoSession)this.sessionObj;
+		
+		//perform the entity table association and db transaction for gallery_items_table_bean	
+		//cast the entity obj to the visitor iface for each entity obj.
+		EntityItemIface entity_item = (EntityItemIface)galleryItemsTableBean;
+		
+		//use the visitor iface to rcv the visitor obj to allow for specific processing for
+		//each entity obj.
+		entity_item.accept(visitor,daoSession);
+		//perform the entity table association and db transaction for gallery_items_table_bean
 	}
 }

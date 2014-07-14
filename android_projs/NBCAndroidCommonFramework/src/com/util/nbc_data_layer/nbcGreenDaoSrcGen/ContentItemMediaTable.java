@@ -242,6 +242,11 @@ public class ContentItemMediaTable implements EntityItemIface{
 	{
 		entityVisitorIface.visit(this, daoSession, cntItemsTable);
 	}
+	
+	@Override
+	public void accept(EntityVisitorIface entityVisitorIface, DaoSession daoSession) 
+	{	
+		//dont do anything here.
+	}
     // KEEP METHODS END
-
 }

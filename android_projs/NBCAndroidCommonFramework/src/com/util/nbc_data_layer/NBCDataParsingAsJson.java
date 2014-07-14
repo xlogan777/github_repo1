@@ -9,6 +9,7 @@ import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemDetailTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemLeadMediaTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemMediaTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemsTable;
+import com.util.nbc_data_layer.nbcGreenDaoSrcGen.RelatedItemsTable;
 
 /**
  * this class will have different parsing schemes for each type of content data
@@ -242,15 +243,60 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 			long relCmsId = json_obj.optLong("id");
 			String title = json_obj.getString("title");
 			String source = json_obj.getString("source");
-			String mobileThumbnailUrl = json_obj.getString("mobileThumbnailUrl");
-			String storyThumbnailUrl = json_obj.getString("storyThumbnailUrl");
-			boolean sponsored = json_obj.getBoolean("sponsored");
+			boolean sponsored = json_obj.optBoolean("sponsored");
 			String url = json_obj.getString("url");
 			long typeID = json_obj.optLong("typeID");
 			
-			//TODO: create obj that holds this data.
-			//will need to be array list of (POJO-java_bean or hashmap objs).
-		}
+			//handle with img url table management.
+			String mobileThumbnailUrl = json_obj.getString("mobileThumbnailUrl");
+			String storyThumbnailUrl = json_obj.getString("storyThumbnailUrl");
+			//end of the parsing of the json string.
+						
+		//create pojo for related items table
+			RelatedItemsTable related_items_table_bean = new RelatedItemsTable();
+			related_items_table_bean.setParentCmsID(parentCmsId);
+			related_items_table_bean.setContentType(contentType);
+			related_items_table_bean.setRelCmsID(relCmsId);
+			related_items_table_bean.setTitle(title);
+			related_items_table_bean.setSource(source);
+			related_items_table_bean.setSponsored(sponsored);
+			related_items_table_bean.setSharingUrl(url);
+			related_items_table_bean.setTypeID(typeID);
+			
+			related_items_table_bean.setRelItemMobileThumbnailUrlType
+			(NBCDataBaseHelper.T_UrlTypeToId.E_REL_ITEM_MOBILE_THUMBNAIL_URL_TYPE.getUrlTypeID());
+			
+			//perform the urlstring to table associations. this all gets saved in the entity obj type.
+			//dont have any details about any of the images.
+			dbIface.peformUrlStringToTableAssociations
+			(
+			 mobileThumbnailUrl,
+			 null,
+			 relCmsId, 
+			 NBCDataBaseHelper.T_UrlTypeToId.E_REL_ITEM_MOBILE_THUMBNAIL_URL_TYPE, 
+			 related_items_table_bean, 
+			 this
+			);
+			
+			related_items_table_bean.setRelItemMobileThumbnailUrlType
+			(NBCDataBaseHelper.T_UrlTypeToId.E_REL_ITEM_STORY_THUMBNAIL_URL_TYPE.getUrlTypeID());
+			
+			//perform the urlstring to table associations. this all gets saved in the entity obj type.
+			//dont have any details about any of the images.
+			dbIface.peformUrlStringToTableAssociations
+			(
+			 storyThumbnailUrl,
+			 null,
+			 relCmsId, 
+			 NBCDataBaseHelper.T_UrlTypeToId.E_REL_ITEM_STORY_THUMBNAIL_URL_TYPE, 
+			 related_items_table_bean, 
+			 this
+			);
+			
+			//add the related content to the DB layer here.
+			dbIface.relatedItemsTableAssociationProcessing(related_items_table_bean);
+		//create pojo for related items table
+		}//for loop
 	}
 	
 	/*
