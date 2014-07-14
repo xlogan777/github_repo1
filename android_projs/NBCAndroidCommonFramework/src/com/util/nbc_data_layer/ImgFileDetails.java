@@ -10,8 +10,8 @@ package com.util.nbc_data_layer;
  */
 public class ImgFileDetails 
 {
-	private String credit = null;
-	private String caption = null;
+	private final String credit;
+	private final String caption;
 	
 	//constructor
 	public ImgFileDetails(String credit, String caption)

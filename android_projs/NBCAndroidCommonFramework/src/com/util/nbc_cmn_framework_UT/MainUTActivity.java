@@ -5,6 +5,7 @@ import java.io.*;
 import com.util.nbc_common_framework.R;
 import com.util.nbc_data_layer.NBCDataParsingBase;
 import com.util.nbc_data_layer.NBCDataParsingAsJson;
+import com.util.nbc_data_layer.ParsingInputParams;
 import com.util.nbc_data_layer.SqliteDBAbstractIface;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemDetailTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemsTable;
@@ -68,8 +69,9 @@ public class MainUTActivity extends ActionBarActivity
 	        //close the input stream...
 	        input_stream.close();
 	        	        
-	        //invoke specific parsing type based on enum and save it to DB.
-	        parse_json.parseAndStoreDataType(json_string, NBCDataParsingBase.T_BasicContentTypes.E_CONTENT_ITEM_TYPE, dbIface);
+	        //invoke specific parsing type by providing the parsing input params.
+	        ParsingInputParams pip = new ParsingInputParams(0, NBCDataParsingBase.T_BasicContentTypes.E_CONTENT_ITEM_TYPE);
+	        parse_json.parseAndStoreDataType(json_string, pip, dbIface);
 	        
 	        //get the content data using the content id. this loads a bean obj.
 	        long id = 253794761;

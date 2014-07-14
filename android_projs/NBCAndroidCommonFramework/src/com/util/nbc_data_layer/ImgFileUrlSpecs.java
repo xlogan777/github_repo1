@@ -10,10 +10,9 @@ package com.util.nbc_data_layer;
  */
 public class ImgFileUrlSpecs 
 {
-	//default values
-	private String fname = null;
-	private long width = -1;
-	private long height = -1;
+	private final String fname;
+	private final long width;
+	private final long height;
 	
 	/*
 	 * constructor

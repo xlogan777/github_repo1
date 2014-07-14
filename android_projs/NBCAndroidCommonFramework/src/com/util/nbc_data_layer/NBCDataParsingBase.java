@@ -78,23 +78,23 @@ public abstract class NBCDataParsingBase
 	 * processing dependent on the type. the error handling is the same... 
 	 * 
 	 */
-	public void parseAndStoreDataType(String inputString, T_BasicContentTypes type, SqliteDBAbstractIface dbIface)
+	public void parseAndStoreDataType(String inputString, ParsingInputParams parsingInputParams, SqliteDBAbstractIface dbIface)
 	{
 		try
 		{
 			//switch on the specific types to handle accordingly.
-			switch(type)
+			switch(parsingInputParams.getContentType())
 			{
 				case E_CONTENT_ITEM_TYPE:
-					parseAndStoreContentData(inputString, dbIface);
+					parseAndStoreContentData(inputString, parsingInputParams, dbIface);
 					break;
 				
 				case E_RELATED_ITEM_TYPE:
-					parseAndStoreRelatedItemsData(inputString, dbIface);
+					parseAndStoreRelatedItemsData(inputString, parsingInputParams, dbIface);
 					break;
 					
 				case E_GALLERY_ITEM_TYPE:					
-					parseAndStoreGalleryContentData(inputString, dbIface);
+					parseAndStoreGalleryContentData(inputString, parsingInputParams, dbIface);
 					break;
 			}
 		}
@@ -169,7 +169,12 @@ public abstract class NBCDataParsingBase
 	 * input string. each method handle a specific type of data from the input string. that can
 	 * throw an exception if an error occurs.
 	 */
-	protected abstract void parseAndStoreContentData(String inputString, SqliteDBAbstractIface dbIface) throws Exception;
-	protected abstract void parseAndStoreRelatedItemsData(String inputString, SqliteDBAbstractIface dbIface) throws Exception;
-	protected abstract void parseAndStoreGalleryContentData(String inputString, SqliteDBAbstractIface dbIface)throws Exception;	
+	protected abstract void parseAndStoreContentData
+	(String inputString, ParsingInputParams parsingInputParams, SqliteDBAbstractIface dbIface) throws Exception;
+	
+	protected abstract void parseAndStoreRelatedItemsData
+	(String inputString, ParsingInputParams parsingInputParams, SqliteDBAbstractIface dbIface) throws Exception;
+	
+	protected abstract void parseAndStoreGalleryContentData
+	(String inputString, ParsingInputParams parsingInputParams, SqliteDBAbstractIface dbIface) throws Exception;	
 }

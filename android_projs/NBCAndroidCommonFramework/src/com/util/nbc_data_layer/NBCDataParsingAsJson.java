@@ -9,6 +9,7 @@ import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemDetailTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemLeadMediaTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemMediaTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemsTable;
+import com.util.nbc_data_layer.nbcGreenDaoSrcGen.GalleryContentTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.RelatedItemsTable;
 
 /**
@@ -31,7 +32,8 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 	 * things like, Article, Video_Release, etc.
 	 */
 	@Override
-	protected void parseAndStoreContentData(String inputString, SqliteDBAbstractIface dbIface) throws Exception
+	protected void parseAndStoreContentData
+	(String inputString, ParsingInputParams parsingInputParams, SqliteDBAbstractIface dbIface) throws Exception
 	{
 		//root obj for the json tree.
 		JSONObject obj = new JSONObject(inputString);
@@ -217,7 +219,8 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 	 * json_obj{ json_array[ json_obj{}, json_obj{}...etc ] }
 	 */
 	@Override
-	protected void parseAndStoreRelatedItemsData(String inputString, SqliteDBAbstractIface dbIface) throws Exception
+	protected void parseAndStoreRelatedItemsData
+	(String inputString, ParsingInputParams parsingInputParams, SqliteDBAbstractIface dbIface) throws Exception
 	{
 		//create json obj from input string. this is the root of the json data tree.
 		JSONObject obj = new JSONObject(inputString);
@@ -306,7 +309,8 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 	 *    
 	 */
 	@Override
-	protected void parseAndStoreGalleryContentData(String inputString, SqliteDBAbstractIface dbIface)throws Exception
+	protected void parseAndStoreGalleryContentData
+	(String inputString, ParsingInputParams parsingInputParams, SqliteDBAbstractIface dbIface) throws Exception
 	{
 		//create json array from json string. this the root for gallery content item.
 		JSONArray json_array_gallery = new JSONArray(inputString);
@@ -321,15 +325,46 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 			JSONObject obj = json_array_gallery.getJSONObject(i);
 			
 			//gather data from json obj at index "i".
-			String imageHeight = obj.getString("imageHeight");
-			String index = obj.getString("index");
+			long imageHeight = obj.optLong("imageHeight");//not needed, will get from url
+			long index = obj.optLong("index");
+			//assume width,height is in the url, of not then take from here...???
 			String imagePath = obj.getString("imagePath");
+			
+			//this is the details of an image file.
 			String imageCaption = obj.getString("imageCaption");
 			String imageCredit = obj.getString("imageCredit");
-			String imageWidth = obj.getString("imageWidth");
 			
-			//TODO: create obj that holds this data.
-			//will need to be array list of (POJO-java_bean or hashmap objs).
-		}
+			long imageWidth = obj.optLong("imageWidth");//not needed, will get from url
+			//this is the end of the parsing code...
+			
+		//create pojo for gallery content table.
+			GalleryContentTable gallery_content_table = new GalleryContentTable();
+			
+			long cms_id = parsingInputParams.getCmsId();
+			
+			gallery_content_table.setGalCmsID(cms_id);
+			gallery_content_table.setImgIndex(index);
+			
+			//img file details obj.
+			ImgFileDetails img_details = new ImgFileDetails(imageCredit,imageCaption);
+			gallery_content_table.setGalleryImgPathUrlType
+			(NBCDataBaseHelper.T_UrlTypeToId.E_GAL_IMG_PATH_URL_TYPE.getUrlTypeID());
+			
+			//perform the urlstring to table associations. this all gets saved in the entity obj type.
+			//dont have any details about any of the images.
+			dbIface.peformUrlStringToTableAssociations
+			(
+			 imagePath,
+			 img_details,
+			 cms_id,
+			 NBCDataBaseHelper.T_UrlTypeToId.E_GAL_IMG_PATH_URL_TYPE, 
+			 gallery_content_table,
+			 this
+			);
+			
+			//add the gallery content to the DB layer here.
+			dbIface.galleryTableAssociationProcessing(gallery_content_table);
+		//create pojo for gallery content table.
+		}//for loop
 	}
 }
