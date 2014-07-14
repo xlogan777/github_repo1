@@ -9,11 +9,13 @@ import de.greenrobot.dao.DaoException;
 import com.util.nbc_data_layer.NBCDataBaseHelper;
 import com.util.nbc_data_layer.EntityItemIface;
 import com.util.nbc_data_layer.EntityVisitorIface;
+//public class ContentItemLeadMediaTable implements EntityItemIface{
+//KEEP INCLUDES END
+
 /**
  * Entity mapped to table CONTENT_ITEM_LEAD_MEDIA_TABLE.
  */
 public class ContentItemLeadMediaTable implements EntityItemIface{
-// KEEP INCLUDES END
 
     private long CmsID;
     /** Not-null value. */
