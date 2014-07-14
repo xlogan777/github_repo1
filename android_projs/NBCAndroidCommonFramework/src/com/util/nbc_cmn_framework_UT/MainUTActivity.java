@@ -1,6 +1,7 @@
 package com.util.nbc_cmn_framework_UT;
 
 import java.io.*;
+import java.util.List;
 
 import com.util.nbc_common_framework.R;
 import com.util.nbc_data_layer.NBCDataParsingBase;
@@ -10,6 +11,10 @@ import com.util.nbc_data_layer.SqliteDBAbstractIface;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemDetailTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemsTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoSession;
+import com.util.nbc_data_layer.nbcGreenDaoSrcGen.GalleryContentTable;
+import com.util.nbc_data_layer.nbcGreenDaoSrcGen.GalleryContentTableDao;
+import com.util.nbc_data_layer.nbcGreenDaoSrcGen.RelatedItemsTable;
+import com.util.nbc_data_layer.nbcGreenDaoSrcGen.RelatedItemsTableDao;
 
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -129,6 +134,30 @@ public class MainUTActivity extends ActionBarActivity
         //invoke specific parsing type by providing the parsing input params.
         ParsingInputParams pip = new ParsingInputParams(0, NBCDataParsingBase.T_BasicContentTypes.E_RELATED_ITEM_TYPE);
         parse_data.parseAndStoreDataType(json_string, pip, dbIface);
+        
+        //get the related item list using the parent cms id.. 
+        long id = 253794761;
+        String log = "";
+        
+        //get this table dao
+        RelatedItemsTableDao dao = this.daoSession.getRelatedItemsTableDao();
+        
+        //do a query against the parent id to get a list of related items tied to this parent id.
+        List<RelatedItemsTable> related_items = 
+        		dao.queryBuilder().where(RelatedItemsTableDao.Properties.ParentCmsID.eq(id)).list();
+        
+        String final_str = "";
+        //iterate over the list of hits here.
+        for(RelatedItemsTable my_related_item : related_items)        	
+        {
+        	log = "JM...parent id = "+my_related_item.getParentCmsID()+ " , relcmsId = "+my_related_item.getRelCmsID()+
+        			" title = "+my_related_item.getTitle();
+        	
+        	Log.d(MainUTActivityTAG, log);
+        	final_str+=log;
+        }
+        
+        tv.setText(tv.getText()+"\n\n"+final_str);
 	}
 	
 	private void unitTestGalleryContentData() throws Exception
@@ -136,9 +165,32 @@ public class MainUTActivity extends ActionBarActivity
 		String json_string = this.parseDataViaAssetFile("gallery_contentId=237503121.json");
 		
 		long cms_id = 237503121;
+		
         //invoke specific parsing type by providing the parsing input params.
         ParsingInputParams pip = new ParsingInputParams(cms_id, NBCDataParsingBase.T_BasicContentTypes.E_GALLERY_ITEM_TYPE);
         parse_data.parseAndStoreDataType(json_string, pip, dbIface);
+        
+        //get this table dao
+        GalleryContentTableDao dao = this.daoSession.getGalleryContentTableDao();
+        
+        //do a query against the parent id to get a list of related items tied to this parent id.
+        List<GalleryContentTable> gallery_items = 
+        		dao.queryBuilder().where(GalleryContentTableDao.Properties.GalCmsID.eq(cms_id)).list();
+        
+        String final_str = "";
+        String log = "";
+        
+        //iterate over the list of hits here.
+        for(GalleryContentTable my_gallery_item : gallery_items)        	
+        {
+        	log = "JM...gallery id = "+my_gallery_item.getGalCmsID()+" index = "+my_gallery_item.getImgIndex();
+        	//get the image data for this item...
+        	
+        	Log.d(MainUTActivityTAG, log);
+        	final_str+=log;
+        }
+        
+        tv.setText(tv.getText()+"\n\n"+final_str);
 	}
 	
 	/*
