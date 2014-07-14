@@ -33,6 +33,14 @@ public class MainUTActivity extends ActionBarActivity
 	
 	//class member for db iface with green dao.
 	private SqliteDBAbstractIface dbIface;
+	
+	//test class vars.
+	private TextView tv;
+	private DaoSession daoSession;
+	private AssetManager asset_mgr;
+	
+	//initiate parsing of json obj in asset folder for content obj.        
+    NBCDataParsingBase parse_data = new NBCDataParsingAsJson();
    	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -40,7 +48,7 @@ public class MainUTActivity extends ActionBarActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_ut);
 		
-		TextView tv = (TextView)findViewById(R.id.my_text_view);
+		tv = (TextView)findViewById(R.id.my_text_view);
 		tv.setText("");
 
 		//create specific db iface implementation via factory method.
@@ -50,57 +58,17 @@ public class MainUTActivity extends ActionBarActivity
 
 		//get the session obj and cast to specific one.
 		//should be getting session type and then cast to specific one...
-		DaoSession daoSession = (DaoSession)dbIface.getDBSession();
+		daoSession = (DaoSession)dbIface.getDBSession();
                         
         //get the asset manager and load the json file to it.
-        AssetManager asset_mgr = getAssets();
+        asset_mgr = getAssets();
         
         try
         {
-        	//open file from asset folder.
-	        InputStream input_stream = asset_mgr.open("my_content_obj.json");
-	        	        
-	        //initiate parsing of json obj in asset folder for content obj.        
-	        NBCDataParsingAsJson parse_json = new NBCDataParsingAsJson();
-	        
-	        //read data which returns a byte array ostream obj. and get the raw array to create a string from it.
-	        String json_string = new String(parse_json.readDataFromInputStream(input_stream).toByteArray());	
-	        
-	        //close the input stream...
-	        input_stream.close();
-	        	        
-	        //invoke specific parsing type by providing the parsing input params.
-	        ParsingInputParams pip = new ParsingInputParams(0, NBCDataParsingBase.T_BasicContentTypes.E_CONTENT_ITEM_TYPE);
-	        parse_json.parseAndStoreDataType(json_string, pip, dbIface);
-	        
-	        //get the content data using the content id. this loads a bean obj.
-	        long id = 253794761;
-	        ContentItemsTable content_items_table_bean = daoSession.getContentItemsTableDao().load(id);
-
-	        String log = "JM...cms id "+content_items_table_bean.getCmsID()+
-	        		" type = "+content_items_table_bean.getContentType() + " title of article = "+
-	        		content_items_table_bean.getContentItemDetailTable().getTitle();
-	        //log content item data.
-	        //display data saved from the parser and gotten from DB.
-	        Log.d(MainUTActivityTAG, log);
-	        
-	        //make a change to the title of the article..
-	        ContentItemDetailTable tmp2 = content_items_table_bean.getContentItemDetailTable();
-	        tmp2.setTitle("JIMBO TITLE NOW IN THE BEAN FOR CNT ITEM DETAILS POJO");
-	        daoSession.getContentItemDetailTableDao().insertOrReplace(tmp2);
-
-	        //display that change from the DAO. by getting the updated bean.
-	        ContentItemsTable tmp_bean = daoSession.getContentItemsTableDao().load(id);
-	        
-	        log = "JM...cms id "+tmp_bean.getCmsID()+
-	        		" type = "+tmp_bean.getContentType() + " title of article = "+
-	        		tmp_bean.getContentItemDetailTable().getTitle();
-	        
-	        //display results.
-	        Log.d(MainUTActivityTAG, log);
-	        
-	        tv.setText(tv.getText()+"\n"+log);
-	        
+        	//perform the unit test for all 3 types of data streams.
+        	this.unitTestContentData();
+        	this.unitTestRelatedItemsContentData();
+        	this.unitTestGalleryContentData();
         }
         catch(Exception e)
         {
@@ -112,6 +80,83 @@ public class MainUTActivity extends ActionBarActivity
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}*/
+	}
+	
+	/*
+	 * this will do the unit testing for content_data, related_items, gallery content.
+	 */
+	private void unitTestContentData() throws Exception
+	{
+		String json_string = this.parseDataViaAssetFile("my_content_obj.json");
+		
+        //invoke specific parsing type by providing the parsing input params.
+        ParsingInputParams pip = new ParsingInputParams(0, NBCDataParsingBase.T_BasicContentTypes.E_CONTENT_ITEM_TYPE);
+        parse_data.parseAndStoreDataType(json_string, pip, dbIface);
+        
+        //get the content data using the content id. this loads a bean obj.
+        long id = 253794761;
+        ContentItemsTable content_items_table_bean = daoSession.getContentItemsTableDao().load(id);
+
+        String log = "JM...cms id "+content_items_table_bean.getCmsID()+
+        		" type = "+content_items_table_bean.getContentType() + " title of article = "+
+        		content_items_table_bean.getContentItemDetailTable().getTitle();
+        //log content item data.
+        //display data saved from the parser and gotten from DB.
+        Log.d(MainUTActivityTAG, log);
+        
+        //make a change to the title of the article..
+        ContentItemDetailTable tmp2 = content_items_table_bean.getContentItemDetailTable();
+        tmp2.setTitle("JIMBO TITLE NOW IN THE BEAN FOR CNT ITEM DETAILS POJO");
+        daoSession.getContentItemDetailTableDao().insertOrReplace(tmp2);
+
+        //display that change from the DAO. by getting the updated bean.
+        ContentItemsTable tmp_bean = daoSession.getContentItemsTableDao().load(id);
+        
+        log = "JM...cms id "+tmp_bean.getCmsID()+
+        		" type = "+tmp_bean.getContentType() + " title of article = "+
+        		tmp_bean.getContentItemDetailTable().getTitle();
+        
+        //display results.
+        Log.d(MainUTActivityTAG, log);
+        
+        tv.setText(tv.getText()+"\n"+log);
+	}
+	
+	private void unitTestRelatedItemsContentData() throws Exception
+	{
+		String json_string = this.parseDataViaAssetFile("related_item.json");
+		
+        //invoke specific parsing type by providing the parsing input params.
+        ParsingInputParams pip = new ParsingInputParams(0, NBCDataParsingBase.T_BasicContentTypes.E_RELATED_ITEM_TYPE);
+        parse_data.parseAndStoreDataType(json_string, pip, dbIface);
+	}
+	
+	private void unitTestGalleryContentData() throws Exception
+	{
+		String json_string = this.parseDataViaAssetFile("gallery_contentId=237503121.json");
+		
+		long cms_id = 237503121;
+        //invoke specific parsing type by providing the parsing input params.
+        ParsingInputParams pip = new ParsingInputParams(cms_id, NBCDataParsingBase.T_BasicContentTypes.E_GALLERY_ITEM_TYPE);
+        parse_data.parseAndStoreDataType(json_string, pip, dbIface);
+	}
+	
+	/*
+	 * this will read in the asset file and return a json stringby simulating the stream process via
+	 * the asset mgr.
+	 */
+	private String parseDataViaAssetFile(String inputFileName) throws Exception
+	{
+		//open file from asset folder.
+        InputStream input_stream = asset_mgr.open(inputFileName);
+        
+        //read data which returns a byte array ostream obj. and get the raw array to create a string from it.
+        String json_string = new String(parse_data.readDataFromInputStream(input_stream).toByteArray());	
+        
+        //close the input stream...
+        input_stream.close();
+        
+        return json_string;
 	}
 
 	@Override
