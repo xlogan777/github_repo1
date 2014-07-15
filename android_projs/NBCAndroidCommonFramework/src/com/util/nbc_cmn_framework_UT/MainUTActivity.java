@@ -72,8 +72,8 @@ public class MainUTActivity extends ActionBarActivity
         {
         	//perform the unit test for all 3 types of data streams.
         	this.unitTestContentData();
-        	this.unitTestRelatedItemsContentData();
-        	this.unitTestGalleryContentData();
+        	//this.unitTestRelatedItemsContentData();
+        	//this.unitTestGalleryContentData();
         }
         catch(Exception e)
         {
@@ -203,11 +203,9 @@ public class MainUTActivity extends ActionBarActivity
         InputStream input_stream = asset_mgr.open(inputFileName);
         
         //read data which returns a byte array ostream obj. and get the raw array to create a string from it.
-        String json_string = new String(parse_data.readDataFromInputStream(input_stream).toByteArray());	
+        String json_string = new String(parse_data.readDataFromInputStream(input_stream).toByteArray());
         
-        //close the input stream...
-        input_stream.close();
-        
+        //return the string to the caller.
         return json_string;
 	}
 

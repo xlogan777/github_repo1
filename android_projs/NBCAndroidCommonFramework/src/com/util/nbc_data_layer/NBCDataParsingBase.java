@@ -68,6 +68,22 @@ public abstract class NBCDataParsingBase
 		{
 			Log.d(FILETAGNAME, e.getMessage());
 		}
+		finally
+		{
+			try
+			{
+				//close the input stream and the output stream.
+				if(inputStream != null)
+					inputStream.close();
+				
+				if(out_buff != null)
+					out_buff.close();
+			}
+			catch(Exception e)
+			{
+				Log.d(FILETAGNAME, "JM...failed to close the streams after parsing..."+e.getMessage());
+			}
+		}
 		
 		//return the json obj reader back to the caller.
 		return out_buff;
