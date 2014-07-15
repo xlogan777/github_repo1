@@ -72,7 +72,7 @@ public class MainUTActivity extends ActionBarActivity
         {
         	//perform the unit test for all 3 types of data streams.
         	this.unitTestContentData();
-        	//this.unitTestRelatedItemsContentData();
+        	this.unitTestRelatedItemsContentData();
         	//this.unitTestGalleryContentData();
         }
         catch(Exception e)
@@ -124,7 +124,7 @@ public class MainUTActivity extends ActionBarActivity
         //display results.
         Log.d(MainUTActivityTAG, log);
         
-        tv.setText(tv.getText()+"\n"+log);
+        tv.setText(tv.getText()+"\n\n"+log);
 	}
 	
 	private void unitTestRelatedItemsContentData() throws Exception
@@ -136,7 +136,7 @@ public class MainUTActivity extends ActionBarActivity
         parse_data.parseAndStoreDataType(json_string, pip, dbIface);
         
         //get the related item list using the parent cms id.. 
-        long id = 253794761;
+        long cms_id = 253794761;
         String log = "";
         
         //get this table dao
@@ -144,7 +144,7 @@ public class MainUTActivity extends ActionBarActivity
         
         //do a query against the parent id to get a list of related items tied to this parent id.
         List<RelatedItemsTable> related_items = 
-        		dao.queryBuilder().where(RelatedItemsTableDao.Properties.ParentCmsID.eq(id)).list();
+        		dao.queryBuilder().where(RelatedItemsTableDao.Properties.ParentCmsID.eq(cms_id)).list();
         
         String final_str = "";
         //iterate over the list of hits here.

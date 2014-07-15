@@ -225,9 +225,12 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 		//create json obj from input string. this is the root of the json data tree.
 		JSONObject obj = new JSONObject(inputString);
 		
+		//get meta data portion of the input
+		JSONObject meta_data = obj.getJSONObject("metadata");
+		
 		//get the content id associated to this json obj.
-		//this id is most likely an artcle content type.
-		long parentCmsId = obj.optLong("contentId"); 
+		//this id is most likely an article content type.
+		long parentCmsId = meta_data.optLong("contentId"); 
 		
 		//get json array from json obj.
 		JSONArray json_array = obj.getJSONArray("relatedContent");

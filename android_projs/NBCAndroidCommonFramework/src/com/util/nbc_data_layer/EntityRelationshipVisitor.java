@@ -1,5 +1,7 @@
 package com.util.nbc_data_layer;
 
+import java.util.List;
+
 import com.util.nbc_data_layer.NBCDataBaseHelper.T_UrlTypeToId;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemDetailTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemLeadMediaTable;
@@ -8,7 +10,10 @@ import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemsTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoSession;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.GalleryContentTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.RelatedItemsTable;
+import com.util.nbc_data_layer.nbcGreenDaoSrcGen.RelatedItemsTableDao;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.UrlImgFileTable;
+
+import de.greenrobot.dao.query.QueryBuilder;
 
 /**
  * this file is the standard visitor pattern from the GOF book. 
@@ -114,7 +119,7 @@ public class EntityRelationshipVisitor implements EntityVisitorIface
 	public void visit(ContentItemLeadMediaTable cntLeadMediaTable, DaoSession daoSession, ContentItemsTable cntItemsTable) 
 	{
 		daoSession.getContentItemLeadMediaTableDao().insertOrReplace(cntLeadMediaTable);
-		cntItemsTable.setContentItemLeadMediaTable(cntLeadMediaTable);	
+		cntItemsTable.setContentItemLeadMediaTable(cntLeadMediaTable);
 	}
 
 	@Override
@@ -134,12 +139,40 @@ public class EntityRelationshipVisitor implements EntityVisitorIface
 	@Override
 	public void visit(RelatedItemsTable relatedItemsTable, DaoSession daoSession)
 	{
-		daoSession.getRelatedItemsTableDao().insert(relatedItemsTable);
+		//get parent_cms_id and rel_cms_id to find the correct row fo the item if it exits.
+		//both of these ids is primary key.
+		long cms_id = relatedItemsTable.getParentCmsID();
+		long rel_cms_id = relatedItemsTable.getRelCmsID();
+		
+		//get the dao of this item.
+		RelatedItemsTableDao dao = daoSession.getRelatedItemsTableDao();
+		QueryBuilder<RelatedItemsTable> tmp2 = dao.queryBuilder();
+		tmp2.where(RelatedItemsTableDao.Properties.ParentCmsID.eq(cms_id), RelatedItemsTableDao.Properties.RelCmsID.eq(rel_cms_id));
+		
+		List<RelatedItemsTable> rel_items = dao.queryBuilder().where
+		(RelatedItemsTableDao.Properties.ParentCmsID.eq(cms_id), RelatedItemsTableDao.Properties.RelCmsID.eq(rel_cms_id)).list();
+		
+		if(rel_items.size() == 0)
+		{
+			daoSession.getRelatedItemsTableDao().insert(relatedItemsTable);
+		}
+		else if(rel_items.size() == 1)
+		{
+			RelatedItemsTable tmp = rel_items.get(0);
+			long pk_id = tmp.getId();
+			relatedItemsTable.setId(pk_id);
+			daoSession.getRelatedItemsTableDao().insertOrReplace(relatedItemsTable);
+		}
+		else
+		{
+			//TODO: should not happen...but log it if so...
+		}
 	}
 
 	@Override
 	public void visit(GalleryContentTable galleryContentTable, DaoSession daoSession)
 	{
+		//check first if we have the item in the db before we insert..
 		daoSession.getGalleryContentTableDao().insert(galleryContentTable);
 	}
 
