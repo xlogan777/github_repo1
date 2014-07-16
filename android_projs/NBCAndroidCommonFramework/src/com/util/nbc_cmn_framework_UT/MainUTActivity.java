@@ -73,7 +73,7 @@ public class MainUTActivity extends ActionBarActivity
         	//perform the unit test for all 3 types of data streams.
         	this.unitTestContentData();
         	this.unitTestRelatedItemsContentData();
-        	//this.unitTestGalleryContentData();
+        	this.unitTestGalleryContentData();
         }
         catch(Exception e)
         {

@@ -152,7 +152,7 @@ public class GalleryContentTable implements EntityItemIface{
 	@Override
 	public void accept(EntityVisitorIface entityVisitorIface, T_UrlTypeToId typeID, UrlImgFileTable urlImgFileTable) 
 	{
-		//dont do anything here
+		entityVisitorIface.visit(this,typeID,urlImgFileTable);
 	}
 
 	@Override

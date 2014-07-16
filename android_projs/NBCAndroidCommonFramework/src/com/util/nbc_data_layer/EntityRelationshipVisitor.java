@@ -9,6 +9,7 @@ import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemMediaTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemsTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoSession;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.GalleryContentTable;
+import com.util.nbc_data_layer.nbcGreenDaoSrcGen.GalleryContentTableDao;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.RelatedItemsTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.RelatedItemsTableDao;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.UrlImgFileTable;
@@ -139,28 +140,36 @@ public class EntityRelationshipVisitor implements EntityVisitorIface
 	@Override
 	public void visit(RelatedItemsTable relatedItemsTable, DaoSession daoSession)
 	{
-		//get parent_cms_id and rel_cms_id to find the correct row fo the item if it exits.
-		//both of these ids is primary key.
-		long cms_id = relatedItemsTable.getParentCmsID();
+		//get parent_cms_id and rel_cms_id to find the correct row for the item if it exits.
+		//both of these ids are primary keys
+		long parent_cms_id = relatedItemsTable.getParentCmsID();
 		long rel_cms_id = relatedItemsTable.getRelCmsID();
 		
 		//get the dao of this item.
 		RelatedItemsTableDao dao = daoSession.getRelatedItemsTableDao();
-		QueryBuilder<RelatedItemsTable> tmp2 = dao.queryBuilder();
-		tmp2.where(RelatedItemsTableDao.Properties.ParentCmsID.eq(cms_id), RelatedItemsTableDao.Properties.RelCmsID.eq(rel_cms_id));
 		
+		//get create the query and get the results by executing the query using the builder.
 		List<RelatedItemsTable> rel_items = dao.queryBuilder().where
-		(RelatedItemsTableDao.Properties.ParentCmsID.eq(cms_id), RelatedItemsTableDao.Properties.RelCmsID.eq(rel_cms_id)).list();
+		(RelatedItemsTableDao.Properties.ParentCmsID.eq(parent_cms_id), RelatedItemsTableDao.Properties.RelCmsID.eq(rel_cms_id)).list();
 		
+		//no items found then, just do regular insert.
 		if(rel_items.size() == 0)
 		{
 			daoSession.getRelatedItemsTableDao().insert(relatedItemsTable);
 		}
+		//found a single item..update that same row with the content passed in.
 		else if(rel_items.size() == 1)
 		{
+			//get the item from the query list
 			RelatedItemsTable tmp = rel_items.get(0);
+			
+			//get the row id of this item.
 			long pk_id = tmp.getId();
+			
+			//update the current entity bean with the row id of the previous one.
 			relatedItemsTable.setId(pk_id);
+			
+			//replace the previous entity in DB with the one passed.
 			daoSession.getRelatedItemsTableDao().insertOrReplace(relatedItemsTable);
 		}
 		else
@@ -172,8 +181,42 @@ public class EntityRelationshipVisitor implements EntityVisitorIface
 	@Override
 	public void visit(GalleryContentTable galleryContentTable, DaoSession daoSession)
 	{
-		//check first if we have the item in the db before we insert..
-		daoSession.getGalleryContentTableDao().insert(galleryContentTable);
+		//get parent_cms_id and rel_cms_id to find the correct row for the item if it exits.
+		//both of these ids are primary keys
+		long gal_cms_id = galleryContentTable.getGalCmsID();
+		long img_idx = galleryContentTable.getImgIndex();
+		
+		//get the dao of this item.
+		GalleryContentTableDao dao = daoSession.getGalleryContentTableDao();
+		
+		//get create the query and get the results by executing the query using the builder.
+		List<GalleryContentTable> gal_items = dao.queryBuilder().where
+		(GalleryContentTableDao.Properties.GalCmsID.eq(gal_cms_id), GalleryContentTableDao.Properties.ImgIndex.eq(img_idx)).list();
+		
+		//no items found then, just do regular insert.
+		if(gal_items.size() == 0)
+		{
+			daoSession.getGalleryContentTableDao().insert(galleryContentTable);
+		}
+		//found a single item..update that same row with the content passed in.
+		else if(gal_items.size() == 1)
+		{
+			//get the item from the query list
+			GalleryContentTable tmp = gal_items.get(0);
+			
+			//get the row id of this item.
+			long pk_id = tmp.getId();
+			
+			//update the current entity bean with the row id of the previous one.
+			galleryContentTable.setId(pk_id);
+			
+			//replace the previous entity in DB with the one passed.
+			daoSession.getGalleryContentTableDao().insertOrReplace(galleryContentTable);
+		}
+		else
+		{
+			//TODO: should not happen...but log it if so...
+		}
 	}
 
 	@Override
