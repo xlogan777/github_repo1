@@ -29,8 +29,8 @@ public class NBCGreenDaoGeneratorMain
         //you can place your code in here...to keep after each generation of the code.
         schema.enableKeepSectionsByDefault();
 
-        System.out.println("create createImgDetailsTable");
-        Entity entity_img_details_table = createImgDetailsTable(schema);
+        //System.out.println("create createImgDetailsTable");
+        //Entity entity_img_details_table = createImgDetailsTable(schema);
 
 		System.out.println("create createImgFnameTable");
 		Entity entity_img_file_table = createImgFnameTable(schema);
@@ -58,7 +58,8 @@ public class NBCGreenDaoGeneratorMain
 		
 		//setup image table relationships
 		NBCGreenDaoTableRelationships.createRelationshipsImgFnameToImgDetails
-		(entity_url_img_file_table,entity_img_file_table,entity_img_details_table);
+		(entity_url_img_file_table,entity_img_file_table);
+		//(entity_url_img_file_table,entity_img_file_table,entity_img_details_table);
 		
 		//setup the content item with its sub details relationships.
 		NBCGreenDaoTableRelationships.createRelationshipContentItemsToDetails
@@ -66,7 +67,7 @@ public class NBCGreenDaoGeneratorMain
 		
 		//setup the related_items/gallery to img table relationships
 		NBCGreenDaoTableRelationships.createRelationshipsRelatedItemsAndGalleryToImgDetails
-		(related_item_table, entity_gallery_table, entity_url_img_file_table);
+		(related_item_table, entity_gallery_table, entity_url_img_file_table,entity_img_file_table);
 		
 		//generate the source code.
 		try
@@ -94,20 +95,20 @@ public class NBCGreenDaoGeneratorMain
 	/*
 	 * this will create a table that keeps track of the info about an image file
 	 */
-	public static Entity createImgDetailsTable(Schema schema)
-	{
-		//create entity obj.
-		Entity ImgDetailsTable = schema.addEntity("ImgDetailsTable");
-		
-		//setup pk
-		ImgDetailsTable.addIdProperty().autoincrement().primaryKey();
-		
-		//setup non- pk
-		ImgDetailsTable.addStringProperty("ImgCredit").notNull();
-		ImgDetailsTable.addStringProperty("ImgCaption").notNull();
-
-		return ImgDetailsTable;
-	}
+//	public static Entity createImgDetailsTable(Schema schema)
+//	{
+//		//create entity obj.
+//		Entity ImgDetailsTable = schema.addEntity("ImgDetailsTable");
+//		
+//		//setup pk
+//		ImgDetailsTable.addIdProperty().autoincrement().primaryKey();
+//		
+//		//setup non- pk
+//		ImgDetailsTable.addStringProperty("ImgCredit").notNull();
+//		ImgDetailsTable.addStringProperty("ImgCaption").notNull();
+//
+//		return ImgDetailsTable;
+//	}
 	
 	/*
 	 * this will take in a schema obj and create the entity for the image filename table
@@ -125,9 +126,12 @@ public class NBCGreenDaoGeneratorMain
 		ImgFnameTable.addIdProperty().autoincrement().primaryKey();
 				
 		//add the non-PK columns.		
-		ImgFnameTable.addStringProperty("ImageFname").notNull();
-		ImgFnameTable.addLongProperty("ImgHeight").notNull();
+		ImgFnameTable.addStringProperty("ImgFname").notNull();
 		ImgFnameTable.addLongProperty("ImgWidth").notNull();
+		ImgFnameTable.addLongProperty("ImgHeight").notNull();
+		ImgFnameTable.addStringProperty("ImgCaption").notNull();
+		ImgFnameTable.addStringProperty("ImgCredit").notNull();
+		ImgFnameTable.addStringProperty("ImgUrlLocation").notNull();
 
 		return ImgFnameTable;
 	}
@@ -147,7 +151,7 @@ public class NBCGreenDaoGeneratorMain
 		//create non-pk fields.
 		UrlImgFileTable.addLongProperty("CmsID").notNull();
 		UrlImgFileTable.addLongProperty("UrlTypeID").notNull();
-		UrlImgFileTable.addStringProperty("UrlLocation").notNull();
+		//UrlImgFileTable.addStringProperty("UrlLocation").notNull();
 		
 		return UrlImgFileTable;
 	}
@@ -171,8 +175,8 @@ public class NBCGreenDaoGeneratorMain
 		//GalleryContentTable.addLongProperty("ImgHeight").notNull();
 		//GalleryContentTable.addLongProperty("ImgWidth").notNull();
 		
-		GalleryContentTable.addLongProperty("ImgIndex").notNull();		
-		GalleryContentTable.addLongProperty("GalleryImgPathUrlType").notNull();
+		GalleryContentTable.addLongProperty("ImgIndex").notNull();
+		//GalleryContentTable.addLongProperty("GalleryImgPathUrlType").notNull();
 		
 		//will be in the img_details_table, will either associate or create.
 		//GalleryContentTable.addStringProperty("ImgCaption").notNull();

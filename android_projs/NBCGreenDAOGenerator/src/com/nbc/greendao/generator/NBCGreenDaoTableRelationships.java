@@ -16,11 +16,12 @@ public class NBCGreenDaoTableRelationships
 	 * this will perform the relationships between the image file table and the image details
 	 * table.
 	 */
-	public static void createRelationshipsImgFnameToImgDetails(Entity urlImgFileTable, Entity imgFnameTable, Entity imgDetailsTable)
+	//public static void createRelationshipsImgFnameToImgDetails(Entity urlImgFileTable, Entity imgFnameTable, Entity imgDetailsTable)
+	public static void createRelationshipsImgFnameToImgDetails(Entity urlImgFileTable, Entity imgFnameTable)
 	{
 		//create fk relationship between image fname table an img details table.
-		Property fk_imgDetailsID = imgFnameTable.addLongProperty("imgDetailsID").notNull().getProperty();		
-		imgFnameTable.addToOne(imgDetailsTable, fk_imgDetailsID);
+		//Property fk_imgDetailsID = imgFnameTable.addLongProperty("imgDetailsID").notNull().getProperty();		
+		//imgFnameTable.addToOne(imgDetailsTable, fk_imgDetailsID);
 		
 		//create fk relationship between url_img table to img_fname table.
 		Property fk_imgFnameID = urlImgFileTable.addLongProperty("imgFnameID").notNull().getProperty();
@@ -31,7 +32,8 @@ public class NBCGreenDaoTableRelationships
 	 * this will establish the relationships between the related items and the gallery entities to the
 	 * img-url table. 
 	 */
-	public static void createRelationshipsRelatedItemsAndGalleryToImgDetails(Entity relatedItemsTable, Entity galleryTable, Entity urlImgFileTable)	
+	public static void createRelationshipsRelatedItemsAndGalleryToImgDetails
+	(Entity relatedItemsTable, Entity galleryTable, Entity urlImgFileTable, Entity imgFnameTable)
 	{
 		//setup related items table for the img media urls
 		//setup 1:1 relationships
@@ -44,8 +46,13 @@ public class NBCGreenDaoTableRelationships
 		
 		//setup the gallery item table for the img media urls.
 		//setup 1:1 relationships
-		Property fk_GalleryImgPathUrlTypeRowID = galleryTable.addLongProperty("galleryImgPathUrlImgTypeRowID").notNull().getProperty();
-		galleryTable.addToOne(urlImgFileTable, fk_GalleryImgPathUrlTypeRowID);
+		//Property fk_GalleryImgPathUrlTypeRowID = galleryTable.addLongProperty("galleryImgPathUrlImgTypeRowID").notNull().getProperty();
+		//galleryTable.addToOne(urlImgFileTable, fk_GalleryImgPathUrlTypeRowID);
+		
+		
+		Property fk_imgFnameID = galleryTable.addLongProperty("imgFnameID").notNull().getProperty();
+		galleryTable.addToOne(imgFnameTable, fk_imgFnameID);
+		
 		//setup the gallery item table for the img media urls.
 	}
 	
