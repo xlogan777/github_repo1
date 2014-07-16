@@ -19,8 +19,7 @@ public class GalleryContentTable implements EntityItemIface{
     private Long id;
     private long GalCmsID;
     private long ImgIndex;
-    private long GalleryImgPathUrlType;
-    private long galleryImgPathUrlImgTypeRowID;
+    private long imgFnameID;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
@@ -28,8 +27,8 @@ public class GalleryContentTable implements EntityItemIface{
     /** Used for active entity operations. */
     private transient GalleryContentTableDao myDao;
 
-    private UrlImgFileTable urlImgFileTable;
-    private Long urlImgFileTable__resolvedKey;
+    private ImgFnameTable imgFnameTable;
+    private Long imgFnameTable__resolvedKey;
 
 
     // KEEP FIELDS - put your custom fields here
@@ -42,12 +41,11 @@ public class GalleryContentTable implements EntityItemIface{
         this.id = id;
     }
 
-    public GalleryContentTable(Long id, long GalCmsID, long ImgIndex, long GalleryImgPathUrlType, long galleryImgPathUrlImgTypeRowID) {
+    public GalleryContentTable(Long id, long GalCmsID, long ImgIndex, long imgFnameID) {
         this.id = id;
         this.GalCmsID = GalCmsID;
         this.ImgIndex = ImgIndex;
-        this.GalleryImgPathUrlType = GalleryImgPathUrlType;
-        this.galleryImgPathUrlImgTypeRowID = galleryImgPathUrlImgTypeRowID;
+        this.imgFnameID = imgFnameID;
     }
 
     /** called by internal mechanisms, do not call yourself. */
@@ -80,47 +78,39 @@ public class GalleryContentTable implements EntityItemIface{
         this.ImgIndex = ImgIndex;
     }
 
-    public long getGalleryImgPathUrlType() {
-        return GalleryImgPathUrlType;
+    public long getImgFnameID() {
+        return imgFnameID;
     }
 
-    public void setGalleryImgPathUrlType(long GalleryImgPathUrlType) {
-        this.GalleryImgPathUrlType = GalleryImgPathUrlType;
-    }
-
-    public long getGalleryImgPathUrlImgTypeRowID() {
-        return galleryImgPathUrlImgTypeRowID;
-    }
-
-    public void setGalleryImgPathUrlImgTypeRowID(long galleryImgPathUrlImgTypeRowID) {
-        this.galleryImgPathUrlImgTypeRowID = galleryImgPathUrlImgTypeRowID;
+    public void setImgFnameID(long imgFnameID) {
+        this.imgFnameID = imgFnameID;
     }
 
     /** To-one relationship, resolved on first access. */
-    public UrlImgFileTable getUrlImgFileTable() {
-        long __key = this.galleryImgPathUrlImgTypeRowID;
-        if (urlImgFileTable__resolvedKey == null || !urlImgFileTable__resolvedKey.equals(__key)) {
+    public ImgFnameTable getImgFnameTable() {
+        long __key = this.imgFnameID;
+        if (imgFnameTable__resolvedKey == null || !imgFnameTable__resolvedKey.equals(__key)) {
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
-            UrlImgFileTableDao targetDao = daoSession.getUrlImgFileTableDao();
-            UrlImgFileTable urlImgFileTableNew = targetDao.load(__key);
+            ImgFnameTableDao targetDao = daoSession.getImgFnameTableDao();
+            ImgFnameTable imgFnameTableNew = targetDao.load(__key);
             synchronized (this) {
-                urlImgFileTable = urlImgFileTableNew;
-            	urlImgFileTable__resolvedKey = __key;
+                imgFnameTable = imgFnameTableNew;
+            	imgFnameTable__resolvedKey = __key;
             }
         }
-        return urlImgFileTable;
+        return imgFnameTable;
     }
 
-    public void setUrlImgFileTable(UrlImgFileTable urlImgFileTable) {
-        if (urlImgFileTable == null) {
-            throw new DaoException("To-one property 'galleryImgPathUrlImgTypeRowID' has not-null constraint; cannot set to-one to null");
+    public void setImgFnameTable(ImgFnameTable imgFnameTable) {
+        if (imgFnameTable == null) {
+            throw new DaoException("To-one property 'imgFnameID' has not-null constraint; cannot set to-one to null");
         }
         synchronized (this) {
-            this.urlImgFileTable = urlImgFileTable;
-            galleryImgPathUrlImgTypeRowID = urlImgFileTable.getId();
-            urlImgFileTable__resolvedKey = galleryImgPathUrlImgTypeRowID;
+            this.imgFnameTable = imgFnameTable;
+            imgFnameID = imgFnameTable.getId();
+            imgFnameTable__resolvedKey = imgFnameID;
         }
     }
 
@@ -152,7 +142,8 @@ public class GalleryContentTable implements EntityItemIface{
 	@Override
 	public void accept(EntityVisitorIface entityVisitorIface, T_UrlTypeToId typeID, UrlImgFileTable urlImgFileTable) 
 	{
-		entityVisitorIface.visit(this,typeID,urlImgFileTable);
+		//entityVisitorIface.visit(this,typeID,urlImgFileTable);
+		//dont do anything here.
 	}
 
 	@Override

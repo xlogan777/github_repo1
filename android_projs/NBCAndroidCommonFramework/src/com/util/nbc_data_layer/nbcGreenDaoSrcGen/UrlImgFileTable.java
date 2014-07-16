@@ -15,8 +15,6 @@ public class UrlImgFileTable {
     private Long id;
     private long CmsID;
     private long UrlTypeID;
-    /** Not-null value. */
-    private String UrlLocation;
     private long imgFnameID;
 
     /** Used to resolve relations */
@@ -39,11 +37,10 @@ public class UrlImgFileTable {
         this.id = id;
     }
 
-    public UrlImgFileTable(Long id, long CmsID, long UrlTypeID, String UrlLocation, long imgFnameID) {
+    public UrlImgFileTable(Long id, long CmsID, long UrlTypeID, long imgFnameID) {
         this.id = id;
         this.CmsID = CmsID;
         this.UrlTypeID = UrlTypeID;
-        this.UrlLocation = UrlLocation;
         this.imgFnameID = imgFnameID;
     }
 
@@ -75,16 +72,6 @@ public class UrlImgFileTable {
 
     public void setUrlTypeID(long UrlTypeID) {
         this.UrlTypeID = UrlTypeID;
-    }
-
-    /** Not-null value. */
-    public String getUrlLocation() {
-        return UrlLocation;
-    }
-
-    /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setUrlLocation(String UrlLocation) {
-        this.UrlLocation = UrlLocation;
     }
 
     public long getImgFnameID() {

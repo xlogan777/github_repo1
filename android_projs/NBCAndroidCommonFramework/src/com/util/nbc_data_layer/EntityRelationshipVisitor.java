@@ -98,23 +98,23 @@ public class EntityRelationshipVisitor implements EntityVisitorIface
 		}
 	}
 	
-	@Override
-	public void visit(GalleryContentTable galleryCntTable, T_UrlTypeToId typeID, UrlImgFileTable urlImgFileTable) 
-	{
-		//case on the different types but only for the url type relationship setup needed
-		switch(typeID)
-		{
-			case E_GAL_IMG_PATH_URL_TYPE:
-				//make the association with cms id to url-img obj here.
-				galleryCntTable.setGalleryImgPathUrlImgTypeRowID(urlImgFileTable.getId());
-				galleryCntTable.setUrlImgFileTable(urlImgFileTable);
-				break;
-				
-			default:
-				//TODO: this is a serious error...need to log and handle in some way.
-				break;
-		}
-	}
+//	@Override
+//	public void visit(GalleryContentTable galleryCntTable, T_UrlTypeToId typeID, UrlImgFileTable urlImgFileTable) 
+//	{
+//		//case on the different types but only for the url type relationship setup needed
+//		switch(typeID)
+//		{
+//			case E_GAL_IMG_PATH_URL_TYPE:
+//				//make the association with cms id to url-img obj here.
+//				//galleryCntTable.setGalleryImgPathUrlImgTypeRowID(urlImgFileTable.getId());
+//				//galleryCntTable.setUrlImgFileTable(urlImgFileTable);
+//				break;
+//				
+//			default:
+//				//TODO: this is a serious error...need to log and handle in some way.
+//				break;
+//		}
+//	}
 
 	@Override
 	public void visit(ContentItemLeadMediaTable cntLeadMediaTable, DaoSession daoSession, ContentItemsTable cntItemsTable) 

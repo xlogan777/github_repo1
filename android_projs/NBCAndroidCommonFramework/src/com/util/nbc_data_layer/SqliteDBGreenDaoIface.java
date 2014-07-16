@@ -5,9 +5,10 @@ import java.util.List;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemsTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoMaster;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoSession;
-import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ImgDetailsTable;
-import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ImgDetailsTableDao;
+//import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ImgDetailsTable;
+//import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ImgDetailsTableDao;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ImgFnameTable;
+import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ImgFnameTableDao;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.UrlImgFileTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.UrlImgFileTableDao;
 
@@ -116,100 +117,17 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 		//need to add the url-img table and img_fname table entries accordingly.
 		if(items.size() == 0)
 		{
-			ImgDetailsTable img_details_entity_val = null;
-			long row_num = 0;
-			
-			if(imgFileDetails != null)
-			{
-				//create entity obj here and setup with specific java bean  here.
-				ImgDetailsTable img_details_entity = new ImgDetailsTable();
-				img_details_entity.setImgCredit(imgFileDetails.getCredit());
-				img_details_entity.setImgCaption(imgFileDetails.getCaption());
-
-				//get dao for img details table.
-				ImgDetailsTableDao img_details_dao = dao_session.getImgDetailsTableDao();
-				
-				//make a query to see if we have a img details row that macthes this potentially new
-				//item 
-				List <ImgDetailsTable> item_list = 
-				   img_details_dao.queryBuilder().where
-				   (
-					ImgDetailsTableDao.Properties.ImgCredit.eq(imgFileDetails.getCredit()),
-					ImgDetailsTableDao.Properties.ImgCaption.eq(imgFileDetails.getCaption())
-				   ).list();
-				
-				//add new entry to this table.
-				if(item_list.size() == 0)
-				{
-					row_num = img_details_dao.insert(img_details_entity);
-					img_details_entity_val = img_details_entity;
-				}
-				//get  the obj for this item..and tie it to the img-fname table.
-				else if(item_list.size() == 1)
-				{
-					img_details_entity_val = item_list.get(0);
-					row_num = img_details_entity_val.getId();
-				}
-				else
-				{
-					Log.d(MyTag, "JM...hit error with finding more items in the item details table. handle this situation.");
-				}
-			}
-			//handle the null img details special.
-			else
-			{
-				//make emtpy association now if needed.
-				//check to see if we did this already..if so use that row id as the id..
-				//if not then make new entry now...
-				img_details_entity_val = new ImgDetailsTable();
-				img_details_entity_val.setImgCredit(tmpCredit);
-				img_details_entity_val.setImgCaption(tmpCaption);
-				
-				//get dao of img details table.
-				ImgDetailsTableDao img_details_dao = dao_session.getImgDetailsTableDao();
-				
-				//make a query to see if we have a img details row that matches this potentially new
-				//item 
-				List <ImgDetailsTable> item_list = 
-				   img_details_dao.queryBuilder().where
-				   (
-					ImgDetailsTableDao.Properties.ImgCredit.eq(img_details_entity_val.getImgCredit()),
-					ImgDetailsTableDao.Properties.ImgCaption.eq(img_details_entity_val.getImgCaption())
-				   ).list();
-				
-				//make the first null emtpy row location for details.
-				if(item_list.size() == 0)
-				{					
-					row_num = img_details_dao.insert(img_details_entity_val);
-				}
-				else
-				{
-					row_num = item_list.get(0).getId();
-					img_details_entity_val = item_list.get(0);
-				}
-			}
-			
-			//create entity obj here and setup with specifics of the java bean.
-			ImgFnameTable img_fname_entity = new ImgFnameTable();
-			img_fname_entity.setImageFname(imgFileSepcs.getFname());
-			img_fname_entity.setImgHeight(imgFileSepcs.getHeight());
-			img_fname_entity.setImgWidth(imgFileSepcs.getWidth());
-			
-			//association here to img-details table.
-			img_fname_entity.setImgDetailsID(row_num);
-			img_fname_entity.setImgDetailsTable(img_details_entity_val);//not needed for now.
-			
-			//create row in img-fname table
-			long row_id = dao_session.getImgFnameTableDao().insert(img_fname_entity);
+			//do the processing here for the img_fname entity item. 
+			ImgFnameTable img_fname_entity = 
+					(ImgFnameTable)this.addImgFileEntry(imgFileSepcs, imgFileDetails, urlLocation);
 			
 			//create entity obj here and setup with specifics of the java bean.
 			UrlImgFileTable url_img_entity = new UrlImgFileTable();
 			url_img_entity.setCmsID(cmsID);
 			url_img_entity.setUrlTypeID(urlTypeID);
-			url_img_entity.setUrlLocation(urlLocation);
 			
 			//association here to img-url table here.
-			url_img_entity.setImgFnameID(row_id);
+			url_img_entity.setImgFnameID(img_fname_entity.getId());
 			url_img_entity.setImgFnameTable(img_fname_entity);
 			
 			//create row here in the img-url table
@@ -233,6 +151,64 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 		}
 		
 		return rv;
+	}
+	
+	/*
+	 * this will perform the processing for the saving of the img file table to the DB layer
+	 * or just returning the found fname row item back to caller as an obj.
+	 */
+	@Override
+	public Object addImgFileEntry
+	(ImgFileUrlSpecs imgFileSepcs, ImgFileDetails imgFileDetails, String urlLocation)
+	{
+		DaoSession dao_session = ((DaoSession)sessionObj);
+		
+		ImgFnameTable img_fname_entity = null;
+
+		//find if we have this same fname in the table already.
+		List <ImgFnameTable> fname_items = 
+		    dao_session.getImgFnameTableDao().queryBuilder().where
+		    (
+		       ImgFnameTableDao.Properties.ImgFname.eq(imgFileSepcs.getFname()),
+		       ImgFnameTableDao.Properties.ImgWidth.eq(imgFileSepcs.getWidth()),
+		       ImgFnameTableDao.Properties.ImgHeight.eq(imgFileSepcs.getHeight())
+			).list();
+		
+		if(fname_items.size() == 0)
+		{
+				//create entity obj here and setup with specifics of the java bean.
+				img_fname_entity = new ImgFnameTable();
+				img_fname_entity.setImgFname(imgFileSepcs.getFname());
+				img_fname_entity.setImgWidth(imgFileSepcs.getWidth());
+				img_fname_entity.setImgHeight(imgFileSepcs.getHeight());
+				
+				//check to see if we have img details.so then use it here.
+				if(imgFileDetails != null)
+				{	
+					img_fname_entity.setImgCaption(imgFileDetails.getCaption());
+					img_fname_entity.setImgCredit(imgFileDetails.getCredit());
+				}
+				else
+				{
+					img_fname_entity.setImgCaption("");
+					img_fname_entity.setImgCredit("");
+				}
+				
+				img_fname_entity.setImgUrlLocation(urlLocation);
+							
+				//create row in img-fname table
+				dao_session.getImgFnameTableDao().insert(img_fname_entity);
+		}
+		else if(fname_items.size() == 1)
+		{
+			img_fname_entity = fname_items.get(0);
+		}
+		else
+		{
+			//TODO: this is a major error..handle it..
+		}
+		
+		return img_fname_entity;
 	}
 	
 	/*

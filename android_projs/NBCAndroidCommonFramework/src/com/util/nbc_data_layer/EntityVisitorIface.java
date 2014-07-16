@@ -25,9 +25,10 @@ public interface EntityVisitorIface
 	public void visit
 	(ContentItemMediaTable cntItemMediaTable, NBCDataBaseHelper.T_UrlTypeToId typeID, UrlImgFileTable urlImgFileTable);
 	public void visit
-	(RelatedItemsTable relItemsTable, NBCDataBaseHelper.T_UrlTypeToId typeID, UrlImgFileTable urlImgFileTable);	
-	public void visit
-	(GalleryContentTable galleryCntTable, NBCDataBaseHelper.T_UrlTypeToId typeID, UrlImgFileTable urlImgFileTable);
+	(RelatedItemsTable relItemsTable, NBCDataBaseHelper.T_UrlTypeToId typeID, UrlImgFileTable urlImgFileTable);
+	
+//	public void visit
+//	(GalleryContentTable galleryCntTable, NBCDataBaseHelper.T_UrlTypeToId typeID, UrlImgFileTable urlImgFileTable);
 	
 	
 	/*

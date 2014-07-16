@@ -8,7 +8,6 @@ import android.util.Log;
 import de.greenrobot.dao.AbstractDaoMaster;
 import de.greenrobot.dao.identityscope.IdentityScopeType;
 
-import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ImgDetailsTableDao;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ImgFnameTableDao;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.UrlImgFileTableDao;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.GalleryContentTableDao;
@@ -27,7 +26,6 @@ public class DaoMaster extends AbstractDaoMaster {
 
     /** Creates underlying database table using DAOs. */
     public static void createAllTables(SQLiteDatabase db, boolean ifNotExists) {
-        ImgDetailsTableDao.createTable(db, ifNotExists);
         ImgFnameTableDao.createTable(db, ifNotExists);
         UrlImgFileTableDao.createTable(db, ifNotExists);
         GalleryContentTableDao.createTable(db, ifNotExists);
@@ -40,7 +38,6 @@ public class DaoMaster extends AbstractDaoMaster {
     
     /** Drops underlying database table using DAOs. */
     public static void dropAllTables(SQLiteDatabase db, boolean ifExists) {
-        ImgDetailsTableDao.dropTable(db, ifExists);
         ImgFnameTableDao.dropTable(db, ifExists);
         UrlImgFileTableDao.dropTable(db, ifExists);
         GalleryContentTableDao.dropTable(db, ifExists);
@@ -80,7 +77,6 @@ public class DaoMaster extends AbstractDaoMaster {
 
     public DaoMaster(SQLiteDatabase db) {
         super(db, SCHEMA_VERSION);
-        registerDaoClass(ImgDetailsTableDao.class);
         registerDaoClass(ImgFnameTableDao.class);
         registerDaoClass(UrlImgFileTableDao.class);
         registerDaoClass(GalleryContentTableDao.class);

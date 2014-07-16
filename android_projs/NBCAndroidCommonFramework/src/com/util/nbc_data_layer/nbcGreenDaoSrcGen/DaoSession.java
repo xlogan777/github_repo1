@@ -9,7 +9,6 @@ import de.greenrobot.dao.AbstractDaoSession;
 import de.greenrobot.dao.identityscope.IdentityScopeType;
 import de.greenrobot.dao.internal.DaoConfig;
 
-import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ImgDetailsTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ImgFnameTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.UrlImgFileTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.GalleryContentTable;
@@ -19,7 +18,6 @@ import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemMediaTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemDetailTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemsTable;
 
-import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ImgDetailsTableDao;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ImgFnameTableDao;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.UrlImgFileTableDao;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.GalleryContentTableDao;
@@ -38,7 +36,6 @@ import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemsTableDao;
  */
 public class DaoSession extends AbstractDaoSession {
 
-    private final DaoConfig imgDetailsTableDaoConfig;
     private final DaoConfig imgFnameTableDaoConfig;
     private final DaoConfig urlImgFileTableDaoConfig;
     private final DaoConfig galleryContentTableDaoConfig;
@@ -48,7 +45,6 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig contentItemDetailTableDaoConfig;
     private final DaoConfig contentItemsTableDaoConfig;
 
-    private final ImgDetailsTableDao imgDetailsTableDao;
     private final ImgFnameTableDao imgFnameTableDao;
     private final UrlImgFileTableDao urlImgFileTableDao;
     private final GalleryContentTableDao galleryContentTableDao;
@@ -61,9 +57,6 @@ public class DaoSession extends AbstractDaoSession {
     public DaoSession(SQLiteDatabase db, IdentityScopeType type, Map<Class<? extends AbstractDao<?, ?>>, DaoConfig>
             daoConfigMap) {
         super(db);
-
-        imgDetailsTableDaoConfig = daoConfigMap.get(ImgDetailsTableDao.class).clone();
-        imgDetailsTableDaoConfig.initIdentityScope(type);
 
         imgFnameTableDaoConfig = daoConfigMap.get(ImgFnameTableDao.class).clone();
         imgFnameTableDaoConfig.initIdentityScope(type);
@@ -89,7 +82,6 @@ public class DaoSession extends AbstractDaoSession {
         contentItemsTableDaoConfig = daoConfigMap.get(ContentItemsTableDao.class).clone();
         contentItemsTableDaoConfig.initIdentityScope(type);
 
-        imgDetailsTableDao = new ImgDetailsTableDao(imgDetailsTableDaoConfig, this);
         imgFnameTableDao = new ImgFnameTableDao(imgFnameTableDaoConfig, this);
         urlImgFileTableDao = new UrlImgFileTableDao(urlImgFileTableDaoConfig, this);
         galleryContentTableDao = new GalleryContentTableDao(galleryContentTableDaoConfig, this);
@@ -99,7 +91,6 @@ public class DaoSession extends AbstractDaoSession {
         contentItemDetailTableDao = new ContentItemDetailTableDao(contentItemDetailTableDaoConfig, this);
         contentItemsTableDao = new ContentItemsTableDao(contentItemsTableDaoConfig, this);
 
-        registerDao(ImgDetailsTable.class, imgDetailsTableDao);
         registerDao(ImgFnameTable.class, imgFnameTableDao);
         registerDao(UrlImgFileTable.class, urlImgFileTableDao);
         registerDao(GalleryContentTable.class, galleryContentTableDao);
@@ -111,7 +102,6 @@ public class DaoSession extends AbstractDaoSession {
     }
     
     public void clear() {
-        imgDetailsTableDaoConfig.getIdentityScope().clear();
         imgFnameTableDaoConfig.getIdentityScope().clear();
         urlImgFileTableDaoConfig.getIdentityScope().clear();
         galleryContentTableDaoConfig.getIdentityScope().clear();
@@ -120,10 +110,6 @@ public class DaoSession extends AbstractDaoSession {
         contentItemMediaTableDaoConfig.getIdentityScope().clear();
         contentItemDetailTableDaoConfig.getIdentityScope().clear();
         contentItemsTableDaoConfig.getIdentityScope().clear();
-    }
-
-    public ImgDetailsTableDao getImgDetailsTableDao() {
-        return imgDetailsTableDao;
     }
 
     public ImgFnameTableDao getImgFnameTableDao() {

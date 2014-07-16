@@ -29,8 +29,7 @@ public class GalleryContentTableDao extends AbstractDao<GalleryContentTable, Lon
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property GalCmsID = new Property(1, long.class, "GalCmsID", false, "GAL_CMS_ID");
         public final static Property ImgIndex = new Property(2, long.class, "ImgIndex", false, "IMG_INDEX");
-        public final static Property GalleryImgPathUrlType = new Property(3, long.class, "GalleryImgPathUrlType", false, "GALLERY_IMG_PATH_URL_TYPE");
-        public final static Property GalleryImgPathUrlImgTypeRowID = new Property(4, long.class, "galleryImgPathUrlImgTypeRowID", false, "GALLERY_IMG_PATH_URL_IMG_TYPE_ROW_ID");
+        public final static Property ImgFnameID = new Property(3, long.class, "imgFnameID", false, "IMG_FNAME_ID");
     };
 
     private DaoSession daoSession;
@@ -52,8 +51,7 @@ public class GalleryContentTableDao extends AbstractDao<GalleryContentTable, Lon
                 "'_id' INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "'GAL_CMS_ID' INTEGER NOT NULL ," + // 1: GalCmsID
                 "'IMG_INDEX' INTEGER NOT NULL ," + // 2: ImgIndex
-                "'GALLERY_IMG_PATH_URL_TYPE' INTEGER NOT NULL ," + // 3: GalleryImgPathUrlType
-                "'GALLERY_IMG_PATH_URL_IMG_TYPE_ROW_ID' INTEGER NOT NULL );"); // 4: galleryImgPathUrlImgTypeRowID
+                "'IMG_FNAME_ID' INTEGER NOT NULL );"); // 3: imgFnameID
     }
 
     /** Drops the underlying database table. */
@@ -73,8 +71,7 @@ public class GalleryContentTableDao extends AbstractDao<GalleryContentTable, Lon
         }
         stmt.bindLong(2, entity.getGalCmsID());
         stmt.bindLong(3, entity.getImgIndex());
-        stmt.bindLong(4, entity.getGalleryImgPathUrlType());
-        stmt.bindLong(5, entity.getGalleryImgPathUrlImgTypeRowID());
+        stmt.bindLong(4, entity.getImgFnameID());
     }
 
     @Override
@@ -96,8 +93,7 @@ public class GalleryContentTableDao extends AbstractDao<GalleryContentTable, Lon
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getLong(offset + 1), // GalCmsID
             cursor.getLong(offset + 2), // ImgIndex
-            cursor.getLong(offset + 3), // GalleryImgPathUrlType
-            cursor.getLong(offset + 4) // galleryImgPathUrlImgTypeRowID
+            cursor.getLong(offset + 3) // imgFnameID
         );
         return entity;
     }
@@ -108,8 +104,7 @@ public class GalleryContentTableDao extends AbstractDao<GalleryContentTable, Lon
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setGalCmsID(cursor.getLong(offset + 1));
         entity.setImgIndex(cursor.getLong(offset + 2));
-        entity.setGalleryImgPathUrlType(cursor.getLong(offset + 3));
-        entity.setGalleryImgPathUrlImgTypeRowID(cursor.getLong(offset + 4));
+        entity.setImgFnameID(cursor.getLong(offset + 3));
      }
     
     /** @inheritdoc */
@@ -142,9 +137,9 @@ public class GalleryContentTableDao extends AbstractDao<GalleryContentTable, Lon
             StringBuilder builder = new StringBuilder("SELECT ");
             SqlUtils.appendColumns(builder, "T", getAllColumns());
             builder.append(',');
-            SqlUtils.appendColumns(builder, "T0", daoSession.getUrlImgFileTableDao().getAllColumns());
+            SqlUtils.appendColumns(builder, "T0", daoSession.getImgFnameTableDao().getAllColumns());
             builder.append(" FROM GALLERY_CONTENT_TABLE T");
-            builder.append(" LEFT JOIN URL_IMG_FILE_TABLE T0 ON T.'GALLERY_IMG_PATH_URL_IMG_TYPE_ROW_ID'=T0.'_id'");
+            builder.append(" LEFT JOIN IMG_FNAME_TABLE T0 ON T.'IMG_FNAME_ID'=T0.'_id'");
             builder.append(' ');
             selectDeep = builder.toString();
         }
@@ -155,9 +150,9 @@ public class GalleryContentTableDao extends AbstractDao<GalleryContentTable, Lon
         GalleryContentTable entity = loadCurrent(cursor, 0, lock);
         int offset = getAllColumns().length;
 
-        UrlImgFileTable urlImgFileTable = loadCurrentOther(daoSession.getUrlImgFileTableDao(), cursor, offset);
-         if(urlImgFileTable != null) {
-            entity.setUrlImgFileTable(urlImgFileTable);
+        ImgFnameTable imgFnameTable = loadCurrentOther(daoSession.getImgFnameTableDao(), cursor, offset);
+         if(imgFnameTable != null) {
+            entity.setImgFnameTable(imgFnameTable);
         }
 
         return entity;    

@@ -129,4 +129,6 @@ public abstract class SqliteDBAbstractIface
 	public abstract void relatedItemsTableAssociationProcessing(Object relatedItemsTableBean);
 	
 	public abstract void galleryTableAssociationProcessing(Object galleryItemsTableBean);
+	
+	public abstract Object addImgFileEntry(ImgFileUrlSpecs imgFileSepcs, ImgFileDetails imgFileDetails, String urlLocation);
 }

@@ -41,10 +41,11 @@ public class NBCDataBaseHelper extends OpenHelper
 		
 		//taken from related item table types
 		E_REL_ITEM_MOBILE_THUMBNAIL_URL_TYPE(5),
-		E_REL_ITEM_STORY_THUMBNAIL_URL_TYPE(6),
-		
-		//taken from gallery img table types
-		E_GAL_IMG_PATH_URL_TYPE(7);
+		E_REL_ITEM_STORY_THUMBNAIL_URL_TYPE(6);
+//		,
+//		
+//		//taken from gallery img table types
+//		E_GAL_IMG_PATH_URL_TYPE(7);
 
 		//constructor to map enums to long values.
 		T_UrlTypeToId(long urlTypeVal_ID)

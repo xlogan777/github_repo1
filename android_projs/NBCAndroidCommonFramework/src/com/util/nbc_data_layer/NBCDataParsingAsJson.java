@@ -10,6 +10,7 @@ import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemLeadMediaTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemMediaTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemsTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.GalleryContentTable;
+import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ImgFnameTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.RelatedItemsTable;
 
 /**
@@ -344,26 +345,22 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 			GalleryContentTable gallery_content_table = new GalleryContentTable();
 			
 			long cms_id = parsingInputParams.getCmsId();
-			
 			gallery_content_table.setGalCmsID(cms_id);
 			gallery_content_table.setImgIndex(index);
 			
 			//img file details obj.
 			ImgFileDetails img_details = new ImgFileDetails(imageCredit,imageCaption);
-			gallery_content_table.setGalleryImgPathUrlType
-			(NBCDataBaseHelper.T_UrlTypeToId.E_GAL_IMG_PATH_URL_TYPE.getUrlTypeID());
 			
-			//perform the urlstring to table associations. this all gets saved in the entity obj type.
-			//dont have any details about any of the images.
-			dbIface.peformUrlStringToTableAssociations
-			(
-			 imagePath,
-			 img_details,
-			 cms_id,
-			 NBCDataBaseHelper.T_UrlTypeToId.E_GAL_IMG_PATH_URL_TYPE, 
-			 gallery_content_table,
-			 this
-			);
+			//TODO: need to do the parsing of the img specs for the url path of the gallery item.
+			ImgFileUrlSpecs img_file_specs = this.parseUrlString(imagePath, imageWidth, imageHeight);
+			
+			//perform the img file processing for the input data from the json str for this item. 
+			ImgFnameTable img_fname_entity = 
+					(ImgFnameTable)dbIface.addImgFileEntry(img_file_specs, img_details, imagePath);
+			
+			//make the table relationships now...
+			gallery_content_table.setImgFnameID(img_fname_entity.getId());
+			gallery_content_table.setImgFnameTable(img_fname_entity);
 			
 			//add the gallery content to the DB layer here.
 			dbIface.galleryTableAssociationProcessing(gallery_content_table);
