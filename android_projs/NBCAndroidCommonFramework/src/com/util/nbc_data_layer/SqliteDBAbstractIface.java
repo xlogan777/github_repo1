@@ -1,5 +1,7 @@
 package com.util.nbc_data_layer;
 
+import java.util.List;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
@@ -131,4 +133,8 @@ public abstract class SqliteDBAbstractIface
 	public abstract void galleryTableAssociationProcessing(Object galleryItemsTableBean);
 	
 	public abstract Object addImgFileEntry(ImgFileUrlSpecs imgFileSepcs, ImgFileDetails imgFileDetails, String urlLocation);
+	
+	public abstract Object getContentData(long cmsId);
+	
+	public abstract List<Object> getContentDataAsList(long cmsId);
 }

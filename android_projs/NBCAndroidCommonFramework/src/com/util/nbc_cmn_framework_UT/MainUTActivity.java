@@ -70,10 +70,25 @@ public class MainUTActivity extends ActionBarActivity
         
         try
         {
+        	long sleep_time = 2000;//2 secs
+        	
         	//perform the unit test for all 3 types of data streams.
+        	//this will do the insertion and updates of data needed.
         	this.unitTestContentData();
         	this.unitTestRelatedItemsContentData();
         	this.unitTestGalleryContentData();
+        	Thread.sleep(sleep_time);
+        	
+        	//this will show the data using only the dao..load all the data 
+        	//using all the relationships from the dao...and display it.
+        	this.displayAllContentData();
+        	Thread.sleep(sleep_time);
+        	
+        	this.displayAllRelatedItemData();
+        	Thread.sleep(sleep_time);
+        	
+        	this.displayAllGalleryItemData();
+        	Thread.sleep(sleep_time);
         }
         catch(Exception e)
         {
@@ -85,6 +100,39 @@ public class MainUTActivity extends ActionBarActivity
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}*/
+	}
+	
+	private void displayAllContentData()
+	{
+		Log.d(MainUTActivityTAG, "JM...display content data");	
+	}
+	
+	private void displayAllRelatedItemData()
+	{
+		Log.d(MainUTActivityTAG, "JM...display related items data");
+	}
+	
+	/*
+	 * display all the gallery data here with their unique img data associated with the 
+	 * gallery items.
+	 */
+	private void displayAllGalleryItemData()
+	{
+		Log.d(MainUTActivityTAG, "JM...display gallery content data");
+		long cms_id = 237503121;
+		
+		//create query and get the data from the gallery table.
+		List<Object> gallery_items = dbIface.getContentDataAsList(cms_id);
+		tv.setText("");
+		
+		for(Object obj : gallery_items)
+		{
+			GalleryContentTable gct = (GalleryContentTable)obj;
+			
+			//print all the items here...
+			
+			
+		}
 	}
 	
 	/*
