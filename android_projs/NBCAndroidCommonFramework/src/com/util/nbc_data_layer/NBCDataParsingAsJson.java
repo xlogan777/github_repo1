@@ -351,7 +351,7 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 			//img file details obj.
 			ImgFileDetails img_details = new ImgFileDetails(imageCredit,imageCaption);
 			
-			//TODO: need to do the parsing of the img specs for the url path of the gallery item.
+			//parse the url specs via the img path.
 			ImgFileUrlSpecs img_file_specs = this.parseUrlString(imagePath, imageWidth, imageHeight);
 			
 			//perform the img file processing for the input data from the json str for this item. 
