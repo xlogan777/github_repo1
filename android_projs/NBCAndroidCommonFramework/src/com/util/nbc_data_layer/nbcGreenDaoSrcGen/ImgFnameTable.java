@@ -109,6 +109,44 @@ public class ImgFnameTable implements ImgFnameTypeIface{
     }
 
     // KEEP METHODS - put your custom methods here
+    /*
+     * this is used for debugging purposes. this will return a string that contains the info
+     * for this current obj as a string..for display. 
+     */
+    public String getDebugString()
+    {
+    	StringBuilder sb = new StringBuilder();
+    	
+    	sb.append("ImgFnameRowId = ");
+    	sb.append(id);
+    	sb.append(" ");
+    	
+    	sb.append("ImgFname = ");
+    	sb.append(ImgFname);
+    	sb.append(" ");
+    	
+    	sb.append("ImgWidth = ");
+    	sb.append(ImgWidth);
+    	sb.append(" ");
+    	
+    	sb.append("ImgHeight = ");
+    	sb.append(ImgHeight);
+    	sb.append(" ");
+    	
+    	sb.append("ImgCaption = ");
+    	sb.append(ImgCaption);
+    	sb.append(" ");
+    	
+    	sb.append("ImgCredit = ");
+    	sb.append(ImgCredit);
+    	sb.append(" ");
+    	
+    	sb.append("ImgUrlLocation = ");
+    	sb.append(ImgUrlLocation);
+    	sb.append(" ");
+    	    	
+    	return sb.toString();
+    }
     // KEEP METHODS END
 
 }
