@@ -2,6 +2,8 @@ package com.util.nbc_data_layer;
 
 import java.util.List;
 
+import com.util.nbc_data_layer.dataTypes.*;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
@@ -112,29 +114,37 @@ public abstract class SqliteDBAbstractIface
 	//override these functions since they will be implementation dependent.
 	public abstract void initializeDB();
 	
-	public abstract Object imgFileTableEntryAndAssociationProcessing
+	public abstract UrlImgTypeIface imgFileTableEntryAndAssociationProcessing
 	(ImgFileUrlSpecs imgFileSepcs, ImgFileDetails imgFileDetails, long cmsID, long urlTypeID, String urlLocation);
 	
 	public abstract void peformUrlStringToTableAssociations
 	(
-	 String urlInput, 
-	 ImgFileDetails imgDetails, 
-	 long cmsID, 
-	 NBCDataBaseHelper.T_UrlTypeToId typeID, 
-	 Object entityObj, 
+	 String urlInput,
+	 ImgFileDetails imgDetails,
+	 long cmsID,
+	 NBCDataBaseHelper.T_UrlTypeToId typeID,
+	 UrlImgTypeIface entityObj,
 	 NBCDataParsingBase parsingObj
 	);
 		
 	public abstract void contentItemTableAssociationProcessing
-	(Object cntItemsTableBean, Object cntItemDetailTableBean, Object cntMediaTableBean, Object cntLeadMediaTableBean);
+	(
+	 CntTypeIface cntItemsTableBean, 
+	 CntDetailTypeIface cntItemDetailTableBean, 
+	 CntMediaTypeIface cntMediaTableBean, 
+	 CntLeadMediaTypeIface cntLeadMediaTableBean
+	);
 	
-	public abstract void relatedItemsTableAssociationProcessing(Object relatedItemsTableBean);
+	public abstract void relatedItemsTableAssociationProcessing(RelCntItemTypeIface relatedItemsTableBean);
 	
-	public abstract void galleryTableAssociationProcessing(Object galleryItemsTableBean);
+	public abstract void galleryTableAssociationProcessing(GalleryCntTypeIface galleryItemsTableBean);
 	
-	public abstract Object addImgFileEntry(ImgFileUrlSpecs imgFileSepcs, ImgFileDetails imgFileDetails, String urlLocation);
+	public abstract ImgFnameTypeIface imgTableProcessing(ImgFileUrlSpecs imgFileSepcs, ImgFileDetails imgFileDetails, String urlLocation);
 	
-	public abstract Object getContentData(long cmsId);
-	
-	public abstract List<Object> getContentDataAsList(long cmsId);
+	/*
+	 * these functions are used as retrieval of data from the db layer.
+	 */
+	public abstract void getContentData(long cmsId, CntTypeIface contentData);
+	public abstract void getRelatedContentDataAsList(long cmsId, List<RelCntItemTypeIface> relatedCntList);
+	public abstract void getGalleryContentDataAsList(long cmsId, List<GalleryCntTypeIface> galleryCntList);
 }

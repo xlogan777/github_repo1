@@ -1,8 +1,8 @@
 package com.util.nbc_data_layer;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import com.util.nbc_data_layer.dataTypes.*;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ContentItemsTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoMaster;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.DaoSession;
@@ -88,11 +88,11 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 	 * img-details table if the obj for it is not null...
 	 */
 	@Override
-	public Object imgFileTableEntryAndAssociationProcessing
+	public UrlImgTypeIface imgFileTableEntryAndAssociationProcessing
 	(ImgFileUrlSpecs imgFileSepcs, ImgFileDetails imgFileDetails, long cmsID, long urlTypeID, String urlLocation)
 	{
 		//object to be returned back to caller.
-		Object rv = null;
+		UrlImgFileTable rv = null;
 		
 		//use the session dao here.
 		DaoSession dao_session = ((DaoSession)sessionObj);
@@ -119,7 +119,7 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 		{
 			//do the processing here for the img_fname entity item. 
 			ImgFnameTable img_fname_entity = 
-					(ImgFnameTable)this.addImgFileEntry(imgFileSepcs, imgFileDetails, urlLocation);
+					(ImgFnameTable)this.imgTableProcessing(imgFileSepcs, imgFileDetails, urlLocation);
 			
 			//create entity obj here and setup with specifics of the java bean.
 			UrlImgFileTable url_img_entity = new UrlImgFileTable();
@@ -158,7 +158,7 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 	 * or just returning the found fname row item back to caller as an obj.
 	 */
 	@Override
-	public Object addImgFileEntry
+	public ImgFnameTypeIface imgTableProcessing
 	(ImgFileUrlSpecs imgFileSepcs, ImgFileDetails imgFileDetails, String urlLocation)
 	{
 		DaoSession dao_session = ((DaoSession)sessionObj);
@@ -223,8 +223,9 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 	 String urlInput, 
 	 ImgFileDetails imgDetails,
 	 long cmsID, 
-	 NBCDataBaseHelper.T_UrlTypeToId typeID, 
-	 Object entityObj, 
+	 NBCDataBaseHelper.T_UrlTypeToId typeID,
+	 //Object entityObj,
+	 UrlImgTypeIface entityObj,
 	 NBCDataParsingBase parsingObj
 	)
 	{
@@ -254,73 +255,6 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 		//use the visitor iface to rcv the visitor obj to allow for specific processing for
 		//each entity obj.
 		entity_item.accept(visitor, typeID, url_img_entity);
-		
-//		//provide switch to appropriately provide the correct type of associations here.
-//		switch(typeID)
-//		{
-//			case E_NOT_VALID_MEDIA_URL_TYPE:
-//				break;
-//			
-//			//taken from lead media table types
-//			case E_LEAD_MEDIA_THUMBNAIL_URL_TYPE:
-//				
-//				//cast entity obj to specific java bean type to make appropriate associations.
-//				ContentItemLeadMediaTable cnt_lead_media_table_bean = (ContentItemLeadMediaTable)entityObj;
-//				
-//				//make the association with cms id to url-img obj here.
-//				cnt_lead_media_table_bean.setLeadMediaThumbnailUrlImgTypeRowID(url_img_entity.getId());
-//				cnt_lead_media_table_bean.setUrlImgFileTable(url_img_entity);
-//				
-//				break;
-//			
-//			//taken from media table types
-//			case E_MEDIA_URL_TYPE:
-//				
-//				//cast entity obj to be specific to defined entity obj type.
-//				ContentItemMediaTable tmp1_cnt_media_table_bean = (ContentItemMediaTable)entityObj;
-//				
-//				//make associations here specific to defined entity obj type.
-//				tmp1_cnt_media_table_bean.setMediaUrlImgTypeRowID(url_img_entity.getId());
-//				tmp1_cnt_media_table_bean.setMediaUrlImgType(url_img_entity);
-//				
-//				break;
-//				
-//			case E_MEDIA_PHOTO_THUMBNAIL_URL_TYPE:
-//				
-//				//cast entity obj to be specific to defined entity obj type.
-//				ContentItemMediaTable tmp2_cnt_media_table_bean = (ContentItemMediaTable)entityObj;
-//				
-//				//make associations here specific to defined entity obj type.
-//				tmp2_cnt_media_table_bean.setMediaPhotoThumbnailUrlImgTypeRowID(url_img_entity.getId());
-//				tmp2_cnt_media_table_bean.setMediaPhotoThumbnailUrlImgType(url_img_entity);
-//
-//				break;
-//				
-//			case E_MEDIA_THUMBNAIL_URL_TYPE:
-//				
-//				//cast entity obj to be specific to defined entity obj type.
-//				ContentItemMediaTable tmp3_cnt_media_table_bean = (ContentItemMediaTable)entityObj;
-//				
-//				//make associations here specific to defined entity obj type.
-//				tmp3_cnt_media_table_bean.setMediaThumbnailUrlImgTypeRowID(url_img_entity.getId());
-//				tmp3_cnt_media_table_bean.setMediaThumbnailUrlImgType(url_img_entity);
-//				
-//				break;
-//			
-//			//taken from related item table types
-//			case E_REL_ITEM_MOBILE_THUMBNAIL_URL_TYPE:
-//				//TODO
-//				break;
-//				
-//			case E_REL_ITEM_STORY_THUMBNAIL_URL_TYPE:
-//				//TODO
-//				break;
-//			
-//			//taken from gallery img table types
-//			case E_GAL_IMG_PATH_URL_TYPE:
-//				//TODO
-//				break;
-//		}
 	}
 	
 	/*
@@ -330,7 +264,12 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 	 */
 	@Override
 	public void contentItemTableAssociationProcessing
-	(Object cntItemsTableBean, Object cntItemDetailTableBean, Object cntMediaTableBean, Object cntLeadMediaTableBean)
+	(
+	 CntTypeIface cntItemsTableBean, 
+	 CntDetailTypeIface cntItemDetailTableBean, 
+	 CntMediaTypeIface cntMediaTableBean, 
+	 CntLeadMediaTypeIface cntLeadMediaTableBean
+	)
 	{
 		//cast to green dao session obj from generic session obj type.
 		DaoSession daoSession = (DaoSession)this.sessionObj;
@@ -347,14 +286,14 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 		entity_item.accept(visitor,daoSession,content_items_table_bean);
 	//perform the entity table association and db transaction for cnt_lead_media_table_bean
 		
-	//perform the entity table association and db transaction for cnt_lead_media_table_bean	
+	//perform the entity table association and db transaction for cnt_media_table_bean	
 		//cast the entity obj to the visitor iface for each entity obj.
 		entity_item = (EntityItemIface)cntMediaTableBean;
 		
 		//use the visitor iface to rcv the visitor obj to allow for specific processing for
 		//each entity obj.
 		entity_item.accept(visitor,daoSession,content_items_table_bean);
-	//perform the entity table association and db transaction for cnt_lead_media_table_bean
+	//perform the entity table association and db transaction for cnt_media_table_bean
 		
 	//perform the entity table association and db transaction for cnt_item_detail_table_bean	
 		//cast the entity obj to the visitor iface for each entity obj.
@@ -365,31 +304,14 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 		entity_item.accept(visitor,daoSession,content_items_table_bean);
 	//perform the entity table association and db transaction for cnt_item_detail_table_bean
 		
-	//perform the entity table association and db transaction for cnt_item_detail_table_bean	
+	//perform the entity table association and db transaction for cnt_items_table_bean	
 		//cast the entity obj to the visitor iface for each entity obj.
 		entity_item = (EntityItemIface)cntItemsTableBean;
 		
 		//use the visitor iface to rcv the visitor obj to allow for specific processing for
 		//each entity obj.
 		entity_item.accept(visitor,daoSession);
-	//perform the entity table association and db transaction for cnt_item_detail_table_bean
-	
-		//update the foreign key associations for the content item table entry.
-		//save the update via there respective dao. update the content item obj new sub bean obj.
-		/*ContentItemLeadMediaTable cnt_lead_media_table_bean = (ContentItemLeadMediaTable)cntLeadMediaTableBean;
-		daoSession.getContentItemLeadMediaTableDao().insertOrReplace(cnt_lead_media_table_bean);
-		content_items_table_bean.setContentItemLeadMediaTable(cnt_lead_media_table_bean);*/
-				
-		/*ContentItemMediaTable cnt_media_table_bean = (ContentItemMediaTable)cntMediaTableBean;
-		daoSession.getContentItemMediaTableDao().insertOrReplace(cnt_media_table_bean);
-		content_items_table_bean.setContentItemMediaTable(cnt_media_table_bean);*/
-		
-		/*ContentItemDetailTable cnt_item_detail_table_bean = (ContentItemDetailTable)cntItemDetailTableBean;
-		daoSession.getContentItemDetailTableDao().insertOrReplace(cnt_item_detail_table_bean);
-		content_items_table_bean.setContentItemDetailTable(cnt_item_detail_table_bean);*/
-				
-		//update content item obj.
-		//daoSession.getContentItemsTableDao().insertOrReplace(content_items_table_bean);
+	//perform the entity table association and db transaction for cnt_items_table_bean
 	}
 	
 	/*
@@ -397,7 +319,7 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 	 * 
 	 */
 	@Override
-	public void relatedItemsTableAssociationProcessing(Object relatedItemsTableBean)
+	public void relatedItemsTableAssociationProcessing(RelCntItemTypeIface relatedItemsTableBean)
 	{
 		//cast to green dao session obj from generic session obj type.
 		DaoSession daoSession = (DaoSession)this.sessionObj;
@@ -417,7 +339,7 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 	 * 
 	 */
 	@Override
-	public void galleryTableAssociationProcessing(Object galleryItemsTableBean)
+	public void galleryTableAssociationProcessing(GalleryCntTypeIface galleryItemsTableBean)
 	{
 		//cast to green dao session obj from generic session obj type.
 		DaoSession daoSession = (DaoSession)this.sessionObj;
@@ -433,75 +355,107 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 	}
 	
 	/*
-	 * this will return the content item using the cms content id.
-	 * this will return either null of nothing found for the call...or 
-	 * the entity obj for the cms id.
 	 * 
+	 * this will return back to caller as param what we got from the db layer
+	 * using this cnt id.
 	 */
 	@Override
-	public Object getContentData(long cmsId) 
-	{
-		Object rv = null;
-		
+	public void getContentData(long cmsId, CntTypeIface contentData)
+	{		
 		//cast to green dao session obj from generic session obj type.
 		DaoSession daoSession = (DaoSession)this.sessionObj;
 		
 		//load the specific entity type using the id.
-		rv = daoSession.getContentItemsTableDao().load(cmsId);
-	
-		//return back to the caller.
-		return rv;
+		contentData = daoSession.getContentItemsTableDao().load(cmsId);
 	}
-
+	
 	/*
-	 * this will return either null..if we have nothing or a list of the data
-	 * tied to the cms id..
-	 * added the suppresion of the warning for the cast from specific List<MyEntityType> type
-	 * to a List<Object> type
 	 * 
+	 * this will return back to caller as param what we got from the db layer
+	 * using this cnt id the entire related items list.
+	 * 
+	 * NOTE: added the [SuppressWarnings annotation to remove the cast warning of list types.]
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Object> getContentDataAsList(long cmsId)
+	public void getRelatedContentDataAsList(long cmsId, List<RelCntItemTypeIface> relatedCntList)
 	{
-		//List<Object> rv = new ArrayList<Object>();
-				
-		List<Object> tt = null;
+		//cast to green dao session obj from generic session obj type.
+		DaoSession daoSession = (DaoSession)this.sessionObj;
+	
+		//get the list of related items using the cms id.
+		List<RelatedItemsTable> rel_items = 
+			daoSession.getRelatedItemsTableDao().queryBuilder().where
+				(RelatedItemsTableDao.Properties.ParentCmsID.eq(cmsId)).list();
 		
+		//cast through an intermediate wildcard type to cast to list of object types
+		relatedCntList = (List<RelCntItemTypeIface>)(List<?>)rel_items;
+	}
+	
+	/*
+	 * 
+	 * this will return back to caller as param what we got from the db layer
+	 * using this cnt id the entire gallery items list.
+	 * 
+	 * NOTE: added the [SuppressWarnings annotation to remove the cast warning of list types.]
+	 */
+	@Override
+	@SuppressWarnings("unchecked")
+	public void getGalleryContentDataAsList(long cmsId, List<GalleryCntTypeIface> galleryCntList)
+	{
 		//cast to green dao session obj from generic session obj type.
 		DaoSession daoSession = (DaoSession)this.sessionObj;
 		
-		//TODO: change this to a enum type.
-		if(cmsId == 100)
-		{
-			List<RelatedItemsTable> rel_items = daoSession.getRelatedItemsTableDao().queryBuilder().where
-					(RelatedItemsTableDao.Properties.ParentCmsID.eq(cmsId)).list();
-			
-			//have data, provide it back to caller.
-			if(rel_items.size() > 0)
-			{
-				//rv.addAll(rel_items);
-				
-				//cast through an intermediate wildcard type to cast to list of object types
-				//@SuppressWarnings("unchecked")
-				tt = (List<Object>)(List<?>)rel_items;
-			}
-		}
-		else
-		{
-			List<GalleryContentTable> gal_items = daoSession.getGalleryContentTableDao().queryBuilder().where
-					(GalleryContentTableDao.Properties.GalCmsID.eq(cmsId)).list();
-			
-			if(gal_items.size() > 0)
-			{				
-				//rv.addAll(gal_items);
-				//cast through an intermediate wildcard type to cast to list of object types
-				//@SuppressWarnings("unchecked")
-				tt = (List<Object>)(List<?>)gal_items;
-			}
-		}
+		List<GalleryContentTable> gal_items = 
+			daoSession.getGalleryContentTableDao().queryBuilder().where
+				(GalleryContentTableDao.Properties.GalCmsID.eq(cmsId)).list();
 		
-		//return rv;
-		return tt;
+		//cast through an intermediate wildcard type to cast to list of object types
+		galleryCntList = (List<GalleryCntTypeIface>)(List<?>)gal_items;
 	}
+	
+//	@Override
+//	@SuppressWarnings("unchecked")
+//	public List<Object> getContentDataAsList(long cmsId)
+//	{
+//		//List<Object> rv = new ArrayList<Object>();
+//				
+//		List<Object> tt = null;
+//		
+//		//cast to green dao session obj from generic session obj type.
+//		DaoSession daoSession = (DaoSession)this.sessionObj;
+//		
+//		//TODO: change this to a enum type.
+//		if(cmsId == 100)
+//		{
+//			List<RelatedItemsTable> rel_items = daoSession.getRelatedItemsTableDao().queryBuilder().where
+//					(RelatedItemsTableDao.Properties.ParentCmsID.eq(cmsId)).list();
+//			
+//			//have data, provide it back to caller.
+//			if(rel_items.size() > 0)
+//			{
+//				//rv.addAll(rel_items);
+//				
+//				//cast through an intermediate wildcard type to cast to list of object types
+//				//@SuppressWarnings("unchecked")
+//				tt = (List<Object>)(List<?>)rel_items;
+//			}
+//		}
+//		else
+//		{
+//			List<GalleryContentTable> gal_items = daoSession.getGalleryContentTableDao().queryBuilder().where
+//					(GalleryContentTableDao.Properties.GalCmsID.eq(cmsId)).list();
+//			
+//			if(gal_items.size() > 0)
+//			{				
+//				//rv.addAll(gal_items);
+//				//cast through an intermediate wildcard type to cast to list of object types
+//				//@SuppressWarnings("unchecked")
+//				tt = (List<Object>)(List<?>)gal_items;
+//			}
+//		}
+//		
+//		//return rv;
+//		return tt;
+//	}
 }

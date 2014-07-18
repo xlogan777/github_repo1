@@ -3,6 +3,7 @@ package com.util.nbc_cmn_framework_UT;
 import java.io.*;
 import java.util.List;
 
+import com.util.nbc_data_layer.dataTypes.*;
 import com.util.nbc_common_framework.R;
 import com.util.nbc_data_layer.NBCDataParsingBase;
 import com.util.nbc_data_layer.NBCDataParsingAsJson;
@@ -77,6 +78,7 @@ public class MainUTActivity extends ActionBarActivity
         	this.unitTestContentData();
         	this.unitTestRelatedItemsContentData();
         	this.unitTestGalleryContentData();
+        	
         	Thread.sleep(sleep_time);
         	
         	//this will show the data using only the dao..load all the data 
@@ -122,15 +124,14 @@ public class MainUTActivity extends ActionBarActivity
 		long cms_id = 237503121;
 		
 		//create query and get the data from the gallery table.
-		List<Object> gallery_items = dbIface.getContentDataAsList(cms_id);
+		List<GalleryCntTypeIface> gallery_items = null; 
+		dbIface.getGalleryContentDataAsList(cms_id, gallery_items);
 		tv.setText("");
 		
-		for(Object obj : gallery_items)
+		//loop over all the items here..and display them..
+		for(GalleryCntTypeIface obj : gallery_items)
 		{
 			GalleryContentTable gct = (GalleryContentTable)obj;
-			
-			//print all the items here...
-			
 			
 		}
 	}

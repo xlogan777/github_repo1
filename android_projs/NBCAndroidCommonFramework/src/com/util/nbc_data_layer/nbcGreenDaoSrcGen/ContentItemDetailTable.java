@@ -6,12 +6,13 @@ package com.util.nbc_data_layer.nbcGreenDaoSrcGen;
 import com.util.nbc_data_layer.EntityItemIface;
 import com.util.nbc_data_layer.EntityVisitorIface;
 import com.util.nbc_data_layer.NBCDataBaseHelper.T_UrlTypeToId;
-//public class ContentItemDetailTable implements EntityItemIface{
+import com.util.nbc_data_layer.dataTypes.CntDetailTypeIface;
+//public class ContentItemDetailTable implements EntityItemIface, CntDetailTypeIface{
 // KEEP INCLUDES END
 /**
  * Entity mapped to table CONTENT_ITEM_DETAIL_TABLE.
  */
-public class ContentItemDetailTable implements EntityItemIface{
+public class ContentItemDetailTable implements EntityItemIface, CntDetailTypeIface{
 
     private long CmsID;
     /** Not-null value. */

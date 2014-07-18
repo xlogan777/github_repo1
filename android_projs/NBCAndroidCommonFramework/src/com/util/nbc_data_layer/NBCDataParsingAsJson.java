@@ -356,7 +356,7 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 			
 			//perform the img file processing for the input data from the json str for this item. 
 			ImgFnameTable img_fname_entity = 
-					(ImgFnameTable)dbIface.addImgFileEntry(img_file_specs, img_details, imagePath);
+					(ImgFnameTable)dbIface.imgTableProcessing(img_file_specs, img_details, imagePath);
 			
 			//make the table relationships now...
 			gallery_content_table.setImgFnameID(img_fname_entity.getId());
