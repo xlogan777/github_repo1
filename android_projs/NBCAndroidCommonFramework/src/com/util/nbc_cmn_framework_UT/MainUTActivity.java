@@ -79,18 +79,18 @@ public class MainUTActivity extends ActionBarActivity
         	this.unitTestRelatedItemsContentData();
         	this.unitTestGalleryContentData();
         	
-        	Thread.sleep(sleep_time);
-        	
-        	//this will show the data using only the dao..load all the data 
-        	//using all the relationships from the dao...and display it.
-        	this.displayAllContentData();
-        	Thread.sleep(sleep_time);
-        	
-        	this.displayAllRelatedItemData();
-        	Thread.sleep(sleep_time);
-        	
-        	this.displayAllGalleryItemData();
-        	Thread.sleep(sleep_time);
+//        	Thread.sleep(sleep_time);
+//        	
+//        	//this will show the data using only the dao..load all the data 
+//        	//using all the relationships from the dao...and display it.
+//        	this.displayAllContentData();
+//        	Thread.sleep(sleep_time);
+//        	
+//        	this.displayAllRelatedItemData();
+//        	Thread.sleep(sleep_time);
+//        	
+//        	this.displayAllGalleryItemData();
+//        	Thread.sleep(sleep_time);
         }
         catch(Exception e)
         {
