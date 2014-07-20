@@ -213,6 +213,73 @@ public class ContentItemDetailTable implements EntityItemIface, CntDetailTypeIfa
 	{
 		//dont do anything here.
 	}
+	
+	/*
+     * this is used for debugging purposes. this will return a string that contains the info
+     * for this current obj as a string..for display. 
+     */
+    public String getDebugString()
+    {
+    	StringBuilder sb = new StringBuilder();
+    	    	
+    	sb.append("CmsID = ");
+    	sb.append(CmsID);
+    	sb.append(" ");
+    	
+    	sb.append("DisplayTimeStamp = ");
+    	sb.append(DisplayTimeStamp);
+    	sb.append(" ");
+    	
+    	sb.append("Flag = ");
+    	sb.append(Flag);
+    	sb.append(" ");
+    	
+    	sb.append("Title = ");
+    	sb.append(Title);
+    	sb.append(" ");
+    	
+    	sb.append("FullTitle = ");
+    	sb.append(FullTitle);
+    	sb.append(" ");
+    	
+    	sb.append("SubTitle = ");
+    	sb.append(SubTitle);
+    	sb.append(" ");
+    	
+    	sb.append("Description = ");
+    	sb.append(Description);
+    	sb.append(" ");
+    	
+    	sb.append("VideoLength = ");
+    	sb.append(VideoLength);
+    	sb.append(" ");
+    	
+    	sb.append("UsingPlaceholderImg = ");
+    	sb.append(UsingPlaceholderImg);
+    	sb.append(" ");
+    	
+    	sb.append("USWorldTarget = ");
+    	sb.append(USWorldTarget);
+    	sb.append(" ");
+    	
+    	sb.append("ContentSectionName = ");
+    	sb.append(ContentSectionName);
+    	sb.append(" ");
+    	
+    	sb.append("ContentSectionNameCss = ");
+    	sb.append(ContentSectionNameCss);
+    	sb.append(" ");
+    	
+    	sb.append("ContentSubSectionName = ");
+    	sb.append(ContentSubSectionName);
+    	sb.append(" ");
+
+    	sb.append("ContentSubSectionNameCss = ");
+    	sb.append(ContentSubSectionNameCss);
+    	sb.append(" ");
+    	    	
+    	return sb.toString();
+    }
     // KEEP METHODS END
 
 }

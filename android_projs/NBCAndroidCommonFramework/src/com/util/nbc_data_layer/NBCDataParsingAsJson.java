@@ -285,7 +285,7 @@ public class NBCDataParsingAsJson extends NBCDataParsingBase
 			 this
 			);
 			
-			related_items_table_bean.setRelItemMobileThumbnailUrlType
+			related_items_table_bean.setRelItemStoryThumbnailUrlType
 			(NBCDataBaseHelper.T_UrlTypeToId.E_REL_ITEM_STORY_THUMBNAIL_URL_TYPE.getUrlTypeID());
 			
 			//perform the urlstring to table associations. this all gets saved in the entity obj type.

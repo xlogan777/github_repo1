@@ -79,18 +79,18 @@ public class MainUTActivity extends ActionBarActivity
         	this.unitTestRelatedItemsContentData();
         	this.unitTestGalleryContentData();
         	
-//        	Thread.sleep(sleep_time);
-//        	
-//        	//this will show the data using only the dao..load all the data 
-//        	//using all the relationships from the dao...and display it.
-//        	this.displayAllContentData();
-//        	Thread.sleep(sleep_time);
-//        	
-//        	this.displayAllRelatedItemData();
-//        	Thread.sleep(sleep_time);
-//        	
-//        	this.displayAllGalleryItemData();
-//        	Thread.sleep(sleep_time);
+        	Thread.sleep(sleep_time);
+        	
+        	//this will show the data using only the dao..load all the data 
+        	//using all the relationships from the dao...and display it.
+        	this.displayAllContentData();
+        	Thread.sleep(sleep_time);
+        	
+        	this.displayAllRelatedItemData();
+        	Thread.sleep(sleep_time);
+        	
+        	this.displayAllGalleryItemData();
+        	Thread.sleep(sleep_time);
         }
         catch(Exception e)
         {
@@ -106,12 +106,45 @@ public class MainUTActivity extends ActionBarActivity
 	
 	private void displayAllContentData()
 	{
-		Log.d(MainUTActivityTAG, "JM...display content data");	
+		Log.d(MainUTActivityTAG, "JM...display content items data");
+		
+		long cms_id = 253794761;
+		
+		//create query and get the data from the cnt table
+		CntTypeIface cnt_items =  dbIface.getContentData(cms_id);
+		tv.setText("");
+		
+		String final_string = "";
+
+		ContentItemsTable cnt = (ContentItemsTable)cnt_items;
+		final_string += cnt.getDebugString();
+		
+		tv.setText(final_string);
 	}
 	
 	private void displayAllRelatedItemData()
 	{
 		Log.d(MainUTActivityTAG, "JM...display related items data");
+		
+		long cms_id = 253794761;
+		
+		//create query and get the data from the related table.
+		List<RelCntItemTypeIface> rel_items = null; 
+		rel_items = dbIface.getRelatedContentDataAsList(cms_id);
+		tv.setText("");
+		
+		String final_string = "";
+		int size = rel_items.size();
+		Log.d(MainUTActivityTAG, "JM...size = "+size);
+		
+		//loop over all the items here..and display them..
+		for(RelCntItemTypeIface obj1 : rel_items)
+		{
+			RelatedItemsTable rct = (RelatedItemsTable)obj1;
+			final_string += rct.getDebugString();
+		}
+		
+		tv.setText(final_string);
 	}
 	
 	/*
@@ -125,15 +158,21 @@ public class MainUTActivity extends ActionBarActivity
 		
 		//create query and get the data from the gallery table.
 		List<GalleryCntTypeIface> gallery_items = null; 
-		dbIface.getGalleryContentDataAsList(cms_id, gallery_items);
+		gallery_items = dbIface.getGalleryContentDataAsList(cms_id);
 		tv.setText("");
 		
+		String final_string = "";
+		int size = gallery_items.size();
+		Log.d(MainUTActivityTAG, "JM...size = "+size);
+		
 		//loop over all the items here..and display them..
-		for(GalleryCntTypeIface obj : gallery_items)
+		for(GalleryCntTypeIface obj1 : gallery_items)
 		{
-			GalleryContentTable gct = (GalleryContentTable)obj;
-			
+			GalleryContentTable gct = (GalleryContentTable)obj1;
+			final_string += gct.getDebugString();			
 		}
+		
+		tv.setText(final_string);
 	}
 	
 	/*

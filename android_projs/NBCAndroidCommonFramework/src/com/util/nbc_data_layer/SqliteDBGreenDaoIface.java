@@ -360,13 +360,16 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 	 * using this cnt id.
 	 */
 	@Override
-	public void getContentData(long cmsId, CntTypeIface contentData)
+	public CntTypeIface getContentData(long cmsId)
 	{		
 		//cast to green dao session obj from generic session obj type.
 		DaoSession daoSession = (DaoSession)this.sessionObj;
 		
 		//load the specific entity type using the id.
-		contentData = daoSession.getContentItemsTableDao().load(cmsId);
+		ContentItemsTable contentData = daoSession.getContentItemsTableDao().load(cmsId);
+		
+		//return specific obj.
+		return contentData;
 	}
 	
 	/*
@@ -378,7 +381,7 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public void getRelatedContentDataAsList(long cmsId, List<RelCntItemTypeIface> relatedCntList)
+	public List<RelCntItemTypeIface> getRelatedContentDataAsList(long cmsId)
 	{
 		//cast to green dao session obj from generic session obj type.
 		DaoSession daoSession = (DaoSession)this.sessionObj;
@@ -389,7 +392,10 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 				(RelatedItemsTableDao.Properties.ParentCmsID.eq(cmsId)).list();
 		
 		//cast through an intermediate wildcard type to cast to list of object types
-		relatedCntList = (List<RelCntItemTypeIface>)(List<?>)rel_items;
+		List<RelCntItemTypeIface> relatedCntList = (List<RelCntItemTypeIface>)(List<?>)rel_items;
+		
+		//return specific list.
+		return relatedCntList;
 	}
 	
 	/*
@@ -401,7 +407,7 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public void getGalleryContentDataAsList(long cmsId, List<GalleryCntTypeIface> galleryCntList)
+	public List<GalleryCntTypeIface> getGalleryContentDataAsList(long cmsId)
 	{
 		//cast to green dao session obj from generic session obj type.
 		DaoSession daoSession = (DaoSession)this.sessionObj;
@@ -411,51 +417,9 @@ public class SqliteDBGreenDaoIface extends SqliteDBAbstractIface
 				(GalleryContentTableDao.Properties.GalCmsID.eq(cmsId)).list();
 		
 		//cast through an intermediate wildcard type to cast to list of object types
-		galleryCntList = (List<GalleryCntTypeIface>)(List<?>)gal_items;
+		List<GalleryCntTypeIface> galleryList = (List<GalleryCntTypeIface>)(List<?>)gal_items;
+		
+		//return specific list.
+		return galleryList;
 	}
-	
-//	@Override
-//	@SuppressWarnings("unchecked")
-//	public List<Object> getContentDataAsList(long cmsId)
-//	{
-//		//List<Object> rv = new ArrayList<Object>();
-//				
-//		List<Object> tt = null;
-//		
-//		//cast to green dao session obj from generic session obj type.
-//		DaoSession daoSession = (DaoSession)this.sessionObj;
-//		
-//		//TODO: change this to a enum type.
-//		if(cmsId == 100)
-//		{
-//			List<RelatedItemsTable> rel_items = daoSession.getRelatedItemsTableDao().queryBuilder().where
-//					(RelatedItemsTableDao.Properties.ParentCmsID.eq(cmsId)).list();
-//			
-//			//have data, provide it back to caller.
-//			if(rel_items.size() > 0)
-//			{
-//				//rv.addAll(rel_items);
-//				
-//				//cast through an intermediate wildcard type to cast to list of object types
-//				//@SuppressWarnings("unchecked")
-//				tt = (List<Object>)(List<?>)rel_items;
-//			}
-//		}
-//		else
-//		{
-//			List<GalleryContentTable> gal_items = daoSession.getGalleryContentTableDao().queryBuilder().where
-//					(GalleryContentTableDao.Properties.GalCmsID.eq(cmsId)).list();
-//			
-//			if(gal_items.size() > 0)
-//			{				
-//				//rv.addAll(gal_items);
-//				//cast through an intermediate wildcard type to cast to list of object types
-//				//@SuppressWarnings("unchecked")
-//				tt = (List<Object>)(List<?>)gal_items;
-//			}
-//		}
-//		
-//		//return rv;
-//		return tt;
-//	}
 }

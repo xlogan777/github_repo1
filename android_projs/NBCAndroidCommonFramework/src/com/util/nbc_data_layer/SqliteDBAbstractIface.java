@@ -144,7 +144,7 @@ public abstract class SqliteDBAbstractIface
 	/*
 	 * these functions are used as retrieval of data from the db layer.
 	 */
-	public abstract void getContentData(long cmsId, CntTypeIface contentData);
-	public abstract void getRelatedContentDataAsList(long cmsId, List<RelCntItemTypeIface> relatedCntList);
-	public abstract void getGalleryContentDataAsList(long cmsId, List<GalleryCntTypeIface> galleryCntList);
+	public abstract CntTypeIface getContentData(long cmsId);
+	public abstract List<RelCntItemTypeIface> getRelatedContentDataAsList(long cmsId);
+	public abstract List<GalleryCntTypeIface> getGalleryContentDataAsList(long cmsId);
 }
