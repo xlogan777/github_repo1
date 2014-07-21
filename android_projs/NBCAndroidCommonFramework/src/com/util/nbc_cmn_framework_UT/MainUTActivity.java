@@ -16,12 +16,18 @@ import com.util.nbc_data_layer.nbcGreenDaoSrcGen.GalleryContentTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.GalleryContentTableDao;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.RelatedItemsTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.RelatedItemsTableDao;
+import com.util.nbc_network_layer.NetworkContentService;
 
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.AssetManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -69,28 +75,39 @@ public class MainUTActivity extends ActionBarActivity
         //get the asset manager and load the json file to it.
         asset_mgr = getAssets();
         
+        //this is the action to filter on.
+        IntentFilter mStatusIntentFilter = new IntentFilter("com.util.nbc_common_framework.network_layer.NetworkContentService");
+        
+        //local register with broadcast rcver.
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+        		new ResponseReceiver(),
+                mStatusIntentFilter);
+        
         try
         {
-        	long sleep_time = 2000;//2 secs
+//        	long sleep_time = 2000;//2 secs
+//        	
+//        	//perform the unit test for all 3 types of data streams.
+//        	//this will do the insertion and updates of data needed.
+//        	this.unitTestContentData();
+//        	this.unitTestRelatedItemsContentData();
+//        	this.unitTestGalleryContentData();
+//        	
+//        	Thread.sleep(sleep_time);
+//        	
+//        	//this will show the data using only the dao..load all the data 
+//        	//using all the relationships from the dao...and display it.
+//        	this.displayAllContentData();
+//        	Thread.sleep(sleep_time);
+//        	
+//        	this.displayAllRelatedItemData();
+//        	Thread.sleep(sleep_time);
+//        	
+//        	this.displayAllGalleryItemData();
+//        	Thread.sleep(sleep_time);
         	
-        	//perform the unit test for all 3 types of data streams.
-        	//this will do the insertion and updates of data needed.
-        	this.unitTestContentData();
-        	this.unitTestRelatedItemsContentData();
-        	this.unitTestGalleryContentData();
-        	
-        	Thread.sleep(sleep_time);
-        	
-        	//this will show the data using only the dao..load all the data 
-        	//using all the relationships from the dao...and display it.
-        	this.displayAllContentData();
-        	Thread.sleep(sleep_time);
-        	
-        	this.displayAllRelatedItemData();
-        	Thread.sleep(sleep_time);
-        	
-        	this.displayAllGalleryItemData();
-        	Thread.sleep(sleep_time);
+        	//call the intent svc.
+        	sendMsgToIntentSvc();
         }
         catch(Exception e)
         {
@@ -102,6 +119,27 @@ public class MainUTActivity extends ActionBarActivity
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}*/
+	}
+	
+	/*
+	 * function that sends the command of the url, that we need to download.
+	 */
+	private void sendMsgToIntentSvc()
+	{
+		//url.
+		String url = "";
+		
+		//create intent with this activity as the sending activity, and the calling service.
+		Intent mServiceIntent = new Intent(this, NetworkContentService.class);		
+		
+		//setup the url used to parse.
+		//mServiceIntent.putExtra("contentUrl", url);
+		mServiceIntent.setData(Uri.parse(url));
+		
+		//start the service
+		this.startService(mServiceIntent);
+		
+		Log.d(MainUTActivityTAG, "JM...started intent svc to load data via http.");
 	}
 	
 	private void displayAllContentData()
@@ -318,6 +356,21 @@ public class MainUTActivity extends ActionBarActivity
 		}
 		
 		return super.onOptionsItemSelected(item);
+	}
+	
+	private class ResponseReceiver extends BroadcastReceiver
+	{   
+	    public ResponseReceiver() 
+	    {
+	    	
+	    }
+	    // Called when the BroadcastReceiver gets an Intent it's registered to receive
+	    @Override
+	    public void onReceive(Context context, Intent intent) 
+	    {
+	    	tv.setText("");
+	    	tv.setText(intent.getCharSequenceExtra("StatusInsert"));
+	    }
 	}
 
 	/**
