@@ -11,6 +11,7 @@ package com.util.nbc_network_layer;
 
 import java.io.InputStream;
 
+import com.util.nbc_data_layer.CommonUtils;
 import com.util.nbc_data_layer.NBCDataParsingAsJson;
 import com.util.nbc_data_layer.NBCDataParsingBase;
 import com.util.nbc_data_layer.ParsingInputParams;
@@ -19,39 +20,59 @@ import com.util.nbc_data_layer.SqliteDBAbstractIface;
 import android.app.IntentService;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 public class NetworkContentService extends IntentService
 {
 	//leaving this as the iface..not specific type..
 	private NBCDataParsingBase parsingBase = new NBCDataParsingAsJson();
+	private String LOGTAG = "NetworkContentService";
 	
-	//use db iface as needed.
-	private SqliteDBAbstractIface dbIface;
-	
-	//constructor
-	public NetworkContentService(String name, SqliteDBAbstractIface dbIface)
+	//use this to call the base class constructor, to allow for the 
+	//seutp of this obj.
+	public NetworkContentService()
 	{
-		super(name);
-		this.dbIface = dbIface;//save the db iface here.
+		super("NetworkContentService");
 	}
+	
+	/*
+http://www.nbcnewyork.com/apps/news-app/content/?contentId=244736981
+
+http://www.nbcnewyork.com/apps/news-app/content/related/?contentId=252039911
+
+http://www.nbcnewyork.com/apps/news-app/content/gallery/?contentId=244827851
+	 */
 
 	@Override
 	protected void onHandleIntent(Intent intent)
 	{
-		String url = intent.getDataString();
+		String cms_id = intent.getStringExtra("contentId");
+		long cmsid = Long.parseLong(cms_id);
 		
-		//TODO; use the intent to get the different 
-		//url streams that this obj will use to make calls for..
+		//create the url to for the content item.
+		//need to have the domain part abstracted.
+		String url = 
+		"http://www.nbcnewyork.com/apps/news-app/content/?contentId="+cms_id.trim();
 		
-		InputStream is = NetworkProcessing.HttpGetProcessing(url);		
+		
+		InputStream is = NetworkProcessing.HttpGetProcessing(url);
+		
 		String json_data_content = parsingBase.readDataFromInputStream(is).toString();
-		ParsingInputParams pip = new ParsingInputParams(0, NBCDataParsingBase.T_BasicContentTypes.E_CONTENT_ITEM_TYPE);
-		parsingBase.parseAndStoreDataType(json_data_content, pip, dbIface);
+		Log.d(LOGTAG, "JM...json data = "+json_data_content);
+		
+		
+//		ParsingInputParams pip = new ParsingInputParams(0, NBCDataParsingBase.T_BasicContentTypes.E_CONTENT_ITEM_TYPE);
+//		
+//		SqliteDBAbstractIface db_iface = CommonUtils.getDBIface();
+//		
+//		//TODO: how do i get the ref to this obj for db mng perpective.
+//		parsingBase.parseAndStoreDataType(json_data_content, pip, db_iface);
 		
 		//create intent stating the status of the insert.
-		Intent localIntent = new Intent("com.util.nbc_common_framework.network_layer.NetworkContentService")
-	            .putExtra("StatusInsert", "Done With Insert to DB layer");
+		Intent localIntent = new Intent(IntentConstants.CONTENT_INTENT_SVC_BROADCAST_ACTION);
+		localIntent.putExtra(IntentConstants.DB_STATUS_CONTENT_INTENT_SVC, IntentConstants.DB_SUCCESS);
 		
+		Log.d(LOGTAG, "JM...all OK, send broadcast msg to receivers.");
 	    // Broadcasts the Intent to receivers in this app.
 		//this will only broadcast to internal components of the app.
 	    LocalBroadcastManager.getInstance(this).sendBroadcast(localIntent);

@@ -3,6 +3,7 @@ package com.util.nbc_network_layer;
 import java.io.InputStream;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -42,9 +43,16 @@ public class NetworkProcessing
 
 				// make GET request to the given URL
 				HttpResponse httpResponse = httpclient.execute(get_request);
+				
+				//get status code from http response.
+				int status = httpResponse.getStatusLine().getStatusCode();
 
-				// receive response as inputStream
-				rv = httpResponse.getEntity().getContent();
+				if(HttpStatus.SC_OK == status)
+				{
+					// receive response as inputStream, will return a valid input stream
+					//otherwise will throw an exception.
+					rv = httpResponse.getEntity().getContent();
+				}
 			} 
 			catch (Exception e) 
 			{

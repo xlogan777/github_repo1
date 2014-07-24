@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.util.nbc_data_layer.dataTypes.*;
 import com.util.nbc_common_framework.R;
+import com.util.nbc_data_layer.CommonUtils;
 import com.util.nbc_data_layer.NBCDataParsingBase;
 import com.util.nbc_data_layer.NBCDataParsingAsJson;
 import com.util.nbc_data_layer.ParsingInputParams;
@@ -16,6 +17,7 @@ import com.util.nbc_data_layer.nbcGreenDaoSrcGen.GalleryContentTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.GalleryContentTableDao;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.RelatedItemsTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.RelatedItemsTableDao;
+import com.util.nbc_network_layer.IntentConstants;
 import com.util.nbc_network_layer.NetworkContentService;
 
 import android.support.v7.app.ActionBarActivity;
@@ -48,8 +50,10 @@ public class MainUTActivity extends ActionBarActivity
 	
 	//test class vars.
 	private TextView tv;
-	private DaoSession daoSession;
+	//private DaoSession daoSession;
 	private AssetManager asset_mgr;
+	
+	private ResponseReceiver responseReceiver = new ResponseReceiver();
 	
 	//initiate parsing of json obj in asset folder for content obj.        
     NBCDataParsingBase parse_data = new NBCDataParsingAsJson();
@@ -62,26 +66,32 @@ public class MainUTActivity extends ActionBarActivity
 		
 		tv = (TextView)findViewById(R.id.my_text_view);
 		tv.setText("");
-
+		
+		
 		//create specific db iface implementation via factory method.
 		//this will also do the initialization of the iface.
-		dbIface = SqliteDBAbstractIface.createSqliteIface
-					(this, "NBC_Content_DB_Test.db", null, SqliteDBAbstractIface.T_Session_Type.E_GREEN_DAO);
-
+		CommonUtils.createSqliteIface
+		(this.getApplicationContext(), "NBC_Content_DB_Test.db", null, SqliteDBAbstractIface.T_Session_Type.E_GREEN_DAO);
+		
+		dbIface = CommonUtils.getDBIface();
+				
 		//get the session obj and cast to specific one.
 		//should be getting session type and then cast to specific one...
-		daoSession = (DaoSession)dbIface.getDBSession();
+		//daoSession = (DaoSession)dbIface.getDBSession();
                         
         //get the asset manager and load the json file to it.
-        asset_mgr = getAssets();
+        //asset_mgr = getAssets();
         
-        //this is the action to filter on.
-        IntentFilter mStatusIntentFilter = new IntentFilter("com.util.nbc_common_framework.network_layer.NetworkContentService");
+        //setup intent filter to a specific action, and tie the receiver to it.
+        IntentFilter mStatusIntentFilter = 
+        		new IntentFilter(IntentConstants.CONTENT_INTENT_SVC_BROADCAST_ACTION);
         
-        //local register with broadcast rcver.
-        LocalBroadcastManager.getInstance(this).registerReceiver(
-        		new ResponseReceiver(),
-                mStatusIntentFilter);
+        //register local receiver with intent filter
+        LocalBroadcastManager.getInstance(this).registerReceiver
+        (
+         responseReceiver,
+         mStatusIntentFilter
+        );
         
         try
         {
@@ -107,7 +117,9 @@ public class MainUTActivity extends ActionBarActivity
 //        	Thread.sleep(sleep_time);
         	
         	//call the intent svc.
-        	sendMsgToIntentSvc();
+        	
+        	long cnt_id = 253794761;
+        	sendMsgToIntentSvc(cnt_id);
         }
         catch(Exception e)
         {
@@ -124,20 +136,19 @@ public class MainUTActivity extends ActionBarActivity
 	/*
 	 * function that sends the command of the url, that we need to download.
 	 */
-	private void sendMsgToIntentSvc()
+	private void sendMsgToIntentSvc(long cntId)
 	{
 		//url.
-		String url = "";
+		//String url = "cntId";
 		
 		//create intent with this activity as the sending activity, and the calling service.
 		Intent mServiceIntent = new Intent(this, NetworkContentService.class);		
 		
-		//setup the url used to parse.
-		//mServiceIntent.putExtra("contentUrl", url);
-		mServiceIntent.setData(Uri.parse(url));
+		//provide the content id.
+		mServiceIntent.putExtra("contentId", ""+cntId);
 		
 		//start the service
-		this.startService(mServiceIntent);
+		startService(mServiceIntent);
 		
 		Log.d(MainUTActivityTAG, "JM...started intent svc to load data via http.");
 	}
@@ -226,7 +237,7 @@ public class MainUTActivity extends ActionBarActivity
         
         //get the content data using the content id. this loads a bean obj.
         long id = 253794761;
-        ContentItemsTable content_items_table_bean = daoSession.getContentItemsTableDao().load(id);
+        ContentItemsTable content_items_table_bean = null; //= daoSession.getContentItemsTableDao().load(id);
 
         String log = "JM...cms id "+content_items_table_bean.getCmsID()+
         		" type = "+content_items_table_bean.getContentType() + " title of article = "+
@@ -238,10 +249,10 @@ public class MainUTActivity extends ActionBarActivity
         //make a change to the title of the article..
         ContentItemDetailTable tmp2 = content_items_table_bean.getContentItemDetailTable();
         tmp2.setTitle("JIMBO TITLE NOW IN THE BEAN FOR CNT ITEM DETAILS POJO");
-        daoSession.getContentItemDetailTableDao().insertOrReplace(tmp2);
+        //daoSession.getContentItemDetailTableDao().insertOrReplace(tmp2);
 
         //display that change from the DAO. by getting the updated bean.
-        ContentItemsTable tmp_bean = daoSession.getContentItemsTableDao().load(id);
+        ContentItemsTable tmp_bean  =null;// = daoSession.getContentItemsTableDao().load(id);
         
         log = "JM...cms id "+tmp_bean.getCmsID()+
         		" type = "+tmp_bean.getContentType() + " title of article = "+
@@ -266,7 +277,7 @@ public class MainUTActivity extends ActionBarActivity
         String log = "";
         
         //get this table dao
-        RelatedItemsTableDao dao = this.daoSession.getRelatedItemsTableDao();
+        RelatedItemsTableDao dao = null;// = this.daoSession.getRelatedItemsTableDao();
         
         //do a query against the parent id to get a list of related items tied to this parent id.
         List<RelatedItemsTable> related_items = 
@@ -297,7 +308,7 @@ public class MainUTActivity extends ActionBarActivity
         parse_data.parseAndStoreDataType(json_string, pip, dbIface);
         
         //get this table dao
-        GalleryContentTableDao dao = this.daoSession.getGalleryContentTableDao();
+        GalleryContentTableDao dao=null;// = this.daoSession.getGalleryContentTableDao();
         
         //do a query against the parent id to get a list of related items tied to this parent id.
         List<GalleryContentTable> gallery_items = 
@@ -358,6 +369,9 @@ public class MainUTActivity extends ActionBarActivity
 		return super.onOptionsItemSelected(item);
 	}
 	
+	/*
+	 * this class handles the intent sent from the intent svc...
+	 */
 	private class ResponseReceiver extends BroadcastReceiver
 	{   
 	    public ResponseReceiver() 
@@ -369,7 +383,9 @@ public class MainUTActivity extends ActionBarActivity
 	    public void onReceive(Context context, Intent intent) 
 	    {
 	    	tv.setText("");
-	    	tv.setText(intent.getCharSequenceExtra("StatusInsert"));
+	    	String int_str = intent.getAction() + intent.getStringExtra(IntentConstants.DB_STATUS_CONTENT_INTENT_SVC);
+	    	Log.d(MainUTActivityTAG, int_str);
+	    	tv.setText(int_str+"in the receiver part.");
 	    }
 	}
 

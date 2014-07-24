@@ -29,7 +29,7 @@
         <service
             android:name="com.util.nbc_network_layer.NetworkContentService"
             android:enabled="true"
-            android:exported="false" >
+            android:exported="true" >
         </service>
     </application>
 

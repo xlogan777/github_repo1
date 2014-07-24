@@ -77,39 +77,6 @@ public abstract class SqliteDBAbstractIface
 	{
 		return this.initialized;
 	}
-	
-	/*
-	 * this is a static factory method that follows the factory pattern from the GOF book 
-	 * to provide common implementation for db iface interactions without exposing the specific
-	 * implementations.
-	 */
-	public static SqliteDBAbstractIface createSqliteIface
-	(Context context, String dbName, CursorFactory factory,T_Session_Type sessionType)
-	{
-		SqliteDBAbstractIface tmp_db_iface = null;
-		
-		//switch on the type and create appropriate iface implementation obj.
-		switch(sessionType)
-		{
-			case E_NO_SESSION_TYPE:
-				//TODO: throw an exception here!!!
-				break;
-				
-			case E_GREEN_DAO:
-				tmp_db_iface = new SqliteDBGreenDaoIface(context, dbName, factory, sessionType);
-				break;
-		}
-		
-		//check to make sure we have a valid obj before any methods on the ref.
-		if(tmp_db_iface != null)
-		{
-			//perform common initialization routines for db iface.		
-			tmp_db_iface.initializeDB();
-		}
-		
-		//return ref obj of iface.
-		return tmp_db_iface;
-	}
 		
 	//override these functions since they will be implementation dependent.
 	public abstract void initializeDB();
