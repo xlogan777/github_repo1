@@ -92,44 +92,20 @@ def tcProcessing(list_of_dirs,logfile_name,tc_Command, sleepTimeVal):
 def killTCProcess(logfile_name, configObj):
 
     #do a ps -ef for linux
-    ps = subprocess.Popen(("ps", "-ef"), stdout=subprocess.PIPE);
-    output = ps.communicate()[0];#execute command
-    
-    #used to help in deciding if to send an email..
-    bool_sendEmail = False;
-    
-    #this is an empty list and add as needed.
-    list_of_tc_processes = [];
-    
-    #split all the lines from the output and iterate over each line
-    #this is iterating over each line from the [ps -ef]
-    for line in output.split('\n'):
+    list_of_tc_processes = getListTCProcesses(configObj);
+    for str_items in list_of_tc_processes:
+                
+        logfile_name.write("found tomcat process to kill...");
+        mystr = str_items.split();#split string based on space
         
-        #this will interate over each dir name and check if the
-        #this line contains that dir name, if it does then peform the kill.
-        for dir_name in configObj.listOfTCDirs:
-            
-            #if we find tomcat instance, then kill it...
-            if line.find(dir_name) > -1:
-                
-                #check to see if an email hasnt been sent yet..and if not
-                #send one, and dont send any more.
-                bool_sendEmail = True;
-                
-                list_of_tc_processes.append(line);
-                
-                logfile_name.write("found tomcat process to kill...");
-                mystr = line.split();#split string based on space
-                
-                #use the pid to kill the process here if it exists...
-                if(mystr[1]):
-                    logfile_name.write("force kill tomcat pid = "+mystr[1]+"\n");
-                    #do kill -9 pid here
-                    pid_num = int(mystr[1]);
-                    os.kill(pid_num,9);
-                    break;#this will break from for loop of dir name in line.
+        #use the pid to kill the process here if it exists...
+        if(mystr[1]):
+            logfile_name.write("force kill tomcat pid = "+mystr[1]+"\n");
+            #do kill -9 pid here
+            pid_num = int(mystr[1]);
+            os.kill(pid_num,9);
         
-    if (bool_sendEmail == True and configObj.sendEmail == "yes"):
+    if (configObj.sendEmail == "yes"):
         send_emailViaSendMail(list_of_tc_processes);#send email to notify that forced kill is required...
 
 #this works when you are not behind a proxy or firewall...
@@ -180,6 +156,32 @@ def send_emailViaSendMail(listOfTCProcesses):
     p.write(message);
     p.close();
 
+#this will list tc processes and return back the list.
+def getListTCProcesses(configObj):
+    
+    #do a ps -ef for linux
+    ps = subprocess.Popen(("ps", "-ef"), stdout=subprocess.PIPE);
+    output = ps.communicate()[0];#execute command
+    
+    #this is an empty list and add as needed.
+    list_of_tc_processes = [];
+    
+    #split all the lines from the output and iterate over each line
+    #this is iterating over each line from the [ps -ef]
+    for line in output.split('\n'):
+        
+        #this will interate over each dir name and check if the
+        #this line contains that dir name, if it does then peform the kill.
+        for dir_name in configObj.listOfTCDirs:
+            
+            #if we find tomcat instance, then kill it...
+            if line.find(dir_name) > -1:
+                list_of_tc_processes.append(line);
+                break;
+                
+    #return back to caller the list of tc processes
+    return list_of_tc_processes;
+
 #main()
 def main():
     print "restart_tc...";
@@ -213,7 +215,12 @@ def main():
     #get local time to put into log file for shutdown.
     localtime1 = time.asctime(time.localtime(time.time()));
     myLogFile.write("shutdown started at => "+localtime1+"\n");
-       
+    
+    #log the list of processes that are going to get shutdown.
+    list_of_tc_processes = getListTCProcesses(MyConfigObj);
+    for str_items in list_of_tc_processes:
+        myLogFile.write("before shutdown, tc process => "+str_items+" \n");
+
     #begin the shutdown process for tc...
     tcProcessing(MyConfigObj.listOfTCDirs, myLogFile,"shutdown.sh",MyConfigObj.sleepTimeVal);
        
@@ -230,6 +237,11 @@ def main():
     tcProcessing(MyConfigObj.listOfTCDirs, myLogFile,"startup.sh", MyConfigObj.sleepTimeVal);
     myLogFile.write("-----Restart End-----\n");
     myLogFile.write("\n");
+    
+    #log the list of processes that are currently running.
+    list_of_tc_processes = getListTCProcesses(MyConfigObj);
+    for str_items in list_of_tc_processes:
+        myLogFile.write("after startup, tc process => "+str_items+" \n");
     
     #close log file.
     myLogFile.close();
