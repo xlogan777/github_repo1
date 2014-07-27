@@ -92,8 +92,8 @@ def tcProcessing(list_of_dirs,logfile_name,tc_Command, sleepTimeVal):
 def killTCProcess(logfile_name, configObj):
 
     #do a ps -ef for linux
-    list_of_tc_processes = getListTCProcesses(configObj);
-    for str_items in list_of_tc_processes:
+    my_list_of_tc_processes = getListTCProcesses(configObj);
+    for str_items in my_list_of_tc_processes:
                 
         logfile_name.write("found tomcat process to kill...");
         mystr = str_items.split();#split string based on space
@@ -104,9 +104,10 @@ def killTCProcess(logfile_name, configObj):
             #do kill -9 pid here
             pid_num = int(mystr[1]);
             os.kill(pid_num,9);
-        
-    if (configObj.sendEmail == "yes"):
-        send_emailViaSendMail(list_of_tc_processes);#send email to notify that forced kill is required...
+    
+    #check if we have configured to send email and have atleast 1 item in the list.    
+    if (configObj.sendEmail == "yes" and len(my_list_of_tc_processes) > 0):
+        send_emailViaSendMail(my_list_of_tc_processes);#send email to notify that forced kill is required...
 
 #this works when you are not behind a proxy or firewall...
 #takes in a list of process info.
@@ -164,7 +165,7 @@ def getListTCProcesses(configObj):
     output = ps.communicate()[0];#execute command
     
     #this is an empty list and add as needed.
-    list_of_tc_processes = [];
+    tmp_list_of_tc_processes = [];
     
     #split all the lines from the output and iterate over each line
     #this is iterating over each line from the [ps -ef]
@@ -176,11 +177,11 @@ def getListTCProcesses(configObj):
             
             #if we find tomcat instance, then kill it...
             if line.find(dir_name) > -1:
-                list_of_tc_processes.append(line);
+                tmp_list_of_tc_processes.append(line);
                 break;
                 
     #return back to caller the list of tc processes
-    return list_of_tc_processes;
+    return tmp_list_of_tc_processes;
 
 #main()
 def main():
@@ -216,11 +217,17 @@ def main():
     localtime1 = time.asctime(time.localtime(time.time()));
     myLogFile.write("shutdown started at => "+localtime1+"\n");
     
+    time.sleep(int(MyConfigObj.sleepTimeVal));#before getting the listing of tc processes.
+    
     #log the list of processes that are going to get shutdown.
     list_of_tc_processes = getListTCProcesses(MyConfigObj);
+    myLogFile.write("tc process_list size = "+str(len(list_of_tc_processes))+"\n");
+    
     for str_items in list_of_tc_processes:
         myLogFile.write("before shutdown, tc process => "+str_items+" \n");
 
+    time.sleep(int(MyConfigObj.sleepTimeVal));#before getting the listing of tc processes.
+    
     #begin the shutdown process for tc...
     tcProcessing(MyConfigObj.listOfTCDirs, myLogFile,"shutdown.sh",MyConfigObj.sleepTimeVal);
        
@@ -235,13 +242,19 @@ def main():
        
     #begin the startup process for tc...
     tcProcessing(MyConfigObj.listOfTCDirs, myLogFile,"startup.sh", MyConfigObj.sleepTimeVal);
-    myLogFile.write("-----Restart End-----\n");
-    myLogFile.write("\n");
+    time.sleep(int(MyConfigObj.sleepTimeVal));#before checking to see what tc processes exist
     
     #log the list of processes that are currently running.
-    list_of_tc_processes = getListTCProcesses(MyConfigObj);
-    for str_items in list_of_tc_processes:
+    list_of_tc_processes2 = getListTCProcesses(MyConfigObj);
+    myLogFile.write("tc process_list size = "+str(len(list_of_tc_processes2))+"\n");
+    
+    for str_items in list_of_tc_processes2:
         myLogFile.write("after startup, tc process => "+str_items+" \n");
+        
+    time.sleep(int(MyConfigObj.sleepTimeVal));
+        
+    myLogFile.write("-----Restart End-----\n");
+    myLogFile.write("\n");
     
     #close log file.
     myLogFile.close();
