@@ -1,6 +1,10 @@
 package com.util.nbc_cmn_framework_UT;
 
 import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.util.nbc_data_layer.dataTypes.*;
@@ -19,6 +23,7 @@ import com.util.nbc_data_layer.nbcGreenDaoSrcGen.RelatedItemsTable;
 import com.util.nbc_data_layer.nbcGreenDaoSrcGen.RelatedItemsTableDao;
 import com.util.nbc_network_layer.IntentConstants;
 import com.util.nbc_network_layer.NetworkContentService;
+import com.util.nbc_network_layer.NetworkProcessing;
 
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -38,7 +43,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.VideoView;
 import android.os.Build;
 
 public class MainUTActivity extends ActionBarActivity 
@@ -63,61 +70,163 @@ public class MainUTActivity extends ActionBarActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_ut);
+		responseReceiver.setMainActivity(this);
+		Bundle bundle = getIntent().getExtras();
 		
-		tv = (TextView)findViewById(R.id.my_text_view);
-		tv.setText("");
-		
-		
-		//create specific db iface implementation via factory method.
-		//this will also do the initialization of the iface.
-		CommonUtils.createSqliteIface
-		(this.getApplicationContext(), "NBC_Content_DB_Test.db", null, SqliteDBAbstractIface.T_Session_Type.E_GREEN_DAO);
-		
-		dbIface = CommonUtils.getDBIface();
+		if(bundle != null )
+		{
+			String mm = bundle.getString("ACTION");
+			if(mm.length() > 0)
+			{
+		    	//get the video view...from the layout file.
+				VideoView vidView = (VideoView)findViewById(R.id.myVideo);
 				
-		//get the session obj and cast to specific one.
-		//should be getting session type and then cast to specific one...
-		//daoSession = (DaoSession)dbIface.getDBSession();
-                        
-        //get the asset manager and load the json file to it.
-        //asset_mgr = getAssets();
-        
-        //setup intent filter to a specific action, and tie the receiver to it.
+				Uri uri = Uri.parse(mm);
+				vidView.setVideoURI(uri);
+				Log.d(MainUTActivityTAG, "JM..got ready to play the video file...");
+				//vidView.setVideoPath(bufferFile.getAbsolutePath());
+				
+				//add a media controller with this activity in the constructor.
+				MediaController vidControl = new MediaController(this);
+				
+				//set the anchor for the video view component to the media controller.
+				vidControl.setAnchorView(vidView);
+				
+				//set the media control to the video view component.
+				vidView.setMediaController(vidControl);
+				
+				//start the video stream..with media controller functionality.
+				vidView.start();
+				
+				return;
+			}
+		}
+			
+		//test1();
+		
+		
+		
+		//setup the uri to a online video..
+		//http://link.theplatform.com/s/Yh1nAC/M_YHwanjJvVR?manifest=m3u&format=smil
+		//String vidAddress = "http://link.theplatform.com/s/Yh1nAC/M_YHwanjJvVR";
+		//String vidAddress = "http://link.theplatform.com/s/Yh1nAC/XUoS7hvWZg_E";
+		//String vidAddress = "http://link.theplatform.com/s/Yh1nAC/18J2yyjQS9e5";
+		//String vidAddress = "http://www.nbcphiladelphia.com/mobilevideo/?videoID=MtK_p5qVAJ70&gpt=verveAppRequest&profLocal=y";
+		//String vidAddress = "http://www.pocketjourney.com/downloads/pj/video/famous.3gp";
+		//String vidAddress = "http://www.nbcnewyork.com/mobilevideo/?videoID=RFxesyIvm9Bp&gpt=verveAppRequest&profLocal=y";
+		//String vidAddress = "http://www.ebookfrenzy.com/android_book/movie.mp4";
+		//String vidAddress = "http://nbclim-f.akamaihd.net/i/Prod/,NBCU_LM_VMS_-_WCAU/862/403/WCAU_000000007179858_med.mp4,.csmil/segment1_0_av.ts";
+		//String vidAddress = "http://nbclim-f.akamaihd.net/i/Prod/NBCU_LM_VMS_-_WCAU/862/403/WCAU_000000007179858_med.mp4";
+		
+		//http://nbclim-f.akamaihd.net/i/Prod/NBCU_LM_VMS_-_WCAU/862/403/WCAU_000000007179858_med.mp4
+//		File bufferFile = null;
+//		try
+//		{
+//			URL url = new URL(vidAddress);
+//			//URL url = new URL("http://www.android.com/");
+//		    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+//		   
+//			
+//            
+////            //Open a connection to that URL.
+////            URLConnection ucon = url.openConnection();
+////
+////            //this timeout affects how long it takes for the app to realize there's a connection problem
+////            ucon.setReadTimeout(5000);
+////            ucon.setConnectTimeout(30000);
+//
+//
+//            //Define InputStreams to read from the URLConnection.
+//          ]  // uses 3KB download buffer
+//            InputStream is =urlConnection.getInputStream();
+//			bufferFile = File.createTempFile("test", "mp4");
+//	
+//	        BufferedOutputStream bufferOS = new BufferedOutputStream(
+//	                new FileOutputStream(bufferFile));
+//	        
+//	        int numRead = 0;
+//	        byte[] buffer = new byte[1024];
+//	        while ((numRead = is.read(buffer, 0,buffer.length )) > 0) {
+//	
+//	            bufferOS.write(buffer, 0, numRead);
+//	            bufferOS.flush();
+//	        }
+//		}
+//		catch(Exception e)
+//		{
+//			Log.d(MainUTActivityTAG, "JM..got error = "+e.getMessage());
+//		}
+		
+		//String vidAddress = "http://nbclim-f.akamaihd.net/Prod/NBCU_LM_VMS_-_WNBC/829/979/WNBC_000000003328838_med.mp4";
+		//String vidAddress = "http://nbclim-f.akamaihd.net/Prod/NBCU_LM_VMS_-_WNBC/829/979/WNBC_000000003328838_med.mp4";
+		//String vidAddress = "http://archive.org/download/ksnn_compilation_master_the_internet/ksnn_compilation_master_the_internet_512kb.mp4";
+		//create a uri from the url...
+		//String vidAddress = "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8";
+//		Uri vidUri = Uri.parse(vidAddress);
+//		
+//		
+//		//set the uri in the video view component.
+//		//vidView.setVideoURI(vidUri);
+		
+		
+		
+		
+				
+		
+		//tv = (TextView)findViewById(R.id.my_text_view);
+		//tv.setText("");
+//		
+//		
+//		//create specific db iface implementation via factory method.
+//		//this will also do the initialization of the iface.
+//		CommonUtils.createSqliteIface
+//		(this.getApplicationContext(), "NBC_Content_DB_Test.db", null, SqliteDBAbstractIface.T_Session_Type.E_GREEN_DAO);
+//		
+//		dbIface = CommonUtils.getDBIface();
+//				
+//		//get the session obj and cast to specific one.
+//		//should be getting session type and then cast to specific one...
+//		//daoSession = (DaoSession)dbIface.getDBSession();
+//                        
+//        //get the asset manager and load the json file to it.
+//        //asset_mgr = getAssets();
+//        
+//        //setup intent filter to a specific action, and tie the receiver to it.
         IntentFilter mStatusIntentFilter = 
         		new IntentFilter(IntentConstants.CONTENT_INTENT_SVC_BROADCAST_ACTION);
-        
-        //register local receiver with intent filter
+//        
+//        //register local receiver with intent filter
         LocalBroadcastManager.getInstance(this).registerReceiver
         (
          responseReceiver,
          mStatusIntentFilter
         );
-        
+//        
         try
         {
-//        	long sleep_time = 2000;//2 secs
+////        	long sleep_time = 2000;//2 secs
+////        	
+////        	//perform the unit test for all 3 types of data streams.
+////        	//this will do the insertion and updates of data needed.
+////        	this.unitTestContentData();
+////        	this.unitTestRelatedItemsContentData();
+////        	this.unitTestGalleryContentData();
+////        	
+////        	Thread.sleep(sleep_time);
+////        	
+////        	//this will show the data using only the dao..load all the data 
+////        	//using all the relationships from the dao...and display it.
+////        	this.displayAllContentData();
+////        	Thread.sleep(sleep_time);
+////        	
+////        	this.displayAllRelatedItemData();
+////        	Thread.sleep(sleep_time);
+////        	
+////        	this.displayAllGalleryItemData();
+////        	Thread.sleep(sleep_time);
 //        	
-//        	//perform the unit test for all 3 types of data streams.
-//        	//this will do the insertion and updates of data needed.
-//        	this.unitTestContentData();
-//        	this.unitTestRelatedItemsContentData();
-//        	this.unitTestGalleryContentData();
+//        	//call the intent svc.
 //        	
-//        	Thread.sleep(sleep_time);
-//        	
-//        	//this will show the data using only the dao..load all the data 
-//        	//using all the relationships from the dao...and display it.
-//        	this.displayAllContentData();
-//        	Thread.sleep(sleep_time);
-//        	
-//        	this.displayAllRelatedItemData();
-//        	Thread.sleep(sleep_time);
-//        	
-//        	this.displayAllGalleryItemData();
-//        	Thread.sleep(sleep_time);
-        	
-        	//call the intent svc.
-        	
         	long cnt_id = 253794761;
         	sendMsgToIntentSvc(cnt_id);
         }
@@ -132,6 +241,51 @@ public class MainUTActivity extends ActionBarActivity
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}*/
 	}
+	
+	/*
+	 * read in the m3u file, that contains many mp3 url files..and return an 
+	 * array list of the files. this will be used by the media player class.
+	 */
+	public ArrayList<String> readURLs(String url) 
+	{   
+		ArrayList<String> list_urls = null;
+		
+        try
+        {
+        	//create url connection obj to the url for the m3u file.
+            URL urls = new URL(url);
+            
+           //open the stream to the m3u file with 
+            //buffered reader to read it as a file list.
+            BufferedReader in = 
+            	new BufferedReader(
+            		new InputStreamReader(urls.openStream()));
+            
+            String str;
+            
+            //create array list to contain all the list of files video files
+            list_urls = new ArrayList<String>();
+            
+            //save all the list of files to array list.
+            while ((str = in.readLine()) != null) 
+            {
+            	//check to see if this line contains the http protocol
+            	//if so then add it to the array list.
+            	if(str.contains("http://"))
+            		list_urls.add(str);
+            }
+            
+            //close buffer reader
+            in.close();
+        } 
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+        }
+        
+        //return the list of urls as array list.
+        return list_urls;
+    }
 	
 	/*
 	 * function that sends the command of the url, that we need to download.
@@ -374,18 +528,33 @@ public class MainUTActivity extends ActionBarActivity
 	 */
 	private class ResponseReceiver extends BroadcastReceiver
 	{   
+		private Context mainact;
+		
 	    public ResponseReceiver() 
 	    {
 	    	
+	    }
+	    
+	    public void setMainActivity(Context context)
+	    {
+	    	this.mainact = context;
 	    }
 	    // Called when the BroadcastReceiver gets an Intent it's registered to receive
 	    @Override
 	    public void onReceive(Context context, Intent intent) 
 	    {
-	    	tv.setText("");
-	    	String int_str = intent.getAction() + intent.getStringExtra(IntentConstants.DB_STATUS_CONTENT_INTENT_SVC);
+	    	//tv.setText("");
+	    	String fname = intent.getStringExtra(IntentConstants.DB_STATUS_CONTENT_INTENT_SVC);
+	    	String int_str = intent.getAction() ;
 	    	Log.d(MainUTActivityTAG, int_str);
-	    	tv.setText(int_str+"in the receiver part.");
+	    	//tv.setText(int_str+"in the receiver part.");
+	    	
+	    	
+	    	Bundle bundle = new Bundle();
+	    	bundle.putString("ACTION", fname);
+	        Intent intent2 = new Intent(mainact,MainUTActivity.class);
+	        intent2.putExtras(bundle);
+	        mainact.startActivity(intent2);
 	    }
 	}
 

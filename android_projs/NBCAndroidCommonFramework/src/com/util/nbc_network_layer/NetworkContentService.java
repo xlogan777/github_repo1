@@ -9,7 +9,13 @@ package com.util.nbc_network_layer;
  * author J.Mena 
  */
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import com.util.nbc_data_layer.CommonUtils;
 import com.util.nbc_data_layer.NBCDataParsingAsJson;
@@ -46,6 +52,35 @@ http://www.nbcnewyork.com/apps/news-app/content/gallery/?contentId=244827851
 	@Override
 	protected void onHandleIntent(Intent intent)
 	{
+		String fname = "";
+		try {
+            URL url = new URL("http://www.ebookfrenzy.com/android_book/movie.mp4");
+			//URL url = new URL("http://nbclim-f.akamaihd.net/i/Prod/,NBCU_LM_VMS_-_WNBC/758/630/WNBC_000000003446911_med.mp4,.csmil/segment1_0_av.ts");
+            HttpURLConnection c = (HttpURLConnection) url.openConnection();           
+            InputStream is = c.getInputStream();
+            byte[] buffer = new byte[1024];
+            
+            File bufferFile = File.createTempFile("test", "mp4");
+	        BufferedOutputStream bufferOS = new BufferedOutputStream(
+	                new FileOutputStream(bufferFile));
+	        
+	        int numRead = 0;
+	        
+	        while ((numRead = is.read(buffer, 0,buffer.length )) > 0) 
+	        {
+	
+	            bufferOS.write(buffer, 0, numRead);
+	            bufferOS.flush();
+	        }
+	        
+	        is.close();
+	        bufferOS.close();
+	        fname = bufferFile.getAbsolutePath();
+	        Log.e(LOGTAG, "JM..path = "+bufferFile.getAbsolutePath());
+        } catch (IOException e) {
+            Log.e("Abhan", "Error: " + e);
+        }
+		
 		String cms_id = intent.getStringExtra("contentId");
 		long cmsid = Long.parseLong(cms_id);
 		
@@ -58,7 +93,7 @@ http://www.nbcnewyork.com/apps/news-app/content/gallery/?contentId=244827851
 		InputStream is = NetworkProcessing.HttpGetProcessing(url);
 		
 		String json_data_content = parsingBase.readDataFromInputStream(is).toString();
-		Log.d(LOGTAG, "JM...json data = "+json_data_content);
+		//Log.d(LOGTAG, "JM...json data = "+json_data_content);
 		
 		
 //		ParsingInputParams pip = new ParsingInputParams(0, NBCDataParsingBase.T_BasicContentTypes.E_CONTENT_ITEM_TYPE);
@@ -70,7 +105,7 @@ http://www.nbcnewyork.com/apps/news-app/content/gallery/?contentId=244827851
 		
 		//create intent stating the status of the insert.
 		Intent localIntent = new Intent(IntentConstants.CONTENT_INTENT_SVC_BROADCAST_ACTION);
-		localIntent.putExtra(IntentConstants.DB_STATUS_CONTENT_INTENT_SVC, IntentConstants.DB_SUCCESS);
+		localIntent.putExtra(IntentConstants.DB_STATUS_CONTENT_INTENT_SVC, fname);
 		
 		Log.d(LOGTAG, "JM...all OK, send broadcast msg to receivers.");
 	    // Broadcasts the Intent to receivers in this app.
