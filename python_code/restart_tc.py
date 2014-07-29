@@ -233,6 +233,10 @@ def main():
        
     #perform kill processing if needed
     myLogFile.write("Check to see if there are TC processes still running and kill them if so.. \n");
+	
+	time.sleep(int(MyConfigObj.sleepTimeVal));
+    myLogFile.write("finished sleeping before find rogue tomcat processes. \n");
+	
     killTCProcess(myLogFile,MyConfigObj);
     time.sleep(int(MyConfigObj.sleepTimeVal));#sleep for config sleep time before restarting.
        
