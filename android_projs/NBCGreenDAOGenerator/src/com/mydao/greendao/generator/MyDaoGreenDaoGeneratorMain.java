@@ -1,4 +1,4 @@
-package com.nbc.greendao.generator;
+package com.mydao.greendao.generator;
 
 import de.greenrobot.daogenerator.DaoGenerator;
 import de.greenrobot.daogenerator.Entity;
@@ -14,7 +14,7 @@ import de.greenrobot.daogenerator.Schema;
  * Author J.Mena
  *
  */
-public class NBCGreenDaoGeneratorMain 
+public class MyDaoGreenDaoGeneratorMain 
 {
 	public static void main(String[] args)
 	{
@@ -57,16 +57,16 @@ public class NBCGreenDaoGeneratorMain
 		Entity content_items_table = createContentItemsTable(schema);
 		
 		//setup image table relationships
-		NBCGreenDaoTableRelationships.createRelationshipsImgFnameToImgDetails
+		MyDaoGreenDaoTableRelationships.createRelationshipsImgFnameToImgDetails
 		(entity_url_img_file_table,entity_img_file_table);
 		//(entity_url_img_file_table,entity_img_file_table,entity_img_details_table);
 		
 		//setup the content item with its sub details relationships.
-		NBCGreenDaoTableRelationships.createRelationshipContentItemsToDetails
+		MyDaoGreenDaoTableRelationships.createRelationshipContentItemsToDetails
 		(content_items_table, content_item_lead_media_table, content_item_media_table, content_item_detail_table,entity_url_img_file_table);
 		
 		//setup the related_items/gallery to img table relationships
-		NBCGreenDaoTableRelationships.createRelationshipsRelatedItemsAndGalleryToImgDetails
+		MyDaoGreenDaoTableRelationships.createRelationshipsRelatedItemsAndGalleryToImgDetails
 		(related_item_table, entity_gallery_table, entity_url_img_file_table,entity_img_file_table);
 		
 		//generate the source code.

@@ -1,4 +1,4 @@
-package com.nbc.greendao.generator;
+package com.mydao.greendao.generator;
 
 import de.greenrobot.daogenerator.Entity;
 import de.greenrobot.daogenerator.Property;
@@ -10,7 +10,7 @@ import de.greenrobot.daogenerator.Property;
  * author J.Mena
  *
  */
-public class NBCGreenDaoTableRelationships 
+public class MyDaoGreenDaoTableRelationships 
 {
 	/*
 	 * this will perform the relationships between the image file table and the image details
