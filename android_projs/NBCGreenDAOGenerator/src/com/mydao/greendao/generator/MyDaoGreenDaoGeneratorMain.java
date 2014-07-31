@@ -20,7 +20,7 @@ public class MyDaoGreenDaoGeneratorMain
 	{
 		//create green dao schema obj with version number, and pkg for the generated files.
 		int db_version_number = 1;
-		String pkg_name = "com.util.nbc_data_layer.nbcGreenDaoSrcGen";
+		String pkg_name = "com.util.mydao_data_layer.GreenDaoSrcGen";
 		
 		//create schema obj.
         Schema schema = new Schema(db_version_number, pkg_name);
@@ -76,7 +76,7 @@ public class MyDaoGreenDaoGeneratorMain
 			DaoGenerator dao_generator = new DaoGenerator();
 			
 			//generate code based on schema and place in outdir.			
-			dao_generator.generateAll(schema, "../NBCAndroidCommonFramework/src");
+			dao_generator.generateAll(schema, "../MyDao_Common_Framework/src");
 			
 			System.out.println("JM...generated the tables from green dao.");
 		}
