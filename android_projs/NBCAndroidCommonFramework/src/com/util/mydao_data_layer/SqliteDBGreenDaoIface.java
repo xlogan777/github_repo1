@@ -14,9 +14,6 @@ import com.util.mydao_data_layer.GreenDaoSrcGen.RelatedItemsTableDao;
 import com.util.mydao_data_layer.GreenDaoSrcGen.UrlImgFileTable;
 import com.util.mydao_data_layer.GreenDaoSrcGen.UrlImgFileTableDao;
 import com.util.mydao_data_layer.dataTypes.*;
-//import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ImgDetailsTable;
-//import com.util.nbc_data_layer.nbcGreenDaoSrcGen.ImgDetailsTableDao;
-
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;

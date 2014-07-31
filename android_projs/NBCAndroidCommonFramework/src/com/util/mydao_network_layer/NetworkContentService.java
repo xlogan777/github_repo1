@@ -41,21 +41,12 @@ public class NetworkContentService extends IntentService
 		super("NetworkContentService");
 	}
 	
-	/*
-http://www.nbcnewyork.com/apps/news-app/content/?contentId=244736981
-
-http://www.nbcnewyork.com/apps/news-app/content/related/?contentId=252039911
-
-http://www.nbcnewyork.com/apps/news-app/content/gallery/?contentId=244827851
-	 */
-
 	@Override
 	protected void onHandleIntent(Intent intent)
 	{
 		String fname = "";
 		try {
             URL url = new URL("http://www.ebookfrenzy.com/android_book/movie.mp4");
-			//URL url = new URL("http://nbclim-f.akamaihd.net/i/Prod/,NBCU_LM_VMS_-_WNBC/758/630/WNBC_000000003446911_med.mp4,.csmil/segment1_0_av.ts");
             HttpURLConnection c = (HttpURLConnection) url.openConnection();           
             InputStream is = c.getInputStream();
             byte[] buffer = new byte[1024];
@@ -86,8 +77,8 @@ http://www.nbcnewyork.com/apps/news-app/content/gallery/?contentId=244827851
 		
 		//create the url to for the content item.
 		//need to have the domain part abstracted.
-		String url = 
-		"http://www.nbcnewyork.com/apps/news-app/content/?contentId="+cms_id.trim();
+		String url =""; 
+		
 		
 		
 		InputStream is = NetworkProcessing.HttpGetProcessing(url);
@@ -96,7 +87,7 @@ http://www.nbcnewyork.com/apps/news-app/content/gallery/?contentId=244827851
 		//Log.d(LOGTAG, "JM...json data = "+json_data_content);
 		
 		
-//		ParsingInputParams pip = new ParsingInputParams(0, NBCDataParsingBase.T_BasicContentTypes.E_CONTENT_ITEM_TYPE);
+//		ParsingInputParams pip = new ParsingInputParams(0, DataParsingBase.T_BasicContentTypes.E_CONTENT_ITEM_TYPE);
 //		
 //		SqliteDBAbstractIface db_iface = CommonUtils.getDBIface();
 //		
@@ -119,13 +110,13 @@ http://www.nbcnewyork.com/apps/news-app/content/gallery/?contentId=244827851
 		
 //		is = NetworkProcessing.HttpGetProcessing("URL 2");
 //		String json_data_related_items = parsingBase.readDataFromInputStream(is).toString();
-//		pip = new ParsingInputParams(0, NBCDataParsingBase.T_BasicContentTypes.E_RELATED_ITEM_TYPE);
+//		pip = new ParsingInputParams(0, DataParsingBase.T_BasicContentTypes.E_RELATED_ITEM_TYPE);
 //		parsingBase.parseAndStoreDataType(json_data_related_items, pip, dbIface);
 //		
 //		long cms_id = 111;
 //		is = NetworkProcessing.HttpGetProcessing("URL 3");
 //		String json_data_gallery_items = parsingBase.readDataFromInputStream(is).toString();
-//		pip = new ParsingInputParams(cms_id, NBCDataParsingBase.T_BasicContentTypes.E_GALLERY_ITEM_TYPE);
+//		pip = new ParsingInputParams(cms_id, DataParsingBase.T_BasicContentTypes.E_GALLERY_ITEM_TYPE);
 //		parsingBase.parseAndStoreDataType(json_data_gallery_items, pip, dbIface);
 	}
 }

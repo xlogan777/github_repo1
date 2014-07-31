@@ -23,7 +23,7 @@ import com.util.mydao_data_layer.dataTypes.*;
 import com.util.mydao_network_layer.IntentConstants;
 import com.util.mydao_network_layer.NetworkContentService;
 import com.util.mydao_network_layer.NetworkProcessing;
-import com.util.nbc_common_framework.R;
+import com.util.mydao_common_framework.*;
 
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -106,19 +106,6 @@ public class MainUTActivity extends ActionBarActivity
 		
 		
 		
-		//setup the uri to a online video..
-		//http://link.theplatform.com/s/Yh1nAC/M_YHwanjJvVR?manifest=m3u&format=smil
-		//String vidAddress = "http://link.theplatform.com/s/Yh1nAC/M_YHwanjJvVR";
-		//String vidAddress = "http://link.theplatform.com/s/Yh1nAC/XUoS7hvWZg_E";
-		//String vidAddress = "http://link.theplatform.com/s/Yh1nAC/18J2yyjQS9e5";
-		//String vidAddress = "http://www.nbcphiladelphia.com/mobilevideo/?videoID=MtK_p5qVAJ70&gpt=verveAppRequest&profLocal=y";
-		//String vidAddress = "http://www.pocketjourney.com/downloads/pj/video/famous.3gp";
-		//String vidAddress = "http://www.nbcnewyork.com/mobilevideo/?videoID=RFxesyIvm9Bp&gpt=verveAppRequest&profLocal=y";
-		//String vidAddress = "http://www.ebookfrenzy.com/android_book/movie.mp4";
-		//String vidAddress = "http://nbclim-f.akamaihd.net/i/Prod/,NBCU_LM_VMS_-_WCAU/862/403/WCAU_000000007179858_med.mp4,.csmil/segment1_0_av.ts";
-		//String vidAddress = "http://nbclim-f.akamaihd.net/i/Prod/NBCU_LM_VMS_-_WCAU/862/403/WCAU_000000007179858_med.mp4";
-		
-		//http://nbclim-f.akamaihd.net/i/Prod/NBCU_LM_VMS_-_WCAU/862/403/WCAU_000000007179858_med.mp4
 //		File bufferFile = null;
 //		try
 //		{
@@ -157,9 +144,7 @@ public class MainUTActivity extends ActionBarActivity
 //			Log.d(MainUTActivityTAG, "JM..got error = "+e.getMessage());
 //		}
 		
-		//String vidAddress = "http://nbclim-f.akamaihd.net/Prod/NBCU_LM_VMS_-_WNBC/829/979/WNBC_000000003328838_med.mp4";
-		//String vidAddress = "http://nbclim-f.akamaihd.net/Prod/NBCU_LM_VMS_-_WNBC/829/979/WNBC_000000003328838_med.mp4";
-		//String vidAddress = "http://archive.org/download/ksnn_compilation_master_the_internet/ksnn_compilation_master_the_internet_512kb.mp4";
+
 		//create a uri from the url...
 		//String vidAddress = "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8";
 //		Uri vidUri = Uri.parse(vidAddress);
@@ -180,7 +165,7 @@ public class MainUTActivity extends ActionBarActivity
 //		//create specific db iface implementation via factory method.
 //		//this will also do the initialization of the iface.
 //		CommonUtils.createSqliteIface
-//		(this.getApplicationContext(), "NBC_Content_DB_Test.db", null, SqliteDBAbstractIface.T_Session_Type.E_GREEN_DAO);
+//		(this.getApplicationContext(), "Content_DB_Test.db", null, SqliteDBAbstractIface.T_Session_Type.E_GREEN_DAO);
 //		
 //		dbIface = CommonUtils.getDBIface();
 //				

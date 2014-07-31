@@ -108,7 +108,7 @@ public class DataBaseHelper extends OpenHelper
 	}
 	
 	//used for logging
-	private String FILETAGNAME = "NBCDataBaseHelper";
+	private String FILETAGNAME = "DataBaseHelper";
 	
     public DataBaseHelper(Context context, String name, CursorFactory factory) 
     {

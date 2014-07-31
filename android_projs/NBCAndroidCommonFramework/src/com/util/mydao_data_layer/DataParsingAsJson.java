@@ -25,7 +25,7 @@ import com.util.mydao_data_layer.GreenDaoSrcGen.RelatedItemsTable;
  */
 public class DataParsingAsJson extends DataParsingBase
 {	
-	private final String NBCDataParsingAsJsonTAG = "NBCDataParsingAsJson";
+	private final String DataParsingAsJsonTAG = "DataParsingAsJson";
 
 	/*
 	 * this method will take in a content json data obj and parse the data from this content item
@@ -103,7 +103,7 @@ public class DataParsingAsJson extends DataParsingBase
 		String description = obj.getString("description");//DONE
 		String photoThumbnail = obj.getString("photoThumbnail");//DONE
 		
-		Log.d(NBCDataParsingAsJsonTAG, "JM...finished parsing nbc content item data.");
+		Log.d(DataParsingAsJsonTAG, "JM...finished parsing  content item data.");
 
 //create pojo for cnt lead media table
 		ContentItemLeadMediaTable cnt_lead_media_table_bean = new ContentItemLeadMediaTable();

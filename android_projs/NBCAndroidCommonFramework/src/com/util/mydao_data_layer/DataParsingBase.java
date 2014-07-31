@@ -14,7 +14,7 @@ import android.util.Log;
 public abstract class DataParsingBase 
 {
 	//use for logging.
-	private String FILETAGNAME = "NBCDataParsingBase";
+	private String FILETAGNAME = "DataParsingBase";
 	
 	//enum type that allows for the same error handling when parsing 
 	//data from the input stream.
@@ -121,7 +121,7 @@ public abstract class DataParsingBase
 	}
 	
 	/*
-	 * this will receive a url like this "http://media.nbcnewyork.com/images/213*120/mta-service-increase.jpg"
+	 * this will receive a url like this 
 	 * and get the image dimensions and the filename from it. this method will return POJO to the caller
 	 * that contains specifics about the image.
 	 * 

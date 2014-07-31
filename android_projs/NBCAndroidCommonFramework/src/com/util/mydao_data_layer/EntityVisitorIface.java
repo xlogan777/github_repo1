@@ -28,7 +28,7 @@ public interface EntityVisitorIface
 	(RelatedItemsTable relItemsTable, DataBaseHelper.T_UrlTypeToId typeID, UrlImgFileTable urlImgFileTable);
 	
 //	public void visit
-//	(GalleryContentTable galleryCntTable, NBCDataBaseHelper.T_UrlTypeToId typeID, UrlImgFileTable urlImgFileTable);
+//	(GalleryContentTable galleryCntTable, DataBaseHelper.T_UrlTypeToId typeID, UrlImgFileTable urlImgFileTable);
 	
 	
 	/*

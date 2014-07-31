@@ -3,7 +3,7 @@
 <!--     android:id="@+id/container" -->
 <!--     android:layout_width="match_parent" -->
 <!--     android:layout_height="match_parent" -->
-<!--     tools:context="com.util.nbc_cmn_framework_UT.MainUTActivity" -->
+<!--     tools:context="com.util.mydao_cmn_framework_UT.MainUTActivity" -->
 <!--     tools:ignore="MergeRootFrame" > -->
     
 <!--         <TextView -->
