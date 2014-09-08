@@ -176,9 +176,15 @@ public class Main
 		bst.find(8);
 		bst.find(1);
 		bst.find(12);
-		bst.find(15);			
+		bst.find(15);
 		
 		BstNode root = bst.getRoot();
+		
+		//get the height of the tree
+		int height = bst.heightOfTree(root);
+		
+		System.out.println("height of tree = "+height);
+				
 		StringBuilder sb = new StringBuilder();
 		
 		boolean found = bst.Dfs(root, 8);
@@ -780,11 +786,10 @@ public class Main
 	   //test1(); //basic stack and queue with arrays and LL implementations
 	   //test2(); //Sll class with test cases.
 	   //test3(); //Dll class with test cases
-	   //test4(); //BST class with test cases and algms
-	   test5(); //arrays and strings algm cases
+	   test4(); //BST class with test cases and algms
+	   //test5(); //arrays and strings algm cases
 	   //test6(); //linked list algms cases
 	   //test7(); //stack and queue algms cases
 	   //test8(); //trees and graph algms cases
 	}
 }
-

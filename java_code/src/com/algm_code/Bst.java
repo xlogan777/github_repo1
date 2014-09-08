@@ -308,4 +308,21 @@ public class Bst
 		
 		return rv;
 	}
+	
+	public int heightOfTree(BstNode node)
+	{
+		if(node == null)
+		{
+			return -1;
+		}
+		else
+		{
+			int left_ht = 1 + heightOfTree(node.getLeftChild());
+			int right_ht = 1 + heightOfTree(node.getRightChild());
+			
+			int height = Math.max(left_ht, right_ht);
+			
+			return height;
+		}
+	}
 }
