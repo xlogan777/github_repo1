@@ -21,7 +21,6 @@ public class Main
 		boolean rv = ma.linearSearchRecusive(ff, 3, 0);
 		rv = ma.linearSearchRecusive(ff, 4, 0);
 		rv = ma.linearSearchRecusive(ff, 4, 10);
-		
 	}
 	
 	public static void test1()
@@ -78,6 +77,7 @@ public class Main
 	public static void test2()
 	{
 		Sll sll = new Sll();
+		sll.delete("sadf");
 		
 		sll.add("abc");
 		sll.add("def");
@@ -784,9 +784,9 @@ public class Main
 	{
 	   //test0(); //math algms
 	   //test1(); //basic stack and queue with arrays and LL implementations
-	   //test2(); //Sll class with test cases.
+	   test2(); //Sll class with test cases.
 	   //test3(); //Dll class with test cases
-	   test4(); //BST class with test cases and algms
+	   //test4(); //BST class with test cases and algms
 	   //test5(); //arrays and strings algm cases
 	   //test6(); //linked list algms cases
 	   //test7(); //stack and queue algms cases

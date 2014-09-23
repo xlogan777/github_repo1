@@ -2,6 +2,8 @@ package com.algm_code;
 
 public class ArrayQueue extends StackQueueBase 
 {
+	private int head, tail;
+	
 	public ArrayQueue(int size)
 	{
 		super(size);
@@ -34,12 +36,11 @@ public class ArrayQueue extends StackQueueBase
 		else
 		{
 			rv = this.dataArray[head];
+			this.dataArray[head] = null;
 			head = (head+1) % this.dataArray.length;
 			this.count--;
 		}
 		
 		return rv;
 	}
-	
-	private int head, tail;
 }

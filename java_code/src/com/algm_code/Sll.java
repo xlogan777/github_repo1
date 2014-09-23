@@ -62,7 +62,11 @@ public class Sll
 	{
 		boolean rv = false;
 		
-		if(head != null && head.getData().equals(dataElement))
+		if(head == null)
+		{
+			//do nothing...head is null.
+		}
+		else if(head.getData().equals(dataElement))
 		{
 			SllNode tmp = head;
 			head = head.getNext();
@@ -73,22 +77,22 @@ public class Sll
 		else
 		{
 			SllNode prev = head;
-			SllNode tmp = head.getNext();
+			SllNode current = head.getNext();
 			
-			while(tmp != null)
+			while(current != null)
 			{
-				if(tmp.getData().equals(dataElement))
+				if(current.getData().equals(dataElement))
 				{
-					prev.setNext(tmp.getNext()); 
-					tmp.setNext(null);
+					prev.setNext(current.getNext()); 
+					current.setNext(null);
 					System.out.println("Deleting from SLL"+dataElement);
-					tmp = null;
+					current = null;
 					rv = true;
 					break;
 				}
 				
-				prev = tmp;
-				tmp = tmp.getNext();
+				prev = current;
+				current = current.getNext();
 			}
 		}
 		

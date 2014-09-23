@@ -19,7 +19,8 @@ public class ArrayStack extends StackQueueBase implements Cloneable
 		else
 		{
 			this.count++;
-			this.dataArray[++top] = element;
+			this.top++;
+			this.dataArray[top] = element;
 			ret_val = true;
 		}
 		
@@ -34,8 +35,10 @@ public class ArrayStack extends StackQueueBase implements Cloneable
 			System.out.println("stack is empty");
 		else
 		{
+			ret_val = this.dataArray[top];
+			this.dataArray[top] = null;//remove ref from array.
 			this.count--;
-			ret_val = this.dataArray[top--];			
+			this.top--;
 		}
 		
 		return ret_val;
@@ -45,6 +48,7 @@ public class ArrayStack extends StackQueueBase implements Cloneable
 	//but for this to work, then you need to have this class implement
 	//the cloneable interface otherwise, calling super will yield an exception
 	//calling super.clone, will always yield a shallow copy of the obj.
+	@Override
 	public Object clone() throws CloneNotSupportedException
 	{
 		return super.clone();

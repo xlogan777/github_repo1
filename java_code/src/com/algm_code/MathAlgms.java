@@ -66,12 +66,12 @@ public class MathAlgms
 	{
 		boolean rv = true;
 		
-		//if we reached end of array or outside, them we didnt find it.
-		if(index >= input.length)
+		//check if we are out of bounds of the index.
+		if(index >= input.length || index < 0)
 		{
 			rv = false;
 		}
-		//if item doesnt match array loc index item, continue to recurse.
+		//if item doesnt match array loc index item, continue to search.
 		else if( input[index] != item)
 		{
 			//increase index and try further.
@@ -81,5 +81,4 @@ public class MathAlgms
 		//return val.
 		return rv;
 	}
-	
 }
