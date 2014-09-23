@@ -1,5 +1,12 @@
 package com.java_lang_exp;
 
+final class Test1
+{
+	static void run()
+	{
+		
+	}
+}
 
 public class MainJavaLangExp 
 {	
