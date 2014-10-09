@@ -1,0 +1,11 @@
+
+{
+   "fname" : "jimbo",
+   "lname" : "hahah",
+   "id" : "123",
+   "friendlist" : [ 
+         {"name":"friend1"},
+         {"name":"friend2"},
+         {"name":"friend3"}
+    ]
+}
