@@ -42,4 +42,9 @@ public class JsonP_Example
 			 logger.debug(names);
 		 }
 	}
+	
+	public int adding(int x, int y)
+	{
+		return (x+y);
+	}
 }
