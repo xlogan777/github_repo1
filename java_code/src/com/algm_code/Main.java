@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Main 
 {
+	//testing
 	public static void test0()
 	{
 		MathAlgms ma = new MathAlgms();
