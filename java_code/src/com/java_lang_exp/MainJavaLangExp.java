@@ -9,6 +9,7 @@ import org.apache.logging.log4j.core.config.LoggerConfig;
 
 public class MainJavaLangExp 
 {
+   //testing.
 	//get instance of logger class for this obj.
 	static final Logger logger = 
 			LogManager.getLogger(MainJavaLangExp.class.getName());
