@@ -17,6 +17,7 @@ public class MainJavaLangExp
 	{
 		try
 		{
+			//test
 			//allows u to programtically update the log level for root logger.
 			/*LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
 			Configuration config = ctx.getConfiguration();
