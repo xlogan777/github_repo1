@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+
+<!-- all ant files needs atleast  1 project element and
+	  atleast 1 target element -->
+<!-- the name attib is default, the default is mandatory.  -->
+<!-- defined the basedir, ant attrib to be current dir for build, and default target to be build -->	  
+<project name="Java_Code" basedir="." default="total_build_and_docs">
+       
+    <!-- allows to provide a propeties files to ant build file here
+    		to allow for different properties to be set. -->
+	   <property file="build.properties"/>
+	   
+	   <!-- setting up properties to use in the build file, mainly setting up where the folders are. -->
+	   <property name="src.dir" value="src/com/algm_code"/>
+	   <property name="libs.dir" value="libs"/>
+	   <property name="resource.dir" value="resource"/>
+	   <property name="docs.dir" value="docs"/>
+	   
+	   <!-- this is where all the class files are sent to. -->
+	   <property name="build.dir" value="build"/>
+	   
+	   <!-- this specifies the classpath for your project this is setting the class path
+	 		to a libs folder, and the classes in the build folder. -->  
+	   <path id="master-classpath">
+	     <!-- point where the libs folder is to set the class path to that location.
+	     		add the wildcard to allow to include all the jars in that folder. -->
+        <fileset dir="${libs.dir}">
+            <include name="*.jar"/>
+        </fileset>
+        
+        <!-- this is including the classes in the build folder. -->
+        <pathelement path="${build.dir}"/>
+      </path>
+	       
+	   <!-- attib name is optional, the target tag has more atribs that are optional. -->    
+	   <target name="info" description="this is for printing only.">
+	      <!-- echo tag is used for printing during ant execution. 
+	      		you can get the property by ${"property name"} syntax as show below.--> 
+	      <echo>Testing the Java code compiling.</echo>
+	      <echo>Apache Ant version is ${ant.version} - build_ver is ${buildversion} </echo>
+	   </target>
+	   
+	   <!-- target showing how to generate javadoc for your project. -->
+	   <target name="generate-javadoc">
+	       
+	       <!-- this is for the javadoc utility, tel the name of the package, src-path, where to put the output html files..etc -->
+		    <javadoc packagenames="my_src_code" sourcepath="${src.dir}" destdir="${docs.dir}" author="true" version="true" windowtitle="Java Code">
+		       
+		        <!-- include the file set for the javadoc to do the docs for. -->
+		       <fileset dir="${src.dir}" defaultexcludes="yes">
+				    <include name="**" />
+				 </fileset>
+		      
+		      <!-- these doctitle, bottom are customizing the header and footer of the javadoc page. -->
+		      <doctitle><![CDATA[= My Java code =]]></doctitle>
+		      <bottom>
+		         <![CDATA[Copyright © 2014. All Rights Reserved.]]>
+		      </bottom>
+		      
+		    </javadoc>
+		    <echo message="java doc has been generated!" />
+		</target>
+	   
+	   <!-- this is making a clean target to allow to remove any build files from the output dir. -->
+	   <!-- we want to delete what was in the output folder -->
+	   <target name="clean" description="Clean output directories" >
+	       
+	     <echo> we are cleaning the compile for this sample proj. </echo>  
+	       
+	     <!-- the delete tag tells ant to remove based on the fileset. which in our case removes entire /build folder.-->  
+        <delete includeemptydirs="true">
+            
+            <!-- fileset allows to specify the directory and then wildcard of items to
+            		include/exclude when deleting file, this will delete all the class files from
+            		the build folder.  the example below is more of a surgical that just cleans out the class files.-->
+           <!-- <fileset dir="${build.dir}">        
+                <include name="**/*.class"/>
+            </fileset>-->
+            
+            <!-- this will remove the entire build folder. -->
+            <!-- <fileset dir="build" includes="**/**"/> -->
+            
+            <!-- this will remove all the folders except for the build folder. -->
+            <fileset dir="build" includes="**/*"/>
+        </delete>
+  
+      </target>
+
+	 <!-- this target will build the project for u. create the build folder if it doesnt exits., 
+	 		then execute compiling the source. we need to provide the classpath and the src folder to javac to compile.
+	 		setting up a dependency which is to clean the prev compiled code first before a new compile is done.-->
+	 <target name="build" description="Compile main source tree java files">
+	     
+	    <!-- makes the build folder. -->
+	    <mkdir dir="${build.dir}"/>
+	    	    
+	    <!-- this is setting up the location of build ouput, tells javac the souce code ver for javac, the target for javac,
+	    		if we need to pass the deprecation or other switches u can provide them as show below. the includeantruntime is to not
+	    		use the ant runtime as the runtime but the system runtime.
+	    		it is providing the src path, and the master classpath to compile this src.
+	    		-->
+	    <javac includeantruntime="false" source="1.8" target="1.8" destdir="${build.dir}" debug="true" deprecation="false" optimize="false" failonerror="true">
+	      <src path="${src.dir}"/>
+	      <classpath refid="master-classpath"/>
+	    </javac>
+	</target>
+	
+	<target name="total_build_and_docs" depends="clean,build,generate-javadoc">
+	    <echo> remove the old build folder if needed</echo>
+	    <echo> create new build folder</echo>
+	    <echo> compile code and put into build folder.</echo>
+	    <echo> generate javadoc also and put into docs folder.</echo>
+	</target>
+   
+</project>
