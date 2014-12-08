@@ -78,7 +78,10 @@
             </fileset>-->
             
             <!-- this will remove the entire build folder. -->
-            <fileset dir="build" includes="**/**"/>
+            <!-- <fileset dir="build" includes="**/**"/> -->
+            
+            <!-- this will remove all the folders except for the build folder. -->
+            <fileset dir="build" includes="**/*"/>
         </delete>
   
       </target>
