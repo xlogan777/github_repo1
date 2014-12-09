@@ -15,6 +15,7 @@
 	   <property name="libs.dir" value="libs"/>
 	   <property name="resource.dir" value="resource"/>
 	   <property name="docs.dir" value="docs"/>
+	   <property name="jar.dir" value="jarDir"/>
 	   
 	   <!-- this is where all the class files are sent to. -->
 	   <property name="build.dir" value="build"/>
@@ -105,7 +106,39 @@
 	    </javac>
 	</target>
 	
-	<target name="total_build_and_docs" depends="clean,build,generate-javadoc">
+	<!-- this will create a target for the jar file with the ant jar task directive.
+			u need to define where the jar file will be located, and the name of the jar file
+			which is the destfile attrib. it needs to know where to get the compiled code from. which
+			is what basedir attrib is. this jar will also be a file that has a main, that is set up 
+			to use a Manifest file via the manifest settings of the jar task directive. 
+			u can add classpath if u want later. u run a jar like so, (java -jar "jar-file")-->
+   <target name="build-jar">
+		<jar destfile="${jar.dir}/AlgmJava.jar" basedir="${build.dir}">
+		     <manifest>
+		      <attribute name="Main-Class" value="com.algm_code.Main"/>
+		     </manifest>
+		</jar>
+	</target>
+	
+   <!-- this target can call a specific java class file with the java ant task.
+   		it needs the classpath to be defined here, which is set at the beginning of this file.
+   		as well as the classname to be the full package path to the main class.
+   		you can pass args to the main file with the arg tag here, 
+   		main class doesnt do anything with this. -->
+   <target name="call_java_file">
+     <java fork="true" failonerror="yes" classname="com.algm_code.Main">
+       <arg line="sample_args hello_world"/>
+       <classpath refid="master-classpath"/>
+     </java>
+   </target>
+	
+   <!-- target does does it all. 
+   		if u want eclipse integration with ant, do this, window -> show_view -> ant
+   		that will show u the ant window on the mid right hand side, there u can add a
+   		buildfile to the window, and if ur proj has a build.xml file u can select it there.
+   		after that u can run the entire ant file via the run-as, ant build file command there. and the
+   		output shows up in the console window. -->
+	<target name="total_build_and_docs" depends="clean,build,generate-javadoc,build-jar">
 	    <echo> remove the old build folder if needed</echo>
 	    <echo> create new build folder</echo>
 	    <echo> compile code and put into build folder.</echo>
