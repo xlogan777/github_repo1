@@ -1,5 +1,6 @@
 package com.algm_code;
 
+//base class for stacks and queues
 public class StackQueueBase
 {
 	public StackQueueBase(int size)
