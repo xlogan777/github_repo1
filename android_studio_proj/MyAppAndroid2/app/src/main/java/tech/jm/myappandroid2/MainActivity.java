@@ -2,6 +2,7 @@ package tech.jm.myappandroid2;
 
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -112,6 +113,32 @@ public class MainActivity extends ActionBarActivity {
         //doing another test
         //final test
         managedCursor.close();
+
+        ContentResolver cr2 = this.getContentResolver();
+        //content:// => content provider protocol..similar to http:// concept
+        //authority = tech.jm.myappandroid2.mycontentprovider
+        //path-segment => "mapData"
+        //id of record being requested after mapData, in this case item 100
+        Uri my_content_uri = Uri.parse("content://tech.jm.myappandroid2.mycontentprovider/mapData/100");
+        int cc = cr2.delete(my_content_uri,"id",new String[]{"1"});
+
+        Uri my_content_uri2 = Uri.parse("content://tech.jm.myappandroid2.mycontentprovider/mapData/200");
+        ContentValues cv = new ContentValues();
+        cv.put("name","jimbo");
+        Uri tmp1 = cr.insert(my_content_uri2, cv);
+
+        Cursor tmp_cur = cr.query(my_content_uri2,null,null,null,null);
+
+        if(tmp_cur.getCount() > 0)
+        {
+            while(tmp_cur.moveToNext())
+            {
+                String my_name = tmp_cur.getString(tmp_cur.getColumnIndex("name_col"));
+                Log.d("","my name  = "+my_name);
+            }
+        }
+
+        tmp_cur.close();
 
         Intent intent = new Intent(this, MyService.class);
         Intent intent2 = new Intent(this, MyIntentService.class);

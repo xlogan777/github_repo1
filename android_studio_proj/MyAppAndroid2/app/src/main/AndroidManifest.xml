@@ -26,11 +26,11 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <!-- allows to read and write to book marks. -->
-    <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS"/>
-    <uses-permission android:name="com.android.browser.permission.WRITE_HISTORY_BOOKMARKS"/>
+    <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
+    <uses-permission android:name="com.android.browser.permission.WRITE_HISTORY_BOOKMARKS" />
 
     <!-- allow to recv sms txt msgs -->
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
     <application
         android:allowBackup="true"
@@ -107,19 +107,27 @@
         <receiver
             android:name=".MyReceiver"
             android:enabled="true"
-            android:exported="true">
-
+            android:exported="true" >
             <intent-filter>
-                <action android:name="tech.jm.BR_ACTION_1" /><!-- defined action for this intent.-->
+                <action android:name="tech.jm.BR_ACTION_1" /> <!-- defined action for this intent. -->
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
             <!-- process sms txt -->
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
+
+        <!-- created a content provider for testing purposes-->
+        <provider
+            android:name=".MyContentProvider"
+            android:authorities="tech.jm.myappandroid2.mycontentprovider"
+            android:enabled="true"
+            android:exported="true" >
+        </provider>
     </application>
 
 </manifest>
