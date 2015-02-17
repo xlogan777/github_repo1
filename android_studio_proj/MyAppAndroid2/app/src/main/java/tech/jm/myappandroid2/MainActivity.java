@@ -108,6 +108,7 @@ public class MainActivity extends ActionBarActivity {
             }
         }
 
+        //closed the cursor.
         managedCursor.close();
 
         Intent intent = new Intent(this, MyService.class);
