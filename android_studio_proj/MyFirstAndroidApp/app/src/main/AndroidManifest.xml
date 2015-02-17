@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="tech.jm.myfirstandroidapp" >
+
+    <!-- allow to read contacts. -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <!-- tell what min version sdk to use this app with. -->
+    <!-- <uses-sdk android:minSdkVersion="14" /> -->
+    <!--
+     adding this to the application tag as an attribute [android:name=".FinchApplication"]
+         is the way to have android call ur specific application sub class override.
+    -->
+    <application
+        android:name=".FinchApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".MainActivity1"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".FinchLifecycle"
+            android:label="@string/title_activity_finch_lifecycle" >
+        </activity>
+        <activity
+            android:name=".ListAndContentActivity"
+            android:label="@string/title_activity_list_and_content" >
+        </activity>
+    </application>
+
+</manifest>

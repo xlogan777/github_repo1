@@ -1,0 +1,88 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- added frame layout. that is used as a dynamic fragment with fgr_xt_mgr.-->
+    <!--<FrameLayout
+        android:id="@+id/date_time"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        />-->
+
+    <Button
+        android:id="@+id/new_fragments"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:textSize="24dp"
+        android:text="update_fragments"
+        />
+
+    <FrameLayout
+        android:id="@+id/date_time2"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        />
+
+    <FrameLayout
+        android:id="@+id/date_time"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        />
+
+    <!-- directly added fragment to the layout.
+    <fragment
+        class="tech.jm.myfirstandroidapp.DateTime"
+        android:id="@+id/date_time"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        /> -->
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/text1"
+            android:text="defaultLeftText"
+            android:focusable="false"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+        <EditText
+            android:id="@+id/text2"
+            android:text="defaultRightText"
+            android:focusable="false"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/button1"
+            android:text="labelRed"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/button2"
+            android:text="labelGreen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Process_Person_Details"
+        android:id="@+id/button6" />
+</LinearLayout>
