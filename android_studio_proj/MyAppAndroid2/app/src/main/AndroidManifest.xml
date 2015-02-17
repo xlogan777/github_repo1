@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="tech.jm.myappandroid2" >
+
+    <!--
+        application permission level. at this level it says any component trying to
+        interact with this application needs this permission. and the application stated here
+        is also requiring this permission to be installed.
+        these are pemission levels for all the components defined in an application
+        ..any activity, service..etc
+    -->
+    <!--
+         if component level permission is set then for activity/service, a security exception
+        is thrown when u are accessing the activity or service that u dont have permission
+        for. for broadcast rcrs, u cant sent to broadcast rcvs. content providers have the
+        same restrictions.
+    -->
+    <permission android:name="android.permission.VIBRATE" />
+
+    <!--
+         this is telling the user that they need to allow this permission before the apk file
+        can be installed in the mobile device.
+    -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <!-- allows to read and write to book marks. -->
+    <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS"/>
+    <uses-permission android:name="com.android.browser.permission.WRITE_HISTORY_BOOKMARKS"/>
+
+    <!-- allow to recv sms txt msgs -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation"
+            android:label="@string/app_name" >
+            <intent-filter>
+
+                <!--
+                     this is stating that this activity is the main activity to launch on ap
+                    app start up.
+                -->
+                <action android:name="android.intent.action.MAIN" />
+                <!--
+                 this is the icon to be placed on the mobile device, to allow for opening
+                 the app
+                -->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ReconfigActivity"
+            android:label="@string/title_activity_reconfig" >
+
+            <!--
+                 these are the items that this activity will respond to if it detects
+                 an intent being called without a explicit calling of this activity in the
+                 intent obj.
+            -->
+            <intent-filter>
+                <action android:name="android.intent.action.CALL" />
+
+                <!--
+                     Note...to rcv implicit intent you NEED to specify the DEFAULT category
+                    regardless of any other category specified.
+                -->
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="images/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="jm.tech.WIFI_STATE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity2"
+            android:label="@string/title_activity_main_activity2" >
+        </activity>
+        <activity
+            android:name=".MainActivity3Activity"
+            android:label="@string/title_activity_main_activity3" >
+        </activity>
+        <activity
+            android:name=".MainActivity32Activity"
+            android:label="@string/title_activity_main_activity32" >
+        </activity>
+
+        <service
+            android:name=".MyService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+        <service
+            android:name=".MyIntentService"
+            android:exported="false" >
+        </service>
+
+        <receiver
+            android:name=".MyReceiver"
+            android:enabled="true"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="tech.jm.BR_ACTION_1" /><!-- defined action for this intent.-->
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <!-- process sms txt -->
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

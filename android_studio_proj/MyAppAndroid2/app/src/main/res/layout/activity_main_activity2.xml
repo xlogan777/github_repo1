@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:orientation="horizontal"
+    android:id="@+id/my_linear_layout">
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+        <!--android:text="Medium Text"-->
+        <!--android:id="@+id/textView3" />-->
+
+    <!-- adding fragments directly to the activity ui layout. -->
+    <!--<fragment-->
+        <!--class="tech.jm.myappandroid2.TilesFragment"-->
+        <!--android:id="@+id/tiles_frag"-->
+        <!--android:layout_weight="1"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent" />-->
+
+    <!--<fragment-->
+        <!--class="tech.jm.myappandroid2.DetailsFragment"-->
+        <!--android:id="@+id/details_frag"-->
+        <!--android:layout_weight="1"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent"/>-->
+
+    <FrameLayout
+        android:id="@+id/titleFrame"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="hide/show frag details"
+            android:id="@+id/hide_show_tiles"
+            android:layout_gravity="left|top" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/detailFrame"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="2">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="hide/show frag tiles"
+            android:id="@+id/hide_show_details"
+            android:layout_gravity="center_horizontal|top" />
+    </FrameLayout>
+
+</LinearLayout>
