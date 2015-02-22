@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Environment;
+import android.os.Message;
 import android.provider.Browser;
 import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
@@ -21,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,9 +33,31 @@ import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.lang.ref.WeakReference;
 
-
+//http://www.androiddesignpatterns.com/2013/01/inner-class-handler-memory-leak.html
 public class MainActivity extends ActionBarActivity {
+    private int mProgressStatus = 0;
+    private static ProgressBar mProgress;
+
+    private static class MyHandler extends  android.os.Handler {
+        private final WeakReference<MainActivity> mActivity;
+
+        public MyHandler(MainActivity activity)
+        {
+            mActivity = new WeakReference<MainActivity>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg)
+        {
+            int aResponse = msg.getData().getInt("progressUpdate");
+            Log.d("","Hey i am here prog = "+aResponse);
+            mProgress.setProgress(aResponse);
+        }
+    }
+
+    private final MyHandler mHandler = new MyHandler(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +67,59 @@ public class MainActivity extends ActionBarActivity {
 
         //set the content view
         setContentView(R.layout.activity_main);
+
+        mProgress = (ProgressBar) findViewById(R.id.progressBar);
+
+        //set the callbacks here for the threads
+        final Button prg1 = (Button)this.findViewById(R.id.button4);
+        prg1.setOnClickListener( new Button.OnClickListener()
+            {
+                public void onClick(View view)
+                {
+                    //adding a runnable onto the UI thread task queue to process
+                    //since we cant call UI components from outside the UI thread.
+                    Thread t1 = new Thread
+                    (
+                            new Runnable()
+                            {
+                                @Override
+                                public void run()
+                                {
+                                    while (mProgressStatus < 100) {
+                                        mProgressStatus += 10;
+
+                                        try
+                                        {
+                                            //do fake work by sleeping
+                                            Thread.sleep(3000);
+
+                                            //send a msg to the handler thread obj for the
+                                            //UI thread to do stuff.
+
+//                                            Message msgObj = mHandler.obtainMessage();
+//                                            Bundle b = new Bundle();
+//                                            b.putInt("progressUpdate",mProgressStatus);
+//                                            msgObj.setData(b);
+//                                            mHandler.sendMessage(msgObj);
+                                        }
+                                        catch(Exception e){}
+
+                                        // Update the progress bar, by posting to the handler class.
+                                        //i am using the send msg approach to bundle data back to handler
+                                        //class
+                                        mHandler.post(new Runnable() {
+                                            public void run() {
+                                                mProgress.setProgress(mProgressStatus);
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                    );
+                    t1.start();
+                }
+            }
+        );
 
         //setup columns to return back in the cursor obj.
         String columns[] = new String[]
