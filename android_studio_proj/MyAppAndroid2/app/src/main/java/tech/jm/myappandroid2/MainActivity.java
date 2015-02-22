@@ -5,10 +5,12 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
+import android.os.Environment;
 import android.provider.Browser;
 import android.provider.ContactsContract;
 import android.support.v7.app.ActionBarActivity;
@@ -21,6 +23,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -139,6 +149,64 @@ public class MainActivity extends ActionBarActivity {
         }
 
         tmp_cur.close();
+
+        String ext_storage_state = Environment.getExternalStorageState();
+        File f = this.getExternalCacheDir();//represent dir name of tmp storage as a cache.
+        File f2 = this.getCacheDir();//gets local cache to save files.
+        File f3 = this.getFilesDir();
+        Log.d("","int dir = "+f3+", ext storage state = "+ext_storage_state+" , ext cache dir = "+f+" , cache_dir"+f2);
+
+        //this will show opening and internal files. these are private files..
+        //use the api to create and read files.
+        File file = new File(this.getFilesDir(), "my_file.txt");
+        String fname = file.getAbsolutePath();
+        try
+        {
+
+            PrintWriter pw =
+                    new PrintWriter(
+                            new BufferedWriter(
+                                    new OutputStreamWriter(
+                                            this.openFileOutput("my_file.txt", Activity.MODE_PRIVATE))));
+
+            pw.println("this is a test");
+            pw.close();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(this.openFileInput("my_file.txt")));
+
+            String line = "";
+            while( (line = br.readLine()) != null)
+            {
+                Log.d("",line);
+            }
+
+            br.close();
+
+            File file22 = new File("my_file.txt");
+            Log.d("","path = "+file22.getAbsolutePath());
+
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        //save across multiple androind instances with shared prefs.
+        //eithe at activity level or at application level.
+        //this can just be a call to this.getPreferences..which does the same below.
+        final SharedPreferences sp = this.getSharedPreferences(MainActivity.class.getName(),Activity.MODE_PRIVATE);
+
+        int val = 100;
+        //get the editor for shared prefs
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt("myId", val);//save data to shared prefs
+        editor.commit();//commit the change.
+
+        final SharedPreferences sp2 = this.getSharedPreferences(MainActivity.class.getName(),Activity.MODE_PRIVATE);
+        int val2 = sp2.getInt("myId",0);
+        Log.d("","val 2 = "+val2);
+
+        //u can also add preferences from a an xml file.
 
         Intent intent = new Intent(this, MyService.class);
         Intent intent2 = new Intent(this, MyIntentService.class);
