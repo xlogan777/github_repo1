@@ -50,6 +50,7 @@ public class MainActivity33Activity extends ActionBarActivity {
               {
                   try
                   {
+                      Log.d("","'");
                       audioManager.playSoundEffect(AudioManager.FX_KEY_CLICK);
                   }
                   catch(Exception e){e.printStackTrace();}
@@ -64,6 +65,7 @@ public class MainActivity33Activity extends ActionBarActivity {
               {
                   try
                   {
+                      Log.d("","'");
                       soundPool.play(soundId, volume, volume, 1, 0, 1.0f);
                   }
                   catch(Exception e){e.printStackTrace();}
@@ -86,14 +88,17 @@ public class MainActivity33Activity extends ActionBarActivity {
         );
 
         //get a sound id for this raw sound obj.
+        //the raw sound obj can be a file and u can get it via  a path and filename, asset file name..
+        //file id type..etc..for now i am not loading anything since i dont have any sound file to load.
         //soundId = soundPool.load(this, R.raw.sound, 1);
-        //test
-        //test2
     }
 
     @Override
     protected void onPause()
     {
+        //when the activity is paused, moved to the background,
+        //need to release resources. by unloading the sound id item, and releasing the
+        //sound pool.
         if(soundPool != null)
         {
             soundPool.unload(soundId);
@@ -102,7 +107,6 @@ public class MainActivity33Activity extends ActionBarActivity {
         }
         super.onPause();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
