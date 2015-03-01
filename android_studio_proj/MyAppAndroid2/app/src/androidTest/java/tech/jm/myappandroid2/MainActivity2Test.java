@@ -22,6 +22,7 @@ public class MainActivity2Test extends ActivityInstrumentationTestCase2<MainActi
     public MainActivity2Test()
     {
         super(MainActivity2.class);
+
     }
 
     //setup object with activity to test with system usage and android specific stuff.
