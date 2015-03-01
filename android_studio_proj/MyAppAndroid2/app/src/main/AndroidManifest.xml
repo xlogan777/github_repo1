@@ -121,13 +121,18 @@
             </intent-filter>
         </receiver>
 
-        <!-- created a content provider for testing purposes-->
+        <!-- created a content provider for testing purposes -->
         <provider
             android:name=".MyContentProvider"
             android:authorities="tech.jm.myappandroid2.mycontentprovider"
             android:enabled="true"
             android:exported="true" >
         </provider>
+
+        <activity
+            android:name=".MainActivity33Activity"
+            android:label="@string/title_activity_main_activity33" >
+        </activity>
     </application>
 
 </manifest>

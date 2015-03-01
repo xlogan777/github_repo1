@@ -413,6 +413,23 @@ public class MainActivity extends ActionBarActivity {
         wifi_intent.putExtra("wifi_state",status_wifi);
         wifi_intent.setAction("jm.tech.WIFI_STATE");
         //startActivity(wifi_intent);
+
+        //setup new button for mutlimedia activity handling.
+        final Button activity_5 = (Button)findViewById(R.id.button5);
+        activity_5.setOnClickListener( new Button.OnClickListener()
+            {
+                public void onClick(View view)
+                {
+                    try {
+                        Intent intent = new Intent(MainActivity.this, MainActivity33Activity.class);
+                        startActivity(intent);
+                        Log.d("","Start MM demo activity.");
+                    }
+                    catch(Exception e){e.printStackTrace();}
+                }
+            }
+        );
+
     }
 
     @Override
