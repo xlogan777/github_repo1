@@ -31,7 +31,8 @@
 
     <!-- allow to recv sms txt msgs -->
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
-
+    <!-- needed for ringtone mgr to play.-->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"

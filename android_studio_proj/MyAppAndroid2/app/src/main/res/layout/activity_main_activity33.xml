@@ -23,4 +23,11 @@
         android:layout_height="wrap_content"
         android:text="PlayButton"
         android:id="@+id/button7" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="play ringtone"
+        android:id="@+id/button8" />
 </LinearLayout>

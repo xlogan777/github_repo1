@@ -2,7 +2,10 @@ package tech.jm.myappandroid2;
 
 import android.media.AudioAttributes;
 import android.media.AudioManager;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.media.SoundPool;
+import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -91,6 +94,43 @@ public class MainActivity33Activity extends ActionBarActivity {
         //the raw sound obj can be a file and u can get it via  a path and filename, asset file name..
         //file id type..etc..for now i am not loading anything since i dont have any sound file to load.
         //soundId = soundPool.load(this, R.raw.sound, 1);
+
+        final Button ringtone_butt = (Button)findViewById(R.id.button8);
+        ringtone_butt.setOnClickListener( new Button.OnClickListener()
+            {
+                public void onClick(View view)
+                {
+                    try
+                    {
+                        //ring tone mgr
+                        Ringtone ringtone =
+                                (Ringtone)RingtoneManager.getRingtone
+                                        (MainActivity33Activity.this, Settings.System.DEFAULT_RINGTONE_URI);
+
+                        if(ringtone != null)
+                        {
+                            Log.d("","ring tone");
+                            ringtone.play();
+                        }
+                    }
+                    catch(Exception e){e.printStackTrace();}
+                }
+            }
+        );
+
+        //for media player see documentation for this stuff..has a state machine for its setup.
+        //MediaPlayer.
+        //video_view is used to allow for multiple sources to be used to display video.
+        //simple widget for just video.
+
+        //for media recorder for video/audio
+        //https://developer.android.com/reference/android/media/MediaRecorder.html
+        //the above link show how the simple state machine and steps are there for usage of this
+        //android feature.
+
+        //usage for the camera is this url with sample steps for camera and video capture
+        //as well as setup steps.
+        //http://developer.android.com/guide/topics/media/camera.html
     }
 
     @Override
