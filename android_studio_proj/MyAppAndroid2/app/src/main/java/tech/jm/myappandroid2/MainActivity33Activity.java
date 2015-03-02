@@ -1,11 +1,18 @@
 package tech.jm.myappandroid2;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.Context;
+import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.media.SoundPool;
 import android.provider.Settings;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -30,12 +38,12 @@ public class MainActivity33Activity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_activity33);
 
-        Log.d("","MAIN MM");
+        Log.d("", "MAIN MM");
 
-        final TextView tv1 = (TextView)this.findViewById(R.id.textView6);
+        final TextView tv1 = (TextView) this.findViewById(R.id.textView6);
 
         //get the audio mgr from android
-        final AudioManager audioManager = (AudioManager)this.getSystemService(AUDIO_SERVICE);
+        final AudioManager audioManager = (AudioManager) this.getSystemService(AUDIO_SERVICE);
 
         //load the sound effects.
         audioManager.loadSoundEffects();
@@ -46,34 +54,30 @@ public class MainActivity33Activity extends ActionBarActivity {
 
         //setup 2 buttons to either play the audio sound via audio mgr or
         //play sound via the sound pool.
-        final Button up_button = (Button)findViewById(R.id.button6);
-        up_button.setOnClickListener( new Button.OnClickListener()
-          {
-              public void onClick(View view)
-              {
-                  try
-                  {
-                      Log.d("","'");
-                      audioManager.playSoundEffect(AudioManager.FX_KEY_CLICK);
-                  }
-                  catch(Exception e){e.printStackTrace();}
-              }
-          }
+        final Button up_button = (Button) findViewById(R.id.button6);
+        up_button.setOnClickListener(new Button.OnClickListener() {
+                                         public void onClick(View view) {
+                                             try {
+                                                 Log.d("", "'");
+                                                 audioManager.playSoundEffect(AudioManager.FX_KEY_CLICK);
+                                             } catch (Exception e) {
+                                                 e.printStackTrace();
+                                             }
+                                         }
+                                     }
         );
 
-        final Button play_button = (Button)findViewById(R.id.button7);
-        play_button.setOnClickListener( new Button.OnClickListener()
-          {
-              public void onClick(View view)
-              {
-                  try
-                  {
-                      Log.d("","'");
-                      soundPool.play(soundId, volume, volume, 1, 0, 1.0f);
-                  }
-                  catch(Exception e){e.printStackTrace();}
-              }
-          }
+        final Button play_button = (Button) findViewById(R.id.button7);
+        play_button.setOnClickListener(new Button.OnClickListener() {
+                                           public void onClick(View view) {
+                                               try {
+                                                   Log.d("", "'");
+                                                   soundPool.play(soundId, volume, volume, 1, 0, 1.0f);
+                                               } catch (Exception e) {
+                                                   e.printStackTrace();
+                                               }
+                                           }
+                                       }
         );
 
         //create a sound pool obj and provide the required params.
@@ -81,13 +85,11 @@ public class MainActivity33Activity extends ActionBarActivity {
         //SoundPool(int maxStreams, int streamType, int srcQuality)
 
         //set a complete listener to enable the button for the sound pool.
-        soundPool.setOnLoadCompleteListener( new SoundPool.OnLoadCompleteListener()
-             {
-                 public void onLoadComplete(SoundPool soundPool, int sampleId, int status)
-                 {
-                     play_button.setEnabled(true);
-                 }
-             }
+        soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+                                                public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                                                    play_button.setEnabled(true);
+                                                }
+                                            }
         );
 
         //get a sound id for this raw sound obj.
@@ -95,27 +97,24 @@ public class MainActivity33Activity extends ActionBarActivity {
         //file id type..etc..for now i am not loading anything since i dont have any sound file to load.
         //soundId = soundPool.load(this, R.raw.sound, 1);
 
-        final Button ringtone_butt = (Button)findViewById(R.id.button8);
-        ringtone_butt.setOnClickListener( new Button.OnClickListener()
-            {
-                public void onClick(View view)
-                {
-                    try
-                    {
-                        //ring tone mgr
-                        Ringtone ringtone =
-                                (Ringtone)RingtoneManager.getRingtone
-                                        (MainActivity33Activity.this, Settings.System.DEFAULT_RINGTONE_URI);
+        final Button ringtone_butt = (Button) findViewById(R.id.button8);
+        ringtone_butt.setOnClickListener(new Button.OnClickListener() {
+                                             public void onClick(View view) {
+                                                 try {
+                                                     //ring tone mgr
+                                                     Ringtone ringtone =
+                                                             (Ringtone) RingtoneManager.getRingtone
+                                                                     (MainActivity33Activity.this, Settings.System.DEFAULT_RINGTONE_URI);
 
-                        if(ringtone != null)
-                        {
-                            Log.d("","ring tone");
-                            ringtone.play();
-                        }
-                    }
-                    catch(Exception e){e.printStackTrace();}
-                }
-            }
+                                                     if (ringtone != null) {
+                                                         Log.d("", "ring tone");
+                                                         ringtone.play();
+                                                     }
+                                                 } catch (Exception e) {
+                                                     e.printStackTrace();
+                                                 }
+                                             }
+                                         }
         );
 
         //for media player see documentation for this stuff..has a state machine for its setup.
@@ -131,6 +130,63 @@ public class MainActivity33Activity extends ActionBarActivity {
         //usage for the camera is this url with sample steps for camera and video capture
         //as well as setup steps.
         //http://developer.android.com/guide/topics/media/camera.html
+
+        //do toast notifications
+        String my_name = "this is my name";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(this, my_name, duration);
+        toast.show();
+
+        //status bar notifications and notification manager.
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.abc_edit_text_material)
+                        .setContentTitle("My notification")
+                        .setContentText("Hello World!");
+
+        // Creates an explicit intent for an Activity in your app
+        Intent resultIntent = new Intent(this, MainActivity32Activity.class);
+
+        // The stack builder object will contain an artificial back stack for the
+        // started Activity.
+        // This ensures that navigating backward from the Activity leads out of
+        // your application to the Home screen.
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+
+        // Adds the back stack for the Intent (but not the Intent itself)
+        stackBuilder.addParentStack(MainActivity32Activity.class);
+
+        // Adds the Intent that starts the Activity to the top of the stack
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        mBuilder.setContentIntent(resultPendingIntent);
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        // mId allows you to update the notification later on.
+        int mId = 100;
+        mNotificationManager.notify(mId, mBuilder.build());
+
+        //set sound and vibration for a notification is done like so
+        //notification.defaults |= Notification.DEFAULT_SOUND;
+        /* custom vibrations to be set on the notification obj .
+        long[] vibrate = {
+                        0,
+                        100,
+                        200,
+                        300
+                        };
+        notification.vibrate  =  vibrate;
+        */
+
+        //alarm notifications allow for
+        //scheduled processing at either a fixed rate time, or one shot..
+        //it used the Alarm Mgr..and u set it via intents.
+        //alarms remain active even when app is sleep or not active.
     }
 
     @Override
