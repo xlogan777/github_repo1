@@ -25,6 +25,12 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 
 public class MainActivity33Activity extends ActionBarActivity {
 
@@ -187,6 +193,35 @@ public class MainActivity33Activity extends ActionBarActivity {
         //scheduled processing at either a fixed rate time, or one shot..
         //it used the Alarm Mgr..and u set it via intents.
         //alarms remain active even when app is sleep or not active.
+
+        //networking in android
+        Thread net_thead = new Thread() {
+            public void run() {
+                try {
+                    URL url = new URL("http://api.geonames.org/earthquakesJSON?north=44.1&south=-%C2%AD%E2%80%909.9&east=-%C2%AD%E2%80%9022.4&west=55.2&username=demo");
+                    HttpURLConnection http_conn = (HttpURLConnection) url.openConnection();
+                    InputStream is = http_conn.getInputStream();
+                    byte[] buffer = new byte[1024];
+                    int numRead = 0;
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+                    while ((numRead = is.read(buffer, 0, buffer.length)) > 0) {
+                        bos.write(buffer, 0, numRead);
+                    }
+
+                    String json_str = bos.toString();
+                    Log.d("",json_str);
+                    bos.close();
+                    is.close();
+                    http_conn.disconnect();
+
+                } catch (Exception e) {
+                    Log.e("Abhan", "Error: " + e);
+                }
+            }
+        };//class
+
+        net_thead.start();
     }
 
     @Override
