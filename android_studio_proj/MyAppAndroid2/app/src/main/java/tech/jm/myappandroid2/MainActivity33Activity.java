@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioAttributes;
@@ -15,6 +16,7 @@ import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.transition.Explode;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -222,6 +224,38 @@ public class MainActivity33Activity extends ActionBarActivity {
         };//class
 
         net_thead.start();
+
+        //do code for blue tooth test
+        blueToothTest();
+    }
+
+    public void blueToothTest()
+    {
+        //get the blue tooth adapter to check to see if we have bluetooth on this device.
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if(mBluetoothAdapter == null)
+        {
+            Log.d("","blue tooth not available.");
+        }
+        else
+        {
+            Log.d("","blue tooth ON status = "+mBluetoothAdapter.isEnabled());
+
+            mBluetoothAdapter.getBondedDevices();
+            mBluetoothAdapter.startDiscovery();
+            mBluetoothAdapter.cancelDiscovery();
+
+            //to connect to devices, u need same UUID between devices to connect each other.
+
+            //if we have bluetooth but its not enabled, send intent to system to enable it.
+            if(!mBluetoothAdapter.isEnabled())
+            {
+                //use default action for enabling intent.
+                Intent enableBluetoothIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivity(enableBluetoothIntent);
+                //startActivityForResult(enableBluetoothIntent,REQUEST_ENABLE_BT);
+            }
+        }
     }
 
     @Override
