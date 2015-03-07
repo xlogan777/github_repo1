@@ -7,6 +7,10 @@ import android.app.TaskStackBuilder;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.Ringtone;
@@ -34,12 +38,17 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 
-public class MainActivity33Activity extends ActionBarActivity {
-
+public class MainActivity33Activity extends ActionBarActivity implements SensorEventListener
+{
     //use for the audio mgr.
     private float volume;
     private SoundPool soundPool;
     private int soundId;
+
+    //for sensors
+    SensorManager mSensorManager;
+    Sensor mAccelerometer;
+    long mLastUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -227,6 +236,9 @@ public class MainActivity33Activity extends ActionBarActivity {
 
         //do code for blue tooth test
         blueToothTest();
+
+        //sensor test
+        sensorsTest();
     }
 
     public void blueToothTest()
@@ -258,6 +270,42 @@ public class MainActivity33Activity extends ActionBarActivity {
         }
     }
 
+    public void sensorsTest()
+    {
+        mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+    }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        //register listener for sensor test accelerometer
+        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        Log.d("","setup listener for accelerometer");
+    }
+
+    @Override
+    //listener to show the xyz coordinate for the accelerometer.
+    public void onSensorChanged(SensorEvent event)
+    {
+        if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
+        {
+            long actualTime = System.currentTimeMillis();
+            if (actualTime - mLastUpdate > 500) {
+                mLastUpdate = actualTime;
+                float x = event.values[0], y = event.values[1], z = event.values[2];
+                Log.d("", "x = " + x + ", y = " + y + ", z = " + z);
+            }
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy)
+    {
+
+    }
+
     @Override
     protected void onPause()
     {
@@ -270,6 +318,10 @@ public class MainActivity33Activity extends ActionBarActivity {
             soundPool.release();
             soundPool = null;
         }
+
+        //unregister for accelerometer test.
+        mSensorManager.unregisterListener(this);
+
         super.onPause();
         //testing
     }
