@@ -11,6 +11,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.Ringtone;
@@ -36,6 +39,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 
 public class MainActivity33Activity extends ActionBarActivity implements SensorEventListener
@@ -49,6 +54,9 @@ public class MainActivity33Activity extends ActionBarActivity implements SensorE
     SensorManager mSensorManager;
     Sensor mAccelerometer;
     long mLastUpdate;
+
+    //loc
+    Location bestReading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -239,6 +247,9 @@ public class MainActivity33Activity extends ActionBarActivity implements SensorE
 
         //sensor test
         sensorsTest();
+
+        //test location and maps.
+        testLocationAndMaps();
     }
 
     public void blueToothTest()
@@ -304,6 +315,50 @@ public class MainActivity33Activity extends ActionBarActivity implements SensorE
     public void onAccuracyChanged(Sensor sensor, int accuracy)
     {
 
+    }
+
+    public void testLocationAndMaps()
+    {
+        //get the location mgr.
+        final LocationManager locationManager =
+                (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+
+        bestReading = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+        final LocationListener locationListener = new LocationListener() {
+            public synchronized void onLocationChanged(Location location)
+            {
+                //if (location.getAccuracy() < bestReading.getAccuracy())
+                {
+                    bestReading = location;
+                    Log.d("","latitude = "+location.getLatitude());
+                }
+            }
+
+            public void onStatusChanged(String s, int x, Bundle bundle)
+            {
+
+            }
+
+            public void onProviderEnabled (String provider)
+            {
+
+            }
+            public void onProviderDisabled (String provider)
+            {
+
+            }
+        };
+
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,0, locationListener);
+
+        Executors.newScheduledThreadPool(1).schedule(new Runnable()
+        {
+            public void run()
+            {
+                locationManager.removeUpdates(locationListener);
+            }
+        }, 10000, TimeUnit.MILLISECONDS);
     }
 
     @Override
