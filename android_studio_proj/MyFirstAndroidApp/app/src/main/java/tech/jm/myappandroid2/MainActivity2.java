@@ -15,6 +15,7 @@ import android.widget.Button;
 
 public class MainActivity2 extends ActionBarActivity {
 
+    //test
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
