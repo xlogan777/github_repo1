@@ -371,4 +371,9 @@ object HelloWorld
          }
       } // outer breakable.
   }
+  
+  //continue with functions subsections
+  //http://www.tutorialspoint.com/scala/scala_functions.htm
+  //Higher-Order Functions, as the link to finish the functions tutorial.
+  
 }
