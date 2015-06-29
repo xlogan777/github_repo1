@@ -1,4 +1,4 @@
-package tech.jm.myfirstandroidapp;
+package tech.jm.myappandroid2;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
