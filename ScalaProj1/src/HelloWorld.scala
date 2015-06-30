@@ -223,6 +223,90 @@ object FuncWithNamesArgs
    }
 }
 
+//These are functions that take other functions as parameters,
+//or whose result is a function.
+object HighOrderFncs
+{
+   //"f" param is a function that uses param "v" as input into the "f" function.
+   //"f: Int => String", "f" is the function ref pointer
+   //"Int => String" means that the input is a Int type
+   //and the "String" is the return type for this function ref param.
+   //"f: Int => String", so this means, for function ref "f", the input to it is an Int type
+   //and the return value is a String
+    def apply(f: Int => String, v: Int) = 
+    {
+       f(v);//this is calling the "f" fnc using the v param.
+    }
+   
+    //the "[]" around the A is saying that the "A" is a data type for the func args of x
+    //so x is of type "A"..and in this case, "A" is really of type int.
+    def layout1[A](x: A) = 
+    {
+      "[" + x.toString() + "]";
+    }
+    
+    //this function is equivalent to the layout1 function.
+    //this is explicitly saying that a String type needs to be returned
+    //back with a return statement.
+    def layout2[A](x: A) : String =
+    {
+      return ("[" + x.toString() + "]");
+    }
+}
+
+object AnonymousFncs
+{
+   //this is a i++ type of anonymous function
+   //or in the declaration at compile time its called
+   //fnc literal. at runtime it is called, function value.
+  
+   //this is creating a function that takes and Int type
+   //and increments the value by 1, and returns that value;
+   var inc = (x:Int) => x+1;
+   
+   //this is defining more args to the function literal and 
+   //does multiplicaton and returns the result.
+   var multiply = (x: Int, y: Int) => x*y;
+  
+   //this is uisng no args as a func call, and returns its value
+   var userDir = () => {System.getProperty("user.dir")};
+}
+
+object CurryingFncs
+{
+   //this is a currying function that allows for
+   //many params to now be defined by func with just 1 param each.
+   //returns a String back to the caller.
+   def str_cat1(a:String)(b:String) =
+   {
+     a + b;
+   }
+   
+   //this function is the same as the function above in terms of syntax.
+   //returns a string back to the caller.
+   def str_cat2(a: String) = (b: String) =>
+   {
+     a + b;
+   }
+}
+
+//A closure is a function, whose return value depends on the value of one or
+//more variables declared outside this function.
+//If a function has no external references, 
+//then it is trivially closed over itself. No external context is required.
+object ClosureFncs
+{
+   //declared a var to be used in the anonymous fnc below.
+   var factor = 10;   
+   
+   //this is an anonymous fnc with a reference to a variable outside of the fnc definition.
+   //this fnc is considered a closure because it uses the factor vars outside of the anonymous fnc def.
+   var multiplier = (i:Int) =>
+   {
+      i * factor;
+   }
+}
+
 object HelloWorld
 {
   /* This is my first java program.  
@@ -230,6 +314,24 @@ object HelloWorld
     */
   def main(args: Array[String]) 
   {
+    println("closure = "+ClosureFncs.multiplier(10));
+    
+    println(CurryingFncs.str_cat1("Hello")("World"));
+    println(CurryingFncs.str_cat2("Jim")("bo"));
+    
+    //call the anonymous fncs now
+    var my_inc = AnonymousFncs.inc(5);
+    println(my_inc);
+    
+    var my_mult = AnonymousFncs.multiply(6,5);
+    println(my_mult);
+    
+    var my_curr_dir = AnonymousFncs.userDir();
+    println(my_curr_dir);
+    
+    println( HighOrderFncs.apply(HighOrderFncs.layout1, 10));
+    println( HighOrderFncs.apply(HighOrderFncs.layout2, 455));
+    
     //loop to call a recursive function
     for(jj <- 5 to 15)
     {
@@ -370,11 +472,5 @@ object HelloWorld
             } // inner breakable
          }
       } // outer breakable.
-  }
-  
-  //continue with functions subsections
-  //http://www.tutorialspoint.com/scala/scala_functions.htm
-  //Higher-Order Functions, as the link to finish the functions tutorial.
-  //finish the functions section and continue with the rest.
-  
+  }  
 }
