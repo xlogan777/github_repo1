@@ -375,5 +375,6 @@ object HelloWorld
   //continue with functions subsections
   //http://www.tutorialspoint.com/scala/scala_functions.htm
   //Higher-Order Functions, as the link to finish the functions tutorial.
+  //finish the functions section and continue with the rest.
   
 }
