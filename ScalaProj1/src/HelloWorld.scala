@@ -2,6 +2,7 @@
 //used to break loops.
 import scala.util.control._;
 import java.util.Date;
+import Array._;
 
 //showing scope of out class with private inner classes.
 class Outer 
@@ -307,6 +308,42 @@ object ClosureFncs
    }
 }
 
+object ScalaCollectionsTypes
+{
+    // Define List of integers.
+    //must be same type stored..similar to array
+    //but variable len container.
+    val x1 = List(1,2,3,4);
+    
+    //this is another way to define a list..where ending item tail
+    //list in scala are linked lists.
+    val fruit = "apples" :: ("oranges" :: ("pears" :: Nil));
+    
+    // Define a set.
+    //must be same type
+    var x2 = Set(1,3,5,7);
+    
+    // Define a map. K/V type of data structure.
+    val x3 = Map("one" -> 1, "two" -> 2, "three" -> 3);
+    
+    x3.keys.foreach{ i =>  
+                     print( "Key = " + i )
+                     println(" Value = " + x3(i) )}
+    
+    // Create a tuple of two elements.
+    //this list type can contain different data types.
+    val x4 = (10, "Scala");
+    
+    // Define an option
+    //provides a container for zero or one element of a given type
+    val x5: Option[Int] = Some(5);
+    
+    //read here
+    //http://www.tutorialspoint.com/scala/scala_collections.htm
+    //go over the diff collection types, especially the
+    //tuple, and options collections.
+}
+
 object HelloWorld
 {
   /* This is my first java program.  
@@ -314,6 +351,73 @@ object HelloWorld
     */
   def main(args: Array[String]) 
   {
+    //create range arrays
+    //this is using the range api to make a array of step 2,
+    //so like 10, 12, 14..etc upto 20 but not including 20.
+    var my_range= range(10,20,2);
+    for ( x <- my_range ) 
+    {
+       println(x);
+    }
+    
+    //combine 2 array, concat array.
+    var array_1_cc = Array(1,2,3);
+    var array_2_cc = Array(4,5,6);
+    var ans_2 = concat(array_1_cc, array_2_cc);
+    for ( x <- ans_2 ) 
+    {
+       println(x);
+    }
+    
+    //mutli dimensional arrays are not directly supported by scala
+    //but u can use it.
+    //this is defining a multi dimensional array with scala api support.
+    //import this "import Array._;" to use mutli dim arrays.
+    var myMatrix = ofDim[Int](3,3);
+    var ints:Int = 200;
+    for (i <- 0 to 2) 
+    {
+       for ( j <- 0 to 2) 
+       {
+          myMatrix(i)(j) = ints;
+          ints = ints + 1;
+       }
+    }
+    
+    for (i <- 0 to 2) 
+    {
+       for ( j <- 0 to 2) 
+       {
+          print(" " + myMatrix(i)(j));
+       }
+       println();
+     }
+    
+    //declaring array vars.
+    //both of these vars array declarations are valid.
+    //this declared array type shows the type defined for the vars on the 
+    //left hand side of the "=" sign
+    var my_array1:Array[String] = new Array[String](3);
+    my_array1(0) = "100";
+    
+    for(x <- my_array1)
+    {
+      println(x);
+    }
+    
+    //this one allows u to declare the vars as an array type.
+    var my_array2 = new Array[String](3);
+    my_array2(1) = "200";
+    
+    //this show how to create an array with Array obj construct.
+    var my_array3 = Array("Zara", "Nuha", "Ayan");
+    for(x <- 0 to (my_array3.length-1) )
+    {
+      println(my_array3(x));
+    }
+    
+    println("array 1 = "+my_array1+", array 2 = "+my_array2+", array 3 = "+my_array3); 
+    
     println("closure = "+ClosureFncs.multiplier(10));
     
     println(CurryingFncs.str_cat1("Hello")("World"));
