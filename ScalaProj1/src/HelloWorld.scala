@@ -3,6 +3,14 @@
 import scala.util.control._;
 import java.util.Date;
 import Array._;
+import scala.collection.mutable.MutableList;
+import scala.util.matching.Regex;
+import java.io.FileReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io._;//using java io pkg in scala to do io stuff.
+import scala.Console;
+import scala.io.Source;
 
 //showing scope of out class with private inner classes.
 class Outer 
@@ -310,21 +318,34 @@ object ClosureFncs
 
 object ScalaCollectionsTypes
 {
+    //goes over the diff collections types in scala.
+    //http://www.tutorialspoint.com/scala/scala_collections.htm
+  
     // Define List of integers.
     //must be same type stored..similar to array
     //but variable len container.
     val x1 = List(1,2,3,4);
+    x1.+:(100);//add item to list.
     
     //this is another way to define a list..where ending item tail
     //list in scala are linked lists.
     val fruit = "apples" :: ("oranges" :: ("pears" :: Nil));
     
+    //defined type up front
+    val fruit2: List[String] = List("apples", "oranges", "pears");
+
+    
     // Define a set.
     //must be same type
     var x2 = Set(1,3,5,7);
+    x2.+(10);//add element to set.
+    
+    var s : Set[Int] = Set(1,3,5,7);
     
     // Define a map. K/V type of data structure.
     val x3 = Map("one" -> 1, "two" -> 2, "three" -> 3);
+    var A:Map[String,Int] = Map();//define data types for map.
+    A += ("A1" -> 1);//adding item to map.
     
     x3.keys.foreach{ i =>  
                      print( "Key = " + i )
@@ -334,16 +355,306 @@ object ScalaCollectionsTypes
     //this list type can contain different data types.
     val x4 = (10, "Scala");
     
+    //define a tuple and access a tuple.
+    val t = (1,2,3,4);
+    val sum = t._1 + t._2 + t._3 + t._4;
+    
     // Define an option
     //provides a container for zero or one element of a given type
     val x5: Option[Int] = Some(5);
-    
-    //read here
-    //http://www.tutorialspoint.com/scala/scala_collections.htm
-    //go over the diff collection types, especially the
-    //tuple, and options collections.
 }
 
+//class syntax with a constructor that has 2 args
+class Point(val xc: Int, val yc: Int)
+{
+   //class members
+   var x: Int = xc;
+   var y: Int = yc;
+   
+   //method for this method
+   def move(dx: Int, dy: Int) =  
+   {
+      x = x + dx;
+      y = y + dy;
+      
+      println ("Point x location : " + x);
+      println ("Point y location : " + y);
+   }
+}
+
+//this is showing how to extend a base class and how to override the args for 
+//the base class contructor.
+//method overriding requires the "override" keyword, 
+//and only the primary constructor can pass parameters to the base constructor
+//scala cannot have static members, pure OO.
+class Location(override val xc: Int, override val yc: Int, val zc :Int) extends Point(xc, yc)
+{
+   var z: Int = zc
+
+   def move(dx: Int, dy: Int, dz: Int) = 
+   {
+      x = x + dx
+      y = y + dy
+      z = z + dz
+      println ("Point x location : " + x);
+      println ("Point y location : " + y);
+      println ("Point z location : " + z);
+   }
+}
+
+/*
+A trait encapsulates method and field definitions, 
+which can then be reused by mixing them into classes. Unlike class inheritance,
+in which each class must inherit from just one superclass, 
+a class can mix in any number of traits.
+
+Traits are used to define object types by specifying the signature 
+of the supported methods. Scala also allows traits to be partially
+implemented but traits may not have constructor parameters.
+
+Child classes extending a trait can give implementation for the 
+un-implemented methods. So a trait is very similar to what we 
+have abstract classes in Java.
+
+ */
+
+//this is definining some of the methods for this trait.
+//very similar to abstract class in java
+//a class can extend any number of traits and implement what it needs.
+trait Equal
+{
+  //this method needs an implementation when called.
+  //this is an abstract method in java.
+  def isEqual(x: Any): Boolean;
+  
+  //this is already implemented and ready to use.
+  def isNotEqual(x: Any): Boolean =
+  {
+     return !isEqual(x); 
+  }
+}
+
+//this class is extending the trait "equal"
+//and providing a definition for the "isEqual" method.
+//http://www.tutorialspoint.com/scala/scala_traits.htm
+//this link above tells reasons to use traits.
+//When to use traits?
+class MyPoint(xc: Int, yc: Int) extends Equal 
+{
+  var x: Int = xc;
+  var y: Int = yc;
+  
+  //this "any" type is defining to be any obj type being called here.
+  def isEqual(obj: Any): Boolean =
+  {
+     return obj.isInstanceOf[Point] && obj.asInstanceOf[Point].x == x; 
+  }  
+}
+
+//pattern matching
+object PatternMatching
+{
+  //this is defining to use the x vars to match a case.
+  //and returns a string. define by the string type
+  //we need to "x match" to evaluate the cases for the input.
+  //similar to a switch statement in java.
+  def matchTest(x: Int): String = x match 
+  {
+     case 1 => "one"
+     case 2 => "two"
+     case _ => "many"
+  }
+  
+  //this will pattern match any data type to the 
+  //case statement and return back any type.
+  def matchTest2(x: Any): Any = x match 
+  {
+      case 1 => "one"
+      case "two" => 2
+      case y: Int => "scala.Int"
+      case _ => "many"
+   }
+  
+  //this function is the same as the matchTest2, but using brackets on match keyword.
+  def matchTest3(x: Any) =
+  {
+      x match 
+      {
+         case 1 => "one";
+         case "two" => 2;
+         case y: Int => "scala.Int";
+         case _ => "many";
+      }
+  }
+  
+   // case class pattern matching.
+   /*
+    Adding the case keyword causes the compiler to add a number of useful features automatically.
+    The keyword suggests an association with case expressions in pattern matching.
+
+    First, the compiler automatically converts the constructor arguments into 
+    immutable fields (vals). The val keyword is optional. If you want mutable fields, 
+    use the var keyword. So, our constructor argument lists are now shorter.
+    
+    Second, the compiler automatically implements equals, hashCode,
+     and toString methods to the class, which use the fields specified as constructor 
+     arguments. So, we no longer need our own toString methods.
+    
+    Finally, also, the body of Person class is gone because there
+     are no methods that we need to define!    
+    */
+   case class Person(name: String, age: Int);
+}
+
+//Scala doesn't actually have checked exceptions.
+//When you want to handle exceptions, you use a try{...}catch{...} block like you would in 
+//Java except that the catch block uses matching to identify and handle the exceptions.
+object ScalaExceptions
+{
+   def testScalaExceptions() =
+   {
+      //do try and catch, but u need to pattern match the 
+      //different types of exceptions being thrown.
+      //there are no checked exceptions in scala.
+      try 
+      {
+         val f = new FileReader("input.txt");
+      } 
+      catch 
+      {
+         case ex: FileNotFoundException =>
+         {
+            println("Missing file exception");
+         }
+         case ex: IOException => 
+         {
+            println("IO Exception");
+         }
+      }
+      finally
+      {
+         println("run anyways");
+      }
+      
+   }
+}
+
+/*
+  An extractor in Scala is an object that has a method called unapply as one of its members. 
+  The purpose of that unapply method is to match a value and take it apart. 
+  Often, the extractor object also defines a dual method apply for building values, 
+  but this is not required.
+ */
+//defining the unapply method makes this obj an extractor type.
+//where the apply method does the opposite.
+
+/*
+ When an instance of a class is followed by parentheses with a list of zero or more parameters,
+ the compiler invokes the apply method on that instance. We can define apply
+ both in objects and in classes.
+
+ As mentioned above, the purpose of the unapply method is to extract a specific
+ value we are looking for. It does the opposite operation apply does.
+ When comparing an extractor object using the match statement the unapply 
+ method will be automatically executed => example below
+ 
+ object Test {
+   def main(args: Array[String]) {
+      
+      val x = Test(5)//this is calling the "apply" method on Test obj
+      println(x)
+
+      x match
+      {
+         //this case state on obj is calling the unapply method.
+         case Test(num) => println(x+" is bigger two times than "+num)
+         //unapply is invoked
+         case _ => println("i cannot calculate")
+      }
+
+   }
+   def apply(x: Int) = x*2
+   def unapply(z: Int): Option[Int] = if (z%2==0) Some(z/2) else None
+}
+ 
+ */
+object ScalaExtractor
+{
+   //The injection method (optional)
+   def apply(user: String, domain: String): String = 
+   {
+      return user +"@"+ domain;
+   }
+
+   //The extraction method (mandatory)
+   /*
+    The unapply must also handle the case where the given string is not an email address. 
+    That's why unapply returns an Option-type over pairs of strings. 
+    Its result is either Some(user, domain) if the string str is an email address 
+    with the given user and domain parts, or None, if str is not an email address.   
+    */
+   def unapply(str: String): Option[(String, String)] = 
+   {
+      val parts = str split "@";
+      
+      if(parts.length == 2)
+      {
+         Some(parts(0), parts(1)); 
+      }
+      else
+      {
+         None;
+      }
+   }
+}
+
+object ScalaFileIO
+{
+   //write to a file using the java io classes.
+   //read from command line.
+   def writeToFile() = 
+   {
+      print("Please enter your filename : " )
+      val line = Console.readLine;//read input from command line.
+      
+      println("Thanks, you just typed: " + line);
+      var fname = line+".txt";
+      val writer = new PrintWriter(new File(fname));
+      writer.println("Hello Scala");
+      writer.close();//close the file.
+      
+      readFromFile(fname);
+   }
+   
+   //read from a file and print the lines.
+   def readFromFile(fname: String) =
+   {
+      println("Following is the content read:" )
+
+      //using the source class to open the file and print each line in a
+      //foreach loop.
+      //this is printing 1 char at a time from the file.
+      //need a way to do buffered reader per line of string
+      //not per char.
+      Source.fromFile(fname).
+      foreach
+      {
+        print
+      };
+   }
+}
+
+//this is a singelton obj in scala.
+//anything wrapped with the "object" keyword, makes a singleton
+//obj, therefore u can just call the methods and vars inside the obj 
+//wrapper code.
+/* NOTE
+ Scala is more object-oriented than Java because in Scala we cannot have static members. 
+ Instead, Scala has singleton objects. A singleton is a class that can have only one instance,
+  i.e., object. You create singleton using the keyword object instead of class keyword. 
+  Since you can't instantiate a singleton object, you can't pass 
+  parameters to the primary constructor.
+ */
 object HelloWorld
 {
   /* This is my first java program.  
@@ -351,6 +662,82 @@ object HelloWorld
     */
   def main(args: Array[String]) 
   {
+     ScalaFileIO.writeToFile();
+
+     println ("Apply method : " + ScalaExtractor.apply("Zara", "gmail.com"));
+     println ("Unapply method : " + ScalaExtractor.unapply("Zara@gmail.com"));
+     println ("Unapply method : " + ScalaExtractor.unapply("Zara Ali"));
+    
+    //testing scala exceptions.
+    ScalaExceptions.testScalaExceptions();
+    
+    //scala regular expressions
+    var pattern = "Scala".r;//implicit give u a regex obj back to do pattern matching.
+    var str = "Scala is Scalable and cool";
+    println(pattern findFirstIn str);//using pattern, us the findStr fnc.
+    
+    //create a regex with regex syntax
+    pattern = new Regex("(S|s)cala");
+    str = "Scala is scalable and cool";
+      
+    //the mkString allow to make a concat string from the results. of the regex execution.
+    println((pattern findAllIn str).mkString(","))
+    
+    //this person obj will contain immutable fields since we have "val"" 
+    val alice = new PatternMatching.Person("Alice", 25);
+    
+    //both of these are immutable, this is being generated by the compiler.
+    var bob = new PatternMatching.Person("Bob", 32);
+    var charlie = new PatternMatching.Person("Charlie", 32);
+   
+    for(person <- List(alice, bob, charlie)) 
+    {
+       //this is case class pattern matching.
+       person match
+       {
+          case PatternMatching.Person("Alice", 25) => 
+            println("Hi Alice!");
+            
+          case PatternMatching.Person("Bob", 32) => 
+            println("Hi Bob!");
+            
+          case PatternMatching.Person(name, age) => 
+            println("Age: " + age + " year, name: " + name + "?");
+       }
+    }
+    
+    println(PatternMatching.matchTest2("two"));
+    println(PatternMatching.matchTest2("test"));
+    println(PatternMatching.matchTest2(1));
+    
+    val p1 = new MyPoint(2, 3);
+    val p2 = new MyPoint(2, 4);
+    val p3 = new MyPoint(3, 3);
+
+    println(p1.isNotEqual(p2));
+    println(p1.isNotEqual(p3));
+    println(p1.isNotEqual(2));
+    
+    val loc = new Location(10, 20, 15);
+
+    // Move to a new location
+    loc.move(10, 10, 5);
+    
+    //create point objs
+    var pt = new Point(10, 20);
+
+    // Move to a new location;
+    //call method on pt objs.
+    pt.move(10, 10);
+    
+    val x1 = MutableList(1,2,3,4);
+    x1.+=:(100);//add item to list.
+    
+    for(jj <- x1)
+    {
+       println(jj);
+    }
+    
     //create range arrays
     //this is using the range api to make a array of step 2,
     //so like 10, 12, 14..etc upto 20 but not including 20.
