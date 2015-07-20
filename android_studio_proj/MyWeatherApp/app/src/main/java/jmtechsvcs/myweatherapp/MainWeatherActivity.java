@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 public class MainWeatherActivity extends ActionBarActivity {
 
-    //test
+    //test 2
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
