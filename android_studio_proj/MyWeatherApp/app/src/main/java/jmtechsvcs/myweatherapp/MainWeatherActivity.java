@@ -21,7 +21,7 @@ import jmtechsvcs.myweatherapp.GreenDaoSrcGen.CityInfoTableDao;
 import jmtechsvcs.myweatherapp.GreenDaoSrcGen.DaoMaster;
 import jmtechsvcs.myweatherapp.GreenDaoSrcGen.DaoSession;
 
-
+//test
 public class MainWeatherActivity extends ActionBarActivity {
 
     private String MyTag = "MainWeatherActivity";
