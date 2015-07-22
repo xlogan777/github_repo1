@@ -32,9 +32,13 @@ public class MainWeatherActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_weather);
 
+        //get the application ctx for this app.
         MyWeatherApplication weather_app = (MyWeatherApplication)getApplicationContext();
+
+        //get the dao session stored in the context.
         DaoSession dao_session = weather_app.getDaoSession();
 
+        //get the dao from the session.
         CityInfoTableDao dao = dao_session.getCityInfoTableDao();
 
         //get data from dao with a specific id.

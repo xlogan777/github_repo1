@@ -28,6 +28,14 @@ import jmtechsvcs.myweatherapp.GreenDaoSrcGen.DaoSession;
 
 //core initialization for green dao.
 //http://greendao-orm.com/documentation/introduction/
+
+/**
+ * this is to provide the main application a way to access from all activities
+ * common services.
+ *
+ * @author Jimmy
+ * @version 1.0
+ */
 public class MyWeatherApplication extends Application
 {
     private String MyTag = "MyWeatherApplication";
