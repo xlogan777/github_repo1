@@ -27,8 +27,6 @@ public class MainWeatherActivity extends ActionBarActivity {
     private String MyTag = "MainWeatherActivity";
 //http://stackoverflow.com/questions/14744496/extract-database-of-an-application-from-android-device-through-adb
 
-    //test2
-    //test3
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
