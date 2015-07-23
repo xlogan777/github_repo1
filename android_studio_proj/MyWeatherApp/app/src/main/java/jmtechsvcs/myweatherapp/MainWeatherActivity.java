@@ -12,9 +12,9 @@ import java.util.List;
 import jmtechsvcs.myweatherapp.GreenDaoSrcGen.CityInfoTable;
 import jmtechsvcs.myweatherapp.GreenDaoSrcGen.CityInfoTableDao;
 import jmtechsvcs.myweatherapp.GreenDaoSrcGen.DaoSession;
-import jmtechsvcs.myweatherapp.jmtechsvcs.myweatherapp.utils.WeatherMapUtils;
 import jmtechsvcs.myweatherapp.networklayer.NetworkProcessing;
 import jmtechsvcs.myweatherapp.networklayer.WeatherMapUrls;
+import jmtechsvcs.myweatherapp.utils.WeatherMapUtils;
 
 //test
 public class MainWeatherActivity extends ActionBarActivity {
@@ -54,7 +54,7 @@ public class MainWeatherActivity extends ActionBarActivity {
         if(useDebug)
         {
             InputStream is = NetworkProcessing.httpGetProcessing
-                    (WeatherMapUrls.getCurrentWeatherByCityId("4891010"),NetworkProcessing.T_Http_Get_Type.E_HTTP_URL_TYPE );
+                    (WeatherMapUrls.getCurrentWeatherByCityId("4891010"), NetworkProcessing.T_Http_Get_Type.E_HTTP_URL_TYPE);
             String json_data = WeatherMapUtils.getJsonStringFromStream(is);
             Log.d(LOGTAG,json_data);
         }

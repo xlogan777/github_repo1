@@ -1,4 +1,4 @@
-package jmtechsvcs.myweatherapp.jmtechsvcs.myweatherapp.utils;
+package jmtechsvcs.myweatherapp.utils;
 
 import android.util.Log;
 
