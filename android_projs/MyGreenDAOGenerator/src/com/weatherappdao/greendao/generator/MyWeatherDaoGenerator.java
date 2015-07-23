@@ -6,6 +6,7 @@ import de.greenrobot.daogenerator.Schema;
 
 public class MyWeatherDaoGenerator 
 {
+   //test
 	public static void main(String[] args)
 	{
 		//create green dao schema obj with version number, and pkg for the generated files.
