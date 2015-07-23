@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 
 import jmtechsvcs.myweatherapp.GreenDaoSrcGen.CityInfoTable;
 import jmtechsvcs.myweatherapp.GreenDaoSrcGen.CityInfoTableDao;
+import jmtechsvcs.myweatherapp.GreenDaoSrcGen.CityWeatherCurrCondTableDao;
 import jmtechsvcs.myweatherapp.GreenDaoSrcGen.DaoMaster;
 import jmtechsvcs.myweatherapp.GreenDaoSrcGen.DaoSession;
 
@@ -60,6 +61,8 @@ public class MyWeatherApplication extends Application
 
         //call this to load all the weather data for cities
         //preloadWeatherData();
+
+        Log.d(LOGTAG,"onCreate called for WeatherApplication class");
     }
 
     @Override
@@ -90,6 +93,9 @@ public class MyWeatherApplication extends Application
 
         //get the actual sql lite database here..creates the db now.
         db = helper.getWritableDatabase();
+
+        //force the creation of the table here.
+        CityWeatherCurrCondTableDao.createTable(db,true);
 
         //use the db ref to get the dao master.
         daoMaster = new DaoMaster(db);
