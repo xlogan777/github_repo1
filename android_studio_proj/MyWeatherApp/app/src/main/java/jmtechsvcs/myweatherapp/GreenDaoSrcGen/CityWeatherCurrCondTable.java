@@ -5,9 +5,9 @@ package jmtechsvcs.myweatherapp.GreenDaoSrcGen;
 // KEEP INCLUDES - put your custom includes here
 // KEEP INCLUDES END
 /**
- * Entity mapped to table CITY__WEATHER__CURR__COND__TABLE.
+ * Entity mapped to table CITY_WEATHER_CURR_COND_TABLE.
  */
-public class City_Weather_Curr_Cond_Table {
+public class CityWeatherCurrCondTable {
 
     private long city_id;
     private Long curr_weather_id;
@@ -33,14 +33,14 @@ public class City_Weather_Curr_Cond_Table {
     // KEEP FIELDS - put your custom fields here
     // KEEP FIELDS END
 
-    public City_Weather_Curr_Cond_Table() {
+    public CityWeatherCurrCondTable() {
     }
 
-    public City_Weather_Curr_Cond_Table(long city_id) {
+    public CityWeatherCurrCondTable(long city_id) {
         this.city_id = city_id;
     }
 
-    public City_Weather_Curr_Cond_Table(long city_id, Long curr_weather_id, String curr_weather_main, String curr_weather_desc, String curr_weather_icon, Double curr_main_temp, Long curr_main_pressure, Long curr_main_humidity, Double curr_main_temp_min, Double curr_main_temp_max, Long curr_main_sea_level, Long curr_main_grnd_level, Double curr_wind_speed, Long curr_wind_degs, Long curr_clouds_all, Long curr_rain_last3hrs, Long curr_snow_last3hrs, Long curr_data_calc_time, Long curr_sys_sunrise_time, Long curr_sys_sunset_time) {
+    public CityWeatherCurrCondTable(long city_id, Long curr_weather_id, String curr_weather_main, String curr_weather_desc, String curr_weather_icon, Double curr_main_temp, Long curr_main_pressure, Long curr_main_humidity, Double curr_main_temp_min, Double curr_main_temp_max, Long curr_main_sea_level, Long curr_main_grnd_level, Double curr_wind_speed, Long curr_wind_degs, Long curr_clouds_all, Long curr_rain_last3hrs, Long curr_snow_last3hrs, Long curr_data_calc_time, Long curr_sys_sunrise_time, Long curr_sys_sunset_time) {
         this.city_id = city_id;
         this.curr_weather_id = curr_weather_id;
         this.curr_weather_main = curr_weather_main;

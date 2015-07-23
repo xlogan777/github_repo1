@@ -71,7 +71,7 @@ public class MainWeatherActivity extends ActionBarActivity {
             //assetManager.close();
 
             //parse the json data and save it to the table.
-            WeatherJsonToDbProcessing.updateCurrWeatherToDb(json_data);
+            WeatherJsonToDbProcessing.updateCurrWeatherToDb(json_data, dao_session);
         }
         catch (Exception e)
         {

@@ -5,6 +5,8 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import jmtechsvcs.myweatherapp.GreenDaoSrcGen.DaoSession;
+
 /**
  * Created by jimmy on 7/23/2015.
  */
@@ -13,7 +15,7 @@ public class WeatherJsonToDbProcessing
     private final static String LOGTAG = "WthrJsonToDbProcessing";
 
     //this will parse the json data and use a dao to save the obj to db.
-    public static void updateCurrWeatherToDb(String jsonInput)
+    public static void updateCurrWeatherToDb(String jsonInput, DaoSession daoSession)
     {
         try
         {
@@ -36,6 +38,8 @@ public class WeatherJsonToDbProcessing
             String weather_main = array_item.getString("main");
             String weather_desc = array_item.getString("description");
             String weather_icon = array_item.getString("icon");
+
+
 
             /*
             "main": {
