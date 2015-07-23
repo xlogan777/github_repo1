@@ -38,7 +38,7 @@ import jmtechsvcs.myweatherapp.GreenDaoSrcGen.DaoSession;
  */
 public class MyWeatherApplication extends Application
 {
-    private String MyTag = "MyWeatherApplication";
+    private static String LOGTAG = "MyWeatherApplication";
 
     //use the dev helper to setup the db here with the db name and the main activity for the context.
     private DaoMaster.DevOpenHelper helper;
@@ -116,7 +116,7 @@ public class MyWeatherApplication extends Application
             for(String filename : files)
             {
                 //skip over anything that isnt a .json exention.
-                Log.d(MyTag, "fname  = " + filename);
+                Log.d(LOGTAG, "fname  = " + filename);
 
                 if(!filename.contains(".json"))
                     continue;
@@ -157,7 +157,7 @@ public class MyWeatherApplication extends Application
                     //save to the db here. it does an upsert action.
                     city_info_tbl_dao.insertOrReplace(city_info_bean);
 
-                    Log.d(MyTag,"added item id = "+id+", file row count = "+row_count+", total cnt = "+total_count);
+                    Log.d(LOGTAG,"added item id = "+id+", file row count = "+row_count+", total cnt = "+total_count);
                 }
 
                 Thread.sleep(3000);//sleep for 3 secs
@@ -171,7 +171,7 @@ public class MyWeatherApplication extends Application
         }
         catch(Exception e)
         {
-            Log.d(MyTag,e.getLocalizedMessage());
+            Log.d(LOGTAG,e.getLocalizedMessage());
         }
     }
 }

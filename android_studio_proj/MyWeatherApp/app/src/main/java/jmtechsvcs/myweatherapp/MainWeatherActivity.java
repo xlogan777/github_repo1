@@ -20,15 +20,20 @@ import jmtechsvcs.myweatherapp.GreenDaoSrcGen.CityInfoTable;
 import jmtechsvcs.myweatherapp.GreenDaoSrcGen.CityInfoTableDao;
 import jmtechsvcs.myweatherapp.GreenDaoSrcGen.DaoMaster;
 import jmtechsvcs.myweatherapp.GreenDaoSrcGen.DaoSession;
+import jmtechsvcs.myweatherapp.networklayer.NetworkProcessing;
+import jmtechsvcs.myweatherapp.networklayer.WeatherMapUrls;
 
 //test
 public class MainWeatherActivity extends ActionBarActivity {
 
-    private String MyTag = "MainWeatherActivity";
+    private static String LOGTAG = "MainWeatherActivity";
+    private static boolean useDebug = false;
+
 //http://stackoverflow.com/questions/14744496/extract-database-of-an-application-from-android-device-through-adb
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_weather);
 
@@ -43,9 +48,20 @@ public class MainWeatherActivity extends ActionBarActivity {
 
         //get data from dao with a specific id.
         List<CityInfoTable> city_info_list = dao.queryBuilder().where
-                (CityInfoTableDao.Properties.City_id.eq(5368381)).list();
+                (CityInfoTableDao.Properties.City_id.eq(4891010)).list();
 
-        Log.d(MyTag,"city name = "+city_info_list.get(0).getName());
+        //check to see if we have valid data in the list before  we use it.
+        if(city_info_list.size() > 0)
+            Log.d(LOGTAG,"city name = "+city_info_list.get(0).getName());
+
+        //get the urls for http end pt retrieval.
+        WeatherMapUrls.getCurrentWeatherByCityId("4891010");
+        WeatherMapUrls.getWeatherIconByIconId("10d");
+
+        if(useDebug)
+        {
+            InputStream is = NetworkProcessing.HttpGetProcessing(WeatherMapUrls.getCurrentWeatherByCityId("4891010"));
+        }
     }
 
     @Override
