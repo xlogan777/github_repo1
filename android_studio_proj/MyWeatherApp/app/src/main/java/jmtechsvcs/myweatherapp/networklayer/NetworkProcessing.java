@@ -31,7 +31,7 @@ public class NetworkProcessing
 
 		//check for null string, and emtpy string..
 		//should handle more error cases, good for now.
-		if(url != null & url.length() > 0)
+		if(url != null && url.length() > 0)
 		{
 			try 
 			{
