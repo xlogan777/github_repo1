@@ -21,20 +21,18 @@ import android.util.Log;
  */
 public class NetworkProcessing 
 {
-	public enum T_Http_Get_Type
-	{
-		E_HTTP_CLIENT_TYPE,
-		E_HTTP_URL_TYPE
-	}
 	private static String LOGTAG = "NetworkProcessing";
 
 	/*
 	 * function that does http GET request using a url.
 	 */
-	public static InputStream httpGetProcessing(String url, T_Http_Get_Type httpGetType)
+	public static InputStream httpGetProcessing(String url)
 	{
 		//return the input stream.
 		InputStream rv = null;
+
+		//http connection.
+		HttpURLConnection conn = null;
 
 		//check for null string, and emtpy string..
 		//should handle more error cases, good for now.
@@ -42,60 +40,38 @@ public class NetworkProcessing
 		{
 			try 
 			{
-				switch(httpGetType)
+				//create url obj
+				URL url_get = new URL(url);
+
+				//cast to http conn type
+				conn = (HttpURLConnection) url_get.openConnection();
+
+				//setup as a Get request.
+				conn.setRequestMethod("GET");
+				//conn.setDoInput(true);
+				//conn.setDoOutput(true);
+
+				//this will access the url, and get back a status code.
+				int status_code = conn.getResponseCode();
+
+				//if we have a valid status get the data.
+				if(status_code ==HttpURLConnection.HTTP_OK)
 				{
-					case E_HTTP_CLIENT_TYPE:
-
-						// create HttpClient
-						HttpClient httpclient = new DefaultHttpClient();
-
-						//make the http get
-						HttpGet get_request = new HttpGet(url);
-
-						// make GET request to the given URL
-						HttpResponse httpResponse = httpclient.execute(get_request);
-
-						//get status code from http response.
-						int status = httpResponse.getStatusLine().getStatusCode();
-
-						if(HttpStatus.SC_OK == status)
-						{
-							// receive response as inputStream, will return a valid input stream
-							//otherwise will throw an exception.
-							rv = httpResponse.getEntity().getContent();
-						}
-
-						break;
-
-					case E_HTTP_URL_TYPE:
-
-						//create url obj
-						URL url_get = new URL(url);
-
-						//cast to http conn type
-						HttpURLConnection conn = (HttpURLConnection) url_get.openConnection();
-
-						//setup as a Get request.
-						conn.setRequestMethod("GET");
-						//conn.setDoInput(true);
-						//conn.setDoOutput(true);
-
-						//this will access the url, and get back a status code.
-						int status_code = conn.getResponseCode();
-
-						//if we have a valid status get the data.
-						if(status_code ==HttpURLConnection.HTTP_OK)
-						{
-							rv = conn.getInputStream();
-						}
-
-						break;
+					rv = conn.getInputStream();
 				}
 			} 
 			catch (Exception e) 
 			{
 				Log.d(LOGTAG, "JM..."+e);
-			}			
+			}
+			finally
+			{
+				//close resources here.
+				if(conn != null)
+				{
+					conn.disconnect();
+				}
+			}
 		}
 		else
 		{

@@ -54,7 +54,7 @@ public class MainWeatherActivity extends ActionBarActivity {
         if(useDebug)
         {
             InputStream is = NetworkProcessing.httpGetProcessing
-                    (WeatherMapUrls.getCurrentWeatherByCityId("4891010"), NetworkProcessing.T_Http_Get_Type.E_HTTP_URL_TYPE);
+                    (WeatherMapUrls.getCurrentWeatherByCityId("4891010"));
             String json_data = WeatherMapUtils.getJsonStringFromStream(is);
             Log.d(LOGTAG,json_data);
         }
