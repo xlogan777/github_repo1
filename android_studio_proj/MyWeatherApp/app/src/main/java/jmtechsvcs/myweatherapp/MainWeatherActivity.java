@@ -1,25 +1,18 @@
 package jmtechsvcs.myweatherapp;
 
-import android.content.res.AssetManager;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.List;
 
 import jmtechsvcs.myweatherapp.GreenDaoSrcGen.CityInfoTable;
 import jmtechsvcs.myweatherapp.GreenDaoSrcGen.CityInfoTableDao;
-import jmtechsvcs.myweatherapp.GreenDaoSrcGen.DaoMaster;
 import jmtechsvcs.myweatherapp.GreenDaoSrcGen.DaoSession;
+import jmtechsvcs.myweatherapp.jmtechsvcs.myweatherapp.utils.WeatherMapUtils;
 import jmtechsvcs.myweatherapp.networklayer.NetworkProcessing;
 import jmtechsvcs.myweatherapp.networklayer.WeatherMapUrls;
 
@@ -27,7 +20,7 @@ import jmtechsvcs.myweatherapp.networklayer.WeatherMapUrls;
 public class MainWeatherActivity extends ActionBarActivity {
 
     private static String LOGTAG = "MainWeatherActivity";
-    private static boolean useDebug = false;
+    private static boolean useDebug = true;
 
 //http://stackoverflow.com/questions/14744496/extract-database-of-an-application-from-android-device-through-adb
 
@@ -60,7 +53,10 @@ public class MainWeatherActivity extends ActionBarActivity {
 
         if(useDebug)
         {
-            InputStream is = NetworkProcessing.HttpGetProcessing(WeatherMapUrls.getCurrentWeatherByCityId("4891010"));
+            InputStream is = NetworkProcessing.httpGetProcessing
+                    (WeatherMapUrls.getCurrentWeatherByCityId("4891010"),NetworkProcessing.T_Http_Get_Type.E_HTTP_URL_TYPE );
+            String json_data = WeatherMapUtils.getJsonStringFromStream(is);
+            Log.d(LOGTAG,json_data);
         }
     }
 
