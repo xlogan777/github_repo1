@@ -23,7 +23,10 @@ public class MyWeatherDaoGenerator
 		System.out.println("create city id info table");
 		Entity city_info_table = createCityInfoTable(schema);
 		
-		//generate the source code.
+		System.out.println("create city weather cond table");	
+		Entity city_weather_cond_table = createCityWeatherCurrCondTable(schema);
+		
+		//generate the source code
 		try
 		{
 			//create dao generator obj.
@@ -43,7 +46,7 @@ public class MyWeatherDaoGenerator
 	
 	public static Entity createCityInfoTable(Schema schema)
 	{
-	  //table name
+	   //table name
       Entity city_info_table_entity = schema.addEntity("CityInfoTable");
       
       //add pk
@@ -57,5 +60,93 @@ public class MyWeatherDaoGenerator
       
       //return entity
       return city_info_table_entity;
+	}
+	
+	public static Entity createCityWeatherCurrCondTable(Schema schema)
+	{
+	   //table name
+      Entity city_weather_cond_entity = schema.addEntity("CityWeatherCurrCondTable");
+      
+      //add pk
+      city_weather_cond_entity.addLongProperty("city_id").primaryKey().notNull();
+      
+      //add non pk fields
+      /*
+       "id": 803,//weather condition id
+            "main": "Clouds",//group of weather params.(can be "Rain, Snow"..)
+            "description": "broken clouds",//weather desc in the group
+            "icon": "04n"//weather icon id, this shows the image icon
+       */
+      city_weather_cond_entity.addLongProperty("curr_weather_id");
+      city_weather_cond_entity.addStringProperty("curr_weather_main");
+      city_weather_cond_entity.addStringProperty("curr_weather_desc");
+      city_weather_cond_entity.addStringProperty("curr_weather_icon");
+      
+      /*
+       "main": {
+        "temp": 296.03,//kelvin
+        "pressure": 1019,//atmospheric pressure, hPa units
+        "humidity": 83,//humidity %
+        "temp_min": 295.93,//kelvin
+        "temp_max": 296.15,//kelvin
+      "sea_level": 1020//atmospheric pressure, hPa units
+      "grnd_level":1010//atmospheric pressure, hPa units
+    }
+       */
+      
+      city_weather_cond_entity.addDoubleProperty("curr_main_temp");
+      city_weather_cond_entity.addLongProperty("curr_main_pressure");
+      city_weather_cond_entity.addLongProperty("curr_main_humidity");
+      city_weather_cond_entity.addDoubleProperty("curr_main_temp_min");
+      city_weather_cond_entity.addDoubleProperty("curr_main_temp_max");
+      city_weather_cond_entity.addLongProperty("curr_main_sea_level");
+      city_weather_cond_entity.addLongProperty("curr_main_grnd_level");
+      
+      /*
+       "wind": {
+        "speed": 4.1,//meters/sec
+        "deg": 160//degrees
+    },
+       */
+      
+      city_weather_cond_entity.addDoubleProperty("curr_wind_speed");
+      city_weather_cond_entity.addLongProperty("curr_wind_degs");
+      
+      /*
+       "clouds": {
+        "all": 75 //cloudiness %
+    }
+       */
+      
+      city_weather_cond_entity.addLongProperty("curr_clouds_all");
+      
+      /*
+       "rain":{"3h":3},//rain volume for the last 3 hrs
+       */
+      city_weather_cond_entity.addLongProperty("curr_rain_last3hrs");
+      
+      /*
+       "snow":{"3h":3},//snow volume for the last 3 hrs
+       */
+      
+      city_weather_cond_entity.addLongProperty("curr_snow_last3hrs");
+      
+      /*
+       "dt": 1437667656//unix utc
+       */
+      
+      city_weather_cond_entity.addLongProperty("curr_data_calc_time");
+      
+      /*
+       "sys": {        
+        "sunrise": 1437597912,//unix utc
+        "sunset": 1437638505//unix utc
+    }
+       */
+      
+      city_weather_cond_entity.addLongProperty("curr_sys_sunrise_time");
+      city_weather_cond_entity.addLongProperty("curr_sys_sunset_time");
+      
+      return city_weather_cond_entity;
 	}
 }
