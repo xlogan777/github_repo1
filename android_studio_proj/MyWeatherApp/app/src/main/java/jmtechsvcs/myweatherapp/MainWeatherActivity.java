@@ -1,5 +1,6 @@
 package jmtechsvcs.myweatherapp;
 
+import android.content.res.AssetManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,13 +15,14 @@ import jmtechsvcs.myweatherapp.GreenDaoSrcGen.CityInfoTableDao;
 import jmtechsvcs.myweatherapp.GreenDaoSrcGen.DaoSession;
 import jmtechsvcs.myweatherapp.networklayer.NetworkProcessing;
 import jmtechsvcs.myweatherapp.networklayer.WeatherMapUrls;
+import jmtechsvcs.myweatherapp.utils.WeatherJsonToDbProcessing;
 import jmtechsvcs.myweatherapp.utils.WeatherMapUtils;
 
 //test
 public class MainWeatherActivity extends ActionBarActivity {
 
     private static String LOGTAG = "MainWeatherActivity";
-    private static boolean useDebug = true;
+    private static boolean useDebug = false;
 
 //http://stackoverflow.com/questions/14744496/extract-database-of-an-application-from-android-device-through-adb
 
@@ -57,6 +59,23 @@ public class MainWeatherActivity extends ActionBarActivity {
                     (WeatherMapUrls.getCurrentWeatherByCityId("4891010"));
             String json_data = WeatherMapUtils.getJsonStringFromStream(is);
             Log.d(LOGTAG,json_data);
+        }
+
+        try
+        {
+            AssetManager assetManager = getAssets();
+
+            InputStream is = assetManager.open("sample_curr_weather.json");
+            String json_data = WeatherMapUtils.getJsonStringFromStream(is);
+
+            //assetManager.close();
+
+            //parse the json data and save it to the table.
+            WeatherJsonToDbProcessing.updateCurrWeatherToDb(json_data);
+        }
+        catch (Exception e)
+        {
+            Log.d(LOGTAG,""+e);
         }
     }
 
