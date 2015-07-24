@@ -4,6 +4,7 @@ import android.util.Log;
 
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -22,6 +23,7 @@ public class WeatherMapUtils
     private final static String DEFAULT_STRING_VAL = "DEFAULT_STRING_VAL";
 
     //returns a json string from the input stream or empty string if something went wrong.
+    //it does not close the input stream..that is left to the caller.
     public static String getJsonStringFromStream(InputStream inputStream)
     {
         //this is to hold the buffer for json data.
@@ -35,12 +37,13 @@ public class WeatherMapUtils
             Reader input = new InputStreamReader(inputStream, "UTF-8");
 
             //get data from reader and store into char buff.
-            while ((numRead = input.read(buffer, 0, buffer.length)) > 0) {
+            while ((numRead = input.read(buffer, 0, buffer.length)) > 0)
+            {
                 //save buffer to string builder with chars read.
                 sb.append(buffer, 0, numRead);
             }
 
-            inputStream.close();
+            //close the reader.
             input.close();
         }
         catch(Exception e)
@@ -49,6 +52,42 @@ public class WeatherMapUtils
         }
 
         return sb.toString();
+    }
+
+    //reads byte data from the input stream
+    //if an error occured the it returns null in the ref back to caller.
+    public static byte[] getByteArrayFromStream(InputStream inputStream)
+    {
+        byte [] data = null;
+
+        try
+        {
+            //create byte array obj.
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+            //create buff to hold bytes read.
+            byte [] buff = new byte[1024];//1kb buff
+            int bytes_read = 0;
+
+            //read raw bytes to buff, and track bytes read
+            while( (bytes_read = inputStream.read(buff,0,buff.length)) >0 )
+            {
+                //save bytes reads to output stream
+                bos.write(buff,0,bytes_read);
+            }
+
+            //get byte array from outstream
+            data = bos.toByteArray();
+
+            //close the output stream.
+            bos.close();
+        }
+        catch(Exception e)
+        {
+            Log.d(LOGTAG,""+e);
+        }
+
+        return data;
     }
 
     /*

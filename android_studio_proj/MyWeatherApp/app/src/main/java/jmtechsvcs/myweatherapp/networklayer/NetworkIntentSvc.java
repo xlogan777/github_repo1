@@ -115,12 +115,12 @@ public class NetworkIntentSvc extends IntentService
         Log.d(LOGTAG,"city id = "+cityId);
 
         //create the weather url with city id
-        String curr_weather_url = WeatherMapUrls.getCurrentWeatherByCityId(""+cityId);
+        String curr_weather_url = WeatherMapUrls.getCurrentWeatherByCityId("" + cityId);
 
         //get the input stream from the http get.
-        String json_data = NetworkProcessing.httpGetProcessing(curr_weather_url);
+        DataPayload payload = NetworkProcessing.httpGetProcessing(curr_weather_url, DataPayload.T_Payload_Type.E_JSON_PAYLOAD_TYPE);
 
-        Log.d(LOGTAG,json_data);
+        Log.d(LOGTAG,payload.getStringPayload());
 
         //get the application ctx for this app.
         MyWeatherApplication weather_app = (MyWeatherApplication)getApplicationContext();
@@ -129,7 +129,7 @@ public class NetworkIntentSvc extends IntentService
         DaoSession dao_session = weather_app.getDaoSession();
 
         //save to the db using this json input.
-        WeatherJsonToDbProcessing.updateCurrWeatherToDb(json_data, dao_session);
+        WeatherJsonToDbProcessing.updateCurrWeatherToDb(payload.getStringPayload(), dao_session);
     }
 
     /**

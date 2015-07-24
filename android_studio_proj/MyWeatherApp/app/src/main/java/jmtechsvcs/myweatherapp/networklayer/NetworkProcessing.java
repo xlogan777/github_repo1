@@ -28,9 +28,11 @@ public class NetworkProcessing
 	/*
 	 * function that does http GET request using a url.
 	 */
-	public static String httpGetProcessing(String url)
+	public static DataPayload httpGetProcessing(String url, DataPayload.T_Payload_Type payloadType)
 	{
-		String json_string = null;
+		//create payload obj and set payload type.
+		DataPayload dataPayload = new DataPayload();
+		dataPayload.setPayloadType(payloadType);
 
 		//return the input stream.
 		InputStream rv = null;
@@ -59,13 +61,33 @@ public class NetworkProcessing
 				int status_code = conn.getResponseCode();
 
 				//if we have a valid status get the data.
-				if(status_code ==HttpURLConnection.HTTP_OK)
+				if(status_code == HttpURLConnection.HTTP_OK)
 				{
 					//get the input stream.
 					rv = conn.getInputStream();
 
-					//get the json string from the input stream.
-					json_string = WeatherMapUtils.getJsonStringFromStream(rv);
+					switch(payloadType)
+					{
+						case E_JSON_PAYLOAD_TYPE:
+
+							//get the json string from the input stream.
+							String json_string = WeatherMapUtils.getJsonStringFromStream(rv);
+
+							//set correct payload data here.
+							dataPayload.setStringPayload(json_string);
+
+							break;
+
+						case E_BYTE_ARRAY_PAYLOAD_TYPE:
+
+							//get byte array from input stream.
+							byte [] data = WeatherMapUtils.getByteArrayFromStream(rv);
+
+							//set correct payload data here.
+							dataPayload.setBytePayload(data);
+
+							break;
+					}
 				}
 			} 
 			catch (Exception e) 
@@ -74,7 +96,7 @@ public class NetworkProcessing
 			}
 			finally
 			{
-				//close resources here.
+				//close http conn here
 				if(conn != null)
 				{
 					conn.disconnect();
@@ -100,6 +122,6 @@ public class NetworkProcessing
 		}
 
 		//return input stream.
-		return json_string;
+		return dataPayload;
 	}
 }
