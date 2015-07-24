@@ -1,58 +1,116 @@
 
 public enum T_Http_Get_Type
-	{
-		E_HTTP_CLIENT_TYPE,
-		E_HTTP_URL_TYPE
-	}
+{
+E_HTTP_CLIENT_TYPE,
+E_HTTP_URL_TYPE
+}
 
 
 switch(httpGetType)
-				{
-					case E_HTTP_CLIENT_TYPE:
+	{
+		case E_HTTP_CLIENT_TYPE:
 
-						// create HttpClient
-						HttpClient httpclient = new DefaultHttpClient();
+			// create HttpClient
+			HttpClient httpclient = new DefaultHttpClient();
 
-						//make the http get
-						HttpGet get_request = new HttpGet(url);
+			//make the http get
+			HttpGet get_request = new HttpGet(url);
 
-						// make GET request to the given URL
-						HttpResponse httpResponse = httpclient.execute(get_request);
+			// make GET request to the given URL
+			HttpResponse httpResponse = httpclient.execute(get_request);
 
 
-						//get status code from http response.
-						int status = httpResponse.getStatusLine().getStatusCode();
+			//get status code from http response.
+			int status = httpResponse.getStatusLine().getStatusCode();
 
-						if(HttpStatus.SC_OK == status)
-						{
-							// receive response as inputStream, will return a valid input stream
-							//otherwise will throw an exception.
-							rv = httpResponse.getEntity().getContent();
-						}
+			if(HttpStatus.SC_OK == status)
+			{
+				// receive response as inputStream, will return a valid input stream
+				//otherwise will throw an exception.
+				rv = httpResponse.getEntity().getContent();
+			}
 
-						break;
+			break;
 
-					case E_HTTP_URL_TYPE:
+		case E_HTTP_URL_TYPE:
 
-						//create url obj
-						URL url_get = new URL(url);
+			//create url obj
+			URL url_get = new URL(url);
 
-						//cast to http conn type
-						conn = (HttpURLConnection) url_get.openConnection();
+			//cast to http conn type
+			conn = (HttpURLConnection) url_get.openConnection();
 
-						//setup as a Get request.
-						conn.setRequestMethod("GET");
-						//conn.setDoInput(true);
-						//conn.setDoOutput(true);
+			//setup as a Get request.
+			conn.setRequestMethod("GET");
+			//conn.setDoInput(true);
+			//conn.setDoOutput(true);
 
-						//this will access the url, and get back a status code.
-						int status_code = conn.getResponseCode();
+			//this will access the url, and get back a status code.
+			int status_code = conn.getResponseCode();
 
-						//if we have a valid status get the data.
-						if(status_code ==HttpURLConnection.HTTP_OK)
-						{
-							rv = conn.getInputStream();
-						}
+			//if we have a valid status get the data.
+			if(status_code ==HttpURLConnection.HTTP_OK)
+			{
+				rv = conn.getInputStream();
+			}
 
-						break;
-				}
+			break;
+
+		}
+
+
+		//        //get the application ctx for this app.
+		//        MyWeatherApplication weather_app = (MyWeatherApplication)getApplicationContext();
+		//
+		//        //get the dao session stored in the context.
+		//        DaoSession dao_session = weather_app.getDaoSession();
+		//
+		//        //get the dao from the session.
+		//        CityInfoTableDao dao = dao_session.getCityInfoTableDao();
+		//
+		//        //get data from dao with a specific id.
+		//        List<CityInfoTable> city_info_list = dao.queryBuilder().where
+		//                (CityInfoTableDao.Properties.City_id.eq(4891010)).list();
+		//
+		//        //check to see if we have valid data in the list before  we use it.
+		//        if(city_info_list.size() > 0)
+		//            Log.d(LOGTAG,"city name = "+city_info_list.get(0).getName());
+
+//get the urls for http end pt retrieval.
+//WeatherMapUrls.getCurrentWeatherByCityId("4891010");
+//WeatherMapUrls.getWeatherIconByIconId("10d");
+
+//        try
+//        {
+//            AssetManager assetManager = getAssets();
+//
+//            InputStream is = assetManager.open("sample_curr_weather.json");
+//            String json_data = WeatherMapUtils.getJsonStringFromStream(is);
+//
+//            //assetManager.close();
+//
+//            //parse the json data and save it to the table.
+//            WeatherJsonToDbProcessing.updateCurrWeatherToDb(json_data, dao_session);
+//        }
+//        catch (Exception e)
+//        {
+//            Log.d(LOGTAG,""+e);
+//        }
+
+//create intent with this activity as the sending activity, and the calling service.
+        Intent mServiceIntent = new Intent(this, NetworkIntentSvc.class);
+
+        //set the action to this intent.
+        mServiceIntent.setAction(NetworkIntentSvc.CURRENT_WEATHER_ACTION);
+
+        //create bundle to save data in it.
+        Bundle bundle = new Bundle();
+        bundle.putLong("cityId",cityId);
+
+        //save bundle to this intent.
+        mServiceIntent.putExtras(bundle);
+
+        //start the service
+        startService(mServiceIntent);
+
+        Log.d(LOGTAG, "started service to get current weather data...with city id = "+cityId);
