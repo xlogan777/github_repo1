@@ -4,15 +4,13 @@
 
     <!-- allow the app to access the network from the phone. -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <!--<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>-->
 
     <application
+        android:name=".MyWeatherApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:name=".MyWeatherApplication">
-
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".MainWeatherActivity"
             android:label="@string/app_name" >
@@ -22,6 +20,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- added this service component for background processing. -->
+        <service
+            android:name=".networklayer.NetworkIntentSvc"
+            android:exported="false" >
+        </service>
+
     </application>
 
 </manifest>

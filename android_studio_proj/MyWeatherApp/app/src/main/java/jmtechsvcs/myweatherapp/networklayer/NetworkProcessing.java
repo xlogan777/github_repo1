@@ -12,6 +12,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.util.Log;
 
+import jmtechsvcs.myweatherapp.utils.WeatherMapUtils;
+
 /**
  * this class deals with the connections to the network
  * should handle different types of http connections.
@@ -26,8 +28,10 @@ public class NetworkProcessing
 	/*
 	 * function that does http GET request using a url.
 	 */
-	public static InputStream httpGetProcessing(String url)
+	public static String httpGetProcessing(String url)
 	{
+		String json_string = null;
+
 		//return the input stream.
 		InputStream rv = null;
 
@@ -57,7 +61,11 @@ public class NetworkProcessing
 				//if we have a valid status get the data.
 				if(status_code ==HttpURLConnection.HTTP_OK)
 				{
+					//get the input stream.
 					rv = conn.getInputStream();
+
+					//get the json string from the input stream.
+					json_string = WeatherMapUtils.getJsonStringFromStream(rv);
 				}
 			} 
 			catch (Exception e) 
@@ -71,6 +79,19 @@ public class NetworkProcessing
 				{
 					conn.disconnect();
 				}
+
+				//close the stream.
+				if(rv != null)
+				{
+					try
+					{
+						rv.close();
+					}
+					catch(Exception e)
+					{
+						Log.d(LOGTAG,""+e);
+					}
+				}
 			}
 		}
 		else
@@ -79,6 +100,6 @@ public class NetworkProcessing
 		}
 
 		//return input stream.
-		return rv;
+		return json_string;
 	}
 }
