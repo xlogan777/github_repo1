@@ -6,6 +6,8 @@ import android.util.Log;
 /**
  * Created by jimmy on 7/25/2015.
  */
+//NOTE: always start the android AVD to run this unit test..and pick the
+//the green android robot to run ur test.
 public class MainWeatherActivityTest extends ActivityInstrumentationTestCase2<MainWeatherActivity>
 {
     private static final String LOGTAG = "MainWeatherActivityTest"
@@ -18,11 +20,11 @@ public class MainWeatherActivityTest extends ActivityInstrumentationTestCase2<Ma
         both of these constructors set the activity to using android specific
         features.
      */
-//    public MainWeatherActivityTest()
-//    {
-//        super(MainWeatherActivity.class);
-//
-//    }
+    public MainWeatherActivityTest()
+    {
+        super(MainWeatherActivity.class);
+
+    }
 
     public MainWeatherActivityTest(Class<MainWeatherActivity> activityClass)
     {
