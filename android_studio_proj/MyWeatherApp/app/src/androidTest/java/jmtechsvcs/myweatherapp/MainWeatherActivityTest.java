@@ -8,10 +8,23 @@ import android.util.Log;
  */
 //NOTE: always start the android AVD to run this unit test..and pick the
 //the green android robot to run ur test.
+/*
+    the steps for the instrumentation for the activity unit test is
+    1. setup() --sets up this unit test for the activity.
+    2. preconditions() --this is a "test method" to make sure u have all data before running test..
+    3. testFoo()--test case 1.
+    4. testFoo2()--test case 2
+    5. testFoo3()..etc --as many test cases as needed.
+    6. tearDown()--reset this instrumentation test back to start.
+
+    at a minumum u just need
+    1. setup() -- get android specific stuff. like activities.
+    2. tearDown() -- reset ur unit test.s
+ */
 public class MainWeatherActivityTest extends ActivityInstrumentationTestCase2<MainWeatherActivity>
 {
-    private static final String LOGTAG = "MainWeatherActivityTest"
-            ;
+    private static final String LOGTAG = "MainWeatherActivityTest";
+
     //private members for this test.
     private MainWeatherActivity mActivity;
     private String resourceString;
@@ -38,11 +51,12 @@ public class MainWeatherActivityTest extends ActivityInstrumentationTestCase2<Ma
         //setup the ut class.
         super.setUp();
 
-        mActivity = getActivity();
+        mActivity = getActivity();//first time this is called, starts the activity. onCreate() is invoked.
         resourceString = mActivity.getString(R.string.hello_world);
     }
 
-    //areas to test the valid activity is available. similar to junit.
+    //this is a junit test method, with "test" as the begining of the method name.
+    //helper to check if we have the data we need before a test case is run.
     public void testPreconditions() throws Exception
     {
         //if this fails the we have an null activity.
