@@ -1,24 +1,12 @@
-package jmtechsvcs.myweatherapp;
+package jmtechsvcs.myweatherapp.activitypkg;
 
-import android.content.Intent;
-import android.content.res.AssetManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.io.InputStream;
-import java.util.List;
-
-import jmtechsvcs.myweatherapp.GreenDaoSrcGen.CityInfoTable;
-import jmtechsvcs.myweatherapp.GreenDaoSrcGen.CityInfoTableDao;
-import jmtechsvcs.myweatherapp.GreenDaoSrcGen.DaoSession;
+import jmtechsvcs.myweatherapp.R;
 import jmtechsvcs.myweatherapp.networklayer.NetworkIntentSvc;
-import jmtechsvcs.myweatherapp.networklayer.NetworkProcessing;
-import jmtechsvcs.myweatherapp.networklayer.WeatherMapUrls;
-import jmtechsvcs.myweatherapp.utils.WeatherJsonToDbProcessing;
-import jmtechsvcs.myweatherapp.utils.WeatherMapUtils;
 
 //test
 public class MainWeatherActivity extends ActionBarActivity {

@@ -5,9 +5,9 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import jmtechsvcs.myweatherapp.GreenDaoSrcGen.CityWeatherCurrCondTable;
-import jmtechsvcs.myweatherapp.GreenDaoSrcGen.CityWeatherCurrCondTableDao;
-import jmtechsvcs.myweatherapp.GreenDaoSrcGen.DaoSession;
+import jmtechsvcs.myweatherapp.greendaosrcgen.CityWeatherCurrCondTable;
+import jmtechsvcs.myweatherapp.greendaosrcgen.CityWeatherCurrCondTableDao;
+import jmtechsvcs.myweatherapp.greendaosrcgen.DaoSession;
 
 /**
  * Created by jimmy on 7/23/2015.

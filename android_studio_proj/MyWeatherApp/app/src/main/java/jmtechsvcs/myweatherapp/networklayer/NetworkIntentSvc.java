@@ -6,12 +6,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
-import java.io.InputStream;
-
-import jmtechsvcs.myweatherapp.GreenDaoSrcGen.DaoSession;
+import jmtechsvcs.myweatherapp.greendaosrcgen.DaoSession;
 import jmtechsvcs.myweatherapp.MyWeatherApplication;
 import jmtechsvcs.myweatherapp.utils.WeatherJsonToDbProcessing;
-import jmtechsvcs.myweatherapp.utils.WeatherMapUtils;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in

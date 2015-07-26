@@ -3,6 +3,8 @@ package jmtechsvcs.myweatherapp;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
+import jmtechsvcs.myweatherapp.activitypkg.MainWeatherActivity;
+
 /**
  * Created by jimmy on 7/25/2015.
  */
