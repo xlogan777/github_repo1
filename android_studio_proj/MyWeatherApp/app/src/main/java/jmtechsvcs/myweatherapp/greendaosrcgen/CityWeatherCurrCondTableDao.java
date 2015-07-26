@@ -13,7 +13,7 @@ import de.greenrobot.dao.internal.DaoConfig;
  * DAO for table CITY_WEATHER_CURR_COND_TABLE.
 */
 public class CityWeatherCurrCondTableDao extends AbstractDao<CityWeatherCurrCondTable, Long> {
-
+    //test
     public static final String TABLENAME = "CITY_WEATHER_CURR_COND_TABLE";
 
     /**

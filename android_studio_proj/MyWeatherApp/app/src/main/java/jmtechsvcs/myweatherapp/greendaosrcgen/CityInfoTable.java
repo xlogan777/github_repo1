@@ -8,7 +8,7 @@ package jmtechsvcs.myweatherapp.greendaosrcgen;
  * Entity mapped to table CITY_INFO_TABLE.
  */
 public class CityInfoTable {
-
+//test
     private long city_id;
     /** Not-null value. */
     private String name;

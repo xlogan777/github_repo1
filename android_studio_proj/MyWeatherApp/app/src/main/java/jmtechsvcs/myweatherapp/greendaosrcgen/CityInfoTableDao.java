@@ -13,7 +13,7 @@ import de.greenrobot.dao.internal.DaoConfig;
  * DAO for table CITY_INFO_TABLE.
 */
 public class CityInfoTableDao extends AbstractDao<CityInfoTable, Long> {
-
+    //test
     public static final String TABLENAME = "CITY_INFO_TABLE";
 
     /**

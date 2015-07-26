@@ -17,6 +17,7 @@ import de.greenrobot.dao.internal.DaoConfig;
  * @see AbstractDaoSession
  */
 public class DaoSession extends AbstractDaoSession {
+    //test
 
     private final DaoConfig cityInfoTableDaoConfig;
     private final DaoConfig cityWeatherCurrCondTableDaoConfig;
