@@ -149,7 +149,6 @@ public class WeatherDbProcessing
         else
         {
             Log.d(LOGTAG,"list size = "+ items.size()+", this is an issue.");
-            throw new IllegalArgumentException("got list size = "+ items.size()+", for the curr weather by city id..issue.");
         }
 
         //return the java bean.
