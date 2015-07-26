@@ -8,7 +8,7 @@ import android.util.Log;
 
 import jmtechsvcs.myweatherapp.greendaosrcgen.DaoSession;
 import jmtechsvcs.myweatherapp.MyWeatherApplication;
-import jmtechsvcs.myweatherapp.utils.WeatherJsonToDbProcessing;
+import jmtechsvcs.myweatherapp.utils.WeatherDbProcessing;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -93,13 +93,7 @@ public class NetworkIntentSvc extends IntentService
 
         Log.d(LOGTAG,payload.getStringPayload());
 
-        //get the application ctx for this app.
-        MyWeatherApplication weather_app = (MyWeatherApplication)getApplicationContext();
-
-        //get the dao session stored in the context.
-        DaoSession dao_session = weather_app.getDaoSession();
-
         //save to the db using this json input.
-        WeatherJsonToDbProcessing.updateCurrWeatherToDb(payload.getStringPayload(), dao_session);
+        WeatherDbProcessing.updateCurrWeatherToDb(payload.getStringPayload(), getApplicationContext());
     }
 }

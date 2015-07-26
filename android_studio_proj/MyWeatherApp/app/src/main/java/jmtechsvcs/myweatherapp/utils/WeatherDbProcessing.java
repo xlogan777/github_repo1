@@ -1,10 +1,14 @@
 package jmtechsvcs.myweatherapp.utils;
 
+import android.content.Context;
 import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.List;
+
+import jmtechsvcs.myweatherapp.MyWeatherApplication;
 import jmtechsvcs.myweatherapp.greendaosrcgen.CityWeatherCurrCondTable;
 import jmtechsvcs.myweatherapp.greendaosrcgen.CityWeatherCurrCondTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgen.DaoSession;
@@ -12,15 +16,31 @@ import jmtechsvcs.myweatherapp.greendaosrcgen.DaoSession;
 /**
  * Created by jimmy on 7/23/2015.
  */
-public class WeatherJsonToDbProcessing
+public class WeatherDbProcessing
 {
     private final static String LOGTAG = "WthrJsonToDbProcessing";
 
+    //helper function allows to a dao session from a context reference.
+    private static DaoSession getDaoSession(Context context)
+    {
+        //get the application ctx for this app.
+        MyWeatherApplication weather_app = (MyWeatherApplication)context.getApplicationContext();
+
+        //get the dao session stored in the context.
+        DaoSession dao_session = weather_app.getDaoSession();
+
+        //return the dao session from the context.
+        return dao_session;
+    }
+
     //this will parse the json data and use a dao to save the obj to db.
-    public static void updateCurrWeatherToDb(String jsonInput, DaoSession daoSession)
+    public static void updateCurrWeatherToDb(String jsonInput, Context context)
     {
         try
         {
+            //get the dao session.
+            DaoSession daoSession = getDaoSession(context);
+
             //get the dao to be used later.
             CityWeatherCurrCondTableDao curr_weather_dao = daoSession.getCityWeatherCurrCondTableDao();
 
@@ -99,5 +119,40 @@ public class WeatherJsonToDbProcessing
         {
             Log.d(LOGTAG,""+e);
         }
+    }
+
+    public static CityWeatherCurrCondTable getCurrentWeatherCity(long cityId, Context context)
+    {
+        //get the dao session.
+        DaoSession daoSession = getDaoSession(context);
+
+        //pojo ref.
+        CityWeatherCurrCondTable rv = null;
+
+        //get the current city weather dao.
+        CityWeatherCurrCondTableDao dao = daoSession.getCityWeatherCurrCondTableDao();
+
+        //get the java bean using the dao obj but use the city id to find it.
+        List<CityWeatherCurrCondTable> items = dao.queryBuilder().where
+        (
+           CityWeatherCurrCondTableDao.Properties.City_id.eq(cityId)
+        ).list();
+
+        if(items.size() == 1)
+        {
+            rv = items.get(0);
+        }
+        else if(items.size() == 0)
+        {
+            Log.d(LOGTAG,"didnt find the item yet.");
+        }
+        else
+        {
+            Log.d(LOGTAG,"list size = "+ items.size()+", this is an issue.");
+            throw new IllegalArgumentException("got list size = "+ items.size()+", for the curr weather by city id..issue.");
+        }
+
+        //return the java bean.
+        return rv;
     }
 }
