@@ -6,8 +6,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
-import jmtechsvcs.myweatherapp.greendaosrcgen.DaoSession;
-import jmtechsvcs.myweatherapp.MyWeatherApplication;
 import jmtechsvcs.myweatherapp.utils.WeatherDbProcessing;
 
 /**

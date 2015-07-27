@@ -8,12 +8,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import jmtechsvcs.myweatherapp.MyWeatherApplication;
 import jmtechsvcs.myweatherapp.R;
 import jmtechsvcs.myweatherapp.greendaosrcgen.CityInfoTable;
 import jmtechsvcs.myweatherapp.greendaosrcgen.CityWeatherCurrCondTable;
-import jmtechsvcs.myweatherapp.greendaosrcgen.CityWeatherCurrCondTableDao;
-import jmtechsvcs.myweatherapp.greendaosrcgen.DaoSession;
 import jmtechsvcs.myweatherapp.utils.WeatherDbProcessing;
 
 /*
