@@ -7,7 +7,10 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.io.Reader;
+import java.io.StringWriter;
+import java.util.Arrays;
 
 /**
  * Created by jimmy on 7/23/2015.
@@ -48,7 +51,7 @@ public class WeatherMapUtils
         }
         catch(Exception e)
         {
-            Log.d(LOGTAG, ""+e);
+            Log.d(LOGTAG,WeatherMapUtils.getStackTrace(e));
         }
 
         return sb.toString();
@@ -84,7 +87,7 @@ public class WeatherMapUtils
         }
         catch(Exception e)
         {
-            Log.d(LOGTAG,""+e);
+            Log.d(LOGTAG,WeatherMapUtils.getStackTrace(e));
         }
 
         return data;
@@ -134,5 +137,22 @@ public class WeatherMapUtils
         Log.d(LOGTAG, (rv == DEFAULT_STRING_VAL ? "using default String val" : "string val = "+rv));
 
         return rv;
+    }
+
+    /*
+        this method will format a stack trace just like the printStackTrace method.. with the error message
+     */
+    public static String getStackTrace(Exception exception)
+    {
+        //create a string writer for the print writer
+        StringWriter sw = new StringWriter();
+
+        //print the java stack trace to the print writer which is wrapping to the string writer.
+        exception.printStackTrace(new PrintWriter(sw));
+
+        //get the string from the string writer.
+        return sw.toString();
+
+        //TODO: may need to write these expections to a errors file...not sure..
     }
 }

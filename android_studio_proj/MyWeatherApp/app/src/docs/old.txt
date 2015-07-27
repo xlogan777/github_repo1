@@ -186,3 +186,16 @@ switch(httpGetType)
 //        //return the java bean.
 //        return rv;
 //    }
+
+//        String rv = exception.getMessage()+"\n";
+//
+//        //get the stack trace as an array of stack items and get the to string from that array.
+//        String stack_trace = Arrays.toString(exception.getStackTrace());
+//
+//        //replace the "," with "\n" to allow better formatting.
+//        stack_trace = stack_trace.replace(",","\n");
+//
+//        //add the error with the stack trace.
+//        rv += stack_trace;
+//
+//        return rv;

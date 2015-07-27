@@ -58,6 +58,9 @@ public class CurrentWeatherActivity extends ActionBarActivity
 
             //load city weather related to ui.
             loadCityWeatherInfo(curr_weather_data);
+
+            //load the weather icon.
+            loadCityWeatherIcon();
         }
         else
         {
@@ -88,7 +91,21 @@ public class CurrentWeatherActivity extends ActionBarActivity
     //this will load all the weather related info for the city.
     private void loadCityWeatherInfo(CityWeatherCurrCondTable currWeatherTable)
     {
-        //TODO: set the weather related info here.
+        ((TextView)findViewById(R.id.weatherid)).setText(currWeatherTable.getCurr_weather_id()+"");
+        ((TextView)findViewById(R.id.weathermain)).setText(currWeatherTable.getCurr_weather_main()+"");
+        ((TextView)findViewById(R.id.weatherdesc)).setText(currWeatherTable.getCurr_weather_desc()+"");
+        ((TextView)findViewById(R.id.maintemp)).setText(currWeatherTable.getCurr_main_temp()+"");
+        ((TextView)findViewById(R.id.mainpressure)).setText(currWeatherTable.getCurr_main_pressure()+"");
+        ((TextView)findViewById(R.id.mainhumidity)).setText(currWeatherTable.getCurr_main_humidity()+"");
+        ((TextView)findViewById(R.id.mintemp)).setText(currWeatherTable.getCurr_main_temp_min()+"");
+        ((TextView)findViewById(R.id.maxtemp)).setText(currWeatherTable.getCurr_main_temp_max()+"");
+        ((TextView)findViewById(R.id.sealevel)).setText(currWeatherTable.getCurr_main_sea_level()+"");
+        ((TextView)findViewById(R.id.grndlevel)).setText(currWeatherTable.getCurr_main_grnd_level()+"");
+        ((TextView)findViewById(R.id.windspeed)).setText(currWeatherTable.getCurr_wind_speed()+"");
+        ((TextView)findViewById(R.id.winddegs)).setText(currWeatherTable.getCurr_wind_degs()+"");
+        ((TextView)findViewById(R.id.clouds)).setText(currWeatherTable.getCurr_clouds_all()+"");
+        ((TextView)findViewById(R.id.rainlast3h)).setText(currWeatherTable.getCurr_rain_last3hrs()+"");
+        ((TextView)findViewById(R.id.snowlast3h)).setText(currWeatherTable.getCurr_snow_last3hrs()+"");
     }
 
     //this will load the weather icon.

@@ -291,15 +291,15 @@
         android:text="maintemp"
         android:id="@+id/maintemp"
         android:layout_above="@+id/curr_main_pressure"
-        android:layout_alignLeft="@+id/textView5"
-        android:layout_alignStart="@+id/textView5"/>
+        android:layout_alignLeft="@+id/mainpressure"
+        android:layout_alignStart="@+id/mainpressure"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="mainpressure"
-        android:id="@+id/textView5"
+        android:id="@+id/mainpressure"
         android:layout_below="@+id/maintemp"
         android:layout_toRightOf="@+id/Lon"
         android:layout_toEndOf="@+id/Lon"/>
@@ -309,8 +309,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="mainhumidity"
-        android:id="@+id/textView6"
-        android:layout_below="@+id/textView5"
+        android:id="@+id/mainhumidity"
+        android:layout_below="@+id/mainpressure"
         android:layout_toRightOf="@+id/Lon"
         android:layout_toEndOf="@+id/Lon"/>
 
@@ -320,7 +320,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="mintemp"
         android:id="@+id/mintemp"
-        android:layout_below="@+id/textView6"
+        android:layout_below="@+id/mainhumidity"
         android:layout_toRightOf="@+id/Lon"
         android:layout_toEndOf="@+id/Lon"/>
 

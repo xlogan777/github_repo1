@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import jmtechsvcs.myweatherapp.MyWeatherApplication;
@@ -120,7 +121,7 @@ public class WeatherDbProcessing
         }
         catch (Exception e)
         {
-            Log.d(LOGTAG,""+e);
+            Log.d(LOGTAG,WeatherMapUtils.getStackTrace(e));
         }
     }
 
@@ -180,7 +181,7 @@ public class WeatherDbProcessing
         }
         catch(Exception e)
         {
-            Log.d(LOGTAG,""+e);
+            Log.d(LOGTAG,WeatherMapUtils.getStackTrace(e));
         }
 
         return rv;

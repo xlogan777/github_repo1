@@ -11,12 +11,14 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 import jmtechsvcs.myweatherapp.greendaosrcgen.CityInfoTable;
 import jmtechsvcs.myweatherapp.greendaosrcgen.CityInfoTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgen.CityWeatherCurrCondTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgen.DaoMaster;
 import jmtechsvcs.myweatherapp.greendaosrcgen.DaoSession;
+import jmtechsvcs.myweatherapp.utils.WeatherMapUtils;
 
 /**
  * Created by jimmy on 7/21/2015.
@@ -177,7 +179,7 @@ public class MyWeatherApplication extends Application
         }
         catch(Exception e)
         {
-            Log.d(LOGTAG,e.getLocalizedMessage());
+            Log.d(LOGTAG, WeatherMapUtils.getStackTrace(e));
         }
     }
 }

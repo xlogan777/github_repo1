@@ -3,6 +3,7 @@ package jmtechsvcs.myweatherapp.networklayer;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Arrays;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -92,7 +93,7 @@ public class NetworkProcessing
 			} 
 			catch (Exception e) 
 			{
-				Log.d(LOGTAG, "JM..."+e);
+                Log.d(LOGTAG,WeatherMapUtils.getStackTrace(e));
 			}
 			finally
 			{
@@ -111,7 +112,7 @@ public class NetworkProcessing
 					}
 					catch(Exception e)
 					{
-						Log.d(LOGTAG,""+e);
+                        Log.d(LOGTAG, WeatherMapUtils.getStackTrace(e));
 					}
 				}
 			}

@@ -91,7 +91,9 @@ public class NetworkIntentSvc extends IntentService
         //get the input stream from the http get.
         DataPayload payload = NetworkProcessing.httpGetProcessing(curr_weather_url, DataPayload.T_Payload_Type.E_JSON_PAYLOAD_TYPE);
 
-        Log.d(LOGTAG,payload.getStringPayload());
+        //print json string if not null.
+        if(payload.getStringPayload() != null)
+            Log.d(LOGTAG,payload.getStringPayload());
 
         //save to the db using this json input.
         WeatherDbProcessing.updateCurrWeatherToDb(payload.getStringPayload(), getApplicationContext());
