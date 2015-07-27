@@ -114,3 +114,75 @@ switch(httpGetType)
         startService(mServiceIntent);
 
         Log.d(LOGTAG, "started service to get current weather data...with city id = "+cityId);
+
+//    public static CityWeatherCurrCondTable getCurrentWeatherCity(long cityId, Context context)
+//    {
+//        //pojo ref.
+//        CityWeatherCurrCondTable rv = null;
+//
+//        try
+//        {
+//            //get the dao session.
+//            DaoSession daoSession = getDaoSession(context);
+//
+//            //get the current city weather dao.
+//            CityWeatherCurrCondTableDao dao = daoSession.getCityWeatherCurrCondTableDao();
+//
+//            //get the java bean using the dao obj but use the city id to find it.
+//            List<CityWeatherCurrCondTable> items = dao.queryBuilder().where
+//                    (
+//                            CityWeatherCurrCondTableDao.Properties.City_id.eq(cityId)
+//                    ).list();
+//
+//            if(items.size() == 1){
+//                rv = items.get(0);
+//            }else if(items.size() == 0){
+//                Log.d(LOGTAG, "didnt find the item yet.");
+//            }else{
+//                Log.d(LOGTAG, "list size = " + items.size() + ", this is an issue.");
+//            }
+//        }
+//        catch(Exception e)
+//        {
+//            Log.d(LOGTAG,""+e);
+//        }
+//
+//        //return the java bean.
+//        return rv;
+//    }
+//
+//    public CityInfoTable getCityInfo(long cityId, Context context)
+//    {
+//        //pojo ref.
+//        CityInfoTable rv = null;
+//
+//        try
+//        {
+//            //get the dao session.
+//            DaoSession daoSession = getDaoSession(context);
+//
+//            //get the current city weather dao.
+//            CityInfoTableDao dao = daoSession.getCityInfoTableDao();
+//
+//            //get the java bean using the dao obj but use the city id to find it.
+//            List<CityInfoTable> items = dao.queryBuilder().where
+//                    (
+//                            CityInfoTableDao.Properties.City_id.eq(cityId)
+//                    ).list();
+//
+//            if(items.size() == 1){
+//                rv = items.get(0);
+//            }else if(items.size() == 0){
+//                Log.d(LOGTAG, "didnt find the item yet.");
+//            }else{
+//                Log.d(LOGTAG, "list size = " + items.size() + ", this is an issue.");
+//            }
+//        }
+//        catch(Exception e)
+//        {
+//            Log.d(LOGTAG,""+e);
+//        }
+//
+//        //return the java bean.
+//        return rv;
+//    }

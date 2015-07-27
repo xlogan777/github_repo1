@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainWeatherActivity"
+            android:name=".activitypkg.MainWeatherActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +26,12 @@
             android:name=".networklayer.NetworkIntentSvc"
             android:exported="false" >
         </service>
+
+        <!-- handles the current weather displaying of data for a city. -->
+        <activity
+            android:name=".activitypkg.CurrentWeatherActivity"
+            android:label="@string/title_activity_current_weather" >
+        </activity>
 
     </application>
 

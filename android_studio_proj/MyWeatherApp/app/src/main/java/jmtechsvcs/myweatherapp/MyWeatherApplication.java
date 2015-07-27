@@ -12,11 +12,11 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import jmtechsvcs.myweatherapp.GreenDaoSrcGen.CityInfoTable;
-import jmtechsvcs.myweatherapp.GreenDaoSrcGen.CityInfoTableDao;
-import jmtechsvcs.myweatherapp.GreenDaoSrcGen.CityWeatherCurrCondTableDao;
-import jmtechsvcs.myweatherapp.GreenDaoSrcGen.DaoMaster;
-import jmtechsvcs.myweatherapp.GreenDaoSrcGen.DaoSession;
+import jmtechsvcs.myweatherapp.greendaosrcgen.CityInfoTable;
+import jmtechsvcs.myweatherapp.greendaosrcgen.CityInfoTableDao;
+import jmtechsvcs.myweatherapp.greendaosrcgen.CityWeatherCurrCondTableDao;
+import jmtechsvcs.myweatherapp.greendaosrcgen.DaoMaster;
+import jmtechsvcs.myweatherapp.greendaosrcgen.DaoSession;
 
 /**
  * Created by jimmy on 7/21/2015.
