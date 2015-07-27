@@ -6,9 +6,12 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jmtechsvcs.myweatherapp.MyWeatherApplication;
+import jmtechsvcs.myweatherapp.greendaosrcgen.CityInfoTable;
+import jmtechsvcs.myweatherapp.greendaosrcgen.CityInfoTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgen.CityWeatherCurrCondTable;
 import jmtechsvcs.myweatherapp.greendaosrcgen.CityWeatherCurrCondTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgen.DaoSession;
@@ -121,37 +124,65 @@ public class WeatherDbProcessing
         }
     }
 
-    public static CityWeatherCurrCondTable getCurrentWeatherCity(long cityId, Context context)
+    /*
+        added annotation for unchecked cast since we know it it ok.
+        uses the input args to get the correct java bean to return based on compile time
+        checking of the data type passed in.
+     */
+    @SuppressWarnings("unchecked")
+    public static <CityBeanType> CityBeanType getBeanByCityId(long cityId, Context context, CityBeanType beanType)
     {
-        //get the dao session.
-        DaoSession daoSession = getDaoSession(context);
+        //data type used in this generic function.
+        CityBeanType rv = null;
 
-        //pojo ref.
-        CityWeatherCurrCondTable rv = null;
-
-        //get the current city weather dao.
-        CityWeatherCurrCondTableDao dao = daoSession.getCityWeatherCurrCondTableDao();
-
-        //get the java bean using the dao obj but use the city id to find it.
-        List<CityWeatherCurrCondTable> items = dao.queryBuilder().where
-        (
-           CityWeatherCurrCondTableDao.Properties.City_id.eq(cityId)
-        ).list();
-
-        if(items.size() == 1)
+        try
         {
-            rv = items.get(0);
+            //get the dao session.
+            DaoSession daoSession = getDaoSession(context);
+
+            //item list.
+            List<CityBeanType> items = new ArrayList<CityBeanType>();
+
+            if(beanType instanceof CityInfoTable)
+            {
+                //get the current city weather dao.
+                CityInfoTableDao dao = daoSession.getCityInfoTableDao();
+
+                //get the java bean using the dao obj but use the city id to find it.
+                items =  (List<CityBeanType>)dao.queryBuilder().where
+                        (
+                                CityInfoTableDao.Properties.City_id.eq(cityId)
+                        ).list();
+            }
+            else if(beanType instanceof CityWeatherCurrCondTable)
+            {
+                CityWeatherCurrCondTableDao dao = daoSession.getCityWeatherCurrCondTableDao();
+
+                //get the java bean using the dao obj but use the city id to find it.
+                items = (List<CityBeanType>)dao.queryBuilder().where
+                        (
+                                CityWeatherCurrCondTableDao.Properties.City_id.eq(cityId)
+                        ).list();
+            }
+
+            if(items.size() == 1)
+            {
+                rv = (CityBeanType)items.get(0);
+            }
+            else if(items.size() == 0)
+            {
+                Log.d(LOGTAG, "didnt find the item yet for data type = "+beanType.getClass().getName());
+            }
+            else
+            {
+                Log.d(LOGTAG, "list size = " + items.size() + ", this is an issue for type = "+beanType.getClass().getName());
+            }
         }
-        else if(items.size() == 0)
+        catch(Exception e)
         {
-            Log.d(LOGTAG,"didnt find the item yet.");
-        }
-        else
-        {
-            Log.d(LOGTAG,"list size = "+ items.size()+", this is an issue.");
+            Log.d(LOGTAG,""+e);
         }
 
-        //return the java bean.
         return rv;
     }
 }
