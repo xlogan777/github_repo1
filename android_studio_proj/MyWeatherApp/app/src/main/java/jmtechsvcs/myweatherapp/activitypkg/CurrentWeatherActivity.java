@@ -70,7 +70,7 @@ public class CurrentWeatherActivity extends ActionBarActivity
     private void loadCityInfo(CityInfoTable cityInfoTable)
     {
         //set the city name and the country code.
-        ((TextView)findViewById(R.id.city_name)).setText(cityInfoTable.getName());
+        ((TextView)findViewById(R.id.cityname)).setText(cityInfoTable.getName());
         ((TextView)findViewById(R.id.countrycode)).setText(cityInfoTable.getCountry());
         ((TextView)findViewById(R.id.lat_val)).setText(cityInfoTable.getLat()+"");
         ((TextView)findViewById(R.id.lon_val)).setText(cityInfoTable.getLon()+"");
@@ -80,29 +80,29 @@ public class CurrentWeatherActivity extends ActionBarActivity
     private void loadCityTimeInfo(CityWeatherCurrCondTable currWeatherTable)
     {
         //set the time related data here
-        ((TextView)findViewById(R.id.recentfeedtime)).setText(currWeatherTable.getCurr_data_calc_time()+"");
-        ((TextView)findViewById(R.id.sunrisetime)).setText(currWeatherTable.getCurr_sys_sunrise_time()+"");
-        ((TextView)findViewById(R.id.sunsettime)).setText(currWeatherTable.getCurr_sys_sunset_time()+"");
+        ((TextView)findViewById(R.id.recentfeedtime_val)).setText(currWeatherTable.getCurr_data_calc_time()+"");
+        ((TextView)findViewById(R.id.sr_time_val)).setText(currWeatherTable.getCurr_sys_sunrise_time()+"");
+        ((TextView)findViewById(R.id.ss_time_val)).setText(currWeatherTable.getCurr_sys_sunset_time()+"");
     }
 
     //this will load all the weather related info for the city.
     private void loadCityWeatherInfo(CityWeatherCurrCondTable currWeatherTable)
     {
-        ((TextView)findViewById(R.id.weatherid)).setText(currWeatherTable.getCurr_weather_id()+"");
-        ((TextView)findViewById(R.id.weathermain)).setText(currWeatherTable.getCurr_weather_main()+"");
-        ((TextView)findViewById(R.id.weatherdesc)).setText(currWeatherTable.getCurr_weather_desc()+"");
-        ((TextView)findViewById(R.id.maintemp)).setText(currWeatherTable.getCurr_main_temp()+"");
-        ((TextView)findViewById(R.id.mainpressure)).setText(currWeatherTable.getCurr_main_pressure()+"");
-        ((TextView)findViewById(R.id.mainhumidity)).setText(currWeatherTable.getCurr_main_humidity()+"");
-        ((TextView)findViewById(R.id.mintemp)).setText(currWeatherTable.getCurr_main_temp_min()+"");
-        ((TextView)findViewById(R.id.maxtemp)).setText(currWeatherTable.getCurr_main_temp_max()+"");
-        ((TextView)findViewById(R.id.sealevel)).setText(currWeatherTable.getCurr_main_sea_level()+"");
-        ((TextView)findViewById(R.id.grndlevel)).setText(currWeatherTable.getCurr_main_grnd_level()+"");
-        ((TextView)findViewById(R.id.windspeed)).setText(currWeatherTable.getCurr_wind_speed()+"");
-        ((TextView)findViewById(R.id.winddegs)).setText(currWeatherTable.getCurr_wind_degs()+"");
-        ((TextView)findViewById(R.id.clouds)).setText(currWeatherTable.getCurr_clouds_all()+"");
-        ((TextView)findViewById(R.id.rainlast3h)).setText(currWeatherTable.getCurr_rain_last3hrs()+"");
-        ((TextView)findViewById(R.id.snowlast3h)).setText(currWeatherTable.getCurr_snow_last3hrs()+"");
+        ((TextView)findViewById(R.id.weatherid_val)).setText(currWeatherTable.getCurr_weather_id()+"");
+        ((TextView)findViewById(R.id.weathermain_val)).setText(currWeatherTable.getCurr_weather_main()+"");
+        ((TextView)findViewById(R.id.weatherdesc_val)).setText(currWeatherTable.getCurr_weather_desc()+"");
+        ((TextView)findViewById(R.id.maintemp_val)).setText(currWeatherTable.getCurr_main_temp()+"");
+        ((TextView)findViewById(R.id.mainpressure_val)).setText(currWeatherTable.getCurr_main_pressure()+"");
+        ((TextView)findViewById(R.id.mainhumidity_val)).setText(currWeatherTable.getCurr_main_humidity()+"");
+        ((TextView)findViewById(R.id.mintemp_val)).setText(currWeatherTable.getCurr_main_temp_min()+"");
+        ((TextView)findViewById(R.id.maxtemp_val)).setText(currWeatherTable.getCurr_main_temp_max()+"");
+        ((TextView)findViewById(R.id.sealevel_val)).setText(currWeatherTable.getCurr_main_sea_level()+"");
+        ((TextView)findViewById(R.id.grndlevel_val)).setText(currWeatherTable.getCurr_main_grnd_level()+"");
+        ((TextView)findViewById(R.id.windspeed_val)).setText(currWeatherTable.getCurr_wind_speed()+"");
+        ((TextView)findViewById(R.id.winddegs_val)).setText(currWeatherTable.getCurr_wind_degs()+"");
+        ((TextView)findViewById(R.id.clouds_val)).setText(currWeatherTable.getCurr_clouds_all()+"");
+        ((TextView)findViewById(R.id.rainlast3h_val)).setText(currWeatherTable.getCurr_rain_last3hrs()+"");
+        ((TextView)findViewById(R.id.snowlast3h_val)).setText(currWeatherTable.getCurr_snow_last3hrs()+"");
     }
 
     //this will load the weather icon.

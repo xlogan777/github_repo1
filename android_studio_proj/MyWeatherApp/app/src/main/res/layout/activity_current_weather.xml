@@ -6,16 +6,15 @@
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
                 android:paddingBottom="@dimen/activity_vertical_margin"
-                tools:context="jmtechsvcs.myweatherapp.activitypkg.CurrentWeatherActivity"
-                android:id="@+id/currentweathergui">
+                tools:context=".CurrentWeatherActivity">
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="city_name"
-        android:id="@+id/city_name"
-        android:layout_marginTop="35dp"
+        android:text="cityname"
+        android:id="@+id/cityname"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
@@ -24,403 +23,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="country_code"
-        android:id="@+id/countrycode"
-        android:layout_alignTop="@+id/city_name"
-        android:layout_alignLeft="@+id/CurrentWeatherConditions"
-        android:layout_alignStart="@+id/CurrentWeatherConditions"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Times"
-        android:id="@+id/Times"
-        android:layout_below="@+id/city_name"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="26dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="DataLastUpdated"
-        android:id="@+id/LastCurrentWeatherUpdate"
-        android:layout_below="@+id/Times"
-        android:layout_alignLeft="@+id/Sunrise"
-        android:layout_alignStart="@+id/Sunrise"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Sunrise"
-        android:id="@+id/Sunrise"
-        android:layout_below="@+id/LastCurrentWeatherUpdate"
-        android:layout_toRightOf="@+id/Times"
-        android:layout_toEndOf="@+id/Times"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Sunset"
-        android:id="@+id/Sunset"
-        android:layout_below="@+id/Sunrise"
-        android:layout_toRightOf="@+id/Times"
-        android:layout_toEndOf="@+id/Times"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Weather"
-        android:id="@+id/Weather"
-        android:layout_marginTop="17dp"
-        android:layout_below="@+id/Sunset"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="recentfeedtime"
-        android:id="@+id/recentfeedtime"
-        android:layout_below="@+id/Times"
-        android:layout_toRightOf="@+id/curr_main_temp_max"
-        android:layout_toEndOf="@+id/curr_main_temp_max"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="sunrisetime"
-        android:id="@+id/sunrisetime"
-        android:layout_below="@+id/recentfeedtime"
-        android:layout_alignLeft="@+id/sunsettime"
-        android:layout_alignStart="@+id/sunsettime"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="sunsettime"
-        android:id="@+id/sunsettime"
-        android:layout_below="@+id/sunrisetime"
-        android:layout_alignLeft="@+id/weathermain"
-        android:layout_alignStart="@+id/weathermain"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="curr_weather_id"
-        android:id="@+id/curr_weather_id"
-        android:layout_below="@+id/Weather"
-        android:layout_alignLeft="@+id/Sunset"
-        android:layout_alignStart="@+id/Sunset"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="curr_weather_main"
-        android:id="@+id/curr_weather_main"
-        android:layout_below="@+id/curr_weather_id"
-        android:layout_alignLeft="@+id/curr_weather_id"
-        android:layout_alignStart="@+id/curr_weather_id"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="curr_weather_desc"
-        android:id="@+id/curr_weather_desc"
-        android:layout_below="@+id/curr_weather_main"
-        android:layout_alignLeft="@+id/curr_weather_main"
-        android:layout_alignStart="@+id/curr_weather_main"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="curr_main_temp"
-        android:id="@+id/curr_main_temp"
-        android:layout_below="@+id/curr_weather_desc"
-        android:layout_toRightOf="@+id/Times"
-        android:layout_toEndOf="@+id/Times"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="curr_main_pressure"
-        android:id="@+id/curr_main_pressure"
-        android:layout_below="@+id/curr_main_temp"
-        android:layout_toRightOf="@+id/Times"
-        android:layout_toEndOf="@+id/Times"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="curr_main_humidity"
-        android:id="@+id/curr_main_humidity"
-        android:layout_below="@+id/curr_main_pressure"
-        android:layout_toRightOf="@+id/Times"
-        android:layout_toEndOf="@+id/Times"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="curr_main_temp_min"
-        android:id="@+id/curr_main_temp_min"
-        android:layout_below="@+id/curr_main_humidity"
-        android:layout_alignLeft="@+id/curr_main_humidity"
-        android:layout_alignStart="@+id/curr_main_humidity"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="curr_main_temp_max"
-        android:id="@+id/curr_main_temp_max"
-        android:layout_below="@+id/curr_main_temp_min"
-        android:layout_toRightOf="@+id/Times"
-        android:layout_toEndOf="@+id/Times"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="curr_main_sea_level"
-        android:id="@+id/curr_main_sea_level"
-        android:layout_below="@+id/curr_main_temp_max"
-        android:layout_alignLeft="@+id/curr_main_temp_max"
-        android:layout_alignStart="@+id/curr_main_temp_max"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="curr_main_grnd_level"
-        android:id="@+id/curr_main_grnd_level"
-        android:layout_below="@+id/curr_main_sea_level"
-        android:layout_toRightOf="@+id/Times"
-        android:layout_toEndOf="@+id/Times"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="curr_wind_speed"
-        android:id="@+id/curr_wind_speed"
-        android:layout_below="@+id/curr_main_grnd_level"
-        android:layout_toRightOf="@+id/Times"
-        android:layout_toEndOf="@+id/Times"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="curr_wind_degs"
-        android:id="@+id/curr_wind_degs"
-        android:layout_below="@+id/curr_wind_speed"
-        android:layout_alignLeft="@+id/curr_wind_speed"
-        android:layout_alignStart="@+id/curr_wind_speed"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="curr_clouds_all"
-        android:id="@+id/curr_clouds_all"
-        android:layout_below="@+id/curr_wind_degs"
-        android:layout_alignLeft="@+id/curr_wind_degs"
-        android:layout_alignStart="@+id/curr_wind_degs"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="curr_rain_last3hrs"
-        android:id="@+id/curr_rain_last3hrs"
-        android:layout_below="@+id/curr_clouds_all"
-        android:layout_alignLeft="@+id/curr_clouds_all"
-        android:layout_alignStart="@+id/curr_clouds_all"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="curr_snow_last3hrs"
-        android:id="@+id/curr_snow_last3hrs"
-        android:layout_below="@+id/curr_rain_last3hrs"
-        android:layout_alignLeft="@+id/curr_rain_last3hrs"
-        android:layout_alignStart="@+id/curr_rain_last3hrs"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="weathermain"
-        android:id="@+id/weathermain"
-        android:layout_alignTop="@+id/curr_weather_main"
-        android:layout_alignLeft="@+id/sealevel"
-        android:layout_alignStart="@+id/sealevel"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="weatherdesc"
-        android:id="@+id/weatherdesc"
-        android:layout_below="@+id/weathermain"
-        android:layout_toRightOf="@+id/Lon"
-        android:layout_toEndOf="@+id/Lon"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="maintemp"
-        android:id="@+id/maintemp"
-        android:layout_above="@+id/curr_main_pressure"
-        android:layout_alignLeft="@+id/mainpressure"
-        android:layout_alignStart="@+id/mainpressure"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="mainpressure"
-        android:id="@+id/mainpressure"
-        android:layout_below="@+id/maintemp"
-        android:layout_toRightOf="@+id/Lon"
-        android:layout_toEndOf="@+id/Lon"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="mainhumidity"
-        android:id="@+id/mainhumidity"
-        android:layout_below="@+id/mainpressure"
-        android:layout_toRightOf="@+id/Lon"
-        android:layout_toEndOf="@+id/Lon"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="mintemp"
-        android:id="@+id/mintemp"
-        android:layout_below="@+id/mainhumidity"
-        android:layout_toRightOf="@+id/Lon"
-        android:layout_toEndOf="@+id/Lon"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="maxtemp"
-        android:id="@+id/maxtemp"
-        android:layout_above="@+id/sealevel"
-        android:layout_toRightOf="@+id/Lon"
-        android:layout_toEndOf="@+id/Lon"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="sealevel"
-        android:id="@+id/sealevel"
-        android:layout_above="@+id/grndlevel"
-        android:layout_alignLeft="@+id/rainlast3h"
-        android:layout_alignStart="@+id/rainlast3h"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="grndlevel"
-        android:id="@+id/grndlevel"
-        android:layout_alignTop="@+id/curr_main_grnd_level"
-        android:layout_alignLeft="@+id/windspeed"
-        android:layout_alignStart="@+id/windspeed"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="windspeed"
-        android:id="@+id/windspeed"
-        android:layout_below="@+id/grndlevel"
-        android:layout_alignLeft="@+id/winddegs"
-        android:layout_alignStart="@+id/winddegs"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="winddegs"
-        android:id="@+id/winddegs"
-        android:layout_alignTop="@+id/curr_wind_degs"
-        android:layout_toRightOf="@+id/Lon"
-        android:layout_toEndOf="@+id/Lon"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="clouds"
-        android:id="@+id/clouds"
-        android:layout_below="@+id/winddegs"
-        android:layout_alignLeft="@+id/winddegs"
-        android:layout_alignStart="@+id/winddegs"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="rainlast3h"
-        android:id="@+id/rainlast3h"
-        android:layout_above="@+id/curr_snow_last3hrs"
-        android:layout_alignLeft="@+id/snowlast3h"
-        android:layout_alignStart="@+id/snowlast3h"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="snowlast3h"
-        android:id="@+id/snowlast3h"
-        android:layout_below="@+id/rainlast3h"
-        android:layout_alignRight="@+id/recentfeedtime"
-        android:layout_alignEnd="@+id/recentfeedtime"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="CurrentWeatherConditions"
-        android:id="@+id/CurrentWeatherConditions"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/Sunrise"
-        android:layout_toEndOf="@+id/Sunrise"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Coordinates:"
-        android:id="@+id/Coordinates"
-        android:layout_below="@+id/city_name"
+        android:text="Coordinates"
+        android:id="@+id/coordinates"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/cityname"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
 
@@ -430,19 +36,9 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Lat"
         android:id="@+id/Lat"
-        android:layout_below="@+id/countrycode"
-        android:layout_alignLeft="@+id/countrycode"
-        android:layout_alignStart="@+id/countrycode"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="lat_val"
-        android:id="@+id/lat_val"
-        android:layout_below="@+id/countrycode"
-        android:layout_alignRight="@+id/countrycode"
-        android:layout_alignEnd="@+id/countrycode"/>
+        android:layout_below="@+id/coordinates"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -450,9 +46,18 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Lon"
         android:id="@+id/Lon"
-        android:layout_below="@+id/countrycode"
-        android:layout_alignLeft="@+id/recentfeedtime"
-        android:layout_alignStart="@+id/recentfeedtime"/>
+        android:layout_below="@+id/Lat"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="lat_val"
+        android:id="@+id/lat_val"
+        android:layout_alignTop="@+id/Lat"
+        android:layout_centerHorizontal="true"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -460,9 +65,91 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="lon_val"
         android:id="@+id/lon_val"
-        android:layout_alignTop="@+id/Lon"
-        android:layout_alignRight="@+id/winddegs"
-        android:layout_alignEnd="@+id/winddegs"/>
+        android:layout_above="@+id/times"
+        android:layout_alignLeft="@+id/lat_val"
+        android:layout_alignStart="@+id/lat_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Times"
+        android:id="@+id/times"
+        android:layout_below="@+id/Lon"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="18dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="LastUpdateTime"
+        android:id="@+id/LastUpdateTime"
+        android:layout_below="@+id/times"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="SunRise"
+        android:id="@+id/SunRise"
+        android:layout_below="@+id/LastUpdateTime"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="SunSet"
+        android:id="@+id/SunSet"
+        android:layout_below="@+id/SunRise"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="recentfeedtime_val"
+        android:id="@+id/recentfeedtime_val"
+        android:layout_alignBottom="@+id/LastUpdateTime"
+        android:layout_alignLeft="@+id/lon_val"
+        android:layout_alignStart="@+id/lon_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="sr_time_val"
+        android:id="@+id/sr_time_val"
+        android:layout_below="@+id/recentfeedtime_val"
+        android:layout_alignLeft="@+id/recentfeedtime_val"
+        android:layout_alignStart="@+id/recentfeedtime_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="ss_time_val"
+        android:id="@+id/ss_time_val"
+        android:layout_below="@+id/sr_time_val"
+        android:layout_alignLeft="@+id/sr_time_val"
+        android:layout_alignStart="@+id/sr_time_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Weather"
+        android:id="@+id/weather"
+        android:layout_below="@+id/SunSet"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -470,8 +157,307 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="weatherid"
         android:id="@+id/weatherid"
-        android:layout_above="@+id/weathermain"
-        android:layout_alignLeft="@+id/weathermain"
-        android:layout_alignStart="@+id/weathermain"/>
+        android:layout_below="@+id/weather"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="weathermain"
+        android:id="@+id/weathermain"
+        android:layout_below="@+id/weatherid"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="weatherdesc"
+        android:id="@+id/weatherdesc"
+        android:layout_below="@+id/weathermain"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="maintemp"
+        android:id="@+id/maintemp"
+        android:layout_below="@+id/weatherdesc"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="mainpressure"
+        android:id="@+id/mainpressure"
+        android:layout_below="@+id/maintemp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="mainhumidity"
+        android:id="@+id/mainhumidity"
+        android:layout_below="@+id/mainpressure"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="mintemp"
+        android:id="@+id/mintemp"
+        android:layout_below="@+id/mainhumidity"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="maxtemp"
+        android:id="@+id/maxtemp"
+        android:layout_below="@+id/mintemp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="sealevel"
+        android:id="@+id/sealevel"
+        android:layout_below="@+id/maxtemp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="grndlevel"
+        android:id="@+id/grndlevel"
+        android:layout_below="@+id/sealevel"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="windspeed"
+        android:id="@+id/windspeed"
+        android:layout_below="@+id/grndlevel"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="winddegs"
+        android:id="@+id/winddegs"
+        android:layout_below="@+id/windspeed"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="clouds"
+        android:id="@+id/clouds"
+        android:layout_below="@+id/winddegs"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="rainlast3h"
+        android:id="@+id/rainlast3h"
+        android:layout_below="@+id/clouds"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="snowlast3h"
+        android:id="@+id/snowlast3h"
+        android:layout_below="@+id/rainlast3h"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="weatherid_val"
+        android:id="@+id/weatherid_val"
+        android:layout_above="@+id/weathermain"
+        android:layout_alignLeft="@+id/ss_time_val"
+        android:layout_alignStart="@+id/ss_time_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="weathermain_val"
+        android:id="@+id/weathermain_val"
+        android:layout_below="@+id/weatherid_val"
+        android:layout_alignLeft="@+id/weatherid_val"
+        android:layout_alignStart="@+id/weatherid_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="weatherdesc_val"
+        android:id="@+id/weatherdesc_val"
+        android:layout_below="@+id/weathermain_val"
+        android:layout_alignLeft="@+id/weathermain_val"
+        android:layout_alignStart="@+id/weathermain_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="maintemp_val"
+        android:id="@+id/maintemp_val"
+        android:layout_below="@+id/weatherdesc_val"
+        android:layout_alignLeft="@+id/weatherdesc_val"
+        android:layout_alignStart="@+id/weatherdesc_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="mainpressure_val"
+        android:id="@+id/mainpressure_val"
+        android:layout_below="@+id/maintemp_val"
+        android:layout_alignLeft="@+id/maintemp_val"
+        android:layout_alignStart="@+id/maintemp_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="mainhumidity_val"
+        android:id="@+id/mainhumidity_val"
+        android:layout_below="@+id/mainpressure_val"
+        android:layout_alignLeft="@+id/mainpressure_val"
+        android:layout_alignStart="@+id/mainpressure_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="mintemp_val"
+        android:id="@+id/mintemp_val"
+        android:layout_below="@+id/mainhumidity_val"
+        android:layout_alignLeft="@+id/mainhumidity_val"
+        android:layout_alignStart="@+id/mainhumidity_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="maxtemp_val"
+        android:id="@+id/maxtemp_val"
+        android:layout_below="@+id/mintemp_val"
+        android:layout_alignLeft="@+id/mintemp_val"
+        android:layout_alignStart="@+id/mintemp_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="sealevel_val"
+        android:id="@+id/sealevel_val"
+        android:layout_below="@+id/maxtemp_val"
+        android:layout_alignLeft="@+id/maxtemp_val"
+        android:layout_alignStart="@+id/maxtemp_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="grndlevel_val"
+        android:id="@+id/grndlevel_val"
+        android:layout_below="@+id/sealevel_val"
+        android:layout_alignLeft="@+id/sealevel_val"
+        android:layout_alignStart="@+id/sealevel_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="windspeed_val"
+        android:id="@+id/windspeed_val"
+        android:layout_below="@+id/grndlevel_val"
+        android:layout_alignLeft="@+id/grndlevel_val"
+        android:layout_alignStart="@+id/grndlevel_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="winddegs_val"
+        android:id="@+id/winddegs_val"
+        android:layout_below="@+id/windspeed_val"
+        android:layout_alignLeft="@+id/windspeed_val"
+        android:layout_alignStart="@+id/windspeed_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="clouds_val"
+        android:id="@+id/clouds_val"
+        android:layout_below="@+id/winddegs_val"
+        android:layout_alignLeft="@+id/winddegs_val"
+        android:layout_alignStart="@+id/winddegs_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="rainlast3h_val"
+        android:id="@+id/rainlast3h_val"
+        android:layout_above="@+id/snowlast3h"
+        android:layout_alignLeft="@+id/clouds_val"
+        android:layout_alignStart="@+id/clouds_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="snowlast3h_val"
+        android:id="@+id/snowlast3h_val"
+        android:layout_below="@+id/rainlast3h_val"
+        android:layout_alignLeft="@+id/rainlast3h_val"
+        android:layout_alignStart="@+id/rainlast3h_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="countrycode"
+        android:id="@+id/countrycode"
+        android:layout_alignTop="@+id/cityname"
+        android:layout_alignLeft="@+id/lat_val"
+        android:layout_alignStart="@+id/lat_val"/>
 </RelativeLayout>
