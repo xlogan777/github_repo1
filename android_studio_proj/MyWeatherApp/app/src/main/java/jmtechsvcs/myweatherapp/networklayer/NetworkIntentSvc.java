@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
+import jmtechsvcs.myweatherapp.greendaosrcgen.CityWeatherCurrCondTable;
 import jmtechsvcs.myweatherapp.utils.WeatherDbProcessing;
 
 /**
@@ -86,7 +87,7 @@ public class NetworkIntentSvc extends IntentService
         //create the weather url with city id
         String curr_weather_url = WeatherMapUrls.getCurrentWeatherByCityId("" + cityId);
 
-        //get the input stream from the http get.
+        //get the payload from the http get for the current weather json data
         DataPayload payload = NetworkProcessing.httpGetProcessing(curr_weather_url, DataPayload.T_Payload_Type.E_JSON_PAYLOAD_TYPE);
 
         //print json string if not null.
@@ -94,6 +95,25 @@ public class NetworkIntentSvc extends IntentService
             Log.d(LOGTAG,payload.getStringPayload());
 
         //save to the db using this json input.
-        WeatherDbProcessing.updateCurrWeatherToDb(payload.getStringPayload(), getApplicationContext());
+        CityWeatherCurrCondTable curr_cond =
+                WeatherDbProcessing.updateCurrWeatherToDb(payload.getStringPayload(), getApplicationContext());
+
+        //confirm that we have a valid bean and its icon data is not null and > 0
+        if(curr_cond != null &&
+           curr_cond.getCurr_weather_icon() != null &&
+           curr_cond.getCurr_weather_icon().length() > 0)
+        {
+            //create the weather icon url.
+            String weather_icon_url = WeatherMapUrls.getWeatherIconByIconId(curr_cond.getCurr_weather_icon());
+
+            Log.d(LOGTAG,"url = "+weather_icon_url);
+
+            //get the payload from the http get for the weather icon.
+            payload = NetworkProcessing.httpGetProcessing(weather_icon_url, DataPayload.T_Payload_Type.E_BYTE_ARRAY_PAYLOAD_TYPE);
+
+            //save the icon data into the DB.
+            WeatherDbProcessing.updateWeatherIcon
+                    (curr_cond.getCurr_weather_icon(), weather_icon_url, payload.getBytePayload(), getApplicationContext());
+        }
     }
 }

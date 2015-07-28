@@ -17,6 +17,7 @@ import jmtechsvcs.myweatherapp.greendaosrcgen.CityInfoTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgen.CityWeatherCurrCondTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgen.DaoMaster;
 import jmtechsvcs.myweatherapp.greendaosrcgen.DaoSession;
+import jmtechsvcs.myweatherapp.greendaosrcgen.WeatherIconTableDao;
 import jmtechsvcs.myweatherapp.utils.WeatherMapUtils;
 
 /**
@@ -95,8 +96,11 @@ public class MyWeatherApplication extends Application
         //get the actual sql lite database here..creates the db now.
         db = helper.getWritableDatabase();
 
-        //force the creation of the table here.
+        //force the creation of the city curr weather table here.
         CityWeatherCurrCondTableDao.createTable(db,true);
+
+        //force the create of the weather icon table here.
+        WeatherIconTableDao.createTable(db, true);
 
         //use the db ref to get the dao master.
         daoMaster = new DaoMaster(db);

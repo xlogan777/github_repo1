@@ -28,18 +28,18 @@ public class MainWeatherActivity extends ActionBarActivity {
             //request download of curr city data.
             sendMsgToIntentSvc(4891010);
         }
-
-        //add this to the android back stack for here to the next activity
-        //being activated.
-        Intent intent = new Intent(this, CurrentWeatherActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putLong("city_id",4891010);
-
-        //add the bundle to the intent.
-        intent.putExtras(bundle);
-
-        //start the activity with info on the city id to be used there.
-        startActivity(intent);
+//
+//        //add this to the android back stack for here to the next activity
+//        //being activated.
+//        Intent intent = new Intent(this, CurrentWeatherActivity.class);
+//        Bundle bundle = new Bundle();
+//        bundle.putLong("city_id",4891010);
+//
+//        //add the bundle to the intent.
+//        intent.putExtras(bundle);
+//
+//        //start the activity with info on the city id to be used there.
+//        startActivity(intent);
     }
 
     private void sendMsgToIntentSvc(long cityId)

@@ -1,10 +1,18 @@
 package jmtechsvcs.myweatherapp.utils;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -133,7 +141,7 @@ public class WeatherMapUtils
         else
             rv = DEFAULT_STRING_VAL;
 
-        Log.d(LOGTAG, (rv == DEFAULT_STRING_VAL ? "using default String val" : "string val = "+rv));
+        Log.d(LOGTAG, (rv == DEFAULT_STRING_VAL ? "using default String val" : "string val = " + rv));
 
         return rv;
     }
@@ -153,5 +161,58 @@ public class WeatherMapUtils
         return sw.toString();
 
         //TODO: may need to write these expections to a errors file...not sure..
+    }
+
+    /*
+        this will create a png file in the specified images dir, and compress the bit map
+        thats was generated from the byte array and save this bitmap as a png compressed
+        file to the images dir.
+     */
+    public static String saveByteToPngFile(Context context, String iconId, byte [] rawImage)
+    throws FileNotFoundException, IOException
+    {
+        // path to /data/data/yourapp/app_data/weather_imgs
+        //create app directory here if it doesnt exist, or get the path to the
+        //directory.
+        File directory = context.getDir("weather_imgs", Context.MODE_PRIVATE);
+
+        //file to create as a png file using the image icon id.
+        //attach the file output stream to it.
+        File image_path = new File(directory, iconId+".png");
+        FileOutputStream fos = new FileOutputStream(image_path);
+
+        //create a bitmap obj here.
+        Bitmap bitmap = BitmapFactory.decodeByteArray(rawImage, 0, rawImage.length);
+
+        // Use the compress method on the BitMap object to write image to the OutputStream
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, fos);
+
+        //close the output stream.
+        fos.close();
+
+        //returns the file path to this newly created image file.
+        return image_path.getAbsolutePath();
+    }
+
+    /*
+        this will take a image path from internal app storage and
+        create a bitmap and return that back to the caller.
+     */
+    public static Bitmap readPngFile(String imagePath) throws FileNotFoundException
+    {
+        //path to image file created.
+        File file_path = new File(imagePath);
+
+        //get a bitmap from the image path and decoded for bitmap.
+        Bitmap rv = BitmapFactory.decodeStream(new FileInputStream(file_path));
+
+//        FileInputStream fis = context.openFileInput(imagePath);
+//        Bitmap b = BitmapFactory.decodeStream(fis);
+//        fis.close();
+
+        //ImageView img=(ImageView)findViewById(R.id.imgPicker);
+        //img.setImageBitmap(b);
+
+        return rv;
     }
 }

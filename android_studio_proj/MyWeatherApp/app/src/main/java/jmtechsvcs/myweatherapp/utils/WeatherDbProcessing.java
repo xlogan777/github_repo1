@@ -1,11 +1,15 @@
 package jmtechsvcs.myweatherapp.utils;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +19,8 @@ import jmtechsvcs.myweatherapp.greendaosrcgen.CityInfoTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgen.CityWeatherCurrCondTable;
 import jmtechsvcs.myweatherapp.greendaosrcgen.CityWeatherCurrCondTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgen.DaoSession;
+import jmtechsvcs.myweatherapp.greendaosrcgen.WeatherIconTable;
+import jmtechsvcs.myweatherapp.greendaosrcgen.WeatherIconTableDao;
 
 /**
  * Created by jimmy on 7/23/2015.
@@ -36,9 +42,68 @@ public class WeatherDbProcessing
         return dao_session;
     }
 
-    //this will parse the json data and use a dao to save the obj to db.
-    public static void updateCurrWeatherToDb(String jsonInput, Context context)
+    /*
+        this will create a image file in the local file system for this image icon and
+        save this path to the DB using the dao for this table.
+     */
+    public static void updateWeatherIcon(String iconId, String iconUrl, byte [] rawImage, Context context)
     {
+        try
+        {
+            //get the dao session.
+            DaoSession daoSession = getDaoSession(context);
+
+            //get the dao from the dao session.
+            WeatherIconTableDao dao = daoSession.getWeatherIconTableDao();
+
+            //check to see if the icon exists in the DB first.
+            List<WeatherIconTable> items =  (List<WeatherIconTable>)dao.queryBuilder().where
+                    (
+                            WeatherIconTableDao.Properties.Icon_id.eq(iconId)
+                    ).list();
+
+            if(items.size() == 0)
+            {
+                //add this image to the file system first, and confirm this worked before u
+                //add it to the DB.
+                String image_path = WeatherMapUtils.saveByteToPngFile(context, iconId, rawImage);
+
+                //if we are here, it is because we didnt generate an exception, we need
+                //to save this data to the DB, with the path to the image file.
+                if(image_path != null && image_path.length() > 0)
+                {
+                    //create bean to set data for this bean.
+                    WeatherIconTable iconTable = new WeatherIconTable();
+
+                    //set the data here.
+                    iconTable.setIcon_id(iconId);
+                    iconTable.setIcon_url(iconUrl);
+
+                    //for now dont save the image file raw in the DB.
+                    //iconTable.setImage_raw(rawImage);
+
+                    iconTable.setImage_path(image_path);
+
+                    //save bean using dao
+                    dao.insert(iconTable);
+                }
+            }
+            else
+            {
+                Log.d(LOGTAG,"size of search = "+items.size()+", dont save to filesystem, or update db.");
+            }
+        }
+        catch(Exception e)
+        {
+            Log.d(LOGTAG,WeatherMapUtils.getStackTrace(e));
+        }
+    }
+
+    //this will parse the json data and use a dao to save the obj to db.
+    public static CityWeatherCurrCondTable updateCurrWeatherToDb(String jsonInput, Context context)
+    {
+        CityWeatherCurrCondTable rv = null;
+
         try
         {
             //get the dao session.
@@ -117,12 +182,19 @@ public class WeatherDbProcessing
 
             //save the data to the db.
             curr_weather_dao.insertOrReplace(curr_weather_bean);
+
+            //return this bean back to the caller.
+            rv = curr_weather_bean;
         }
         catch (Exception e)
         {
             Log.d(LOGTAG,WeatherMapUtils.getStackTrace(e));
         }
+
+        return rv;
     }
+
+
 
     /*
         added annotation for unchecked cast since we know it it ok.
