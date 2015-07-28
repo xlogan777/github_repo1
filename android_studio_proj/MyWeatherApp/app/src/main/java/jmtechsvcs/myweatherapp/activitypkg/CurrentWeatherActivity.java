@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import jmtechsvcs.myweatherapp.R;
@@ -142,7 +143,9 @@ public class CurrentWeatherActivity extends ActionBarActivity
 
                 if(bitmap != null)
                 {
-                    //TODO: set the bitmap here to the image view .
+                    //set the image bit map here.
+                    ((ImageView)findViewById(R.id.weather_icon)).setImageBitmap(bitmap);
+                    Log.d(LOGTAG,"loaded the image bit map...bit map file = "+img_path);
                 }
             }
         }
