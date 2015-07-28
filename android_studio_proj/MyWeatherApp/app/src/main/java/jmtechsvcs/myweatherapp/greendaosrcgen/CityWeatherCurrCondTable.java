@@ -8,7 +8,7 @@ package jmtechsvcs.myweatherapp.greendaosrcgen;
  * Entity mapped to table CITY_WEATHER_CURR_COND_TABLE.
  */
 public class CityWeatherCurrCondTable {
-    //test
+
     private long city_id;
     private Long curr_weather_id;
     private String curr_weather_main;
