@@ -161,7 +161,7 @@ public class MyWeatherDaoGenerator
       //add pk
       //this will be an incrementing row number to give unique row access
       //this is the auto-increment feature seen in other databases.
-      weather_icon_entity.addIdProperty().primaryKey().notNull();
+      weather_icon_entity.addIdProperty().primaryKey().autoincrement().notNull();
       
       //add non pk fields
       //searching will be done using this property.
