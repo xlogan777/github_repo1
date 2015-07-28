@@ -194,15 +194,14 @@ public class WeatherDbProcessing
         return rv;
     }
 
-
-
     /*
         added annotation for unchecked cast since we know it it ok.
         uses the input args to get the correct java bean to return based on compile time
         checking of the data type passed in.
      */
     @SuppressWarnings("unchecked")
-    public static <CityBeanType> CityBeanType getBeanByCityId(long cityId, Context context, CityBeanType beanType)
+    public static <CityBeanType> CityBeanType getBeanByQueryParams
+    (BeanQueryParams queryParams, Context context, CityBeanType beanType)
     {
         //data type used in this generic function.
         CityBeanType rv = null;
@@ -215,7 +214,8 @@ public class WeatherDbProcessing
             //item list.
             List<CityBeanType> items = new ArrayList<CityBeanType>();
 
-            if(beanType instanceof CityInfoTable)
+            if(beanType instanceof CityInfoTable &&
+               queryParams.getQueryParamType() == BeanQueryParams.T_Query_Param_Type.E_CITY_INFO_TABLE_TYPE)
             {
                 //get the current city weather dao.
                 CityInfoTableDao dao = daoSession.getCityInfoTableDao();
@@ -223,17 +223,30 @@ public class WeatherDbProcessing
                 //get the java bean using the dao obj but use the city id to find it.
                 items =  (List<CityBeanType>)dao.queryBuilder().where
                         (
-                                CityInfoTableDao.Properties.City_id.eq(cityId)
+                                CityInfoTableDao.Properties.City_id.eq(queryParams.getCityId())
                         ).list();
             }
-            else if(beanType instanceof CityWeatherCurrCondTable)
+            else if(beanType instanceof CityWeatherCurrCondTable &&
+                    queryParams.getQueryParamType() == BeanQueryParams.T_Query_Param_Type.E_CURR_CITY_WEATHER_TABLE_TYPE)
             {
                 CityWeatherCurrCondTableDao dao = daoSession.getCityWeatherCurrCondTableDao();
 
                 //get the java bean using the dao obj but use the city id to find it.
                 items = (List<CityBeanType>)dao.queryBuilder().where
                         (
-                                CityWeatherCurrCondTableDao.Properties.City_id.eq(cityId)
+                                CityWeatherCurrCondTableDao.Properties.City_id.eq(queryParams.getCityId())
+                        ).list();
+            }
+
+            else if(beanType instanceof WeatherIconTable &&
+                    queryParams.getQueryParamType() == BeanQueryParams.T_Query_Param_Type.E_IMG_ICON_TABLE_TYPE)
+            {
+                WeatherIconTableDao dao = daoSession.getWeatherIconTableDao();
+
+                //get the java bean using the dao obj but use the city id to find it.
+                items = (List<CityBeanType>)dao.queryBuilder().where
+                        (
+                                WeatherIconTableDao.Properties.Icon_id.eq(queryParams.getIconId())
                         ).list();
             }
 

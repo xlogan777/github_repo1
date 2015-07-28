@@ -1,6 +1,8 @@
 package jmtechsvcs.myweatherapp.activitypkg;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +13,10 @@ import android.widget.TextView;
 import jmtechsvcs.myweatherapp.R;
 import jmtechsvcs.myweatherapp.greendaosrcgen.CityInfoTable;
 import jmtechsvcs.myweatherapp.greendaosrcgen.CityWeatherCurrCondTable;
+import jmtechsvcs.myweatherapp.greendaosrcgen.WeatherIconTable;
+import jmtechsvcs.myweatherapp.utils.BeanQueryParams;
 import jmtechsvcs.myweatherapp.utils.WeatherDbProcessing;
+import jmtechsvcs.myweatherapp.utils.WeatherMapUtils;
 
 /*
     this class handles the display of the current weather data for a city.
@@ -33,13 +38,31 @@ public class CurrentWeatherActivity extends ActionBarActivity
         //this is the city id needed to ge the current weather data.
         long city_id = bundle.getLong("city_id");
 
-        //get the current weather using the city id.
+        //get the application context.
+        Context context = getApplicationContext();
+
+        //get the current weather using the city id. build the query params for each specific data type
+        //being accessed.
+        BeanQueryParams qp = new BeanQueryParams();
+        qp.setCityId(city_id);//city id is used for both weather cond, and city info.
+
+        qp.setQueryParamType(BeanQueryParams.T_Query_Param_Type.E_CURR_CITY_WEATHER_TABLE_TYPE);
         CityWeatherCurrCondTable curr_weather_data = new CityWeatherCurrCondTable();
-        curr_weather_data = WeatherDbProcessing.getBeanByCityId(city_id, getApplicationContext(), curr_weather_data);
+        curr_weather_data = WeatherDbProcessing.getBeanByQueryParams(qp, context, curr_weather_data);
 
         //get the current city info using city id.
+        qp.setQueryParamType(BeanQueryParams.T_Query_Param_Type.E_CITY_INFO_TABLE_TYPE);
         CityInfoTable city_info_table = new CityInfoTable();
-        city_info_table = WeatherDbProcessing.getBeanByCityId(city_id, getApplicationContext(), city_info_table);
+        city_info_table = WeatherDbProcessing.getBeanByQueryParams(qp, context, city_info_table);
+
+        //get the image icon and allow to have it loaded to the image view.
+        //setup the query params for access to the icon data.
+        qp.setQueryParamType(BeanQueryParams.T_Query_Param_Type.E_IMG_ICON_TABLE_TYPE);
+        qp.setCityId(-1);
+        qp.setIconId(curr_weather_data.getCurr_weather_icon());
+
+        WeatherIconTable weatherIconTable = new WeatherIconTable();
+        weatherIconTable = WeatherDbProcessing.getBeanByQueryParams(qp, context, weatherIconTable);
 
         //make sure that the data valid before u display it.
         if(curr_weather_data != null && city_info_table != null)
@@ -57,7 +80,7 @@ public class CurrentWeatherActivity extends ActionBarActivity
             loadCityWeatherInfo(curr_weather_data);
 
             //load the weather icon.
-            loadCityWeatherIcon();
+            loadCityWeatherIcon(weatherIconTable);
         }
         else
         {
@@ -106,9 +129,27 @@ public class CurrentWeatherActivity extends ActionBarActivity
     }
 
     //this will load the weather icon.
-    private void loadCityWeatherIcon()
+    private void loadCityWeatherIcon(WeatherIconTable weatherIconTable)
     {
-        //TODO: load the weather icon.
+        try
+        {
+            //get the image path from the bean obj.
+            String img_path = weatherIconTable.getImage_path();
+
+            if(img_path != null && img_path.length() > 0)
+            {
+                Bitmap bitmap = WeatherMapUtils.readPngFile(img_path);
+
+                if(bitmap != null)
+                {
+                    //TODO: set the bitmap here to the image view .
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            Log.d(LOGTAG,WeatherMapUtils.getStackTrace(e));
+        }
     }
 
     @Override
