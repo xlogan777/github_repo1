@@ -11,7 +11,7 @@ public class MyWeatherDaoGenerator
 	{
 		//create green dao schema obj with version number, and pkg for the generated files.
 		int db_version_number = 1;
-		String pkg_name = "jmtechsvcs.myweatherapp.GreenDaoSrcGen";
+		String pkg_name = "jmtechsvcs.myweatherapp.greendaosrcgen";
 		
 		//create schema obj.
       Schema schema = new Schema(db_version_number, pkg_name);
@@ -23,8 +23,11 @@ public class MyWeatherDaoGenerator
 		System.out.println("create city id info table");
 		Entity city_info_table = createCityInfoTable(schema);
 		
-		System.out.println("create city weather cond table");	
+		System.out.println("create city weather cond table");
 		Entity city_weather_cond_table = createCityWeatherCurrCondTable(schema);
+		
+		System.out.println("create weather icon table");
+		Entity weather_icon_table = createWeatherIconTable(schema);
 		
 		//generate the source code
 		try
@@ -148,5 +151,28 @@ public class MyWeatherDaoGenerator
       city_weather_cond_entity.addLongProperty("curr_sys_sunset_time");
       
       return city_weather_cond_entity;
+	}
+	
+	public static Entity createWeatherIconTable(Schema schema)
+	{
+	   //table name
+      Entity weather_icon_entity = schema.addEntity("WeatherIconTable");
+      
+      //add pk
+      //this will be an incrementing row number to give unique row access
+      //this is the auto-increment feature seen in other databases.
+      weather_icon_entity.addIdProperty().primaryKey().notNull();
+      
+      //add non pk fields
+      //searching will be done using this property.
+      weather_icon_entity.addStringProperty("icon_id").unique().notNull();
+      
+      weather_icon_entity.addStringProperty("icon_url").notNull();
+      weather_icon_entity.addStringProperty("image_path").notNull();
+      
+      //this is kept here in case we want to store the raw image as a blob
+      weather_icon_entity.addByteArrayProperty("image_raw");
+      
+      return weather_icon_entity;
 	}
 }
