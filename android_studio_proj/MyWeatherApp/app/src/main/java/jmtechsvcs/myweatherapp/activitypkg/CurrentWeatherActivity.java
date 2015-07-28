@@ -56,20 +56,21 @@ public class CurrentWeatherActivity extends ActionBarActivity
         CityInfoTable city_info_table = new CityInfoTable();
         city_info_table = WeatherDbProcessing.getBeanByQueryParams(qp, context, city_info_table);
 
-        //get the image icon and allow to have it loaded to the image view.
-        //setup the query params for access to the icon data.
-        qp.setQueryParamType(BeanQueryParams.T_Query_Param_Type.E_IMG_ICON_TABLE_TYPE);
-        qp.setCityId(-1);
-        qp.setIconId(curr_weather_data.getCurr_weather_icon());
-
-        WeatherIconTable weatherIconTable = new WeatherIconTable();
-        weatherIconTable = WeatherDbProcessing.getBeanByQueryParams(qp, context, weatherIconTable);
-
         //make sure that the data valid before u display it.
-        if(curr_weather_data != null && city_info_table != null)
+        if(curr_weather_data != null &&
+           city_info_table != null)
         {
             Log.d(LOGTAG,"load data, city id = "+curr_weather_data.getCity_id()+
                     ", temp = "+curr_weather_data.getCurr_main_temp());
+
+            //get the image icon and allow to have it loaded to the image view.
+            //setup the query params for access to the icon data.
+            qp.setQueryParamType(BeanQueryParams.T_Query_Param_Type.E_IMG_ICON_TABLE_TYPE);
+            qp.setCityId(-1);
+            qp.setIconId(curr_weather_data.getCurr_weather_icon());
+
+            WeatherIconTable weatherIconTable = new WeatherIconTable();
+            weatherIconTable = WeatherDbProcessing.getBeanByQueryParams(qp, context, weatherIconTable);
 
             //load city info to ui
             loadCityInfo(city_info_table);
@@ -85,6 +86,30 @@ public class CurrentWeatherActivity extends ActionBarActivity
         }
         else
         {
+            ((TextView)findViewById(R.id.cityname)).setText("no city data available");
+            ((TextView)findViewById(R.id.countrycode)).setText("no city data available");
+
+            ((TextView)findViewById(R.id.lat_val)).setText("");
+            ((TextView)findViewById(R.id.lon_val)).setText("");
+            ((TextView)findViewById(R.id.recentfeedtime_val)).setText("");
+            ((TextView)findViewById(R.id.sr_time_val)).setText("");
+            ((TextView)findViewById(R.id.ss_time_val)).setText("");
+            ((TextView)findViewById(R.id.weatherid_val)).setText("");
+            ((TextView)findViewById(R.id.weathermain_val)).setText("");
+            ((TextView)findViewById(R.id.weatherdesc_val)).setText("");
+            ((TextView)findViewById(R.id.maintemp_val)).setText("");
+            ((TextView)findViewById(R.id.mainpressure_val)).setText("");
+            ((TextView)findViewById(R.id.mainhumidity_val)).setText("");
+            ((TextView)findViewById(R.id.mintemp_val)).setText("");
+            ((TextView)findViewById(R.id.maxtemp_val)).setText("");
+            ((TextView)findViewById(R.id.sealevel_val)).setText("");
+            ((TextView)findViewById(R.id.grndlevel_val)).setText("");
+            ((TextView)findViewById(R.id.windspeed_val)).setText("");
+            ((TextView)findViewById(R.id.winddegs_val)).setText("");
+            ((TextView)findViewById(R.id.clouds_val)).setText("");
+            ((TextView)findViewById(R.id.rainlast3h_val)).setText("");
+            ((TextView)findViewById(R.id.snowlast3h_val)).setText("");
+
             Log.d(LOGTAG,"null obj for curr city weather obj..load default data.");
         }
     }

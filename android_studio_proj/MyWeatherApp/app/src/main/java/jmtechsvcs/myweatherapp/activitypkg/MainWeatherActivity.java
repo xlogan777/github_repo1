@@ -13,7 +13,7 @@ import jmtechsvcs.myweatherapp.networklayer.NetworkIntentSvc;
 public class MainWeatherActivity extends ActionBarActivity {
 
     private static String LOGTAG = "MainWeatherActivity";
-    private static boolean useDebug = false;
+    private static boolean useDebug = true;
 
 //http://stackoverflow.com/questions/14744496/extract-database-of-an-application-from-android-device-through-adb
 
