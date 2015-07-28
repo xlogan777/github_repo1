@@ -43,7 +43,7 @@ public class WeatherIconTableDao extends AbstractDao<WeatherIconTable, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "'WEATHER_ICON_TABLE' (" + //
-                "'_id' INTEGER PRIMARY KEY NOT NULL ," + // 0: id
+                "'_id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ," + // 0: id
                 "'ICON_ID' TEXT NOT NULL UNIQUE ," + // 1: icon_id
                 "'ICON_URL' TEXT NOT NULL ," + // 2: icon_url
                 "'IMAGE_PATH' TEXT NOT NULL ," + // 3: image_path
