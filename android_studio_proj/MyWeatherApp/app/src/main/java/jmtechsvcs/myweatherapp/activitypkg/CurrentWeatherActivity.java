@@ -82,7 +82,8 @@ public class CurrentWeatherActivity extends ActionBarActivity
             loadCityWeatherInfo(curr_weather_data);
 
             //load the weather icon.
-            loadCityWeatherIcon(weatherIconTable);
+            if(weatherIconTable != null)
+                loadCityWeatherIcon(weatherIconTable);
         }
         else
         {

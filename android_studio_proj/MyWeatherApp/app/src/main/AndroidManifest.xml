@@ -32,7 +32,10 @@
             android:name=".activitypkg.CurrentWeatherActivity"
             android:label="@string/title_activity_current_weather" >
         </activity>
-
+        <activity
+            android:name=".activitypkg.CitySearchActivity"
+            android:label="@string/title_activity_city_search" >
+        </activity>
     </application>
 
 </manifest>
