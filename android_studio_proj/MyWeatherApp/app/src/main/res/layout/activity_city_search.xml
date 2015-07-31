@@ -25,14 +25,14 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Enter Country Code"
         android:id="@+id/searchcountrycode"
-        android:layout_alignTop="@+id/editText2"
+        android:layout_alignTop="@+id/cc_input"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
+        android:id="@+id/city_name_input"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -43,8 +43,8 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editText2"
-        android:layout_below="@+id/editText"
+        android:id="@+id/cc_input"
+        android:layout_below="@+id/city_name_input"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/searchcountrycode"
@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
         android:text="Search"
         android:id="@+id/performsearch"
-        android:layout_below="@+id/editText2"
+        android:layout_below="@+id/cc_input"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
 

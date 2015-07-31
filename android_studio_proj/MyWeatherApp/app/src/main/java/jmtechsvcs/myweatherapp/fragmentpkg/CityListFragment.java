@@ -8,9 +8,15 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
+import jmtechsvcs.myweatherapp.activitypkg.CitySearchActivity;
+import jmtechsvcs.myweatherapp.greendaosrcgen.CityInfoTable;
+import jmtechsvcs.myweatherapp.utils.BeanQueryParams;
+import jmtechsvcs.myweatherapp.utils.WeatherDbProcessing;
+
+//https://www.airpair.com/android/list-fragment-android-studio
 /**
  * A fragment representing a list of Items.
  * <p/>
@@ -30,7 +36,8 @@ public class CityListFragment extends ListFragment
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public CityListFragment(){
+    public CityListFragment()
+    {
     }
 
     @Override
@@ -38,9 +45,37 @@ public class CityListFragment extends ListFragment
     {
         super.onCreate(savedInstanceState);
 
-        List<String> items = Arrays.asList("My Item 1","My Item 2","My Item 3");
-        setListAdapter(new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_2, android.R.id.text1, items));
+        //get the activity and cast to the parent activity.
+        CitySearchActivity act = (CitySearchActivity)getActivity();
+
+        //get the city list from the act obj.
+        List<CityInfoTable> listParam = act.getCityList();
+
+        if(listParam != null)
+        {
+            String cn = "";
+            String cc = "";
+
+            List<String> display_list = new ArrayList<String>();
+            for(CityInfoTable my_items : listParam)
+            {
+                long city_id = my_items.getCity_id();
+                cn = my_items.getName();
+                cc = my_items.getCountry();
+
+//                BeanQueryParams qp = new BeanQueryParams();
+//                qp.setCityId(city_id);
+//                qp.setQueryParamType(BeanQueryParams.T_Query_Param_Type.E_CITY_INFO_TABLE_TYPE);
+//                CityInfoTable city_info_table = new CityInfoTable();
+//                city_info_table = WeatherDbProcessing.getBeanByQueryParams
+//                        (qp, getActivity().getApplicationContext(), city_info_table);
+
+                display_list.add("CityName = "+cn+", CC = "+cc);
+            }
+
+            setListAdapter(new ArrayAdapter<String>(getActivity(),
+                    android.R.layout.simple_list_item_2, android.R.id.text1, display_list));
+        }
     }
 
     @Override

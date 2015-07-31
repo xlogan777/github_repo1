@@ -13,6 +13,8 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.greenrobot.dao.query.Query;
+import de.greenrobot.dao.query.WhereCondition;
 import jmtechsvcs.myweatherapp.MyWeatherApplication;
 import jmtechsvcs.myweatherapp.greendaosrcgen.CityInfoTable;
 import jmtechsvcs.myweatherapp.greendaosrcgen.CityInfoTableDao;
@@ -261,6 +263,70 @@ public class WeatherDbProcessing
             else
             {
                 Log.d(LOGTAG, "list size = " + items.size() + ", this is an issue for type = "+beanType.getClass().getName());
+            }
+        }
+        catch(Exception e)
+        {
+            Log.d(LOGTAG,WeatherMapUtils.getStackTrace(e));
+        }
+
+        return rv;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <CityBeanType> List<CityBeanType> getBeanByQueryParamsList
+            (BeanQueryParams queryParams, Context context, CityBeanType beanType)
+    {
+        //data type used in this generic function.
+        List<CityBeanType> rv = null;
+
+        try
+        {
+            //get the dao session.
+            DaoSession daoSession = getDaoSession(context);
+
+            //item list.
+            List<CityBeanType> items = new ArrayList<CityBeanType>();
+
+            if(beanType instanceof CityInfoTable &&
+                    queryParams.getQueryParamType() == BeanQueryParams.T_Query_Param_Type.E_CITY_INFO_TABLE_LIST_TYPE)
+            {
+                //get the current city weather dao.
+                CityInfoTableDao dao = daoSession.getCityInfoTableDao();
+
+                //check to see if we have a coutry code..if so us it in the query.
+                if(queryParams.getCountryCode() != null && queryParams.getCountryCode().length() > 0)
+                {
+                    CityInfoTableDao.Properties.Name.columnName.equalsIgnoreCase(queryParams.getCityName());
+
+                    //get the java bean using the dao obj but use the city id to find it.
+                    items = (List<CityBeanType>)dao.queryBuilder().where
+                            (
+                                    CityInfoTableDao.Properties.Name.like(queryParams.getCityName()),
+                                    CityInfoTableDao.Properties.Country.like(queryParams.getCountryCode())
+                            ).list();
+                }
+
+                //check just for city name if we didnt find anything with cityname and CC.
+                //doing query with just city name
+                if(items.size() == 0)
+                {
+                    items = (List<CityBeanType>)dao.queryBuilder().where
+                            (
+                                    CityInfoTableDao.Properties.Name.like(queryParams.getCityName())
+                            ).list();
+                }
+                //return back the list to the caller.
+                rv = items;
+            }
+
+            if(items.size() == 0)
+            {
+                Log.d(LOGTAG,"no items found");
+            }
+            else
+            {
+                Log.d(LOGTAG, "list size = " + items.size() + ", this is a type = "+beanType.getClass().getName());
             }
         }
         catch(Exception e)

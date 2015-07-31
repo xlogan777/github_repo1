@@ -9,7 +9,7 @@ package jmtechsvcs.myweatherapp.greendaosrcgen;
  */
 public class WeatherIconTable {
 
-    private long id;
+    private Long id;
     /** Not-null value. */
     private String icon_id;
     /** Not-null value. */
@@ -24,11 +24,11 @@ public class WeatherIconTable {
     public WeatherIconTable() {
     }
 
-    public WeatherIconTable(long id) {
+    public WeatherIconTable(Long id) {
         this.id = id;
     }
 
-    public WeatherIconTable(long id, String icon_id, String icon_url, String image_path, byte[] image_raw) {
+    public WeatherIconTable(Long id, String icon_id, String icon_url, String image_path, byte[] image_raw) {
         this.id = id;
         this.icon_id = icon_id;
         this.icon_url = icon_url;
@@ -36,11 +36,11 @@ public class WeatherIconTable {
         this.image_raw = image_raw;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
