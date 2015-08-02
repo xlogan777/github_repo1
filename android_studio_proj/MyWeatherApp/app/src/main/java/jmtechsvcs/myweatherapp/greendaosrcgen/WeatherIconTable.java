@@ -5,7 +5,7 @@ package jmtechsvcs.myweatherapp.greendaosrcgen;
 // KEEP INCLUDES - put your custom includes here
 // KEEP INCLUDES END
 /**
- * Entity mapped to table WEATHER_ICON_TABLE.
+ * Entity mapped to table "WEATHER_ICON_TABLE".
  */
 public class WeatherIconTable {
 

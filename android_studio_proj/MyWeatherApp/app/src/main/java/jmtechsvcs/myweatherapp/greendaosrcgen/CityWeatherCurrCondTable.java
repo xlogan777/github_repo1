@@ -5,7 +5,7 @@ package jmtechsvcs.myweatherapp.greendaosrcgen;
 // KEEP INCLUDES - put your custom includes here
 // KEEP INCLUDES END
 /**
- * Entity mapped to table CITY_WEATHER_CURR_COND_TABLE.
+ * Entity mapped to table "CITY_WEATHER_CURR_COND_TABLE".
  */
 public class CityWeatherCurrCondTable {
 
