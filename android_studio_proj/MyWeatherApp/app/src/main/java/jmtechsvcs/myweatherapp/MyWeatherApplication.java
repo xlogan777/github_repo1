@@ -52,12 +52,14 @@ public class MyWeatherApplication extends Application
     //use the db ref to get the dao master.
     private DaoMaster daoMaster;
 
-    //get a session via the dao master.
+    //use the dao session as a cache.
     private DaoSession daoSession;
 
     @Override
     public void onCreate()
     {
+        super.onCreate();
+
         //setup all the db stuff.
         weatherDbSetup();
 
@@ -70,13 +72,13 @@ public class MyWeatherApplication extends Application
     @Override
     public void onConfigurationChanged(Configuration newConfig)
     {
-//Called by the system when the device configuration changes while your component is running.
+        super.onConfigurationChanged(newConfig);
     }
 
     @Override
     public void onLowMemory()
     {
-//This is called when the overall system is running low on memory, and actively running processes should trim their memory usage.
+        super.onLowMemory();
     }
 
     public DaoMaster getDaoMaster()
@@ -105,7 +107,7 @@ public class MyWeatherApplication extends Application
         //use the db ref to get the dao master.
         daoMaster = new DaoMaster(db);
 
-        //get a session via the dao master.
+        //get a new session from this dao master.
         daoSession = daoMaster.newSession();
     }
 

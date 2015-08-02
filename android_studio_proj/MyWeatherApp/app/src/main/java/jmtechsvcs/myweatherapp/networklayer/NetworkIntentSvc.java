@@ -106,8 +106,6 @@ public class NetworkIntentSvc extends IntentService
             //create the weather icon url.
             String weather_icon_url = WeatherMapUrls.getWeatherIconByIconId(curr_cond.getCurr_weather_icon());
 
-            Log.d(LOGTAG,"url = "+weather_icon_url);
-
             //get the payload from the http get for the weather icon.
             payload = NetworkProcessing.httpGetProcessing(weather_icon_url, DataPayload.T_Payload_Type.E_BYTE_ARRAY_PAYLOAD_TYPE);
 

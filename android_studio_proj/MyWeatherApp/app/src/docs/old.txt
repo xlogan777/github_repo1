@@ -329,3 +329,26 @@ switch(httpGetType)
     </ListView>
 
 </LinearLayout>
+
+                    //get the java bean using the dao obj but use the city id to find it.
+//                    items = (List<CityBeanType>)dao.queryBuilder().where
+//                            (
+//                                    CityInfoTableDao.Properties.Name.like(queryParams.getCityName()),
+//                                    CityInfoTableDao.Properties.Country.like(queryParams.getCountryCode())
+//                            ).list();
+
+//rawQuery("SELECT id, name FROM people WHERE name = ? AND id = ?", new String[] {"David", "2"});
+
+                    items = (List<CityBeanType>)dao.queryRaw
+                            ("select * from city_info_table where name like '%?%' and country like '%?%'",
+                             new String[]{queryParams.getCityName(),queryParams.getCountryCode()});
+
+//                    items = (List<CityBeanType>)dao.queryBuilder().where
+//                            (
+//                                    CityInfoTableDao.Properties.Name.like(queryParams.getCityName())
+//                            ).list();
+
+
+//                    items = (List<CityBeanType>)dao.queryRaw
+//                            ("select * from city_info_table where name like '%brooklyn%'",
+//                             null);

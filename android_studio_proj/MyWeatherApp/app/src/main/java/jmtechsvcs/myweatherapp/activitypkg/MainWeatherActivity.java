@@ -7,14 +7,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import jmtechsvcs.myweatherapp.R;
-import jmtechsvcs.myweatherapp.fragmentpkg.CityListFragment;
 import jmtechsvcs.myweatherapp.networklayer.NetworkIntentSvc;
 
 //test
 public class MainWeatherActivity extends ActionBarActivity {
 
     private static String LOGTAG = "MainWeatherActivity";
-    private static boolean useDebug = true;
+    private static boolean useDebug = false;
 
 //http://stackoverflow.com/questions/14744496/extract-database-of-an-application-from-android-device-through-adb
 
@@ -24,8 +23,8 @@ public class MainWeatherActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_weather);
 
-        //long city_id = 4891010;
-        long city_id = 4349599;
+        //long city_id = 4891010;//elmhurst US
+        long city_id = 4349599;//brooklyn park US
         if(useDebug)
         {
             //request download of curr city data.
@@ -46,8 +45,8 @@ public class MainWeatherActivity extends ActionBarActivity {
             startActivity(intent);
         }
 
-        //Intent intent = new Intent(this, CitySearchActivity.class);
-        //startActivity(intent);
+        Intent intent = new Intent(this, CitySearchActivity.class);
+        startActivity(intent);
     }
 
     private void sendMsgToIntentSvc(long cityId)

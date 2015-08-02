@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -85,23 +84,26 @@ public class CitySearchActivity extends ActionBarActivity implements CityListFra
                  List<CityInfoTable> list_city_info =
                          WeatherDbProcessing.getBeanByQueryParamsList(bqp, getApplicationContext(), new CityInfoTable());
 
-                 if(list_city_info.size() > 0){
+                 if(list_city_info != null && list_city_info.size() > 0)
+                 {
+                     //assign the city list to the list used by the fragment.
+                     cityList = list_city_info;
+
                      //get the frag mgr and create a tx to add frags.
                      FragmentManager fm = getFragmentManager();
                      FragmentTransaction ft = fm.beginTransaction();
 
                      //create the fragment.
                      CityListFragment frag = new CityListFragment();
-                     cityList = list_city_info;//assign local list to class list.
-
-                     Log.d(LOGTAG, "" + list_city_info.toString());
 
                      //add fragment to main activity layout
                      ft.add(R.id.frame_frag_layout, frag);
 
                      //commit this activity.
                      ft.commit();
-                 }else{
+                 }
+                 else
+                 {
                      Log.d(LOGTAG, "no data to display for fragments.");
                  }
              }

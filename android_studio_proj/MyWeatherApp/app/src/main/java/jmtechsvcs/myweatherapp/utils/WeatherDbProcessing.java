@@ -1,20 +1,14 @@
 package jmtechsvcs.myweatherapp.utils;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.greenrobot.dao.query.Query;
-import de.greenrobot.dao.query.WhereCondition;
 import jmtechsvcs.myweatherapp.MyWeatherApplication;
 import jmtechsvcs.myweatherapp.greendaosrcgen.CityInfoTable;
 import jmtechsvcs.myweatherapp.greendaosrcgen.CityInfoTableDao;
@@ -37,7 +31,7 @@ public class WeatherDbProcessing
         //get the application ctx for this app.
         MyWeatherApplication weather_app = (MyWeatherApplication)context.getApplicationContext();
 
-        //get the dao session stored in the context.
+        //get a stored dao session.
         DaoSession dao_session = weather_app.getDaoSession();
 
         //return the dao session from the context.
@@ -273,6 +267,8 @@ public class WeatherDbProcessing
         return rv;
     }
 
+    //http://stackoverflow.com/questions/12927859/why-greendao-doesnt-support-like-operator-completely
+    //check the last item.
     @SuppressWarnings("unchecked")
     public static <CityBeanType> List<CityBeanType> getBeanByQueryParamsList
             (BeanQueryParams queryParams, Context context, CityBeanType beanType)
@@ -297,13 +293,10 @@ public class WeatherDbProcessing
                 //check to see if we have a coutry code..if so us it in the query.
                 if(queryParams.getCountryCode() != null && queryParams.getCountryCode().length() > 0)
                 {
-                    CityInfoTableDao.Properties.Name.columnName.equalsIgnoreCase(queryParams.getCityName());
-
-                    //get the java bean using the dao obj but use the city id to find it.
                     items = (List<CityBeanType>)dao.queryBuilder().where
                             (
-                                    CityInfoTableDao.Properties.Name.like(queryParams.getCityName()),
-                                    CityInfoTableDao.Properties.Country.like(queryParams.getCountryCode())
+                                    CityInfoTableDao.Properties.Name.like("%"+queryParams.getCityName()+"%"),
+                                    CityInfoTableDao.Properties.Country.like("%"+queryParams.getCountryCode()+"%")
                             ).list();
                 }
 
@@ -312,10 +305,9 @@ public class WeatherDbProcessing
                 if(items.size() == 0)
                 {
                     items = (List<CityBeanType>)dao.queryBuilder().where
-                            (
-                                    CityInfoTableDao.Properties.Name.like(queryParams.getCityName())
-                            ).list();
+                            (CityInfoTableDao.Properties.Name.like("%"+queryParams.getCityName()+"%")).list();
                 }
+
                 //return back the list to the caller.
                 rv = items;
             }
