@@ -24,16 +24,20 @@ public class MainWeatherActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_weather);
 
+        //long city_id = 4891010;
+        long city_id = 4349599;
         if(useDebug)
         {
             //request download of curr city data.
-            sendMsgToIntentSvc(4891010);
+            //sendMsgToIntentSvc(city_id);
+            sendMsgToIntentSvc(city_id);
 
             //add this to the android back stack for here to the next activity
             //being activated.
             Intent intent = new Intent(this, CurrentWeatherActivity.class);
             Bundle bundle = new Bundle();
-            bundle.putLong("city_id",4891010);
+            //bundle.putLong("city_id",city_id);
+            bundle.putLong("city_id",city_id);
 
             //add the bundle to the intent.
             intent.putExtras(bundle);
