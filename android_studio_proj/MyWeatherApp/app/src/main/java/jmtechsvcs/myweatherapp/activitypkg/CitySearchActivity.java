@@ -36,36 +36,26 @@ public class CitySearchActivity extends ActionBarActivity implements CityListFra
         setContentView(R.layout.activity_city_search);
 
         final Button search_button = (Button)findViewById(R.id.performsearch);
+        final Button clear_button = (Button)findViewById(R.id.cleardata);
 
-        //add the event handler for the button.
+        //add the event handler for clearing the fragment
+        clear_button.setOnClickListener(
+                new Button.OnClickListener(){
+                    public void onClick(View view){
+
+                        //remove fragment.
+                        removedFragment();
+                    }
+                }
+        );
+
+        //add the event handler for search event.
         search_button.setOnClickListener(new Button.OnClickListener(){
              public void onClick(View view){
                  Log.d(LOGTAG, "clicked the search button.");
 
-                 //use a non empty list to do clean up of fragment.
-                 if(cityList != null)
-                 {
-                     cityList.clear();
-
-                     //get frag mgr to clear frag item from view.
-                     FragmentManager fm = getFragmentManager();
-
-                     //start a frag tx.
-                     FragmentTransaction ft = fm.beginTransaction();
-
-                     //find the fragment tied to this view item.
-                     Fragment fragment = fm.findFragmentById(R.id.frame_frag_layout);
-
-                     //if their is a fragment in this view destory it..
-                     if(fragment != null)
-                     {
-                         // remove the existing fragment from the frag tx.
-                         ft.remove(fragment);
-
-                         //commit this change.
-                         ft.commit();
-                     }
-                 }
+                 //remove fragment.
+                 removedFragment();
 
                  //get the text from both the cc and the city edit boxes.
                  String city_name = ((EditText)findViewById(R.id.city_name_input)).getText().toString();
@@ -98,6 +88,7 @@ public class CitySearchActivity extends ActionBarActivity implements CityListFra
 
                      //add fragment to main activity layout
                      ft.add(R.id.frame_frag_layout, frag);
+                     //ft.add(R.id.scrollView, frag);
 
                      //commit this activity.
                      ft.commit();
@@ -109,6 +100,35 @@ public class CitySearchActivity extends ActionBarActivity implements CityListFra
              }
          }
         );
+    }
+
+    public void removedFragment()
+    {
+        //use a non empty list to do clean up of fragment.
+        if(cityList != null)
+        {
+            cityList.clear();
+
+            //get frag mgr to clear frag item from view.
+            FragmentManager fm = getFragmentManager();
+
+            //start a frag tx.
+            FragmentTransaction ft = fm.beginTransaction();
+
+            //find the fragment tied to this view item.
+            Fragment fragment = fm.findFragmentById(R.id.frame_frag_layout);
+            //Fragment fragment = fm.findFragmentById(R.id.scrollView);
+
+            //if their is a fragment in this view destroy it..
+            if(fragment != null)
+            {
+                // remove the existing fragment from the frag tx.
+                ft.remove(fragment);
+
+                //commit this change.
+                ft.commit();
+            }
+        }
     }
 
     @Override

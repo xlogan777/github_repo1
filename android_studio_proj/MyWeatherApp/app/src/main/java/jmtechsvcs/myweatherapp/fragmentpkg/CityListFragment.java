@@ -53,22 +53,12 @@ public class CityListFragment extends ListFragment
 
         if(listParam != null)
         {
-            String cn = "";
-            String cc = "";
-
             List<String> display_list = new ArrayList<String>();
+
             for(CityInfoTable my_items : listParam)
             {
-                long city_id = my_items.getCity_id();
-                cn = my_items.getName();
-                cc = my_items.getCountry();
-
-//                BeanQueryParams qp = new BeanQueryParams();
-//                qp.setCityId(city_id);
-//                qp.setQueryParamType(BeanQueryParams.T_Query_Param_Type.E_CITY_INFO_TABLE_TYPE);
-//                CityInfoTable city_info_table = new CityInfoTable();
-//                city_info_table = WeatherDbProcessing.getBeanByQueryParams
-//                        (qp, getActivity().getApplicationContext(), city_info_table);
+                String cn = my_items.getName();
+                String cc = my_items.getCountry();
 
                 display_list.add("CityName = "+cn+", CC = "+cc);
             }
@@ -127,7 +117,6 @@ public class CityListFragment extends ListFragment
      */
     public interface OnFragmentInteractionListener
     {
-        // TODO: Update argument type and name
         public void onFragmentInteraction(String id);
     }
 }
