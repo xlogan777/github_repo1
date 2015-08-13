@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.app.ListFragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -66,6 +68,16 @@ public class CityListFragment extends ListFragment
             setListAdapter(new ArrayAdapter<String>(getActivity(),
                     android.R.layout.simple_list_item_2, android.R.id.text1, display_list));
         }
+    }
+
+    @Override
+    public void onActivityCreated (Bundle savedInstanceState)
+    {
+        //call super class.
+        super.onActivityCreated(savedInstanceState);
+
+        //allow for scrolling inside the list fragment container.
+        this.getListView().setScrollContainer(true);
     }
 
     @Override
