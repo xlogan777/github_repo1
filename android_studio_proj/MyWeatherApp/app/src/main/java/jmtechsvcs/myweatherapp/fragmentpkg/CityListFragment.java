@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.app.ListFragment;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -15,8 +13,6 @@ import java.util.List;
 
 import jmtechsvcs.myweatherapp.activitypkg.CitySearchActivity;
 import jmtechsvcs.myweatherapp.greendaosrcgen.CityInfoTable;
-import jmtechsvcs.myweatherapp.utils.BeanQueryParams;
-import jmtechsvcs.myweatherapp.utils.WeatherDbProcessing;
 
 //https://www.airpair.com/android/list-fragment-android-studio
 /**
@@ -108,6 +104,10 @@ public class CityListFragment extends ListFragment
         super.onListItemClick(l, v, position, id);
 
         Log.d(LOGTAG,"pos = "+position+", id = "+id);
+
+        //using the item clicked from the list
+        //provide a popup to the user to select if they want to see
+        //current weather , 5 day forecast..etc...options here.
 
         if(mListener != null)
         {
