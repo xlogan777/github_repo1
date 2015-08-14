@@ -16,6 +16,7 @@ import java.util.List;
 
 import jmtechsvcs.myweatherapp.R;
 import jmtechsvcs.myweatherapp.fragmentpkg.CityListFragment;
+import jmtechsvcs.myweatherapp.fragmentpkg.WeatherOptionsFragment;
 import jmtechsvcs.myweatherapp.greendaosrcgen.CityInfoTable;
 import jmtechsvcs.myweatherapp.utils.BeanQueryParams;
 import jmtechsvcs.myweatherapp.utils.WeatherDbProcessing;
@@ -44,7 +45,7 @@ public class CitySearchActivity extends ActionBarActivity implements CityListFra
                     public void onClick(View view){
 
                         //remove fragment.
-                        removedFragment();
+                        removeFragment();
                     }
                 }
         );
@@ -55,7 +56,7 @@ public class CitySearchActivity extends ActionBarActivity implements CityListFra
                  Log.d(LOGTAG, "clicked the search button.");
 
                  //remove fragment.
-                 removedFragment();
+                 removeFragment();
 
                  //get the text from both the cc and the city edit boxes.
                  String city_name = ((EditText)findViewById(R.id.city_name_input)).getText().toString();
@@ -102,7 +103,7 @@ public class CitySearchActivity extends ActionBarActivity implements CityListFra
         );
     }
 
-    public void removedFragment()
+    public void removeFragment()
     {
         //use a non empty list to do clean up of fragment.
         if(cityList != null)
@@ -154,8 +155,21 @@ public class CitySearchActivity extends ActionBarActivity implements CityListFra
     }
 
     @Override
-    public void onFragmentInteraction(String id)
+    public void onFragmentInteraction(String data)
     {
-        Log.d(LOGTAG,"activity_callback = "+id);
+        Log.d(LOGTAG, "activity_callback = " + data);
+
+        this.showWeatherOptions(data);
+    }
+
+    private void showWeatherOptions(String data)
+    {
+        //create the dialog fragment and show the fragment with hooks for it to the
+        //fragment mgr.
+        WeatherOptionsFragment optionsFragment = new WeatherOptionsFragment();
+        optionsFragment.setData(data);
+
+        //show the fragment and also tied to the frag mgr
+        optionsFragment.show(getFragmentManager(),"WeatherOptionsFragment");
     }
 }

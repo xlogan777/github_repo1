@@ -55,10 +55,11 @@ public class CityListFragment extends ListFragment
 
             for(CityInfoTable my_items : listParam)
             {
+                long cid = my_items.getCity_id();
                 String cn = my_items.getName();
                 String cc = my_items.getCountry();
 
-                display_list.add("CityName = "+cn+", CC = "+cc);
+                display_list.add("cid = "+cid+", CityName = "+cn+", CC = "+cc);
             }
 
             setListAdapter(new ArrayAdapter<String>(getActivity(),
@@ -105,15 +106,14 @@ public class CityListFragment extends ListFragment
 
         Log.d(LOGTAG,"pos = "+position+", id = "+id);
 
-        //using the item clicked from the list
-        //provide a popup to the user to select if they want to see
-        //current weather , 5 day forecast..etc...options here.
+        //get the data from the selected item.
+        String selectedFromList =(getListView().getItemAtPosition(position).toString());
 
         if(mListener != null)
         {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(position+"");//position of item clicked.
+            mListener.onFragmentInteraction(selectedFromList);//data of item clicked
         }
     }
 
@@ -129,6 +129,6 @@ public class CityListFragment extends ListFragment
      */
     public interface OnFragmentInteractionListener
     {
-        public void onFragmentInteraction(String id);
+        public void onFragmentInteraction(String data);
     }
 }
