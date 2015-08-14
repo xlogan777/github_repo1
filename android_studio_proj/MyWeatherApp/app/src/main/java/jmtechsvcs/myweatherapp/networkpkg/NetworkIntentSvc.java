@@ -1,4 +1,4 @@
-package jmtechsvcs.myweatherapp.networklayer;
+package jmtechsvcs.myweatherapp.networkpkg;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -6,8 +6,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
-import jmtechsvcs.myweatherapp.greendaosrcgen.CityWeatherCurrCondTable;
-import jmtechsvcs.myweatherapp.utils.WeatherDbProcessing;
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityWeatherCurrCondTable;
+import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in

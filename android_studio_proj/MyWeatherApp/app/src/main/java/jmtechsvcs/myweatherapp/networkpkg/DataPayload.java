@@ -1,4 +1,4 @@
-package jmtechsvcs.myweatherapp.networklayer;
+package jmtechsvcs.myweatherapp.networkpkg;
 
 /**
  * Created by jimmy on 7/24/2015.

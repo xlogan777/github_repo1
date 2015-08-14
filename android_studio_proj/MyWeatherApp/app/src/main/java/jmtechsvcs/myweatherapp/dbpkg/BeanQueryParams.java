@@ -1,4 +1,4 @@
-package jmtechsvcs.myweatherapp.utils;
+package jmtechsvcs.myweatherapp.dbpkg;
 
 /**
  * Created by jimmy on 7/28/2015.

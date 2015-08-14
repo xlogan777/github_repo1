@@ -23,7 +23,7 @@
 
         <!-- added this service component for background processing. -->
         <service
-            android:name=".networklayer.NetworkIntentSvc"
+            android:name=".networkpkg.NetworkIntentSvc"
             android:exported="false" >
         </service>
 

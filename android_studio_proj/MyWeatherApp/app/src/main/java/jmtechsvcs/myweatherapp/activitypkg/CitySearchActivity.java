@@ -17,9 +17,9 @@ import java.util.List;
 import jmtechsvcs.myweatherapp.R;
 import jmtechsvcs.myweatherapp.fragmentpkg.CityListFragment;
 import jmtechsvcs.myweatherapp.fragmentpkg.WeatherOptionsFragment;
-import jmtechsvcs.myweatherapp.greendaosrcgen.CityInfoTable;
-import jmtechsvcs.myweatherapp.utils.BeanQueryParams;
-import jmtechsvcs.myweatherapp.utils.WeatherDbProcessing;
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTable;
+import jmtechsvcs.myweatherapp.dbpkg.BeanQueryParams;
+import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
 
 public class CitySearchActivity extends ActionBarActivity implements CityListFragment.OnFragmentInteractionListener
 {

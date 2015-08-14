@@ -1,4 +1,4 @@
-package jmtechsvcs.myweatherapp.networklayer;
+package jmtechsvcs.myweatherapp.networkpkg;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -6,7 +6,7 @@ import java.net.URL;
 
 import android.util.Log;
 
-import jmtechsvcs.myweatherapp.utils.WeatherMapUtils;
+import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 
 /**
  * this class deals with the connections to the network
@@ -65,7 +65,7 @@ public class NetworkProcessing
 						case E_JSON_PAYLOAD_TYPE:
 
 							//get the json string from the input stream.
-							String json_string = WeatherMapUtils.getJsonStringFromStream(rv);
+							String json_string = WeatherAppUtils.getJsonStringFromStream(rv);
 
 							//set correct payload data here.
 							dataPayload.setStringPayload(json_string);
@@ -75,7 +75,7 @@ public class NetworkProcessing
 						case E_BYTE_ARRAY_PAYLOAD_TYPE:
 
 							//get byte array from input stream.
-							byte [] data = WeatherMapUtils.getByteArrayFromStream(rv);
+							byte [] data = WeatherAppUtils.getByteArrayFromStream(rv);
 
 							//set correct payload data here.
 							dataPayload.setBytePayload(data);
@@ -86,7 +86,7 @@ public class NetworkProcessing
 			} 
 			catch (Exception e) 
 			{
-                Log.d(LOGTAG,WeatherMapUtils.getStackTrace(e));
+                Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
 			}
 			finally
 			{
@@ -105,7 +105,7 @@ public class NetworkProcessing
 					}
 					catch(Exception e)
 					{
-                        Log.d(LOGTAG, WeatherMapUtils.getStackTrace(e));
+                        Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
 					}
 				}
 			}

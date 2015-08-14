@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jmtechsvcs.myweatherapp.activitypkg.CitySearchActivity;
-import jmtechsvcs.myweatherapp.greendaosrcgen.CityInfoTable;
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTable;
 
 //https://www.airpair.com/android/list-fragment-android-studio
 /**

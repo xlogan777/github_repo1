@@ -1,4 +1,4 @@
-package jmtechsvcs.myweatherapp.utils;
+package jmtechsvcs.myweatherapp.utilspkg;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -10,7 +10,6 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,9 +21,9 @@ import java.io.StringWriter;
 /**
  * Created by jimmy on 7/23/2015.
  */
-public class WeatherMapUtils
+public class WeatherAppUtils
 {
-    private static final String LOGTAG = "WeatherMapUtils";
+    private static final String LOGTAG = "WeatherAppUtils";
 
     //these show that we have a failed retrieval of the value and replaced with this
     //instead, showing we are missing data and do nothing.
@@ -58,7 +57,7 @@ public class WeatherMapUtils
         }
         catch(Exception e)
         {
-            Log.d(LOGTAG,WeatherMapUtils.getStackTrace(e));
+            Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
         }
 
         return sb.toString();
@@ -94,7 +93,7 @@ public class WeatherMapUtils
         }
         catch(Exception e)
         {
-            Log.d(LOGTAG,WeatherMapUtils.getStackTrace(e));
+            Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
         }
 
         return data;
@@ -169,7 +168,7 @@ public class WeatherMapUtils
         file to the images dir.
      */
     public static String saveByteToPngFile(Context context, String iconId, byte [] rawImage)
-    throws FileNotFoundException, IOException
+    throws IOException
     {
         // path to /data/data/yourapp/app_data/weather_imgs
         //create app directory here if it doesnt exist, or get the path to the
@@ -198,7 +197,7 @@ public class WeatherMapUtils
         this will take a image path from internal app storage and
         create a bitmap and return that back to the caller.
      */
-    public static Bitmap readPngFile(String imagePath) throws FileNotFoundException
+    public static Bitmap readPngFile(String imagePath) throws IOException
     {
         //path to image file created.
         File file_path = new File(imagePath);
@@ -214,5 +213,15 @@ public class WeatherMapUtils
         //img.setImageBitmap(b);
 
         return rv;
+    }
+
+    public static String [] getDialogList()
+    {
+        String [] weather_opts =
+                {"Current City Weather",
+                 "5 day / 3 hour forecast",
+                  "16 day / daily forecast"};
+
+        return weather_opts;
     }
 }

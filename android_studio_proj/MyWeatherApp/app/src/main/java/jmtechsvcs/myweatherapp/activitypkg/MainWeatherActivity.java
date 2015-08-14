@@ -7,7 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import jmtechsvcs.myweatherapp.R;
-import jmtechsvcs.myweatherapp.networklayer.NetworkIntentSvc;
+import jmtechsvcs.myweatherapp.networkpkg.NetworkIntentSvc;
 
 //test
 public class MainWeatherActivity extends ActionBarActivity {

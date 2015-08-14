@@ -12,12 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import jmtechsvcs.myweatherapp.R;
-import jmtechsvcs.myweatherapp.greendaosrcgen.CityInfoTable;
-import jmtechsvcs.myweatherapp.greendaosrcgen.CityWeatherCurrCondTable;
-import jmtechsvcs.myweatherapp.greendaosrcgen.WeatherIconTable;
-import jmtechsvcs.myweatherapp.utils.BeanQueryParams;
-import jmtechsvcs.myweatherapp.utils.WeatherDbProcessing;
-import jmtechsvcs.myweatherapp.utils.WeatherMapUtils;
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTable;
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityWeatherCurrCondTable;
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherIconTable;
+import jmtechsvcs.myweatherapp.dbpkg.BeanQueryParams;
+import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
+import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 
 /*
     this class handles the display of the current weather data for a city.
@@ -176,7 +176,7 @@ public class CurrentWeatherActivity extends ActionBarActivity
 
             if(img_path != null && img_path.length() > 0)
             {
-                Bitmap bitmap = WeatherMapUtils.readPngFile(img_path);
+                Bitmap bitmap = WeatherAppUtils.readPngFile(img_path);
 
                 if(bitmap != null)
                 {
@@ -188,7 +188,7 @@ public class CurrentWeatherActivity extends ActionBarActivity
         }
         catch(Exception e)
         {
-            Log.d(LOGTAG,WeatherMapUtils.getStackTrace(e));
+            Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
         }
     }
 

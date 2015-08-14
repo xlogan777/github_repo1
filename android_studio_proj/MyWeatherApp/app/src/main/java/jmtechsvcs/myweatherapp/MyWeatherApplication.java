@@ -12,13 +12,13 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import jmtechsvcs.myweatherapp.greendaosrcgen.CityInfoTable;
-import jmtechsvcs.myweatherapp.greendaosrcgen.CityInfoTableDao;
-import jmtechsvcs.myweatherapp.greendaosrcgen.CityWeatherCurrCondTableDao;
-import jmtechsvcs.myweatherapp.greendaosrcgen.DaoMaster;
-import jmtechsvcs.myweatherapp.greendaosrcgen.DaoSession;
-import jmtechsvcs.myweatherapp.greendaosrcgen.WeatherIconTableDao;
-import jmtechsvcs.myweatherapp.utils.WeatherMapUtils;
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTable;
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTableDao;
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityWeatherCurrCondTableDao;
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.DaoMaster;
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.DaoSession;
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherIconTableDao;
+import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 
 /**
  * Created by jimmy on 7/21/2015.
@@ -184,7 +184,7 @@ public class MyWeatherApplication extends Application
         }
         catch(Exception e)
         {
-            Log.d(LOGTAG, WeatherMapUtils.getStackTrace(e));
+            Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
         }
     }
 }

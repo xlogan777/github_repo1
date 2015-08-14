@@ -9,7 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 import jmtechsvcs.myweatherapp.activitypkg.CurrentWeatherActivity;
-import jmtechsvcs.myweatherapp.networklayer.NetworkIntentSvc;
+import jmtechsvcs.myweatherapp.networkpkg.NetworkIntentSvc;
+import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 
 public class WeatherOptionsFragment extends DialogFragment{
 
@@ -32,7 +33,8 @@ public class WeatherOptionsFragment extends DialogFragment{
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        final String [] weather_opts = {"Current City Weather", "5 day / 3 hour forecast","16 day / daily forecast"};
+        //get the dialog list
+        final String [] weather_opts = WeatherAppUtils.getDialogList();
 
         builder.setTitle("WeatherChoices")
                 .setItems(weather_opts, new DialogInterface.OnClickListener() {
@@ -43,11 +45,13 @@ public class WeatherOptionsFragment extends DialogFragment{
 
                         Log.d(LOGTAG,"picked this choice = "+weather_opts[which]);
 
+                        //get the cid from the data string to use as the city id.
                         String [] items = data.split(",");
                         String cid = items[0];
                         cid = cid.substring(cid.indexOf("=")+1);
                         long city_id = Long.parseLong(cid.trim());
 
+                        //this handles which item was selected.
                         switch(which)
                         {
                             case 0:
