@@ -17,6 +17,7 @@ import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityWeatherCurrCondTable;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherIconTable;
 import jmtechsvcs.myweatherapp.dbpkg.BeanQueryParams;
 import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
+import jmtechsvcs.myweatherapp.utilspkg.MathUtils;
 import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 
 /*
@@ -133,37 +134,172 @@ public class CurrentWeatherActivity extends ActionBarActivity
         //set the city name and the country code.
         ((TextView)findViewById(R.id.cityname)).setText(cityInfoTable.getName());
         ((TextView)findViewById(R.id.countrycode)).setText(cityInfoTable.getCountry());
-        ((TextView)findViewById(R.id.lat_val)).setText(cityInfoTable.getLat()+"");
-        ((TextView)findViewById(R.id.lon_val)).setText(cityInfoTable.getLon()+"");
+
+        //do conversion here
+        ((TextView)findViewById(R.id.lat_val)).setText(MathUtils.getDegreeString(cityInfoTable.getLat())+"");
+        ((TextView)findViewById(R.id.lon_val)).setText(MathUtils.getDegreeString(cityInfoTable.getLon())+"");
     }
 
     //this will load time related data about the city or data feed.
     private void loadCityTimeInfo(CityWeatherCurrCondTable currWeatherTable)
     {
         //set the time related data here
-        ((TextView)findViewById(R.id.recentfeedtime_val)).setText(currWeatherTable.getCurr_data_calc_time()+"");
-        ((TextView)findViewById(R.id.sr_time_val)).setText(currWeatherTable.getCurr_sys_sunrise_time()+"");
-        ((TextView)findViewById(R.id.ss_time_val)).setText(currWeatherTable.getCurr_sys_sunset_time()+"");
+        //do conversions here.
+        String result = WeatherAppUtils.getDefaultStringDiplayLong(currWeatherTable.getCurr_data_calc_time());
+
+        if(result.length() == 0)
+            ((TextView)findViewById(R.id.recentfeedtime_val)).setText(
+                MathUtils.convertToRequestedTimeUnit(currWeatherTable.getCurr_data_calc_time())+"");
+        else
+            ((TextView)findViewById(R.id.recentfeedtime_val)).setText(result);
+
+        result = WeatherAppUtils.getDefaultStringDiplayLong(currWeatherTable.getCurr_sys_sunrise_time());
+        if(result.length() == 0)
+            ((TextView)findViewById(R.id.sr_time_val)).setText(
+                MathUtils.convertToRequestedTimeUnit(currWeatherTable.getCurr_sys_sunrise_time())+"");
+        else
+            ((TextView)findViewById(R.id.recentfeedtime_val)).setText(result);
+
+        result = WeatherAppUtils.getDefaultStringDiplayLong(currWeatherTable.getCurr_sys_sunset_time());
+        if(result.length() == 0)
+            ((TextView)findViewById(R.id.ss_time_val)).setText(
+                    MathUtils.convertToRequestedTimeUnit(currWeatherTable.getCurr_sys_sunset_time())+"");
+        else
+            ((TextView)findViewById(R.id.recentfeedtime_val)).setText(result);
     }
 
     //this will load all the weather related info for the city.
     private void loadCityWeatherInfo(CityWeatherCurrCondTable currWeatherTable)
     {
-        ((TextView)findViewById(R.id.weatherid_val)).setText(currWeatherTable.getCurr_weather_id()+"");
-        ((TextView)findViewById(R.id.weathermain_val)).setText(currWeatherTable.getCurr_weather_main()+"");
-        ((TextView)findViewById(R.id.weatherdesc_val)).setText(currWeatherTable.getCurr_weather_desc()+"");
-        ((TextView)findViewById(R.id.maintemp_val)).setText(currWeatherTable.getCurr_main_temp()+"");
-        ((TextView)findViewById(R.id.mainpressure_val)).setText(currWeatherTable.getCurr_main_pressure()+"");
-        ((TextView)findViewById(R.id.mainhumidity_val)).setText(currWeatherTable.getCurr_main_humidity()+"");
-        ((TextView)findViewById(R.id.mintemp_val)).setText(currWeatherTable.getCurr_main_temp_min()+"");
-        ((TextView)findViewById(R.id.maxtemp_val)).setText(currWeatherTable.getCurr_main_temp_max()+"");
-        ((TextView)findViewById(R.id.sealevel_val)).setText(currWeatherTable.getCurr_main_sea_level()+"");
-        ((TextView)findViewById(R.id.grndlevel_val)).setText(currWeatherTable.getCurr_main_grnd_level()+"");
-        ((TextView)findViewById(R.id.windspeed_val)).setText(currWeatherTable.getCurr_wind_speed()+"");
-        ((TextView)findViewById(R.id.winddegs_val)).setText(currWeatherTable.getCurr_wind_degs()+"");
-        ((TextView)findViewById(R.id.clouds_val)).setText(currWeatherTable.getCurr_clouds_all()+"");
-        ((TextView)findViewById(R.id.rainlast3h_val)).setText(currWeatherTable.getCurr_rain_last3hrs()+"");
-        ((TextView)findViewById(R.id.snowlast3h_val)).setText(currWeatherTable.getCurr_snow_last3hrs()+"");
+        String result = WeatherAppUtils.getDefaultStringDiplayLong(currWeatherTable.getCurr_weather_id());
+        if(result.length() == 0)
+            ((TextView)findViewById(R.id.weatherid_val)).setText(
+                    currWeatherTable.getCurr_weather_id() + ""
+            );
+        else
+            ((TextView)findViewById(R.id.weatherid_val)).setText(result);
+
+        result = WeatherAppUtils.getDefaultStringDiplayString(currWeatherTable.getCurr_weather_main());
+        if(result.length() == 0)
+            ((TextView)findViewById(R.id.weathermain_val)).setText(currWeatherTable.getCurr_weather_main()+"");
+        else
+            ((TextView)findViewById(R.id.weathermain_val)).setText(result);
+
+        result = WeatherAppUtils.getDefaultStringDiplayString(
+                currWeatherTable.getCurr_weather_desc()
+        );
+        if(result.length() == 0)
+            ((TextView)findViewById(R.id.weatherdesc_val)).setText(currWeatherTable.getCurr_weather_desc()+"");
+        else
+            ((TextView)findViewById(R.id.weatherdesc_val)).setText(result);
+
+        //do conversions here.
+        result = WeatherAppUtils.getDefaultStringDiplayDouble(currWeatherTable.getCurr_main_temp());
+        if(result.length() == 0)
+            ((TextView)findViewById(R.id.maintemp_val)).setText(MathUtils.convertToRequestedTempUnit(
+                                                                        currWeatherTable.getCurr_main_temp(),
+                                                                        'F'
+                                                                )+"");
+        else
+            ((TextView)findViewById(R.id.maintemp_val)).setText(result);
+
+        result = WeatherAppUtils.getDefaultStringDiplayLong(currWeatherTable.getCurr_main_pressure());
+        if(result.length() == 0)
+            ((TextView)findViewById(R.id.mainpressure_val)).setText(MathUtils.getPressureString(
+                                                                            currWeatherTable.getCurr_main_pressure()
+                                                                    )+"");
+        else
+            ((TextView)findViewById(R.id.mainpressure_val)).setText(result);
+
+        result = WeatherAppUtils.getDefaultStringDiplayLong(
+                currWeatherTable.getCurr_main_humidity()
+        );
+        if(result.length() == 0)
+            ((TextView)findViewById(R.id.mainhumidity_val)).setText(MathUtils.getDegreeString(
+                                                                            currWeatherTable.getCurr_main_humidity()
+                                                                    )+"");
+        else
+            ((TextView)findViewById(R.id.mainhumidity_val)).setText(result);
+
+        result = WeatherAppUtils.getDefaultStringDiplayDouble(currWeatherTable.getCurr_main_temp_min());
+        if(result.length() == 0)
+            ((TextView)findViewById(R.id.mintemp_val)).setText(
+                        MathUtils.convertToRequestedTempUnit(
+                                currWeatherTable.getCurr_main_temp_min(), 'F'
+                        ) + ""
+                );
+        else
+            ((TextView)findViewById(R.id.mintemp_val)).setText(result);
+
+
+        result = WeatherAppUtils.getDefaultStringDiplayDouble(
+                currWeatherTable.getCurr_main_temp_max()
+        );
+        if(result.length() == 0)
+            ((TextView)findViewById(R.id.maxtemp_val)).setText(MathUtils.convertToRequestedTempUnit(
+                                                                       currWeatherTable.getCurr_main_temp_max(),
+                                                                       'F'
+                                                               )+"");
+        else
+            ((TextView)findViewById(R.id.maxtemp_val)).setText(result);
+
+        result = WeatherAppUtils.getDefaultStringDiplayLong(currWeatherTable.getCurr_main_sea_level());
+        if(result.length() == 0)
+            ((TextView)findViewById(R.id.sealevel_val)).setText(MathUtils.getPressureString(currWeatherTable.getCurr_main_sea_level())+"");
+        else
+            ((TextView)findViewById(R.id.sealevel_val)).setText(result);
+
+        result = WeatherAppUtils.getDefaultStringDiplayLong(
+                currWeatherTable.getCurr_main_grnd_level()
+        );
+        if(result.length() == 0)
+            ((TextView)findViewById(R.id.grndlevel_val)).setText(MathUtils.getPressureString(
+                                                                         currWeatherTable.getCurr_main_grnd_level()
+                                                                 )+"");
+        else
+            ((TextView)findViewById(R.id.grndlevel_val)).setText(result);
+
+        result = WeatherAppUtils.getDefaultStringDiplayDouble(currWeatherTable.getCurr_wind_speed());
+        if(result.length() == 0)
+            ((TextView)findViewById(R.id.windspeed_val)).setText(MathUtils.convertToRequestedVelocityUnit(
+                                                                         currWeatherTable.getCurr_wind_speed(),
+                                                                         'M'
+                                                                 )+"");
+        else
+            ((TextView)findViewById(R.id.windspeed_val)).setText(result);
+
+
+        result = WeatherAppUtils.getDefaultStringDiplayDouble(currWeatherTable.getCurr_wind_degs());
+        if(result.length() == 0)
+            ((TextView)findViewById(R.id.winddegs_val)).setText(MathUtils.getDegreeString(
+                                                                        currWeatherTable.getCurr_wind_degs()
+                                                                )+"");
+        else
+            ((TextView)findViewById(R.id.winddegs_val)).setText(result);
+
+        result = WeatherAppUtils.getDefaultStringDiplayLong(currWeatherTable.getCurr_clouds_all());
+        if(result.length() == 0)
+            ((TextView)findViewById(R.id.clouds_val)).setText(
+                    MathUtils.getPercentString(currWeatherTable.getCurr_clouds_all()) + ""
+            );
+        else
+            ((TextView)findViewById(R.id.clouds_val)).setText(result);
+
+        result = WeatherAppUtils.getDefaultStringDiplayLong(currWeatherTable.getCurr_rain_last3hrs());
+        if(result.length() == 0)
+            ((TextView)findViewById(R.id.rainlast3h_val)).setText(MathUtils.convertToRequestedDistanceUnit(currWeatherTable.getCurr_rain_last3hrs(),'I')+"");
+        else
+            ((TextView)findViewById(R.id.rainlast3h_val)).setText(result);
+
+        result = WeatherAppUtils.getDefaultStringDiplayLong(currWeatherTable.getCurr_snow_last3hrs());
+        if(result.length() == 0)
+            ((TextView)findViewById(R.id.snowlast3h_val)).setText(
+                    MathUtils.convertToRequestedDistanceUnit(
+                            currWeatherTable.getCurr_snow_last3hrs(), 'I'
+                    ) + ""
+            );
+        else
+            ((TextView)findViewById(R.id.snowlast3h_val)).setText(result);
     }
 
     //this will load the weather icon.

@@ -224,4 +224,31 @@ public class WeatherAppUtils
 
         return weather_opts;
     }
+
+    public static String getDefaultStringDiplayLong(long data)
+    {
+        String rv = "No Data Available";
+        if(data != DEFAULT_lONG_VAL)
+            rv = "";
+
+        return rv;
+    }
+
+    public static String getDefaultStringDiplayDouble(double data)
+    {
+        String rv = "No Data Available";
+        if(data != DEFAULT_DOUBLE_VAL)
+            rv = "";
+
+        return rv;
+    }
+
+    public static String getDefaultStringDiplayString(String data)
+    {
+        String rv = "No Data Available";
+        if(!data.equals(DEFAULT_STRING_VAL))
+            rv = "";
+
+        return rv;
+    }
 }
