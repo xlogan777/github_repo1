@@ -11,7 +11,7 @@ public class MyWeatherDaoGenerator
 	{
 		//create green dao schema obj with version number, and pkg for the generated files.
 		int db_version_number = 1;
-		String pkg_name = "jmtechsvcs.myweatherapp.greendaosrcgen";
+		String pkg_name = "jmtechsvcs.myweatherapp.greendaosrcgenpkg";
 		
 		//create schema obj.
       Schema schema = new Schema(db_version_number, pkg_name);
