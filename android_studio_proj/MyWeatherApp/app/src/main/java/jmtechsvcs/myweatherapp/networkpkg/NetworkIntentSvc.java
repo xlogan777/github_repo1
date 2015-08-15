@@ -87,16 +87,27 @@ public class NetworkIntentSvc extends IntentService
         //create the weather url with city id
         String curr_weather_url = WeatherMapUrls.getCurrentWeatherByCityId("" + cityId);
 
+        //get more weather data with xml based url.
+        String curr_weather_url_xml = WeatherMapUrls.getCurrentWeatherByCityIdXml(""+cityId);
+
         //get the payload from the http get for the current weather json data
         DataPayload payload = NetworkProcessing.httpGetProcessing(curr_weather_url, DataPayload.T_Payload_Type.E_JSON_PAYLOAD_TYPE);
 
-        //print json string if not null.
-        if(payload.getStringPayload() != null)
-            Log.d(LOGTAG,payload.getStringPayload());
+        //get the payload from the http get for this current weather as a stream.
+        DataPayload stream_payload =
+                NetworkProcessing.httpGetProcessing(curr_weather_url_xml, DataPayload.T_Payload_Type.E_BYTE_STREAM_PAYLOAD_TYPE);
+
+        //print json string if not null and
+        if(payload.getStringPayload() != null && stream_payload.getInputStreamPayload() != null)
+        {
+            Log.d(LOGTAG, payload.getStringPayload());
+            Log.d(LOGTAG,stream_payload.getInputStreamPayload().toString());
+        }
 
         //save to the db using this json input.
         CityWeatherCurrCondTable curr_cond =
-                WeatherDbProcessing.updateCurrWeatherToDb(payload.getStringPayload(), getApplicationContext());
+                WeatherDbProcessing.updateCurrWeatherToDb
+                        (payload.getStringPayload(),stream_payload.getInputStreamPayload(), getApplicationContext());
 
         //confirm that we have a valid bean and its icon data is not null and > 0
         if(curr_cond != null &&

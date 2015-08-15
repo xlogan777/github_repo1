@@ -27,6 +27,13 @@ public class WeatherMapUrls
         return rv;
     }
 
+    public static String getCurrentWeatherByCityIdXml(String cityId)
+    {
+        String rv = CURRENT_WEATHER_END_PT+"id="+cityId+"&mode=xml&"+APP_ID;
+        Log.d(LOGTAG, "url => "+rv);
+        return rv;
+    }
+
     public static String getWeatherIconByIconId(String iconId)
     {
         String rv = WEATEHR_ICON_END_PT+iconId+".png?"+APP_ID;

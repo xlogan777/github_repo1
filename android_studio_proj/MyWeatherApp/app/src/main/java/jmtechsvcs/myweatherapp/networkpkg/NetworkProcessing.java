@@ -1,5 +1,6 @@
 package jmtechsvcs.myweatherapp.networkpkg;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -79,6 +80,16 @@ public class NetworkProcessing
 
 							//set correct payload data here.
 							dataPayload.setBytePayload(data);
+
+							break;
+
+						case E_BYTE_STREAM_PAYLOAD_TYPE:
+
+							//get the byte stream from the input stream.
+							ByteArrayInputStream bis = WeatherAppUtils.getByteSteamFromStream(rv);
+
+							//set the correct payload data here.
+							dataPayload.setInputStreamPayload(bis);
 
 							break;
 					}

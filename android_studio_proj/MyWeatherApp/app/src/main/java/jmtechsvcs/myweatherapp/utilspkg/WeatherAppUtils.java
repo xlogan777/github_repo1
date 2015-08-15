@@ -7,6 +7,7 @@ import android.util.Log;
 
 import org.json.JSONObject;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,6 +18,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.StringWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by jimmy on 7/23/2015.
@@ -94,6 +98,25 @@ public class WeatherAppUtils
         catch(Exception e)
         {
             Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
+        }
+
+        return data;
+    }
+
+    //used the get byte aray method to return an array and wrap that array into
+    //a byte array input stream and return that to the caller.
+    public static ByteArrayInputStream getByteSteamFromStream(InputStream inputStream)
+    {
+        //get the byte array.
+        byte [] byte_data = getByteArrayFromStream(inputStream);
+        ByteArrayInputStream data = null;
+
+        //check if the data is null, if not, then create a
+        //byte array input stream.
+        if(byte_data != null)
+        {
+            //create new obj with byte array inside the stream.
+            data = new ByteArrayInputStream(byte_data);
         }
 
         return data;
@@ -246,8 +269,28 @@ public class WeatherAppUtils
     public static String getDefaultStringDiplayString(String data)
     {
         String rv = "No Data Available";
-        if(!data.equals(DEFAULT_STRING_VAL))
+        if(data != null && !data.equals(DEFAULT_STRING_VAL))
             rv = "";
+
+        return rv;
+    }
+
+    public static long getUtcSecondsFromDateString(String input)
+    {
+        long rv = DEFAULT_lONG_VAL;
+
+        try
+        {
+            //2015-08-15T11:00:07, from xml feed.
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            Date inputDate = dateFormat.parse(input);
+            Log.d(LOGTAG,inputDate.toString());
+            rv = inputDate.getTime();
+        }
+        catch(Exception e)
+        {
+            Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
+        }
 
         return rv;
     }

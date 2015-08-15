@@ -5,7 +5,10 @@ import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,7 +100,7 @@ public class WeatherDbProcessing
     }
 
     //this will parse the json data and use a dao to save the obj to db.
-    public static CityWeatherCurrCondTable updateCurrWeatherToDb(String jsonInput, Context context)
+    public static CityWeatherCurrCondTable updateCurrWeatherToDb(String jsonInput, ByteArrayInputStream bis, Context context)
     {
         CityWeatherCurrCondTable rv = null;
 
@@ -176,6 +179,142 @@ public class WeatherDbProcessing
             long sys_sunset = WeatherAppUtils.getLongVal(sys_obj, "sunset");
             curr_weather_bean.setCurr_sys_sunrise_time(sys_sunrise);
             curr_weather_bean.setCurr_sys_sunset_time(sys_sunset);
+
+            //parse the xml stream here.
+            //create a factory obj for the xml pull parser.
+            XmlPullParserFactory xmlFactoryObject = XmlPullParserFactory.newInstance();
+
+            //create an xml pull parser from the pull parser factory.
+            XmlPullParser parser = xmlFactoryObject.newPullParser();
+
+            //set the input to the xml pull parser here.
+            parser.setInput(bis, null);
+
+            //get the event type and begin the parsing.
+            int event = parser.getEventType();
+
+            //check if u havent reached the end.
+            while (event != XmlPullParser.END_DOCUMENT)
+            {
+                //get the name of the tag
+                String name = parser.getName();
+
+                //this will switch on the different event, tag names here
+                //like <abc>, or </abc> which are start and end tags.
+                switch (event)
+                {
+                    case XmlPullParser.START_DOCUMENT:
+                        Log.d(LOGTAG,"start doc parsing.");
+                        break;
+                    case XmlPullParser.TEXT:
+                        break;
+
+                    case XmlPullParser.START_TAG:
+
+                        //need to check for null if the attribute doesnt exist, when requested.
+                        //check for the sun tag
+                        if(name.equals("sun"))
+                        {
+                            //need to create long values here. for time
+                            String sun_rise = parser.getAttributeValue(null,"rise");
+                            long sun_rise_val = WeatherAppUtils.getUtcSecondsFromDateString(sun_rise);
+
+                            String sun_set = parser.getAttributeValue(null, "set");
+                            long sun_set_val = WeatherAppUtils.getUtcSecondsFromDateString(sun_set);
+
+                            //update pojo with this times.
+                            curr_weather_bean.setCurr_sys_sunrise_time(sun_rise_val);
+                            curr_weather_bean.setCurr_sys_sunset_time(sun_set_val);
+                        }
+                        else if(name.equals("lastupdate"))
+                        {
+                            //need to create long value here for time
+                            String lastupdate = parser.getAttributeValue(null,"value");
+                            long last_update_val = WeatherAppUtils.getUtcSecondsFromDateString(lastupdate);
+                            curr_weather_bean.setCurr_data_calc_time(last_update_val);
+                        }
+                        else if(name.equals("speed"))
+                        {
+                            //this is a string.
+                            String speed_name = parser.getAttributeValue(null,"name");
+                            String result = WeatherAppUtils.getDefaultStringDiplayString(speed_name);
+                            if(result.length() != 0)
+                            {
+                                //use the result value to save to pojo
+                            }
+                            else
+                            {
+                                //use the value from the xml feed.
+                            }
+                        }
+                        else if(name.equals("direction"))
+                        {
+                            //this is a string
+                            String wind_dir = parser.getAttributeValue(null,"code");
+
+                            String result = WeatherAppUtils.getDefaultStringDiplayString(wind_dir);
+                            if(result.length() != 0)
+                            {
+                                //use the result value to save to pojo
+                            }
+                            else
+                            {
+                                //use the value from the xml feed.
+                            }
+                        }
+                        else if(name.equals("visibility"))
+                        {
+                            //long, meter conv to miles.
+                            String visibility = parser.getAttributeValue(null,"value");
+                            String result = WeatherAppUtils.getDefaultStringDiplayString(visibility);
+                            if(result.length() != 0)
+                            {
+                                //use the default long to save to the pojo.
+                            }
+                            else
+                            {
+                                //use the value from the xml feed.
+                                //make a long type and convert to miles.
+                            }
+                        }
+                        else if(name.equals("precipitation"))
+                        {
+                            //this is a string.
+                            String precip_mode = parser.getAttributeValue(null,"mode");
+                            String result = WeatherAppUtils.getDefaultStringDiplayString(precip_mode);
+                            if(result.length() != 0)
+                            {
+                                //use the result value to save to pojo
+                            }
+                            else
+                            {
+                                //use the value from the xml feed.
+                            }
+
+                            //long, mm conv to inches.
+                            String precip_value = parser.getAttributeValue(null, "value");
+                            result = WeatherAppUtils.getDefaultStringDiplayString(precip_value);
+                            if(result.length() != 0)
+                            {
+                                //use the default long to save to the pojo.
+                            }
+                            else
+                            {
+                                //use the value from the xml feed.
+                                //make a long type and convert to inches.
+                            }
+                        }
+
+                        break;
+
+                    case XmlPullParser.END_TAG:
+                        break;
+                }
+
+                //get the next event.
+                event = parser.next();
+            }
+            Log.d(LOGTAG,"end doc parsing");
 
             //save the data to the db.
             curr_weather_dao.insertOrReplace(curr_weather_bean);
