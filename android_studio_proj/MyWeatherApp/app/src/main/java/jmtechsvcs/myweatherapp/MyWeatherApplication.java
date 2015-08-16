@@ -9,8 +9,11 @@ import android.util.Log;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTable;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTableDao;
@@ -42,6 +45,9 @@ import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 public class MyWeatherApplication extends Application
 {
     private static String LOGTAG = "MyWeatherApplication";
+
+    private static final String DB_PATH = "/data/data/jmtechsvcs.myweatherapp/databases/";
+    final static String DB_NAME = "my_weather_db.db";
 
     //use the dev helper to setup the db here with the db name and the main activity for the context.
     private DaoMaster.DevOpenHelper helper;
@@ -91,20 +97,123 @@ public class MyWeatherApplication extends Application
         return daoSession;
     }
 
-    private void weatherDbSetup()
+    //check if the databases exists or not.
+    //also confirms that the DB is a file.
+    //returns true if so.
+    private boolean checkDataBase()
     {
-        helper = new DaoMaster.DevOpenHelper(this, "my_weather_db.db", null);
+        File databaseFile = new File(DB_PATH + DB_NAME);
+        boolean status = (databaseFile.exists()/*&& databaseFile.isFile()*/);
+
+        return status;
+    }
+
+    //this will copy the DB file from the asset folder to the
+    //database folder for this app.
+    private void copyDataBase()
+    {
+        AssetManager assetManager = null;
+        InputStream myInput = null;
+        OutputStream myOutput = null;
+
+        try
+        {
+            //get the asset mgr.
+            //never close the asset manager.
+            assetManager = getAssets();
+
+            //Open your local db as the input stream
+            myInput = assetManager.open(DB_NAME);
+
+            // Path to the just created empty db
+            String outFileName = DB_PATH + DB_NAME;
+
+            //Open the empty db as the output stream
+            myOutput = new FileOutputStream(outFileName);
+
+            //transfer bytes from the input file to the output file
+            byte[] buffer = new byte[1024];
+            int length;
+            while((length = myInput.read(buffer)) > 0){
+                myOutput.write(buffer, 0, length);
+            }
+
+            //flush the output stream.
+            myOutput.flush();
+        }
+        catch(Exception e)
+        {
+            Log.d(LOGTAG,WeatherAppUtils.getStackTrace(e));
+        }
+        finally
+        {
+            if(myOutput != null)
+            {
+                try
+                {
+                    myOutput.close();
+                }
+                catch(Exception e)
+                {
+                    Log.d(LOGTAG,WeatherAppUtils.getStackTrace(e));
+                }
+            }
+
+            if(myInput != null)
+            {
+                try
+                {
+                    myInput.close();
+                }
+                catch(Exception e){
+                    Log.d(LOGTAG,WeatherAppUtils.getStackTrace(e));
+                }
+            }
+        }
+    }
+
+    //this will load the file from the assets folder and put it to the /databases folder
+    //so that we can start with the city info data
+    private void loadDbFromAssets()
+    {
+        //check if the database exists
+        boolean databaseExist = checkDataBase();
+
+        //create the helper class to assist in creating/opening the db.
+        helper = new DaoMaster.DevOpenHelper(this, DB_NAME, null);
 
         //get the actual sql lite database here..creates the db now.
         db = helper.getWritableDatabase();
 
-        //drop and force the creation of the city curr weather table here.
-        //CityWeatherCurrCondTableDao.dropTable(db,true);
-        //CityWeatherCurrCondTableDao.createTable(db,true);
+        if(databaseExist)
+        {
+            Log.d(LOGTAG,"database = "+DB_NAME+", already exists just use it.");
+        }
+        else
+        {
+            //copy the db from the assets folder to the current db just created.
+            //this will overwrite the db just created recently with the one in the
+            //assets folder.
+            copyDataBase();
+        }// end if else dbExist
+    }
 
-        //drop and force the create of the weather icon table here.
+    private void weatherDbSetup()
+    {
+        //load db from asset folder if it doesnt exist
+        loadDbFromAssets();
+
+        //drop the table here if it exists.
+        //CityWeatherCurrCondTableDao.dropTable(db,true);
+
+        //force the creation of the table here if it wasnt created.
+        CityWeatherCurrCondTableDao.createTable(db,true);
+
+        //drop the table here if it exists.
         //WeatherIconTableDao.dropTable(db,true);
-        //WeatherIconTableDao.createTable(db, true);
+
+        //force the creation of the table here if it wasnt created.
+        WeatherIconTableDao.createTable(db, true);
 
         //use the db ref to get the dao master.
         daoMaster = new DaoMaster(db);
@@ -119,6 +228,7 @@ public class MyWeatherApplication extends Application
         CityInfoTableDao city_info_tbl_dao = daoSession.getCityInfoTableDao();
 
         //get all the json files with asset manager.
+        //never close the asset manager.
         AssetManager assetManager = getAssets();
 
         try
@@ -180,9 +290,6 @@ public class MyWeatherApplication extends Application
                 //close the buffered reader.
                 br.close();
             }
-
-            //close the resource.
-            assetManager.close();
         }
         catch(Exception e)
         {
