@@ -115,6 +115,16 @@ public class MyWeatherDaoGenerator
       city_weather_cond_entity.addDoubleProperty("curr_wind_speed");
       city_weather_cond_entity.addLongProperty("curr_wind_degs");
       
+      
+      /*
+         <wind>
+          <speed value="7.78" name="Moderate breeze"/>
+          <direction value="140" code="SE" name="SouthEast"/>
+         </wind>
+       */
+      city_weather_cond_entity.addStringProperty("curr_wind_speed_name");//from xml
+      city_weather_cond_entity.addStringProperty("curr_wind_dirr_code");//from xml
+      
       /*
        "clouds": {
         "all": 75 //cloudiness %
@@ -122,6 +132,15 @@ public class MyWeatherDaoGenerator
        */
       
       city_weather_cond_entity.addLongProperty("curr_clouds_all");
+      
+      //<visibility value="10000"/>
+      city_weather_cond_entity.addLongProperty("curr_visibility");//from xml
+      
+      /*
+       <precipitation mode="no" value = "100"/>
+       */
+      city_weather_cond_entity.addStringProperty("precipitation_mode");//from xml
+      city_weather_cond_entity.addDoubleProperty("precipitation_value");//from xml
       
       /*
        "rain":{"3h":3},//rain volume for the last 3 hrs
