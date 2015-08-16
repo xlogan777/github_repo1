@@ -22,14 +22,14 @@ public class WeatherMapUrls
 
     public static String getCurrentWeatherByCityId(String cityId)
     {
-        String rv = CURRENT_WEATHER_END_PT+"id="+cityId+"&"+APP_ID;
+        String rv = CURRENT_WEATHER_END_PT+"id="+cityId+"&units=imperial&"+APP_ID;
         Log.d(LOGTAG, "url => "+rv);
         return rv;
     }
 
     public static String getCurrentWeatherByCityIdXml(String cityId)
     {
-        String rv = CURRENT_WEATHER_END_PT+"id="+cityId+"&mode=xml&"+APP_ID;
+        String rv = CURRENT_WEATHER_END_PT+"id="+cityId+"&mode=xml&units=imperial&"+APP_ID;
         Log.d(LOGTAG, "url => "+rv);
         return rv;
     }

@@ -81,10 +81,10 @@ public class MyWeatherApplication extends Application
         super.onLowMemory();
     }
 
-    public DaoMaster getDaoMaster()
-    {
-        return daoMaster;
-    }
+//    public DaoMaster getDaoMaster()
+//    {
+//        return daoMaster;
+//    }
 
     public DaoSession getDaoSession()
     {
@@ -99,12 +99,12 @@ public class MyWeatherApplication extends Application
         db = helper.getWritableDatabase();
 
         //drop and force the creation of the city curr weather table here.
-        CityWeatherCurrCondTableDao.dropTable(db,true);
-        CityWeatherCurrCondTableDao.createTable(db,true);
+        //CityWeatherCurrCondTableDao.dropTable(db,true);
+        //CityWeatherCurrCondTableDao.createTable(db,true);
 
         //drop and force the create of the weather icon table here.
-        WeatherIconTableDao.dropTable(db,true);
-        WeatherIconTableDao.createTable(db, true);
+        //WeatherIconTableDao.dropTable(db,true);
+        //WeatherIconTableDao.createTable(db, true);
 
         //use the db ref to get the dao master.
         daoMaster = new DaoMaster(db);

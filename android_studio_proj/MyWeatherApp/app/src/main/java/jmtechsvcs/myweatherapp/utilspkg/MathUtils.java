@@ -15,57 +15,17 @@ public class MathUtils
 {
     private static final String LOGTAG = "MathUtils";
 
-    public static String convertToRequestedTempUnit(double kelvin, char unit)
+    public static String getTempString(double data)
     {
-        //load to default
-        double rv = kelvin;
-        String display_rv = rv+" K";
-
-        switch(unit)
-        {
-            case 'F':
-
-                rv =  (kelvin - 273.15) * 1.8000 + 32.00;
-                display_rv = rv+" F";
-                break;
-
-            case 'C':
-
-                rv =  (kelvin - 273.15);
-                display_rv = rv+" C";
-                break;
-
-            default://this is kelvin
-
-                Log.d(LOGTAG,"using default of kelvin");
-                break;
-        }
-
-        return display_rv;
+        return data+" F";
     }
 
-    //default is m/s
-    public static String convertToRequestedVelocityUnit(double speed, char unit)
+    public static String getVelocityString(double speed)
     {
-        String rv = speed+" m/s";
-
-        switch(unit)
-        {
-            case 'M':
-
-                rv = (speed * 2.236936)+" mph";
-                break;
-
-            default:
-
-                Log.d(LOGTAG,"using m/s");
-                break;
-        }
-
-        return rv;
+        return speed+" mph";
     }
 
-    public static String convertToRequestedDistanceUnit(long distance, char unit)
+    public static String getDistanceString(long distance, char unit)
     {
         String rv = distance+" in";
 
@@ -73,12 +33,12 @@ public class MathUtils
         {
             //miles from meters.
             case 'M':
-                rv = (distance * 0.00062137)+" miles";
+                rv = distance+" miles";
                 break;
 
             //mm to inches.
             case 'I':
-                rv = (distance * 0.039370)+" in";
+                rv = distance+" in";
                 break;
 
             default:

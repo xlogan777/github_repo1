@@ -208,10 +208,8 @@ public class CurrentWeatherActivity extends ActionBarActivity
         //do conversions here.
         result = WeatherAppUtils.getDefaultStringDiplayDouble(currWeatherTable.getCurr_main_temp());
         if(result.length() == 0)
-            ((TextView)findViewById(R.id.maintemp_val)).setText(MathUtils.convertToRequestedTempUnit(
-                    currWeatherTable.getCurr_main_temp(),
-                    'F'
-            )+"");
+            ((TextView)findViewById(R.id.maintemp_val)).setText(MathUtils.getTempString(
+                    currWeatherTable.getCurr_main_temp())+"");
         else
             ((TextView)findViewById(R.id.maintemp_val)).setText(result);
 
@@ -236,10 +234,7 @@ public class CurrentWeatherActivity extends ActionBarActivity
         result = WeatherAppUtils.getDefaultStringDiplayDouble(currWeatherTable.getCurr_main_temp_min());
         if(result.length() == 0)
             ((TextView)findViewById(R.id.mintemp_val)).setText(
-                        MathUtils.convertToRequestedTempUnit(
-                                currWeatherTable.getCurr_main_temp_min(), 'F'
-                        ) + ""
-                );
+                        MathUtils.getTempString(currWeatherTable.getCurr_main_temp_min()) + "");
         else
             ((TextView)findViewById(R.id.mintemp_val)).setText(result);
 
@@ -248,10 +243,7 @@ public class CurrentWeatherActivity extends ActionBarActivity
                 currWeatherTable.getCurr_main_temp_max()
         );
         if(result.length() == 0)
-            ((TextView)findViewById(R.id.maxtemp_val)).setText(MathUtils.convertToRequestedTempUnit(
-                    currWeatherTable.getCurr_main_temp_max(),
-                    'F'
-            )+"");
+            ((TextView)findViewById(R.id.maxtemp_val)).setText(MathUtils.getTempString(currWeatherTable.getCurr_main_temp_max())+"");
         else
             ((TextView)findViewById(R.id.maxtemp_val)).setText(result);
 
@@ -273,10 +265,7 @@ public class CurrentWeatherActivity extends ActionBarActivity
 
         result = WeatherAppUtils.getDefaultStringDiplayDouble(currWeatherTable.getCurr_wind_speed());
         if(result.length() == 0)
-            ((TextView)findViewById(R.id.windspeed_val)).setText(MathUtils.convertToRequestedVelocityUnit(
-                    currWeatherTable.getCurr_wind_speed(),
-                    'M'
-            )+"");
+            ((TextView)findViewById(R.id.windspeed_val)).setText(MathUtils.getVelocityString(currWeatherTable.getCurr_wind_speed())+"");
         else
             ((TextView)findViewById(R.id.windspeed_val)).setText(result);
 
@@ -309,7 +298,7 @@ public class CurrentWeatherActivity extends ActionBarActivity
 
         result = WeatherAppUtils.getDefaultStringDiplayLong(currWeatherTable.getCurr_visibility());
         if(result.length() == 0)
-            ((TextView)findViewById(R.id.visibility_val)).setText(MathUtils.convertToRequestedDistanceUnit(currWeatherTable.getCurr_visibility(), 'M')+"");
+            ((TextView)findViewById(R.id.visibility_val)).setText(MathUtils.getDistanceString(currWeatherTable.getCurr_visibility(),'M')+"");
         else
             ((TextView)findViewById(R.id.visibility_val)).setText(result);
 
