@@ -31,9 +31,10 @@ public class WeatherAppUtils
 
     //these show that we have a failed retrieval of the value and replaced with this
     //instead, showing we are missing data and do nothing.
-    private final static long DEFAULT_lONG_VAL = Long.MAX_VALUE;
-    private final static double DEFAULT_DOUBLE_VAL = Double.MAX_VALUE;
-    private final static String DEFAULT_STRING_VAL = "DEFAULT_STRING_VAL";
+    public final static long DEFAULT_lONG_VAL = Long.MAX_VALUE;
+    public final static double DEFAULT_DOUBLE_VAL = Double.MAX_VALUE;
+    public final static String DEFAULT_STRING_VAL = "DEFAULT_STRING_VAL";
+    public final static String UTC_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
     //returns a json string from the input stream or empty string if something went wrong.
     //it does not close the input stream..that is left to the caller.
@@ -275,6 +276,7 @@ public class WeatherAppUtils
         return rv;
     }
 
+    //parse utc formatted string and get a long seconds value.
     public static long getUtcSecondsFromDateString(String input)
     {
         long rv = DEFAULT_lONG_VAL;
@@ -282,7 +284,7 @@ public class WeatherAppUtils
         try
         {
             //2015-08-15T11:00:07, from xml feed.
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            SimpleDateFormat dateFormat = new SimpleDateFormat(UTC_DATE_FORMAT);
             Date inputDate = dateFormat.parse(input);
             Log.d(LOGTAG,inputDate.toString());
             rv = inputDate.getTime();
@@ -291,6 +293,18 @@ public class WeatherAppUtils
         {
             Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
         }
+
+        return rv;
+    }
+
+    //get a string value from utc seconds in the format specified.
+    public static String getUtcFromUtcSeconds(long utcSeconds)
+    {
+        String rv = "";
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat(UTC_DATE_FORMAT);
+        rv = dateFormat.format(new Date(utcSeconds));
+        Log.d(LOGTAG,"date = "+rv);
 
         return rv;
     }

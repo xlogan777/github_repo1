@@ -98,10 +98,12 @@ public class MyWeatherApplication extends Application
         //get the actual sql lite database here..creates the db now.
         db = helper.getWritableDatabase();
 
-        //force the creation of the city curr weather table here.
+        //drop and force the creation of the city curr weather table here.
+        CityWeatherCurrCondTableDao.dropTable(db,true);
         CityWeatherCurrCondTableDao.createTable(db,true);
 
-        //force the create of the weather icon table here.
+        //drop and force the create of the weather icon table here.
+        WeatherIconTableDao.dropTable(db,true);
         WeatherIconTableDao.createTable(db, true);
 
         //use the db ref to get the dao master.

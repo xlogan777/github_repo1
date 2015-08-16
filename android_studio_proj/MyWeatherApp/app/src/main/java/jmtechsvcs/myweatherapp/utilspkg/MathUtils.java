@@ -65,39 +65,20 @@ public class MathUtils
         return rv;
     }
 
-    //to hh:mm
-    public static String convertToRequestedTimeUnit(long utc)
-    {
-        String rv = utc+" utc";
-
-        try
-        {
-            //display time in utc format. from last update.
-            TimeZone tz = TimeZone.getTimeZone("UTC");
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd, HH:mm:ss a z");
-            df.setTimeZone(tz);
-            rv = df.format(new Date(utc));
-
-//            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss a z", Locale.getDefault());
-//            rv = formatter.format(new Date(utc));
-        }
-        catch(Exception e)
-        {
-            Log.d(LOGTAG,"error with time format..use utc");
-        }
-
-        return rv;
-    }
-
     public static String convertToRequestedDistanceUnit(long distance, char unit)
     {
         String rv = distance+" in";
 
         switch(unit)
         {
+            //miles from meters.
             case 'M':
+                rv = (distance * 0.00062137)+" miles";
+                break;
 
-                rv = (distance * 2.54)+" cm";
+            //mm to inches.
+            case 'I':
+                rv = (distance * 0.039370)+" in";
                 break;
 
             default:
@@ -117,6 +98,13 @@ public class MathUtils
     public static String getPercentString(long percentage)
     {
         return percentage+"%";
+    }
+
+    public static String getPercentWhole(double percent)
+    {
+        long val = (long)(percent * 100.0);
+        String rv = getPercentString(val);
+        return rv;
     }
 
     public static String getDegreeString(double degree)

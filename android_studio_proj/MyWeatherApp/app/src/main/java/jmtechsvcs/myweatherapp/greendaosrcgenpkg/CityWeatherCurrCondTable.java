@@ -23,7 +23,12 @@ public class CityWeatherCurrCondTable {
     private Long curr_main_grnd_level;
     private Double curr_wind_speed;
     private Long curr_wind_degs;
+    private String curr_wind_speed_name;
+    private String curr_wind_dirr_code;
     private Long curr_clouds_all;
+    private Long curr_visibility;
+    private String precipitation_mode;
+    private Double precipitation_value;
     private Long curr_rain_last3hrs;
     private Long curr_snow_last3hrs;
     private Long curr_data_calc_time;
@@ -40,7 +45,7 @@ public class CityWeatherCurrCondTable {
         this.city_id = city_id;
     }
 
-    public CityWeatherCurrCondTable(long city_id, Long curr_weather_id, String curr_weather_main, String curr_weather_desc, String curr_weather_icon, Double curr_main_temp, Long curr_main_pressure, Long curr_main_humidity, Double curr_main_temp_min, Double curr_main_temp_max, Long curr_main_sea_level, Long curr_main_grnd_level, Double curr_wind_speed, Long curr_wind_degs, Long curr_clouds_all, Long curr_rain_last3hrs, Long curr_snow_last3hrs, Long curr_data_calc_time, Long curr_sys_sunrise_time, Long curr_sys_sunset_time) {
+    public CityWeatherCurrCondTable(long city_id, Long curr_weather_id, String curr_weather_main, String curr_weather_desc, String curr_weather_icon, Double curr_main_temp, Long curr_main_pressure, Long curr_main_humidity, Double curr_main_temp_min, Double curr_main_temp_max, Long curr_main_sea_level, Long curr_main_grnd_level, Double curr_wind_speed, Long curr_wind_degs, String curr_wind_speed_name, String curr_wind_dirr_code, Long curr_clouds_all, Long curr_visibility, String precipitation_mode, Double precipitation_value, Long curr_rain_last3hrs, Long curr_snow_last3hrs, Long curr_data_calc_time, Long curr_sys_sunrise_time, Long curr_sys_sunset_time) {
         this.city_id = city_id;
         this.curr_weather_id = curr_weather_id;
         this.curr_weather_main = curr_weather_main;
@@ -55,7 +60,12 @@ public class CityWeatherCurrCondTable {
         this.curr_main_grnd_level = curr_main_grnd_level;
         this.curr_wind_speed = curr_wind_speed;
         this.curr_wind_degs = curr_wind_degs;
+        this.curr_wind_speed_name = curr_wind_speed_name;
+        this.curr_wind_dirr_code = curr_wind_dirr_code;
         this.curr_clouds_all = curr_clouds_all;
+        this.curr_visibility = curr_visibility;
+        this.precipitation_mode = precipitation_mode;
+        this.precipitation_value = precipitation_value;
         this.curr_rain_last3hrs = curr_rain_last3hrs;
         this.curr_snow_last3hrs = curr_snow_last3hrs;
         this.curr_data_calc_time = curr_data_calc_time;
@@ -175,12 +185,52 @@ public class CityWeatherCurrCondTable {
         this.curr_wind_degs = curr_wind_degs;
     }
 
+    public String getCurr_wind_speed_name() {
+        return curr_wind_speed_name;
+    }
+
+    public void setCurr_wind_speed_name(String curr_wind_speed_name) {
+        this.curr_wind_speed_name = curr_wind_speed_name;
+    }
+
+    public String getCurr_wind_dirr_code() {
+        return curr_wind_dirr_code;
+    }
+
+    public void setCurr_wind_dirr_code(String curr_wind_dirr_code) {
+        this.curr_wind_dirr_code = curr_wind_dirr_code;
+    }
+
     public Long getCurr_clouds_all() {
         return curr_clouds_all;
     }
 
     public void setCurr_clouds_all(Long curr_clouds_all) {
         this.curr_clouds_all = curr_clouds_all;
+    }
+
+    public Long getCurr_visibility() {
+        return curr_visibility;
+    }
+
+    public void setCurr_visibility(Long curr_visibility) {
+        this.curr_visibility = curr_visibility;
+    }
+
+    public String getPrecipitation_mode() {
+        return precipitation_mode;
+    }
+
+    public void setPrecipitation_mode(String precipitation_mode) {
+        this.precipitation_mode = precipitation_mode;
+    }
+
+    public Double getPrecipitation_value() {
+        return precipitation_value;
+    }
+
+    public void setPrecipitation_value(Double precipitation_value) {
+        this.precipitation_value = precipitation_value;
     }
 
     public Long getCurr_rain_last3hrs() {

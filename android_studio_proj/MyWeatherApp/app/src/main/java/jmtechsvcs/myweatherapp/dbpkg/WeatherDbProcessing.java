@@ -240,13 +240,14 @@ public class WeatherDbProcessing
                             String result = WeatherAppUtils.getDefaultStringDiplayString(speed_name);
                             if(result.length() != 0)
                             {
-                                //use the result value to save to pojo
+                                curr_weather_bean.setCurr_wind_speed_name(result);
                             }
                             else
                             {
-                                //use the value from the xml feed.
+                                curr_weather_bean.setCurr_wind_speed_name(speed_name);
                             }
                         }
+                        //NEW FIELDS BEING ADDED TO POJO.
                         else if(name.equals("direction"))
                         {
                             //this is a string
@@ -255,11 +256,11 @@ public class WeatherDbProcessing
                             String result = WeatherAppUtils.getDefaultStringDiplayString(wind_dir);
                             if(result.length() != 0)
                             {
-                                //use the result value to save to pojo
+                                curr_weather_bean.setCurr_wind_dirr_code(result);
                             }
                             else
                             {
-                                //use the value from the xml feed.
+                                curr_weather_bean.setCurr_wind_dirr_code(wind_dir);
                             }
                         }
                         else if(name.equals("visibility"))
@@ -269,12 +270,12 @@ public class WeatherDbProcessing
                             String result = WeatherAppUtils.getDefaultStringDiplayString(visibility);
                             if(result.length() != 0)
                             {
-                                //use the default long to save to the pojo.
+                                curr_weather_bean.setCurr_visibility(WeatherAppUtils.DEFAULT_lONG_VAL);
                             }
                             else
                             {
-                                //use the value from the xml feed.
-                                //make a long type and convert to miles.
+                                long vis = Long.parseLong(visibility);
+                                curr_weather_bean.setCurr_visibility(vis);
                             }
                         }
                         else if(name.equals("precipitation"))
@@ -284,26 +285,26 @@ public class WeatherDbProcessing
                             String result = WeatherAppUtils.getDefaultStringDiplayString(precip_mode);
                             if(result.length() != 0)
                             {
-                                //use the result value to save to pojo
+                                curr_weather_bean.setPrecipitation_mode(result);
                             }
                             else
                             {
-                                //use the value from the xml feed.
+                                curr_weather_bean.setPrecipitation_mode(precip_mode);
                             }
 
-                            //long, mm conv to inches.
                             String precip_value = parser.getAttributeValue(null, "value");
                             result = WeatherAppUtils.getDefaultStringDiplayString(precip_value);
                             if(result.length() != 0)
                             {
-                                //use the default long to save to the pojo.
+                                curr_weather_bean.setPrecipitation_value(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
                             }
                             else
                             {
-                                //use the value from the xml feed.
-                                //make a long type and convert to inches.
+                                double precip_val = Double.parseDouble(precip_value);
+                                curr_weather_bean.setPrecipitation_value(precip_val);
                             }
                         }
+                        //NEW FIELDS BEING ADDED TO POJO
 
                         break;
 
