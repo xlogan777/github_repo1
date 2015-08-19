@@ -323,12 +323,31 @@ public class WeatherDbProcessing
             //return this bean back to the caller.
             rv = curr_weather_bean;
         }
-        catch (Exception e)
+        catch(Exception e)
         {
             Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
         }
 
         return rv;
+    }
+
+    //this will update the dao with the json weather station data in the json string to the DB.
+    //for this geo location stream.
+    public static void updateCurrentWeatherStationInfoGeo(String jsonInput, Context context)
+    {
+        try
+        {
+            //get the dao session.
+            DaoSession daoSession = getDaoSession(context);
+
+            //TODO: parse the json data here, add the data to the java bean and update it in the dao.
+            Log.d(LOGTAG,"need to do this piece");
+
+        }
+        catch(Exception e)
+        {
+            Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
+        }
     }
 
     /*

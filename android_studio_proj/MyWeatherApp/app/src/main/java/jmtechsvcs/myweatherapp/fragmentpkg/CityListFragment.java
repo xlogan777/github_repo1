@@ -55,11 +55,21 @@ public class CityListFragment extends ListFragment
 
             for(CityInfoTable my_items : listParam)
             {
+                //add all the items to the selectable string.
                 long cid = my_items.getCity_id();
                 String cn = my_items.getName();
                 String cc = my_items.getCountry();
+                double lat = my_items.getLat();
+                double lon = my_items.getLon();
 
-                display_list.add("cid = "+cid+", CityName = "+cn+", CC = "+cc);
+                display_list.add
+                        (
+                         "cid = "+ cid+
+                         ", CityName = "+ cn+
+                         ", CC = "+ cc+
+                         ", lat = "+ lat+
+                         ", lon = "+ lon
+                        );
             }
 
             setListAdapter(new ArrayAdapter<String>(getActivity(),

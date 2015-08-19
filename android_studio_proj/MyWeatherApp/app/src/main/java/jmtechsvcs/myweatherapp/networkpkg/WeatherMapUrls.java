@@ -9,16 +9,20 @@ public class WeatherMapUrls
 {
     private static String LOGTAG = "WeatherMapUrls";
 
+    //api key used for all http calls.
     private final static String APP_ID = "APPID=22ecf4a075718bdfcd5657156e3272b5";//weather app id.
-    private final static String CURRENT_WEATHER_END_PT = "http://api.openweathermap.org/data/2.5/weather?";
-    private final static String WEATEHR_ICON_END_PT = "http://openweathermap.org/img/w/";
 
-    //TODO:
-    /*
-        may need to get the updated time from the xml feed based current data
-        since there is an issue with the current time, sunrise, sunset times in utc..
-        vs the one from the xml feed.
-     */
+    //current weather end point
+    private final static String CURRENT_WEATHER_END_PT = "http://api.openweathermap.org/data/2.5/weather?";
+
+    //weather icon end pt.
+    private final static String WEATHER_ICON_END_PT = "http://openweathermap.org/img/w/";
+
+    //weather station info url.
+    private final static String WEATHER_STATION_GEO_END_PT = "http://api.openweathermap.org/data/2.5/station/find?";
+
+    //weather station id end pt.
+    private final static String CURRENT_WEATHER_STATION_END_PT = "http://api.openweathermap.org/data/2.5/station?id=";
 
     public static String getCurrentWeatherByCityId(String cityId)
     {
@@ -36,7 +40,21 @@ public class WeatherMapUrls
 
     public static String getWeatherIconByIconId(String iconId)
     {
-        String rv = WEATEHR_ICON_END_PT+iconId+".png?"+APP_ID;
+        String rv = WEATHER_ICON_END_PT+iconId+".png?"+APP_ID;
+        Log.d(LOGTAG,"url => "+rv);
+        return rv;
+    }
+
+    public static String getWeatherStationInfoByGeo(String lat, String lon, String cnt)
+    {
+        String rv = WEATHER_STATION_GEO_END_PT+"lat="+lat+"&lon="+lon+"&cnt="+cnt+"&"+APP_ID;
+        Log.d(LOGTAG,"url => "+rv);
+        return rv;
+    }
+
+    public static String getWeatherStationInfoById(String stationId)
+    {
+        String rv = CURRENT_WEATHER_STATION_END_PT+stationId+"&"+APP_ID;
         Log.d(LOGTAG,"url => "+rv);
         return rv;
     }

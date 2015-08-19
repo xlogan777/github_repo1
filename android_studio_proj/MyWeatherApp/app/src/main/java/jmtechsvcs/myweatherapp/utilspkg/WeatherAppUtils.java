@@ -239,12 +239,14 @@ public class WeatherAppUtils
         return rv;
     }
 
+    //dialog list of items used for choices.
     public static String [] getDialogList()
     {
         String [] weather_opts =
                 {"Current City Weather",
                  "5 day / 3 hour forecast",
-                  "16 day / daily forecast"};
+                 "16 day / daily forecast",
+                 "Weather stations Info for city"};
 
         return weather_opts;
     }
@@ -307,5 +309,11 @@ public class WeatherAppUtils
         Log.d(LOGTAG,"date = "+rv);
 
         return rv;
+    }
+
+    public static String getDataFromInput(String input)
+    {
+        String rv = input.substring(input.indexOf("=")+1);
+        return rv.trim();
     }
 }

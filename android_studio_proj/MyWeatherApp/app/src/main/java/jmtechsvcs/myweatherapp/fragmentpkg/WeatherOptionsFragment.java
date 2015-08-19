@@ -45,15 +45,29 @@ public class WeatherOptionsFragment extends DialogFragment{
 
                         Log.d(LOGTAG,"picked this choice = "+weather_opts[which]);
 
-                        //get the cid from the data string to use as the city id.
+                        //split the data string by commas
                         String [] items = data.split(",");
+
+                        //get the cid from the data string to use as the city id.
                         String cid = items[0];
-                        cid = cid.substring(cid.indexOf("=")+1);
-                        long city_id = Long.parseLong(cid.trim());
+                        long city_id = Long.parseLong(WeatherAppUtils.getDataFromInput(cid));
+
+                        String cn = items[1];//city name
+                        cn = WeatherAppUtils.getDataFromInput(cn);
+
+                        String cc = items[2];//country code
+                        cc = WeatherAppUtils.getDataFromInput(cc);
+
+                        String lat_s = items[3];//lat
+                        double lat = Double.parseDouble(WeatherAppUtils.getDataFromInput(lat_s));
+
+                        String lon_s = items[4];//lon
+                        double lon = Double.parseDouble(WeatherAppUtils.getDataFromInput(lon_s));
 
                         //this handles which item was selected.
                         switch(which)
                         {
+                            //current weather option.
                             case 0:
 
                                 //start the bg service, with helper method to load params to bg processing.
@@ -78,6 +92,16 @@ public class WeatherOptionsFragment extends DialogFragment{
                                 break;
 
                             case 2:
+
+                                break;
+
+                            //weather station information processing.
+                            case 3:
+
+                                //start the bg service, with helper method to load params to bg processing.
+                                NetworkIntentSvc.startActionCurrentWeatherStationGeo(getActivity(),lat,lon);
+
+                                //TODO: add the call to the weather station screens from here.
 
                                 break;
                         }
