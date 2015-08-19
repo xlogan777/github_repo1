@@ -42,6 +42,7 @@ import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
  * @author Jimmy
  * @version 1.0
  */
+//this is a test.
 public class MyWeatherApplication extends Application
 {
     private static String LOGTAG = "MyWeatherApplication";
