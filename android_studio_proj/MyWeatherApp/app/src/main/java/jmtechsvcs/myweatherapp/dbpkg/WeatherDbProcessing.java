@@ -352,60 +352,76 @@ public class WeatherDbProcessing
             //len of the json array.
             int size = weather_station_array.length();
 
+            int index = 0;
+
             //loop over the json array.
             for(int i = 0; i < size; i++)
             {
-                //get the obj from the json array.
-                JSONObject array_obj = weather_station_array.getJSONObject(i);
+                //track which index we are at.
+                //allow for other items to be parsed if we fail some.
+                index = i;
+                try
+                {
+                    //get the obj from the json array.
+                    JSONObject array_obj = weather_station_array.getJSONObject(i);
 
-                //long weather_id = WeatherAppUtils.getLongVal(array_item, "id");
-                //String weather_main = WeatherAppUtils.getStringVal(array_item, "main");
+                    //must have station information.
+                    JSONObject station_obj = array_obj.getJSONObject("station");
+                    String station_name = WeatherAppUtils.getStringVal(station_obj, "name");
+                    long station_id = WeatherAppUtils.getLongVal(station_obj, "id");
+                    //TODO: add to pojo here.
 
-                JSONObject station_obj = array_obj.getJSONObject("station");
-                String station_name = WeatherAppUtils.getStringVal(station_obj, "name");
-                long station_id = WeatherAppUtils.getLongVal(station_obj, "id");
-                //TODO: add to pojo here.
+                    //must have the last obj
+                    JSONObject last_station_obj = array_obj.getJSONObject("last");
 
-                JSONObject last_station_obj = array_obj.getJSONObject("last");
-                JSONObject main_station_obj = last_station_obj.getJSONObject("main");
-                double main_temp = WeatherAppUtils.getDoubleVal(main_station_obj, "temp");
-                long main_pressure = WeatherAppUtils.getLongVal(main_station_obj, "pressure");
-                long main_humidity = WeatherAppUtils.getLongVal(main_station_obj, "humidity");
-                //TODO: add to pojo here.
+                    //all these objs below may be optional.
+                    JSONObject main_station_obj = last_station_obj.optJSONObject("main");
+                    double main_temp = WeatherAppUtils.getDoubleVal(main_station_obj, "temp");
+                    long main_pressure = WeatherAppUtils.getLongVal(main_station_obj, "pressure");
+                    long main_humidity = WeatherAppUtils.getLongVal(main_station_obj, "humidity");
+                    //TODO: add to pojo here.
 
-                JSONObject last_wind = last_station_obj.getJSONObject("wind");
-                double last_wind_speed = WeatherAppUtils.getDoubleVal(last_wind, "speed");
-                long last_wind_deg = WeatherAppUtils.getLongVal(last_wind, "deg");
-                double last_wind_gust = WeatherAppUtils.getDoubleVal(last_wind, "gust");
-                //TODO: add to pojo here.
+                    JSONObject last_wind = last_station_obj.optJSONObject("wind");
+                    double last_wind_speed = WeatherAppUtils.getDoubleVal(last_wind, "speed");
+                    long last_wind_deg = WeatherAppUtils.getLongVal(last_wind, "deg");
+                    double last_wind_gust = WeatherAppUtils.getDoubleVal(last_wind, "gust");
+                    //TODO: add to pojo here.
 
-                JSONObject last_visibility = last_station_obj.getJSONObject("visibility");
-                long last_visibility_distance = WeatherAppUtils.getLongVal(last_visibility, "distance");
-                //TODO: add to pojo here.
+                    JSONObject last_visibility = last_station_obj.optJSONObject("visibility");
+                    long last_visibility_distance = WeatherAppUtils.getLongVal(last_visibility, "distance");
+                    //TODO: add to pojo here.
 
-                JSONObject last_calc = last_station_obj.getJSONObject("calc");
-                double last_calc_dewpt = WeatherAppUtils.getDoubleVal(last_calc, "dewpoint");
-                double last_calc_humidex = WeatherAppUtils.getDoubleVal(last_calc, "humidex");
-                //TODO: add to pojo here.
+                    JSONObject last_calc = last_station_obj.optJSONObject("calc");
+                    double last_calc_dewpt = WeatherAppUtils.getDoubleVal(last_calc, "dewpoint");
+                    double last_calc_humidex = WeatherAppUtils.getDoubleVal(last_calc, "humidex");
+                    //TODO: add to pojo here.
 
-                JSONArray last_clouds_array = last_station_obj.getJSONArray("clouds");
-                JSONObject clouds_item = last_clouds_array.getJSONObject(0);
-                long clouds_item_dist = WeatherAppUtils.getLongVal(clouds_item, "distance");
-                String clouds_item_cond = WeatherAppUtils.getStringVal(clouds_item, "condition");
-                //TODO: add to pojo here.
+                    JSONArray last_clouds_array = last_station_obj.optJSONArray("clouds");
+                    if(last_clouds_array != null){
+                        //only get data from the first item.
+                        JSONObject clouds_item = last_clouds_array.getJSONObject(0);
+                        long clouds_item_dist = WeatherAppUtils.getLongVal(clouds_item, "distance");
+                        String clouds_item_cond = WeatherAppUtils.getStringVal(clouds_item, "condition");
+                        //TODO: add to pojo here.
+                    }
 
-                JSONObject last_rain = last_station_obj.getJSONObject("rain");
-                long last_rain_1h = WeatherAppUtils.getLongVal(last_rain, "1h");
-                long last_rain_24h = WeatherAppUtils.getLongVal(last_rain, "24h");
-                long last_rain_today = WeatherAppUtils.getLongVal(last_rain, "today");
-                //TODO: add to pojo here.
+                    JSONObject last_rain = last_station_obj.optJSONObject("rain");
+                    long last_rain_1h = WeatherAppUtils.getLongVal(last_rain, "1h");
+                    long last_rain_24h = WeatherAppUtils.getLongVal(last_rain, "24h");
+                    long last_rain_today = WeatherAppUtils.getLongVal(last_rain, "today");
+                    //TODO: add to pojo here.
 
-                long last_dt = WeatherAppUtils.getLongVal(last_station_obj,"dt");
-                //TODO: add to pojo here.
+                    long last_dt = WeatherAppUtils.getLongVal(last_station_obj, "dt");
+                    //TODO: add to pojo here.
 
-                //save the data to the db.
-                //curr_weather_dao.insertOrReplace(curr_weather_bean);
-
+                    //save the data to the db.
+                    //curr_weather_dao.insertOrReplace(curr_weather_bean);
+                }
+                catch(Exception e)
+                {
+                    Log.d(LOGTAG,"issues with item in weather station array loc = "+index);
+                    Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
+                }
             }//for loop
         }
         catch(Exception e)

@@ -1,0 +1,44 @@
+[
+    {
+        "station": {
+            "name": "KORD",
+            "id": 962            
+        },
+        "distance": 9.482,
+        "last": {
+            "main": {
+                "temp": 293.15,
+                "pressure": 1006,
+                "humidity": 60
+            },
+            "wind": {
+                "speed": 6.7,
+                "deg": 250,
+                "gust": 9.8
+            },
+            "visibility": {
+                "distance": 16093
+            },
+            "calc": {
+                "dewpoint": 285.15,
+                "humidex": 295.35
+            },
+            "clouds": [ 
+                {
+                    "distance": 1219,
+                    "condition": "FEW"
+                },
+                {
+                    "distance": 4572,
+                    "condition": "BKN"
+                },
+                {
+                    "distance": 7620,
+                    "condition": "OVC"
+                }
+            ],
+			"rain":{"1h":0,"24h":0,"today":0},
+            "dt": 1440028260
+        }
+    }
+]

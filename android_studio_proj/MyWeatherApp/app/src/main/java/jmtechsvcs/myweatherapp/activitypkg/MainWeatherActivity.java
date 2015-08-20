@@ -46,6 +46,9 @@ public class MainWeatherActivity extends ActionBarActivity {
             startActivity(intent);
         }
 
+        //testing the parsing of the weather_station.json file.
+        //WeatherDbProcessing.updateCurrentWeatherStationInfoGeo("",getApplicationContext());
+
         Intent intent = new Intent(this, CitySearchActivity.class);
         startActivity(intent);
     }
