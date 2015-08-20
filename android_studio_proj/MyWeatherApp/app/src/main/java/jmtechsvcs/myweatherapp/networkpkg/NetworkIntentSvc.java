@@ -60,7 +60,7 @@ public class NetworkIntentSvc extends IntentService
      *
      * @see IntentService
      */
-    public static void startActionCurrentWeatherStationGeo(Context context, double lat, double lon)
+    public static void startActionCurrentWeatherStationGeo(Context context, double lat, double lon, long cityId)
     {
         //create intent with this activity as the sending activity, and the calling service.
         Intent mServiceIntent = new Intent(context, NetworkIntentSvc.class);
@@ -72,6 +72,7 @@ public class NetworkIntentSvc extends IntentService
         Bundle bundle = new Bundle();
         bundle.putDouble("lat", lat);
         bundle.putDouble("lon", lon);
+        bundle.putLong("cityId",cityId);
 
         //save bundle to this intent.
         mServiceIntent.putExtras(bundle);
@@ -107,9 +108,10 @@ public class NetworkIntentSvc extends IntentService
                 //get the data from the bundle.
                 double lat = bundle.getDouble("lat");
                 double lon = bundle.getDouble("lon");
+                long cityId = bundle.getLong("cityId");
 
                 //call handler for this action
-                handleCurrentWeatherStationGeoAction(lat, lon);
+                handleCurrentWeatherStationGeoAction(lat, lon, cityId);
             }
             else
             {
@@ -172,7 +174,7 @@ public class NetworkIntentSvc extends IntentService
         }
     }
 
-    private void handleCurrentWeatherStationGeoAction(double lat, double lon)
+    private void handleCurrentWeatherStationGeoAction(double lat, double lon, long cityId)
     {
         Log.d(LOGTAG,"lat = "+lat+", lon = "+lon);
 
@@ -188,7 +190,7 @@ public class NetworkIntentSvc extends IntentService
             Log.d(LOGTAG, payload.getStringPayload());
 
             //update the dao using the json string and providing the app context.
-            WeatherDbProcessing.updateCurrentWeatherStationInfoGeo(payload.getStringPayload(), getApplicationContext());
+            WeatherDbProcessing.updateCurrentWeatherStationInfoGeo(payload.getStringPayload(), getApplicationContext(), cityId);
         }
     }
 }

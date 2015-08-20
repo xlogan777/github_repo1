@@ -15,12 +15,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 
+import jmtechsvcs.myweatherapp.dbpkg.WeatherDbHelper;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTable;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityWeatherCurrCondTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.DaoMaster;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.DaoSession;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherIconTableDao;
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherStationInfoTableDao;
 import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 
 /**
@@ -51,7 +53,7 @@ public class MyWeatherApplication extends Application
     final static String DB_NAME = "my_weather_db.db";
 
     //use the dev helper to setup the db here with the db name and the main activity for the context.
-    private DaoMaster.DevOpenHelper helper;
+    private WeatherDbHelper helper;
 
     //get the actual sql lite database here..creates the db now.
     private SQLiteDatabase db;
@@ -87,11 +89,6 @@ public class MyWeatherApplication extends Application
     {
         super.onLowMemory();
     }
-
-//    public DaoMaster getDaoMaster()
-//    {
-//        return daoMaster;
-//    }
 
     public DaoSession getDaoSession()
     {
@@ -181,7 +178,7 @@ public class MyWeatherApplication extends Application
         boolean databaseExist = checkDataBase();
 
         //create the helper class to assist in creating/opening the db.
-        helper = new DaoMaster.DevOpenHelper(this, DB_NAME, null);
+        helper = new WeatherDbHelper(this, DB_NAME, null);
 
         //get the actual sql lite database here..creates the db now.
         db = helper.getWritableDatabase();
@@ -196,6 +193,12 @@ public class MyWeatherApplication extends Application
             //this will overwrite the db just created recently with the one in the
             //assets folder.
             copyDataBase();
+
+            //after we copy the db from the assets folder we lost all the tables
+            //created. need to create them if we did a copy.
+            CityWeatherCurrCondTableDao.createTable(db, true);
+            WeatherIconTableDao.createTable(db, true);
+            WeatherStationInfoTableDao.createTable(db, true);
         }// end if else dbExist
     }
 
@@ -203,18 +206,6 @@ public class MyWeatherApplication extends Application
     {
         //load db from asset folder if it doesnt exist
         loadDbFromAssets();
-
-        //drop the table here if it exists.
-        //CityWeatherCurrCondTableDao.dropTable(db,true);
-
-        //force the creation of the table here if it wasnt created.
-        CityWeatherCurrCondTableDao.createTable(db,true);
-
-        //drop the table here if it exists.
-        //WeatherIconTableDao.dropTable(db,true);
-
-        //force the creation of the table here if it wasnt created.
-        WeatherIconTableDao.createTable(db, true);
 
         //use the db ref to get the dao master.
         daoMaster = new DaoMaster(db);

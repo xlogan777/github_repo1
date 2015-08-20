@@ -43,8 +43,8 @@ public class CityWeatherCurrCondTableDao extends AbstractDao<CityWeatherCurrCond
         public final static Property Curr_visibility = new Property(17, Long.class, "curr_visibility", false, "CURR_VISIBILITY");
         public final static Property Precipitation_mode = new Property(18, String.class, "precipitation_mode", false, "PRECIPITATION_MODE");
         public final static Property Precipitation_value = new Property(19, Double.class, "precipitation_value", false, "PRECIPITATION_VALUE");
-        public final static Property Curr_rain_last3hrs = new Property(20, Long.class, "curr_rain_last3hrs", false, "CURR_RAIN_LAST3HRS");
-        public final static Property Curr_snow_last3hrs = new Property(21, Long.class, "curr_snow_last3hrs", false, "CURR_SNOW_LAST3HRS");
+        public final static Property Curr_rain_last3hrs = new Property(20, Double.class, "curr_rain_last3hrs", false, "CURR_RAIN_LAST3HRS");
+        public final static Property Curr_snow_last3hrs = new Property(21, Double.class, "curr_snow_last3hrs", false, "CURR_SNOW_LAST3HRS");
         public final static Property Curr_data_calc_time = new Property(22, Long.class, "curr_data_calc_time", false, "CURR_DATA_CALC_TIME");
         public final static Property Curr_sys_sunrise_time = new Property(23, Long.class, "curr_sys_sunrise_time", false, "CURR_SYS_SUNRISE_TIME");
         public final static Property Curr_sys_sunset_time = new Property(24, Long.class, "curr_sys_sunset_time", false, "CURR_SYS_SUNSET_TIME");
@@ -83,8 +83,8 @@ public class CityWeatherCurrCondTableDao extends AbstractDao<CityWeatherCurrCond
                 "\"CURR_VISIBILITY\" INTEGER," + // 17: curr_visibility
                 "\"PRECIPITATION_MODE\" TEXT," + // 18: precipitation_mode
                 "\"PRECIPITATION_VALUE\" REAL," + // 19: precipitation_value
-                "\"CURR_RAIN_LAST3HRS\" INTEGER," + // 20: curr_rain_last3hrs
-                "\"CURR_SNOW_LAST3HRS\" INTEGER," + // 21: curr_snow_last3hrs
+                "\"CURR_RAIN_LAST3HRS\" REAL," + // 20: curr_rain_last3hrs
+                "\"CURR_SNOW_LAST3HRS\" REAL," + // 21: curr_snow_last3hrs
                 "\"CURR_DATA_CALC_TIME\" INTEGER," + // 22: curr_data_calc_time
                 "\"CURR_SYS_SUNRISE_TIME\" INTEGER," + // 23: curr_sys_sunrise_time
                 "\"CURR_SYS_SUNSET_TIME\" INTEGER);"); // 24: curr_sys_sunset_time
@@ -197,14 +197,14 @@ public class CityWeatherCurrCondTableDao extends AbstractDao<CityWeatherCurrCond
             stmt.bindDouble(20, precipitation_value);
         }
  
-        Long curr_rain_last3hrs = entity.getCurr_rain_last3hrs();
+        Double curr_rain_last3hrs = entity.getCurr_rain_last3hrs();
         if (curr_rain_last3hrs != null) {
-            stmt.bindLong(21, curr_rain_last3hrs);
+            stmt.bindDouble(21, curr_rain_last3hrs);
         }
  
-        Long curr_snow_last3hrs = entity.getCurr_snow_last3hrs();
+        Double curr_snow_last3hrs = entity.getCurr_snow_last3hrs();
         if (curr_snow_last3hrs != null) {
-            stmt.bindLong(22, curr_snow_last3hrs);
+            stmt.bindDouble(22, curr_snow_last3hrs);
         }
  
         Long curr_data_calc_time = entity.getCurr_data_calc_time();
@@ -253,8 +253,8 @@ public class CityWeatherCurrCondTableDao extends AbstractDao<CityWeatherCurrCond
             cursor.isNull(offset + 17) ? null : cursor.getLong(offset + 17), // curr_visibility
             cursor.isNull(offset + 18) ? null : cursor.getString(offset + 18), // precipitation_mode
             cursor.isNull(offset + 19) ? null : cursor.getDouble(offset + 19), // precipitation_value
-            cursor.isNull(offset + 20) ? null : cursor.getLong(offset + 20), // curr_rain_last3hrs
-            cursor.isNull(offset + 21) ? null : cursor.getLong(offset + 21), // curr_snow_last3hrs
+            cursor.isNull(offset + 20) ? null : cursor.getDouble(offset + 20), // curr_rain_last3hrs
+            cursor.isNull(offset + 21) ? null : cursor.getDouble(offset + 21), // curr_snow_last3hrs
             cursor.isNull(offset + 22) ? null : cursor.getLong(offset + 22), // curr_data_calc_time
             cursor.isNull(offset + 23) ? null : cursor.getLong(offset + 23), // curr_sys_sunrise_time
             cursor.isNull(offset + 24) ? null : cursor.getLong(offset + 24) // curr_sys_sunset_time
@@ -285,8 +285,8 @@ public class CityWeatherCurrCondTableDao extends AbstractDao<CityWeatherCurrCond
         entity.setCurr_visibility(cursor.isNull(offset + 17) ? null : cursor.getLong(offset + 17));
         entity.setPrecipitation_mode(cursor.isNull(offset + 18) ? null : cursor.getString(offset + 18));
         entity.setPrecipitation_value(cursor.isNull(offset + 19) ? null : cursor.getDouble(offset + 19));
-        entity.setCurr_rain_last3hrs(cursor.isNull(offset + 20) ? null : cursor.getLong(offset + 20));
-        entity.setCurr_snow_last3hrs(cursor.isNull(offset + 21) ? null : cursor.getLong(offset + 21));
+        entity.setCurr_rain_last3hrs(cursor.isNull(offset + 20) ? null : cursor.getDouble(offset + 20));
+        entity.setCurr_snow_last3hrs(cursor.isNull(offset + 21) ? null : cursor.getDouble(offset + 21));
         entity.setCurr_data_calc_time(cursor.isNull(offset + 22) ? null : cursor.getLong(offset + 22));
         entity.setCurr_sys_sunrise_time(cursor.isNull(offset + 23) ? null : cursor.getLong(offset + 23));
         entity.setCurr_sys_sunset_time(cursor.isNull(offset + 24) ? null : cursor.getLong(offset + 24));

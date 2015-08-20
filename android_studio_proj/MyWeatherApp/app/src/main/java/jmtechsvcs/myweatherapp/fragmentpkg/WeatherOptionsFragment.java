@@ -99,7 +99,7 @@ public class WeatherOptionsFragment extends DialogFragment{
                             case 3:
 
                                 //start the bg service, with helper method to load params to bg processing.
-                                NetworkIntentSvc.startActionCurrentWeatherStationGeo(getActivity(),lat,lon);
+                                NetworkIntentSvc.startActionCurrentWeatherStationGeo(getActivity(),lat,lon,city_id);
 
                                 //TODO: add the call to the weather station screens from here.
 

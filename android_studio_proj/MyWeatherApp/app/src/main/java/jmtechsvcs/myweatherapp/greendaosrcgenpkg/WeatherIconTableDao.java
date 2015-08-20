@@ -14,7 +14,7 @@ import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherIconTable;
 /** 
  * DAO for table "WEATHER_ICON_TABLE".
 */
-public class WeatherIconTableDao extends AbstractDao<WeatherIconTable, Long> {
+public class WeatherIconTableDao extends AbstractDao<WeatherIconTable, String> {
 
     public static final String TABLENAME = "WEATHER_ICON_TABLE";
 
@@ -23,11 +23,10 @@ public class WeatherIconTableDao extends AbstractDao<WeatherIconTable, Long> {
      * Can be used for QueryBuilder and for referencing column names.
     */
     public static class Properties {
-        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Icon_id = new Property(1, String.class, "icon_id", false, "ICON_ID");
-        public final static Property Icon_url = new Property(2, String.class, "icon_url", false, "ICON_URL");
-        public final static Property Image_path = new Property(3, String.class, "image_path", false, "IMAGE_PATH");
-        public final static Property Image_raw = new Property(4, byte[].class, "image_raw", false, "IMAGE_RAW");
+        public final static Property Icon_id = new Property(0, String.class, "icon_id", true, "ICON_ID");
+        public final static Property Icon_url = new Property(1, String.class, "icon_url", false, "ICON_URL");
+        public final static Property Image_path = new Property(2, String.class, "image_path", false, "IMAGE_PATH");
+        public final static Property Image_raw = new Property(3, byte[].class, "image_raw", false, "IMAGE_RAW");
     };
 
 
@@ -43,11 +42,10 @@ public class WeatherIconTableDao extends AbstractDao<WeatherIconTable, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"WEATHER_ICON_TABLE\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"ICON_ID\" TEXT NOT NULL UNIQUE ," + // 1: icon_id
-                "\"ICON_URL\" TEXT NOT NULL ," + // 2: icon_url
-                "\"IMAGE_PATH\" TEXT NOT NULL ," + // 3: image_path
-                "\"IMAGE_RAW\" BLOB);"); // 4: image_raw
+                "\"ICON_ID\" TEXT PRIMARY KEY NOT NULL ," + // 0: icon_id
+                "\"ICON_URL\" TEXT NOT NULL ," + // 1: icon_url
+                "\"IMAGE_PATH\" TEXT NOT NULL ," + // 2: image_path
+                "\"IMAGE_RAW\" BLOB);"); // 3: image_raw
     }
 
     /** Drops the underlying database table. */
@@ -60,36 +58,30 @@ public class WeatherIconTableDao extends AbstractDao<WeatherIconTable, Long> {
     @Override
     protected void bindValues(SQLiteStatement stmt, WeatherIconTable entity) {
         stmt.clearBindings();
- 
-        Long id = entity.getId();
-        if (id != null) {
-            stmt.bindLong(1, id);
-        }
-        stmt.bindString(2, entity.getIcon_id());
-        stmt.bindString(3, entity.getIcon_url());
-        stmt.bindString(4, entity.getImage_path());
+        stmt.bindString(1, entity.getIcon_id());
+        stmt.bindString(2, entity.getIcon_url());
+        stmt.bindString(3, entity.getImage_path());
  
         byte[] image_raw = entity.getImage_raw();
         if (image_raw != null) {
-            stmt.bindBlob(5, image_raw);
+            stmt.bindBlob(4, image_raw);
         }
     }
 
     /** @inheritdoc */
     @Override
-    public Long readKey(Cursor cursor, int offset) {
-        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
+    public String readKey(Cursor cursor, int offset) {
+        return cursor.getString(offset + 0);
     }    
 
     /** @inheritdoc */
     @Override
     public WeatherIconTable readEntity(Cursor cursor, int offset) {
         WeatherIconTable entity = new WeatherIconTable( //
-            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.getString(offset + 1), // icon_id
-            cursor.getString(offset + 2), // icon_url
-            cursor.getString(offset + 3), // image_path
-            cursor.isNull(offset + 4) ? null : cursor.getBlob(offset + 4) // image_raw
+            cursor.getString(offset + 0), // icon_id
+            cursor.getString(offset + 1), // icon_url
+            cursor.getString(offset + 2), // image_path
+            cursor.isNull(offset + 3) ? null : cursor.getBlob(offset + 3) // image_raw
         );
         return entity;
     }
@@ -97,25 +89,23 @@ public class WeatherIconTableDao extends AbstractDao<WeatherIconTable, Long> {
     /** @inheritdoc */
     @Override
     public void readEntity(Cursor cursor, WeatherIconTable entity, int offset) {
-        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setIcon_id(cursor.getString(offset + 1));
-        entity.setIcon_url(cursor.getString(offset + 2));
-        entity.setImage_path(cursor.getString(offset + 3));
-        entity.setImage_raw(cursor.isNull(offset + 4) ? null : cursor.getBlob(offset + 4));
+        entity.setIcon_id(cursor.getString(offset + 0));
+        entity.setIcon_url(cursor.getString(offset + 1));
+        entity.setImage_path(cursor.getString(offset + 2));
+        entity.setImage_raw(cursor.isNull(offset + 3) ? null : cursor.getBlob(offset + 3));
      }
     
     /** @inheritdoc */
     @Override
-    protected Long updateKeyAfterInsert(WeatherIconTable entity, long rowId) {
-        entity.setId(rowId);
-        return rowId;
+    protected String updateKeyAfterInsert(WeatherIconTable entity, long rowId) {
+        return entity.getIcon_id();
     }
     
     /** @inheritdoc */
     @Override
-    public Long getKey(WeatherIconTable entity) {
+    public String getKey(WeatherIconTable entity) {
         if(entity != null) {
-            return entity.getId();
+            return entity.getIcon_id();
         } else {
             return null;
         }
