@@ -29,6 +29,9 @@ public class MyWeatherDaoGenerator
 		System.out.println("create weather icon table");
 		Entity weather_icon_table = createWeatherIconTable(schema);
 		
+		System.out.println("create weather station info table");
+		Entity weather_station_entity =  createWeatherStationInfoTable(schema);
+		
 		//generate the source code
 		try
 		{
@@ -145,13 +148,13 @@ public class MyWeatherDaoGenerator
       /*
        "rain":{"3h":3},//rain volume for the last 3 hrs
        */
-      city_weather_cond_entity.addLongProperty("curr_rain_last3hrs");
+      city_weather_cond_entity.addDoubleProperty("curr_rain_last3hrs");
       
       /*
        "snow":{"3h":3},//snow volume for the last 3 hrs
        */
       
-      city_weather_cond_entity.addLongProperty("curr_snow_last3hrs");
+      city_weather_cond_entity.addDoubleProperty("curr_snow_last3hrs");
       
       /*
        "dt": 1437667656//unix utc
@@ -178,14 +181,9 @@ public class MyWeatherDaoGenerator
       Entity weather_icon_entity = schema.addEntity("WeatherIconTable");
       
       //add pk
-      //this will be an incrementing row number to give unique row access
-      //this is the auto-increment feature seen in other databases.
-      weather_icon_entity.addIdProperty().autoincrement().primaryKey();
+      weather_icon_entity.addStringProperty("icon_id").primaryKey().notNull();
       
       //add non pk fields
-      //searching will be done using this property.
-      weather_icon_entity.addStringProperty("icon_id").unique().notNull();
-      
       weather_icon_entity.addStringProperty("icon_url").notNull();
       weather_icon_entity.addStringProperty("image_path").notNull();
       
@@ -193,5 +191,35 @@ public class MyWeatherDaoGenerator
       weather_icon_entity.addByteArrayProperty("image_raw");
       
       return weather_icon_entity;
+	}
+	
+	public static Entity createWeatherStationInfoTable(Schema schema)
+	{
+	   //table name
+      Entity weather_station_entity = schema.addEntity("WeatherStationInfoTable");
+      
+      //add pk
+      weather_station_entity.addLongProperty("station_id").primaryKey().notNull();
+      
+      //add non pk fields
+      weather_station_entity.addLongProperty("city_id").notNull();
+      weather_station_entity.addStringProperty("station_name").notNull();
+      weather_station_entity.addDoubleProperty("station_temp").notNull();
+      weather_station_entity.addLongProperty("station_pressure").notNull();
+      weather_station_entity.addLongProperty("station_humidity").notNull();
+      weather_station_entity.addDoubleProperty("station_wind_speed").notNull();
+      weather_station_entity.addLongProperty("station_wind_deg").notNull();
+      weather_station_entity.addDoubleProperty("station_wind_gust").notNull();
+      weather_station_entity.addLongProperty("station_visibility_dist").notNull();
+      weather_station_entity.addDoubleProperty("station_calc_dewpt").notNull();
+      weather_station_entity.addDoubleProperty("station_calc_humidex").notNull();
+      weather_station_entity.addLongProperty("station_clouds_dist").notNull();
+      weather_station_entity.addStringProperty("station_clouds_cond").notNull();
+      weather_station_entity.addDoubleProperty("station_rain_1h").notNull();
+      weather_station_entity.addDoubleProperty("station_rain_24h").notNull();
+      weather_station_entity.addDoubleProperty("station_rain_today").notNull();
+      weather_station_entity.addLongProperty("last_update_time").notNull();
+      
+      return weather_station_entity;
 	}
 }
