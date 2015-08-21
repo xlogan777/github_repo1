@@ -72,8 +72,12 @@ public class CityListFragment extends ListFragment
                         );
             }
 
-            setListAdapter(new ArrayAdapter<String>(getActivity(),
-                    android.R.layout.simple_list_item_2, android.R.id.text1, display_list));
+            //create the simple array adapter
+            SimpleArrayAdapter simpleArrayAdapter =
+                    new SimpleArrayAdapter(getActivity(), display_list);
+
+            //set the custom adapter to the list adapter here for this frag list.
+            setListAdapter(simpleArrayAdapter);
         }
     }
 
