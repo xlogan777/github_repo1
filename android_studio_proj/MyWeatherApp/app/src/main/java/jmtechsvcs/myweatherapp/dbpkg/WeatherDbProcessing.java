@@ -570,6 +570,18 @@ public class WeatherDbProcessing
                 //return back the list to the caller.
                 rv = items;
             }
+            else if(beanType instanceof CityInfoTable &&
+                    queryParams.getQueryParamType() == BeanQueryParams.T_Query_Param_Type.E_WEATHER_STATION_TABLE_LIST_TYPE)
+            {
+                //get the dao for weather station info.
+                WeatherStationInfoTableDao dao = daoSession.getWeatherStationInfoTableDao();
+
+                //get the java bean using the dao obj but use the city id to find it.
+                items =  (List<CityBeanType>)dao.queryBuilder().where
+                        (
+                                WeatherStationInfoTableDao.Properties.City_id.eq(queryParams.getCityId())
+                        ).list();
+            }
 
             if(items.size() == 0)
             {

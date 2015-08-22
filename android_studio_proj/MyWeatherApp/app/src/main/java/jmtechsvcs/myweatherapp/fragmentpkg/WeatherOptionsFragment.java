@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import jmtechsvcs.myweatherapp.activitypkg.CurrentWeatherActivity;
+import jmtechsvcs.myweatherapp.activitypkg.WeatherStationDisplayActivity;
 import jmtechsvcs.myweatherapp.networkpkg.NetworkIntentSvc;
 import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 
@@ -75,15 +76,15 @@ public class WeatherOptionsFragment extends DialogFragment{
 
                                 //add this to the android back stack for here to the next activity
                                 //being activated.
-                                Intent intent = new Intent(getActivity(), CurrentWeatherActivity.class);
-                                Bundle bundle = new Bundle();
-                                bundle.putLong("city_id",city_id);
+                                Intent curr_weather_intent = new Intent(getActivity(), CurrentWeatherActivity.class);
+                                Bundle curr_bundle = new Bundle();
+                                curr_bundle.putLong("city_id",city_id);
 
                                 //add the bundle to the intent.
-                                intent.putExtras(bundle);
+                                curr_weather_intent.putExtras(curr_bundle);
 
                                 //start the activity with info on the city id to be used there.
-                                startActivity(intent);
+                                startActivity(curr_weather_intent);
 
                                 break;
 
@@ -99,9 +100,20 @@ public class WeatherOptionsFragment extends DialogFragment{
                             case 3:
 
                                 //start the bg service, with helper method to load params to bg processing.
-                                NetworkIntentSvc.startActionCurrentWeatherStationGeo(getActivity(),lat,lon,city_id);
+                                NetworkIntentSvc.startActionCurrentWeatherStationGeo
+                                        (getActivity(), lat, lon, city_id);
 
-                                //TODO: add the call to the weather station screens from here.
+                                //add this to the android back stack for here to the next activity
+                                //being activated.
+                                Intent station_intent = new Intent(getActivity(), WeatherStationDisplayActivity.class);
+                                Bundle station_bundle = new Bundle();
+                                station_bundle.putLong("city_id",city_id);
+
+                                //add the bundle to the intent.
+                                station_intent.putExtras(station_bundle);
+
+                                //start the activity with weather station info.
+                                startActivity(station_intent);
 
                                 break;
                         }

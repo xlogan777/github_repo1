@@ -8,4 +8,143 @@
                 android:paddingBottom="@dimen/activity_vertical_margin"
                 tools:context="jmtechsvcs.myweatherapp.activitypkg.WeatherStationDisplayActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="cn_name_val"
+        android:id="@+id/cn_name_val"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="cc_name_val"
+        android:id="@+id/cc_name_val"
+        android:layout_alignTop="@+id/cn_name_val"
+        android:layout_toRightOf="@+id/cn_name_val"
+        android:layout_toEndOf="@+id/cn_name_val"
+        android:layout_marginLeft="17dp"
+        android:layout_marginStart="17dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="tempature"
+        android:id="@+id/tempature"
+        android:layout_below="@+id/cn_name_val"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="tempature_val"
+        android:id="@+id/tempature_val"
+        android:layout_alignTop="@+id/tempature"
+        android:layout_alignLeft="@+id/cc_name_val"
+        android:layout_alignStart="@+id/cc_name_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="temp_min"
+        android:id="@+id/temp_min"
+        android:layout_below="@+id/tempature"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="temp_min_val"
+        android:id="@+id/temp_min_val"
+        android:layout_below="@+id/tempature_val"
+        android:layout_alignLeft="@+id/tempature_val"
+        android:layout_alignStart="@+id/tempature_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="temp_max"
+        android:id="@+id/temp_max"
+        android:layout_below="@+id/temp_min"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="temp_max_val"
+        android:id="@+id/temp_max_val"
+        android:layout_alignTop="@+id/temp_max"
+        android:layout_alignLeft="@+id/temp_min_val"
+        android:layout_alignStart="@+id/temp_min_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="humidity"
+        android:id="@+id/humidity"
+        android:layout_below="@+id/temp_max"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="humidity_val"
+        android:id="@+id/humidity_val"
+        android:layout_below="@+id/temp_max_val"
+        android:layout_alignLeft="@+id/temp_max_val"
+        android:layout_alignStart="@+id/temp_max_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="pressure"
+        android:id="@+id/pressure"
+        android:layout_below="@+id/humidity"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="pressure_val"
+        android:id="@+id/pressure_val"
+        android:layout_alignTop="@+id/pressure"
+        android:layout_alignLeft="@+id/humidity_val"
+        android:layout_alignStart="@+id/humidity_val"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView_id"
+        android:layout_alignTop="@+id/cc_name_val"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/pressure"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/weather_station_id">
+    </FrameLayout>
+
 </RelativeLayout>

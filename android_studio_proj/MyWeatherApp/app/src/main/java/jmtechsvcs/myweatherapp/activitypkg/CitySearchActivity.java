@@ -89,7 +89,6 @@ public class CitySearchActivity extends ActionBarActivity implements CityListFra
 
                      //add fragment to main activity layout
                      ft.add(R.id.frame_frag_layout, frag);
-                     //ft.add(R.id.scrollView, frag);
 
                      //commit this activity.
                      ft.commit();
@@ -118,7 +117,6 @@ public class CitySearchActivity extends ActionBarActivity implements CityListFra
 
             //find the fragment tied to this view item.
             Fragment fragment = fm.findFragmentById(R.id.frame_frag_layout);
-            //Fragment fragment = fm.findFragmentById(R.id.scrollView);
 
             //if their is a fragment in this view destroy it..
             if(fragment != null)
