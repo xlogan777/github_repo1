@@ -17,20 +17,20 @@ import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
  * Created by jimmy on 8/20/2015.
  */
 //this class is the custom array adapter for use in the city list fragment.
-public class SimpleArrayAdapter extends ArrayAdapter<String>
+public class CityInfoSimpleArrayAdapter extends ArrayAdapter<String>
 {
-    private static final String LOGTAG = "SimpleArrayAdapter";
+    private static final String LOGTAG = "CityInf[]Adapter";
 
     //these are used to setup the row view for
     //this adapter.
     private final Context context;
     private final List<String> values;
 
-    public SimpleArrayAdapter(Context context, List<String> values)
+    public CityInfoSimpleArrayAdapter(Context context, List<String> values)
     {
         //call the super class to setup the xml layout with the
         //input values.
-        super( context, R.layout.row_layout, values);
+        super( context, R.layout.city_info_row_layout, values);
 
         //save the ctx and data from the const params.
         this.context = context;
@@ -48,7 +48,7 @@ public class SimpleArrayAdapter extends ArrayAdapter<String>
 
         //inflate the row view here for the xml layout file and attach to the parent
         //view group.
-        View rowView = inflater.inflate(R.layout.row_layout, parent, false);
+        View rowView = inflater.inflate(R.layout.city_info_row_layout, parent, false);
 
         //get the data from the list container position and parse the string here to display it.
         String [] items = values.get(position).split(",");

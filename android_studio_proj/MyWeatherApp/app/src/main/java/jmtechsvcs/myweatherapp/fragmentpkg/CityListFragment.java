@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.app.ListFragment;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -73,8 +72,8 @@ public class CityListFragment extends ListFragment
             }
 
             //create the simple array adapter
-            SimpleArrayAdapter simpleArrayAdapter =
-                    new SimpleArrayAdapter(getActivity(), display_list);
+            CityInfoSimpleArrayAdapter simpleArrayAdapter =
+                    new CityInfoSimpleArrayAdapter(getActivity(), display_list);
 
             //set the custom adapter to the list adapter here for this frag list.
             setListAdapter(simpleArrayAdapter);
@@ -114,14 +113,14 @@ public class CityListFragment extends ListFragment
     }
 
     @Override
-    public void onListItemClick (ListView l, View v, int position, long id)
+    public void onListItemClick(ListView l, View v, int position, long id)
     {
         super.onListItemClick(l, v, position, id);
 
         Log.d(LOGTAG,"pos = "+position+", id = "+id);
 
         //get the data from the selected item.
-        String selectedFromList =(getListView().getItemAtPosition(position).toString());
+        String selectedFromList = getListView().getItemAtPosition(position).toString();
 
         if(mListener != null)
         {

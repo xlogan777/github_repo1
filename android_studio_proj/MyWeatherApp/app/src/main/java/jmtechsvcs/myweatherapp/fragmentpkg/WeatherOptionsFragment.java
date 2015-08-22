@@ -105,7 +105,6 @@ public class WeatherOptionsFragment extends DialogFragment{
 
                                 break;
                         }
-
                     }
                 });
 
