@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 
+import de.greenrobot.dao.query.QueryBuilder;
 import jmtechsvcs.myweatherapp.dbpkg.WeatherDbHelper;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTable;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTableDao;
@@ -212,6 +213,15 @@ public class MyWeatherApplication extends Application
 
         //get a new session from this dao master.
         daoSession = daoMaster.newSession();
+
+        //enable logging of sql statements for
+        //enableSqlDebugging();
+    }
+
+    private void enableSqlDebugging()
+    {
+        QueryBuilder.LOG_SQL = true;
+        QueryBuilder.LOG_VALUES = true;
     }
 
     private void preloadWeatherData()

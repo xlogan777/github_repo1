@@ -18,7 +18,6 @@ import java.util.List;
 import jmtechsvcs.myweatherapp.R;
 import jmtechsvcs.myweatherapp.dbpkg.BeanQueryParams;
 import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
-import jmtechsvcs.myweatherapp.fragmentpkg.CityListFragment;
 import jmtechsvcs.myweatherapp.fragmentpkg.WeatherStationFragment;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTable;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityWeatherCurrCondTable;
@@ -83,6 +82,10 @@ public class WeatherStationDisplayActivity extends ActionBarActivity
 
                 //load the weather stations for this curr city data.
                 loadWeatherStations(city_id, context);
+            }
+            else
+            {
+                setDefaultView();
             }
         }
         else
@@ -156,7 +159,7 @@ public class WeatherStationDisplayActivity extends ActionBarActivity
                 if(bitmap != null)
                 {
                     //set the image bit map here.
-                    ((ImageView)findViewById(R.id.weather_icon)).setImageBitmap(bitmap);
+                    ((ImageView)findViewById(R.id.imageView_id)).setImageBitmap(bitmap);
                     Log.d(LOGTAG, "loaded the image bit map...bit map file = " + img_path);
                 }
             }

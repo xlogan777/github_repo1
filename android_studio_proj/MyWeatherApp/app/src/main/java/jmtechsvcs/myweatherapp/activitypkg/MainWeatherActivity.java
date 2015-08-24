@@ -24,8 +24,8 @@ public class MainWeatherActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_weather);
 
-        //long city_id = 4891010;//elmhurst US
-        long city_id = 4349599;//brooklyn park US
+        long city_id = 4891010;//elmhurst US
+        //long city_id = 4349599;//brooklyn park US
         if(useDebug)
         {
             //request download of curr city data.

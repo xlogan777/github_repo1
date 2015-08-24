@@ -350,9 +350,6 @@ public class WeatherDbProcessing
             WeatherStationInfoTableDao weather_station_dao =
                     daoSession.getWeatherStationInfoTableDao();
 
-            //create bean to be used by dao.
-            WeatherStationInfoTable weather_station_bean = new WeatherStationInfoTable();
-
             //the weather stations are a json array of objs here.
             JSONArray weather_station_array = new JSONArray(jsonInput);
 
@@ -371,6 +368,9 @@ public class WeatherDbProcessing
                 {
                     //get the obj from the json array.
                     JSONObject array_obj = weather_station_array.getJSONObject(i);
+
+                    //create new bean obj each time we update data here.
+                    WeatherStationInfoTable weather_station_bean = new WeatherStationInfoTable();
 
                     //this sets the city id for this bean
                     weather_station_bean.setCity_id(cityId);
@@ -570,7 +570,7 @@ public class WeatherDbProcessing
                 //return back the list to the caller.
                 rv = items;
             }
-            else if(beanType instanceof CityInfoTable &&
+            else if(beanType instanceof WeatherStationInfoTable &&
                     queryParams.getQueryParamType() == BeanQueryParams.T_Query_Param_Type.E_WEATHER_STATION_TABLE_LIST_TYPE)
             {
                 //get the dao for weather station info.
@@ -581,6 +581,9 @@ public class WeatherDbProcessing
                         (
                                 WeatherStationInfoTableDao.Properties.City_id.eq(queryParams.getCityId())
                         ).list();
+
+                //return back the list to the caller.
+                rv = items;
             }
 
             if(items.size() == 0)
