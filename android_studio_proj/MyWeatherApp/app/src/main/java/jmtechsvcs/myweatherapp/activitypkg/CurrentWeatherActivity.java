@@ -344,7 +344,7 @@ public class CurrentWeatherActivity extends ActionBarActivity
 
             if(img_path != null && img_path.length() > 0)
             {
-                Bitmap bitmap = WeatherAppUtils.readPngFile(img_path);
+                Bitmap bitmap = WeatherAppUtils.readPngFile(img_path, 150, 150);
 
                 if(bitmap != null)
                 {

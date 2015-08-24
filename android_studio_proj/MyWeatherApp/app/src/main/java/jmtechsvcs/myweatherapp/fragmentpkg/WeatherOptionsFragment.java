@@ -92,12 +92,9 @@ public class WeatherOptionsFragment extends DialogFragment{
 
                                 break;
 
-                            case 2:
-
-                                break;
 
                             //weather station information processing.
-                            case 3:
+                            case 2:
 
                                 //start the bg service, with helper method to load params to bg processing.
                                 NetworkIntentSvc.startActionCurrentWeatherStationGeo

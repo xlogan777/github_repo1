@@ -154,8 +154,10 @@ public class WeatherStationDisplayActivity extends ActionBarActivity
 
             if(img_path != null && img_path.length() > 0)
             {
-                Bitmap bitmap = WeatherAppUtils.readPngFile(img_path);
+                //get png file from folder.
+                Bitmap bitmap = WeatherAppUtils.readPngFile(img_path, 150, 150);
 
+                //use resized bit map.
                 if(bitmap != null)
                 {
                     //set the image bit map here.

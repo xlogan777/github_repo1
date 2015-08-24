@@ -221,22 +221,19 @@ public class WeatherAppUtils
         this will take a image path from internal app storage and
         create a bitmap and return that back to the caller.
      */
-    public static Bitmap readPngFile(String imagePath) throws IOException
+    public static Bitmap readPngFile(String imagePath, int width, int height) throws IOException
     {
         //path to image file created.
         File file_path = new File(imagePath);
 
         //get a bitmap from the image path and decoded for bitmap.
-        Bitmap rv = BitmapFactory.decodeStream(new FileInputStream(file_path));
+        Bitmap bitmap = BitmapFactory.decodeStream(new FileInputStream(file_path));
 
-//        FileInputStream fis = context.openFileInput(imagePath);
-//        Bitmap b = BitmapFactory.decodeStream(fis);
-//        fis.close();
+        //resize bitmap to new width x new height
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 150, 150, false);
 
-        //ImageView img=(ImageView)findViewById(R.id.imgPicker);
-        //img.setImageBitmap(b);
-
-        return rv;
+        //return resized bitmap.
+        return resizedBitmap;
     }
 
     //dialog list of items used for choices.
@@ -244,8 +241,7 @@ public class WeatherAppUtils
     {
         String [] weather_opts =
                 {"Current City Weather",
-                 "5 day / 3 hour forecast",
-                 "16 day / daily forecast",
+                 "5 day / 3 hourly forecast",
                  "Weather stations Info for city"};
 
         return weather_opts;

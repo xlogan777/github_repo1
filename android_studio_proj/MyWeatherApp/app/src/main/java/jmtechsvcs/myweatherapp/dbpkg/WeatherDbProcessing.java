@@ -29,7 +29,7 @@ import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
  */
 public class WeatherDbProcessing
 {
-    private final static String LOGTAG = "WthrJsonToDbProcessing";
+    private final static String LOGTAG = "WeatherDbProcessing";
 
     //helper function allows to a dao session from a context reference.
     private static DaoSession getDaoSession(Context context)

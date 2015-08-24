@@ -130,14 +130,6 @@
         android:layout_alignLeft="@+id/humidity_val"
         android:layout_alignStart="@+id/humidity_val"/>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView_id"
-        android:layout_alignTop="@+id/cc_name_val"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -146,5 +138,15 @@
         android:layout_alignParentStart="true"
         android:id="@+id/weather_station_id">
     </FrameLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView_id"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/weather_station_id"
+        android:layout_alignEnd="@+id/weather_station_id"
+        android:layout_marginRight="36dp"
+        android:layout_marginEnd="36dp"/>
 
 </RelativeLayout>

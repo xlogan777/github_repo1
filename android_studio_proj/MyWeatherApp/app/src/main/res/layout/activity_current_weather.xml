@@ -399,14 +399,6 @@
         android:layout_alignLeft="@+id/lat_val"
         android:layout_alignStart="@+id/lat_val"/>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/weather_icon"
-        android:layout_alignTop="@+id/countrycode"
-        android:layout_toRightOf="@+id/weathermain_val"
-        android:layout_toEndOf="@+id/weathermain_val"/>
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -506,5 +498,13 @@
         android:layout_below="@+id/precipitationmode_val"
         android:layout_alignLeft="@+id/precipitationmode_val"
         android:layout_alignStart="@+id/precipitationmode_val"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/weather_icon"
+        android:layout_alignTop="@+id/countrycode"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>
