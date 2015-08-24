@@ -91,7 +91,7 @@ public class WeatherDbProcessing
                 }
                 else
                 {
-                    Log.d(LOGTAG,"issue with the img path, either null or len = 0");
+                    Log.d(LOGTAG, "issue with the img path, either null or len = 0");
                 }
             }
             else
@@ -413,13 +413,20 @@ public class WeatherDbProcessing
                     weather_station_bean.setStation_calc_humidex(last_calc_humidex);
 
                     JSONArray last_clouds_array = last_station_obj.optJSONArray("clouds");
-                    if(last_clouds_array != null){
+                    if(last_clouds_array != null)
+                    {
                         //only get data from the first item.
                         JSONObject clouds_item = last_clouds_array.getJSONObject(0);
                         long clouds_item_dist = WeatherAppUtils.getLongVal(clouds_item, "distance");
                         String clouds_item_cond = WeatherAppUtils.getStringVal(clouds_item, "condition");
                         weather_station_bean.setStation_clouds_dist(clouds_item_dist);
                         weather_station_bean.setStation_clouds_cond(clouds_item_cond);
+                    }
+                    else
+                    {
+                        //set these to defaults if the obj can't be retrieved.
+                        weather_station_bean.setStation_clouds_dist(WeatherAppUtils.DEFAULT_lONG_VAL);
+                        weather_station_bean.setStation_clouds_cond(WeatherAppUtils.DEFAULT_STRING_VAL);
                     }
 
                     JSONObject last_rain = last_station_obj.optJSONObject("rain");
