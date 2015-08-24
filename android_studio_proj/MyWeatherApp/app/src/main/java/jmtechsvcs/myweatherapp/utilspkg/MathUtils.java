@@ -71,4 +71,29 @@ public class MathUtils
     {
         return degree+" degs";
     }
+
+    //standard conversion for units.
+    public static double convertKelvinToFarenheit(double kelvin)
+    {
+        double rv = (kelvin - 273.15) * 1.8000 + 32.00;
+        return rv;
+    }
+
+    public static double convertMpsToMph(double mps)
+    {
+        double rv = mps * 2.236936;
+        return rv;
+    }
+
+    public static double convertMetersToMiles(long meters)
+    {
+        double rv = meters * 0.00062137;
+        return rv;
+    }
+
+    public static double convertMmToInches(double mm)
+    {
+        double rv = mm * 0.039370;
+        return rv;
+    }
 }

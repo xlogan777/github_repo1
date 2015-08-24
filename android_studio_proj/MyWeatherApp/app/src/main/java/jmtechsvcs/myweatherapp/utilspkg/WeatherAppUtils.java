@@ -229,8 +229,8 @@ public class WeatherAppUtils
         //get a bitmap from the image path and decoded for bitmap.
         Bitmap bitmap = BitmapFactory.decodeStream(new FileInputStream(file_path));
 
-        //resize bitmap to new width x new height
-        Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, 150, 150, false);
+        //resize bitmap to new width x new height, from method params and no filter.
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
 
         //return resized bitmap.
         return resizedBitmap;

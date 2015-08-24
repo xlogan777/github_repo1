@@ -430,9 +430,9 @@ public class WeatherDbProcessing
                     }
 
                     JSONObject last_rain = last_station_obj.optJSONObject("rain");
-                    long last_rain_1h = WeatherAppUtils.getLongVal(last_rain, "1h");
-                    long last_rain_24h = WeatherAppUtils.getLongVal(last_rain, "24h");
-                    long last_rain_today = WeatherAppUtils.getLongVal(last_rain, "today");
+                    double last_rain_1h = WeatherAppUtils.getDoubleVal(last_rain, "1h");
+                    double last_rain_24h = WeatherAppUtils.getDoubleVal(last_rain, "24h");
+                    double last_rain_today = WeatherAppUtils.getDoubleVal(last_rain, "today");
                     weather_station_bean.setStation_rain_1h(last_rain_1h);
                     weather_station_bean.setStation_rain_24h(last_rain_24h);
                     weather_station_bean.setStation_rain_today(last_rain_today);

@@ -19,6 +19,7 @@ import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 public class NetworkProcessing 
 {
 	private static String LOGTAG = "NetworkProcessing";
+    private static final int TIMEOUT = 15000;//15 secs timeout
 
 	/*
 	 * function that does http GET request using a url.
@@ -45,12 +46,18 @@ public class NetworkProcessing
 				URL url_get = new URL(url);
 
 				//cast to http conn type
-				conn = (HttpURLConnection) url_get.openConnection();
+				conn = (HttpURLConnection)url_get.openConnection();
+
+                //set the timeouts to be for this url connection before we make
+                //a new connection.
+                conn.setConnectTimeout(TIMEOUT);
+                conn.setReadTimeout(TIMEOUT);
 
 				//setup as a Get request.
 				conn.setRequestMethod("GET");
-				//conn.setDoInput(true);
-				//conn.setDoOutput(true);
+
+                //connect to the url.
+                conn.connect();
 
 				//this will access the url, and get back a status code.
 				int status_code = conn.getResponseCode();
