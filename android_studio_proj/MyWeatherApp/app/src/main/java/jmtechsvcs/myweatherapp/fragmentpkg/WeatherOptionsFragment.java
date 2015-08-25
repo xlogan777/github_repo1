@@ -10,20 +10,21 @@ import android.util.Log;
 
 import jmtechsvcs.myweatherapp.activitypkg.CurrentWeatherActivity;
 import jmtechsvcs.myweatherapp.activitypkg.WeatherStationDisplayActivity;
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTable;
 import jmtechsvcs.myweatherapp.networkpkg.NetworkIntentSvc;
 import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 
 public class WeatherOptionsFragment extends DialogFragment{
 
     private static final String LOGTAG = "WeatherOptionsFragment";
-    private String data;
+    private CityInfoTable data;
 
     public WeatherOptionsFragment()
     {
 
     }
 
-    public void setData(String data)
+    public void setData(CityInfoTable data)
     {
         this.data = data;
     }
@@ -46,24 +47,20 @@ public class WeatherOptionsFragment extends DialogFragment{
 
                         Log.d(LOGTAG,"picked this choice = "+weather_opts[which]);
 
-                        //split the data string by commas
-                        String [] items = data.split(",");
+                        //get the city id from the data item.
+                        long city_id = data.getCity_id();
 
-                        //get the cid from the data string to use as the city id.
-                        String cid = items[0];
-                        long city_id = Long.parseLong(WeatherAppUtils.getDataFromInput(cid));
+                        //get the city name
+                        String cn = data.getName();//city name
 
-                        String cn = items[1];//city name
-                        cn = WeatherAppUtils.getDataFromInput(cn);
+                        //get the country code
+                        String cc = data.getCountry();//country code
 
-                        String cc = items[2];//country code
-                        cc = WeatherAppUtils.getDataFromInput(cc);
+                        //get the lat
+                        double lat = data.getLat();
 
-                        String lat_s = items[3];//lat
-                        double lat = Double.parseDouble(WeatherAppUtils.getDataFromInput(lat_s));
-
-                        String lon_s = items[4];//lon
-                        double lon = Double.parseDouble(WeatherAppUtils.getDataFromInput(lon_s));
+                        //get the long
+                        double lon = data.getLon();
 
                         //this handles which item was selected.
                         switch(which)

@@ -153,14 +153,13 @@ public class CitySearchActivity extends ActionBarActivity implements CityListFra
     }
 
     @Override
-    public void onFragmentInteraction(String data)
+    public void onFragmentInteraction(CityInfoTable data)
     {
-        Log.d(LOGTAG, "activity_callback = " + data);
-
+        //call local method to use this item.
         this.showWeatherOptions(data);
     }
 
-    private void showWeatherOptions(String data)
+    private void showWeatherOptions(CityInfoTable data)
     {
         //create the dialog fragment and show the fragment with hooks for it to the
         //fragment mgr.

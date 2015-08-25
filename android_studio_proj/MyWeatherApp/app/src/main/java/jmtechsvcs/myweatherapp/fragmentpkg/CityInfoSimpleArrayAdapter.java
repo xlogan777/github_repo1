@@ -11,26 +11,27 @@ import android.widget.TextView;
 import java.util.List;
 
 import jmtechsvcs.myweatherapp.R;
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTable;
 import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 
 /**
  * Created by jimmy on 8/20/2015.
  */
 //this class is the custom array adapter for use in the city list fragment.
-public class CityInfoSimpleArrayAdapter extends ArrayAdapter<String>
+public class CityInfoSimpleArrayAdapter extends ArrayAdapter<CityInfoTable>
 {
     private static final String LOGTAG = "CityInf[]Adapter";
 
     //these are used to setup the row view for
     //this adapter.
     private final Context context;
-    private final List<String> values;
+    private final List<CityInfoTable> values;
 
-    public CityInfoSimpleArrayAdapter(Context context, List<String> values)
+    public CityInfoSimpleArrayAdapter(Context context, List<CityInfoTable> values)
     {
         //call the super class to setup the xml layout with the
         //input values.
-        super( context, R.layout.city_info_row_layout, values);
+        super(context, R.layout.city_info_row_layout, values);
 
         //save the ctx and data from the const params.
         this.context = context;
@@ -50,34 +51,24 @@ public class CityInfoSimpleArrayAdapter extends ArrayAdapter<String>
         //view group.
         View rowView = inflater.inflate(R.layout.city_info_row_layout, parent, false);
 
-        //get the data from the list container position and parse the string here to display it.
-        String [] items = values.get(position).split(",");
-        Log.d(LOGTAG, values.get(position));
+        //get the item row from the values list.
+        CityInfoTable item_row = values.get(position);
 
-        //get the cid from the data string to use as the city id.
-        String cid = items[0];
-        String city_id = WeatherAppUtils.getDataFromInput(cid);
+        //get the city id from the item row for the text view.
         TextView textView = (TextView)rowView.findViewById(R.id.city_id_vals);
-        textView.setText(city_id);
+        textView.setText(item_row.getCity_id()+"");
 
-        String cn = items[1];//city name
-        cn = WeatherAppUtils.getDataFromInput(cn);
-
-        String cc = items[2];//country code
-        cc = WeatherAppUtils.getDataFromInput(cc);
-
+        //get the city name and country code, and add it to the text view.
         textView = (TextView)rowView.findViewById(R.id.cn_cc_vals);
-        textView.setText(cn+", "+cc);
+        textView.setText(item_row.getName()+", "+item_row.getCountry());
 
-        String lat_s = items[3];//lat
-        String lat = WeatherAppUtils.getDataFromInput(lat_s);
+        //get the lat from item row and add it to the text view.
         textView = (TextView)rowView.findViewById(R.id.lat_vals);
-        textView.setText(lat);
+        textView.setText(item_row.getLat()+"");
 
-        String lon_s = items[4];//lon
-        String lon = WeatherAppUtils.getDataFromInput(lon_s);
+        //get the long from the item row and add it to the text view.
         textView = (TextView)rowView.findViewById(R.id.lon_vals);
-        textView.setText(lon);
+        textView.setText(item_row.getLon()+"");
 
         //return the row view for this inflated item.
         return rowView;

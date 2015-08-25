@@ -48,32 +48,13 @@ public class CityListFragment extends ListFragment
         //get the city list from the act obj.
         List<CityInfoTable> listParam = act.getCityList();
 
-        if(listParam != null)
+        //check for null list and items in the list to do adapter code.
+        if(listParam != null && listParam.size() > 0)
         {
-            List<String> display_list = new ArrayList<String>();
-
-            for(CityInfoTable my_items : listParam)
-            {
-                //add all the items to the selectable string.
-                long cid = my_items.getCity_id();
-                String cn = my_items.getName();
-                String cc = my_items.getCountry();
-                double lat = my_items.getLat();
-                double lon = my_items.getLon();
-
-                display_list.add
-                        (
-                         "cid = "+ cid+
-                         ", CityName = "+ cn+
-                         ", CC = "+ cc+
-                         ", lat = "+ lat+
-                         ", lon = "+ lon
-                        );
-            }
-
+            //add the city info list to this adapter.
             //create the simple array adapter
             CityInfoSimpleArrayAdapter simpleArrayAdapter =
-                    new CityInfoSimpleArrayAdapter(getActivity(), display_list);
+                    new CityInfoSimpleArrayAdapter(getActivity(), listParam);
 
             //set the custom adapter to the list adapter here for this frag list.
             setListAdapter(simpleArrayAdapter);
@@ -119,8 +100,8 @@ public class CityListFragment extends ListFragment
 
         Log.d(LOGTAG,"pos = "+position+", id = "+id);
 
-        //get the data from the selected item.
-        String selectedFromList = getListView().getItemAtPosition(position).toString();
+        //get the data from the selected item and cast to expected obj.
+        CityInfoTable selectedFromList = (CityInfoTable)getListView().getItemAtPosition(position);
 
         if(mListener != null)
         {
@@ -130,18 +111,9 @@ public class CityListFragment extends ListFragment
         }
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+   //iface to provide data back to activity of the selected item.
     public interface OnFragmentInteractionListener
     {
-        public void onFragmentInteraction(String data);
+        public void onFragmentInteraction(CityInfoTable data);
     }
 }
