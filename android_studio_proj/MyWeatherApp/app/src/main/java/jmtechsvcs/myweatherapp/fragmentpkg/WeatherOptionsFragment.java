@@ -87,6 +87,10 @@ public class WeatherOptionsFragment extends DialogFragment{
 
                             case 1:
 
+                                //start ng svc
+                                NetworkIntentSvc.startActionCityWeatherForecast(getActivity(), city_id);
+
+                                //TODO: add the call to the activity here for weather forecast.
                                 break;
 
 

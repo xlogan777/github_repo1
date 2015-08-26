@@ -24,4 +24,5 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile files('src/libs/greendao-2.0.0.jar')
+    compile files('src/libs/owm-japis-2.5.0.3.jar')
 }

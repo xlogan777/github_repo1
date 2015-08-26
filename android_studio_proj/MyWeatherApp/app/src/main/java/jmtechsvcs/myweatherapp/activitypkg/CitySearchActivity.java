@@ -44,6 +44,10 @@ public class CitySearchActivity extends ActionBarActivity implements CityListFra
                 new Button.OnClickListener(){
                     public void onClick(View view){
 
+                        //clear the inputs from user entered data.
+                        ((EditText)findViewById(R.id.city_name_input)).setText("");
+                        ((EditText)findViewById(R.id.cc_input)).setText("");
+
                         //remove fragment.
                         removeFragment();
                     }

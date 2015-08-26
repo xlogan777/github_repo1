@@ -3,11 +3,18 @@ package jmtechsvcs.myweatherapp.activitypkg;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import net.aksingh.owmjapis.CurrentWeather;
+import net.aksingh.owmjapis.OpenWeatherMap;
+
+import java.io.IOException;
+
 import jmtechsvcs.myweatherapp.R;
 import jmtechsvcs.myweatherapp.networkpkg.NetworkIntentSvc;
+import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 //added more comments
 
 //test

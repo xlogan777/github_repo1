@@ -6,8 +6,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
+import net.aksingh.owmjapis.CurrentWeather;
+import net.aksingh.owmjapis.OpenWeatherMap;
+
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityWeatherCurrCondTable;
 import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
+import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -23,6 +27,9 @@ public class NetworkIntentSvc extends IntentService
 
     //action to be used for processing in the handler method.
     private static final String CURRENT_WEATHER_STATION_GEO_ACTION = "CURRENT_WEATHER_STATION_GEO_ACTION";
+
+    //action to be used to allow processing in the handler method.
+    private static final String WEATHER_DAILY_FORECAST_ACTION = "WEATHER_DAILY_FORECAST_ACTION";
 
     public NetworkIntentSvc()
     {
@@ -81,6 +88,25 @@ public class NetworkIntentSvc extends IntentService
         context.startService(mServiceIntent);
     }
 
+    public static void startActionCityWeatherForecast(Context context, long cityId)
+    {
+        //create intent with this activity as the sending activity, and the calling service.
+        Intent mServiceIntent = new Intent(context, NetworkIntentSvc.class);
+
+        //set the action to this intent.
+        mServiceIntent.setAction(WEATHER_DAILY_FORECAST_ACTION);
+
+        //create bundle to save data in it.
+        Bundle bundle = new Bundle();
+        bundle.putLong("cityId", cityId);
+
+        //save bundle to this intent.
+        mServiceIntent.putExtras(bundle);
+
+        //start the service
+        context.startService(mServiceIntent);
+    }
+
     @Override
     protected void onHandleIntent(Intent intent)
     {
@@ -112,6 +138,17 @@ public class NetworkIntentSvc extends IntentService
 
                 //call handler for this action
                 handleCurrentWeatherStationGeoAction(lat, lon, cityId);
+            }
+            else if(WEATHER_DAILY_FORECAST_ACTION.equals(action))
+            {
+                //get the bundle from the intent
+                Bundle bundle = intent.getExtras();
+
+                //get the data from the bundle.
+                long cityId = bundle.getLong("cityId");
+
+                //call handler for this action
+                handleCityForecastAction(cityId);
             }
             else
             {
@@ -150,7 +187,7 @@ public class NetworkIntentSvc extends IntentService
             //save to the db using this json input.
             CityWeatherCurrCondTable curr_cond =
                     WeatherDbProcessing.updateCurrWeatherToDb
-                            (payload.getStringPayload(),stream_payload.getInputStreamPayload(), getApplicationContext());
+                            (payload.getStringPayload(), stream_payload.getInputStreamPayload(), getApplicationContext());
 
             //confirm that we have a valid bean and its icon data is not null and > 0
             if(curr_cond != null &&
@@ -179,7 +216,7 @@ public class NetworkIntentSvc extends IntentService
         Log.d(LOGTAG,"lat = "+lat+", lon = "+lon);
 
         //create the weather station url with geo location.
-        String curr_weather_station_geo_url = WeatherMapUrls.getWeatherStationInfoByGeo(""+lat,""+lon,"4");//get 4 station entries.
+        String curr_weather_station_geo_url = WeatherMapUrls.getWeatherStationInfoByGeo("" + lat, "" + lon, "4");//get 4 station entries.
 
         //get the payload from the http get for the current weather station json data
         DataPayload payload = NetworkProcessing.httpGetProcessing(curr_weather_station_geo_url, DataPayload.T_Payload_Type.E_JSON_PAYLOAD_TYPE);
@@ -191,6 +228,43 @@ public class NetworkIntentSvc extends IntentService
 
             //update the dao using the json string and providing the app context.
             WeatherDbProcessing.updateCurrentWeatherStationInfoGeo(payload.getStringPayload(), getApplicationContext(), cityId);
+        }
+    }
+
+    private void handleCityForecastAction(long cityId)
+    {
+        try
+        {
+            // declaring object of "OpenWeatherMap" class
+            //setup with api key and the units needed which is imperial.
+            OpenWeatherMap owm = new
+                    OpenWeatherMap(OpenWeatherMap.Units.IMPERIAL, "22ecf4a075718bdfcd5657156e3272b5");
+
+            // getting current weather data for elmhurst via city id.
+            CurrentWeather cwd = owm.currentWeatherByCityCode(cityId);
+            //owm.currentWeatherByCityName("London");
+
+            // checking data retrieval was successful or not
+            if (cwd.isValid())
+            {
+                // checking if city name is available
+                if(cwd.hasCityName())
+                {
+                    //printing city name from the retrieved data
+                    Log.d(LOGTAG,"City: " + cwd.getCityName());
+                }
+
+                // checking if max. temp. and min. temp. is available
+                if(cwd.getMainInstance().hasMaxTemperature() && cwd.getMainInstance().hasMinTemperature()){
+                    // printing the max./min. temperature
+                    Log.d(LOGTAG,"Temperature: " + cwd.getMainInstance().getMaxTemperature()
+                            + "/" + cwd.getMainInstance().getMinTemperature() + "\'F");
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
         }
     }
 }
