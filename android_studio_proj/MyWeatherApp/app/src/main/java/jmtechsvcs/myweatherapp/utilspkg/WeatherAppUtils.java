@@ -306,10 +306,4 @@ public class WeatherAppUtils
 
         return rv;
     }
-
-    public static String getDataFromInput(String input)
-    {
-        String rv = input.substring(input.indexOf("=")+1);
-        return rv.trim();
-    }
 }
