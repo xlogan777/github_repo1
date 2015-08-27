@@ -9,8 +9,11 @@ public class WeatherMapUrls
 {
     private static String LOGTAG = "WeatherMapUrls";
 
+    //api key from open weather map api.
+    public final static String API_KEY = "22ecf4a075718bdfcd5657156e3272b5";
+
     //api key used for all http calls.
-    private final static String APP_ID = "APPID=22ecf4a075718bdfcd5657156e3272b5";//weather app id.
+    private final static String APP_ID = "APPID="+API_KEY;//weather app id.
 
     //current weather end point
     private final static String CURRENT_WEATHER_END_PT = "http://api.openweathermap.org/data/2.5/weather?";

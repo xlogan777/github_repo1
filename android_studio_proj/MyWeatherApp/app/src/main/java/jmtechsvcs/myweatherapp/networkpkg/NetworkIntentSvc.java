@@ -7,7 +7,12 @@ import android.os.Bundle;
 import android.util.Log;
 
 import net.aksingh.owmjapis.CurrentWeather;
+import net.aksingh.owmjapis.DailyForecast;
+import net.aksingh.owmjapis.HourlyForecast;
 import net.aksingh.owmjapis.OpenWeatherMap;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityWeatherCurrCondTable;
 import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
@@ -238,28 +243,64 @@ public class NetworkIntentSvc extends IntentService
             // declaring object of "OpenWeatherMap" class
             //setup with api key and the units needed which is imperial.
             OpenWeatherMap owm = new
-                    OpenWeatherMap(OpenWeatherMap.Units.IMPERIAL, "22ecf4a075718bdfcd5657156e3272b5");
+                    OpenWeatherMap(OpenWeatherMap.Units.IMPERIAL, WeatherMapUrls.API_KEY);
 
-            // getting current weather data for elmhurst via city id.
-            CurrentWeather cwd = owm.currentWeatherByCityCode(cityId);
-            //owm.currentWeatherByCityName("London");
+            //list of hourly forecast objs.
+            List<HourlyForecast.Forecast> hourly_list = new ArrayList<HourlyForecast.Forecast>();
 
-            // checking data retrieval was successful or not
-            if (cwd.isValid())
+            //get the hourly forecast by city id.
+            HourlyForecast hourlyForecast_obj = owm.hourlyForecastByCityCode(cityId);
+
+            //checking data retrieval was successful or not
+            if(hourlyForecast_obj.isValid())
             {
-                // checking if city name is available
-                if(cwd.hasCityName())
-                {
-                    //printing city name from the retrieved data
-                    Log.d(LOGTAG,"City: " + cwd.getCityName());
-                }
+                //get the count from the hourly obj if it has one.
+                int hourly_cnt =
+                        hourlyForecast_obj.hasForecastCount() ?
+                                hourlyForecast_obj.getForecastCount() : 0;
 
-                // checking if max. temp. and min. temp. is available
-                if(cwd.getMainInstance().hasMaxTemperature() && cwd.getMainInstance().hasMinTemperature()){
-                    // printing the max./min. temperature
-                    Log.d(LOGTAG,"Temperature: " + cwd.getMainInstance().getMaxTemperature()
-                            + "/" + cwd.getMainInstance().getMinTemperature() + "\'F");
+                for(int i = 0; i < hourly_cnt; i++)
+                {
+                    //get the hourly forecast obj from the main forecast obj.
+                    HourlyForecast.Forecast  hr_forecast =
+                            hourlyForecast_obj.getForecastInstance(i);
+
+                    //add this item to this hourly list.
+                    //this list is for a city id.
+                    hourly_list.add(hr_forecast);
                 }
+            }
+
+            //list of daily objs.
+            List<DailyForecast.Forecast> daily_list = new ArrayList<DailyForecast.Forecast>();
+
+            //get the daily forecast by city id.
+            byte cnt = 5;//only request 5 days.
+            DailyForecast dailyForecast = owm.dailyForecastByCityCode(cityId, cnt);
+
+            //check if daily forecast is valid.
+            if(dailyForecast.isValid())
+            {
+                //get the cnt if it exists.
+                int daily_cnt = dailyForecast.hasForecastCount() ?
+                        dailyForecast.getForecastCount() : 0;
+
+                //pull all items for this city id for daily data.
+                for(int i = 0; i < daily_cnt; i++)
+                {
+                    //get daily info
+                    DailyForecast.Forecast day_forecast = dailyForecast.getForecastInstance(i);
+
+                    //add item to this list to allow for processing based on city id.
+                    daily_list.add(day_forecast);
+                }
+            }
+
+            //if we have data for both items in the list, the processing it to the db.
+            if(hourly_list.size() > 0 && daily_list.size() > 0)
+            {
+                WeatherDbProcessing.updateDailyHourlyCityWeatherForecast
+                        (getApplicationContext(), daily_list, hourly_list, cityId);
             }
         }
         catch(Exception e)

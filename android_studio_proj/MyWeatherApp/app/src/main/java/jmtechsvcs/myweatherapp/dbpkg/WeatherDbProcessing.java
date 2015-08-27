@@ -3,6 +3,9 @@ package jmtechsvcs.myweatherapp.dbpkg;
 import android.content.Context;
 import android.util.Log;
 
+import net.aksingh.owmjapis.DailyForecast;
+import net.aksingh.owmjapis.HourlyForecast;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
@@ -449,6 +452,27 @@ public class WeatherDbProcessing
                     Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
                 }
             }//for loop
+        }
+        catch(Exception e)
+        {
+            Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
+        }
+    }
+
+    public static void updateDailyHourlyCityWeatherForecast
+            (Context context,
+             List<DailyForecast.Forecast> dailyList,
+             List<HourlyForecast.Forecast> hourlyList,
+             long cityId)
+    {
+        try
+        {
+            //get the dao session.
+            DaoSession daoSession = getDaoSession(context);
+
+            //get dao here.
+
+            //TODO: get data from list and add it to DB via java bean and save it using DAO.
         }
         catch(Exception e)
         {
