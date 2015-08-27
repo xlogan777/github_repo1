@@ -259,6 +259,8 @@ public class NetworkIntentSvc extends IntentService
                         hourlyForecast_obj.hasForecastCount() ?
                                 hourlyForecast_obj.getForecastCount() : 0;
 
+                Log.d(LOGTAG,"hourly count = "+hourly_cnt);
+
                 for(int i = 0; i < hourly_cnt; i++)
                 {
                     //get the hourly forecast obj from the main forecast obj.
@@ -285,6 +287,8 @@ public class NetworkIntentSvc extends IntentService
                 int daily_cnt = dailyForecast.hasForecastCount() ?
                         dailyForecast.getForecastCount() : 0;
 
+                Log.d(LOGTAG,"daily count = "+daily_cnt);
+
                 //pull all items for this city id for daily data.
                 for(int i = 0; i < daily_cnt; i++)
                 {
@@ -296,12 +300,9 @@ public class NetworkIntentSvc extends IntentService
                 }
             }
 
-            //if we have data for both items in the list, the processing it to the db.
-            if(hourly_list.size() > 0 && daily_list.size() > 0)
-            {
-                WeatherDbProcessing.updateDailyHourlyCityWeatherForecast
-                        (getApplicationContext(), daily_list, hourly_list, cityId);
-            }
+            //process these lists accordingly.
+            WeatherDbProcessing.updateDailyHourlyCityWeatherForecast
+                    (getApplicationContext(), daily_list, hourly_list, cityId);
         }
         catch(Exception e)
         {

@@ -20,6 +20,7 @@ import jmtechsvcs.myweatherapp.dbpkg.WeatherDbHelper;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTable;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityWeatherCurrCondTableDao;
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.DailyWeatherInfoTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.DaoMaster;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.DaoSession;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherIconTableDao;
@@ -200,6 +201,7 @@ public class MyWeatherApplication extends Application
             CityWeatherCurrCondTableDao.createTable(db, true);
             WeatherIconTableDao.createTable(db, true);
             WeatherStationInfoTableDao.createTable(db, true);
+            DailyWeatherInfoTableDao.createTable(db,true);
         }// end if else dbExist
     }
 

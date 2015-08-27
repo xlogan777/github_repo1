@@ -20,6 +20,8 @@ import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTable;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityWeatherCurrCondTable;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityWeatherCurrCondTableDao;
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.DailyWeatherInfoTable;
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.DailyWeatherInfoTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.DaoSession;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherIconTable;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherIconTableDao;
@@ -471,8 +473,26 @@ public class WeatherDbProcessing
             DaoSession daoSession = getDaoSession(context);
 
             //get dao here.
+            DailyWeatherInfoTableDao daily_weather_dao = daoSession.getDailyWeatherInfoTableDao();
 
-            //TODO: get data from list and add it to DB via java bean and save it using DAO.
+            //TODO: get the data for this city id and use those pojo objs to save this new data back.
+            //if there is no pojos then it is new insert data.
+
+            //read data from list and save to java bean to allow for saving to dao via this java bean.
+            //using the city id.
+            for(DailyForecast.Forecast daily_forecast : dailyList)
+            {
+                //java bean to set for db
+                DailyWeatherInfoTable daily_weather = new DailyWeatherInfoTable();
+
+                if(daily_forecast.hasHumidity())
+                {
+                    daily_forecast.getHumidity();
+                }
+
+                //save data to db via dao using java bean.
+                daily_weather_dao.insertOrReplace(daily_weather);
+            }
         }
         catch(Exception e)
         {
