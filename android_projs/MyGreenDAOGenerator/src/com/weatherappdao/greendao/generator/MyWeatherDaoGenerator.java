@@ -32,6 +32,9 @@ public class MyWeatherDaoGenerator
 		System.out.println("create weather station info table");
 		Entity weather_station_entity =  createWeatherStationInfoTable(schema);
 		
+		System.out.println("create daily weather info table");
+      Entity daily_weather_entity =  createDailyWeatherInfoTable(schema);
+		
 		//generate the source code
 		try
 		{
@@ -203,23 +206,76 @@ public class MyWeatherDaoGenerator
       
       //add non pk fields
       weather_station_entity.addLongProperty("city_id").notNull();
-      weather_station_entity.addStringProperty("station_name").notNull();
-      weather_station_entity.addDoubleProperty("station_temp").notNull();
-      weather_station_entity.addLongProperty("station_pressure").notNull();
-      weather_station_entity.addLongProperty("station_humidity").notNull();
-      weather_station_entity.addDoubleProperty("station_wind_speed").notNull();
-      weather_station_entity.addLongProperty("station_wind_deg").notNull();
-      weather_station_entity.addDoubleProperty("station_wind_gust").notNull();
-      weather_station_entity.addLongProperty("station_visibility_dist").notNull();
-      weather_station_entity.addDoubleProperty("station_calc_dewpt").notNull();
-      weather_station_entity.addDoubleProperty("station_calc_humidex").notNull();
-      weather_station_entity.addLongProperty("station_clouds_dist").notNull();
-      weather_station_entity.addStringProperty("station_clouds_cond").notNull();
-      weather_station_entity.addDoubleProperty("station_rain_1h").notNull();
-      weather_station_entity.addDoubleProperty("station_rain_24h").notNull();
-      weather_station_entity.addDoubleProperty("station_rain_today").notNull();
-      weather_station_entity.addLongProperty("last_update_time").notNull();
+      
+      weather_station_entity.addStringProperty("station_name");
+      weather_station_entity.addDoubleProperty("station_temp");
+      weather_station_entity.addLongProperty("station_pressure");
+      weather_station_entity.addLongProperty("station_humidity");
+      weather_station_entity.addDoubleProperty("station_wind_speed");
+      weather_station_entity.addLongProperty("station_wind_deg");
+      weather_station_entity.addDoubleProperty("station_wind_gust");
+      weather_station_entity.addLongProperty("station_visibility_dist");
+      weather_station_entity.addDoubleProperty("station_calc_dewpt");
+      weather_station_entity.addDoubleProperty("station_calc_humidex");
+      weather_station_entity.addLongProperty("station_clouds_dist");
+      weather_station_entity.addStringProperty("station_clouds_cond");
+      weather_station_entity.addDoubleProperty("station_rain_1h");
+      weather_station_entity.addDoubleProperty("station_rain_24h");
+      weather_station_entity.addDoubleProperty("station_rain_today");
+      weather_station_entity.addLongProperty("last_update_time");
       
       return weather_station_entity;
+	}
+	
+	public static Entity createDailyWeatherInfoTable(Schema schema)
+	{
+	   /*
+	    float  getHumidity() 
+float getPercentageOfClouds() 
+float getPressure() 
+float getRain() 
+java.lang.String  getRawResponse() 
+int   getResponseCode() 
+float getSnow() 
+DailyForecast.Forecast.Temperature  getTemperatureInstance() 
+float getWindDegree() 
+float getWindSpeed()  
+	   
+	   DailyForecast.Forecast.Temperature  getTemperatureInstance()	   
+	    float  getDayTemperature() 
+      float getEveningTemperature() 
+      float getMaximumTemperature() 
+      float getMinimumTemperature() 
+      float getMorningTemperature() 
+      float getNightTemperature() 
+
+	    */
+	   
+	   //table name
+      Entity daily_weather_entity = schema.addEntity("DailyWeatherInfoTable");
+      
+      //add pk, this will be a auto inc pk since we will have the same items repeated here
+      //and will be updated accordingly.
+      daily_weather_entity.addIdProperty().primaryKey().autoincrement();
+      
+      //add non pk fields
+      daily_weather_entity.addLongProperty("city_id").notNull();
+      
+      daily_weather_entity.addDoubleProperty("daily_humidity");  
+      daily_weather_entity.addDoubleProperty("daily_cloud_pert");
+      daily_weather_entity.addDoubleProperty("daily_pressure");
+      daily_weather_entity.addDoubleProperty("daily_rain");
+      daily_weather_entity.addDoubleProperty("daily_snow");
+      daily_weather_entity.addDoubleProperty("daily_wind_deg");
+      daily_weather_entity.addDoubleProperty("daily_wind_speed");
+      
+      daily_weather_entity.addDoubleProperty("daily_temp");
+      daily_weather_entity.addDoubleProperty("daily_evening_temp");
+      daily_weather_entity.addDoubleProperty("daily_max_temp");
+      daily_weather_entity.addDoubleProperty("daily_min_temp");
+      daily_weather_entity.addDoubleProperty("daily_morning_temp");
+      daily_weather_entity.addDoubleProperty("daily_night_temp");
+      
+      return daily_weather_entity;
 	}
 }
