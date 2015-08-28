@@ -40,6 +40,10 @@
             android:name=".activitypkg.WeatherStationDisplayActivity"
             android:label="@string/title_activity_weather_station_display" >
         </activity>
+        <activity
+            android:name=".activitypkg.DailyWeatherForecastActivity"
+            android:label="@string/title_activity_daily_weather_forecast" >
+        </activity>
     </application>
 
 </manifest>
