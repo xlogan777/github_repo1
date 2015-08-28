@@ -21,7 +21,8 @@ public class BeanQueryParams
         E_CURR_CITY_WEATHER_TABLE_TYPE,
         E_IMG_ICON_TABLE_TYPE,
         E_CITY_INFO_TABLE_LIST_TYPE,
-        E_WEATHER_STATION_TABLE_LIST_TYPE
+        E_WEATHER_STATION_TABLE_LIST_TYPE,
+        E_DAILY_WEATHER_TABLE_LIST_TYPE
     }
 
     private T_Query_Param_Type queryParamType;

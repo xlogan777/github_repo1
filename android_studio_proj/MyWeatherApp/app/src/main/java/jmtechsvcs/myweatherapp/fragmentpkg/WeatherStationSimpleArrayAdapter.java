@@ -68,7 +68,7 @@ public class WeatherStationSimpleArrayAdapter extends ArrayAdapter<WeatherStatio
         textView.setText(WeatherAppUtils.getUtcFromUtcSeconds(item_row.getLast_update_time())+"");
 
         //any else is optional to display..so treat it that way.
-        String result = WeatherAppUtils.getDefaultStringDiplayDouble(item_row.getStation_temp());
+        String result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getStation_temp());
         if(result.length() == 0)
             ((TextView)rowView.findViewById(R.id.temp_val)).setText(
                     MathUtils.getTempString(
@@ -78,7 +78,7 @@ public class WeatherStationSimpleArrayAdapter extends ArrayAdapter<WeatherStatio
         else
             ((TextView)rowView.findViewById(R.id.temp_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDiplayLong(item_row.getStation_pressure());
+        result = WeatherAppUtils.getDefaultStringDisplayLong(item_row.getStation_pressure());
         if(result.length() == 0)
             ((TextView)rowView.findViewById(R.id.pressure_val)).setText(
                     MathUtils.getPressureString(item_row.getStation_pressure()) + ""
@@ -86,14 +86,14 @@ public class WeatherStationSimpleArrayAdapter extends ArrayAdapter<WeatherStatio
         else
             ((TextView)rowView.findViewById(R.id.pressure_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDiplayLong(item_row.getStation_humidity());
+        result = WeatherAppUtils.getDefaultStringDisplayLong(item_row.getStation_humidity());
         if(result.length() == 0)
             ((TextView)rowView.findViewById(R.id.humidity_val)).
                     setText(MathUtils.getPercentString(item_row.getStation_humidity()) + "");
         else
             ((TextView)rowView.findViewById(R.id.humidity_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDiplayDouble(item_row.getStation_wind_speed());
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getStation_wind_speed());
         if(result.length() == 0)
             ((TextView)rowView.findViewById(R.id.wind_speed_val)).setText(
                     MathUtils.getVelocityString(
@@ -103,14 +103,14 @@ public class WeatherStationSimpleArrayAdapter extends ArrayAdapter<WeatherStatio
         else
             ((TextView)rowView.findViewById(R.id.wind_speed_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDiplayLong(item_row.getStation_wind_deg());
+        result = WeatherAppUtils.getDefaultStringDisplayLong(item_row.getStation_wind_deg());
         if(result.length() == 0)
             ((TextView)rowView.findViewById(R.id.wind_deg_val)).setText
                     (MathUtils.getDegreeString(item_row.getStation_wind_deg())+"");
         else
             ((TextView)rowView.findViewById(R.id.wind_deg_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDiplayDouble(item_row.getStation_wind_gust());
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getStation_wind_gust());
         if(result.length() == 0)
             ((TextView)rowView.findViewById(R.id.wind_gust_val)).setText(
                     MathUtils.getVelocityString(
@@ -120,7 +120,7 @@ public class WeatherStationSimpleArrayAdapter extends ArrayAdapter<WeatherStatio
         else
             ((TextView)rowView.findViewById(R.id.wind_gust_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDiplayLong(item_row.getStation_visibility_dist());
+        result = WeatherAppUtils.getDefaultStringDisplayLong(item_row.getStation_visibility_dist());
         if(result.length() == 0)
             ((TextView)rowView.findViewById(R.id.visibility_val)).
                     setText(
@@ -130,7 +130,7 @@ public class WeatherStationSimpleArrayAdapter extends ArrayAdapter<WeatherStatio
         else
             ((TextView)rowView.findViewById(R.id.visibility_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDiplayDouble(item_row.getStation_calc_dewpt());
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getStation_calc_dewpt());
         if(result.length() == 0)
             ((TextView)rowView.findViewById(R.id.dewpoint_val)).setText(
                     MathUtils.getTempString(
@@ -140,7 +140,7 @@ public class WeatherStationSimpleArrayAdapter extends ArrayAdapter<WeatherStatio
         else
             ((TextView)rowView.findViewById(R.id.dewpoint_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDiplayDouble(item_row.getStation_calc_humidex());
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getStation_calc_humidex());
         if(result.length() == 0)
             ((TextView)rowView.findViewById(R.id.humidex_val)).setText(
                     MathUtils.getTempString(
@@ -150,13 +150,13 @@ public class WeatherStationSimpleArrayAdapter extends ArrayAdapter<WeatherStatio
         else
             ((TextView)rowView.findViewById(R.id.humidex_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDiplayString(item_row.getStation_clouds_cond());
+        result = WeatherAppUtils.getDefaultStringDisplayString(item_row.getStation_clouds_cond());
         if(result.length() == 0)
             ((TextView)rowView.findViewById(R.id.cloud_cond_val)).setText(item_row.getStation_clouds_cond()+"");
         else
             ((TextView)rowView.findViewById(R.id.cloud_cond_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDiplayDouble(item_row.getStation_rain_today());
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getStation_rain_today());
         if(result.length() == 0)
             ((TextView)rowView.findViewById(R.id.rain_today_val)).setText(
                     MathUtils.getDistanceString(

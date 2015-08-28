@@ -103,14 +103,14 @@ public class WeatherStationDisplayActivity extends ActionBarActivity
 
     private void loadCityWeatherInfo(CityWeatherCurrCondTable currWeatherTable)
     {
-        String result = WeatherAppUtils.getDefaultStringDiplayDouble(currWeatherTable.getCurr_main_temp());
+        String result = WeatherAppUtils.getDefaultStringDisplayDouble(currWeatherTable.getCurr_main_temp());
         if(result.length() == 0)
             ((TextView)findViewById(R.id.tempature_val)).setText(MathUtils.getTempString(
                     currWeatherTable.getCurr_main_temp())+"");
         else
             ((TextView)findViewById(R.id.tempature_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDiplayLong(currWeatherTable.getCurr_main_pressure());
+        result = WeatherAppUtils.getDefaultStringDisplayLong(currWeatherTable.getCurr_main_pressure());
         if(result.length() == 0)
             ((TextView)findViewById(R.id.pressure_val)).setText(MathUtils.getPressureString(
                     currWeatherTable.getCurr_main_pressure()
@@ -118,7 +118,7 @@ public class WeatherStationDisplayActivity extends ActionBarActivity
         else
             ((TextView)findViewById(R.id.pressure_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDiplayLong(
+        result = WeatherAppUtils.getDefaultStringDisplayLong(
                 currWeatherTable.getCurr_main_humidity()
         );
         if(result.length() == 0)
@@ -128,7 +128,7 @@ public class WeatherStationDisplayActivity extends ActionBarActivity
         else
             ((TextView)findViewById(R.id.humidity_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDiplayDouble(currWeatherTable.getCurr_main_temp_min());
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(currWeatherTable.getCurr_main_temp_min());
         if(result.length() == 0)
             ((TextView)findViewById(R.id.temp_min_val)).setText(
                     MathUtils.getTempString(currWeatherTable.getCurr_main_temp_min()) + "");
@@ -136,7 +136,7 @@ public class WeatherStationDisplayActivity extends ActionBarActivity
             ((TextView)findViewById(R.id.temp_min_val)).setText(result);
 
 
-        result = WeatherAppUtils.getDefaultStringDiplayDouble(
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(
                 currWeatherTable.getCurr_main_temp_max()
         );
         if(result.length() == 0)

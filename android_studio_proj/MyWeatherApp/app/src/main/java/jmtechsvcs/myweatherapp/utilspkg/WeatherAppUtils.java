@@ -150,7 +150,7 @@ public class WeatherAppUtils
         else
             rv = DEFAULT_DOUBLE_VAL;
 
-        Log.d(LOGTAG, (rv == DEFAULT_DOUBLE_VAL ? "using default double max val" : "double val = "+rv));
+        Log.d(LOGTAG, (Double.compare(rv, DEFAULT_DOUBLE_VAL) == 0 ? "using default double max val" : "double val = "+rv));
 
         return rv;
     }
@@ -164,7 +164,7 @@ public class WeatherAppUtils
         else
             rv = DEFAULT_STRING_VAL;
 
-        Log.d(LOGTAG, (rv == DEFAULT_STRING_VAL ? "using default String val" : "string val = " + rv));
+        Log.d(LOGTAG, (rv.equals(DEFAULT_STRING_VAL) ? "using default String val" : "string val = " + rv));
 
         return rv;
     }
@@ -182,8 +182,6 @@ public class WeatherAppUtils
 
         //get the string from the string writer.
         return sw.toString();
-
-        //TODO: may need to write these expections to a errors file...not sure..
     }
 
     /*
@@ -247,7 +245,7 @@ public class WeatherAppUtils
         return weather_opts;
     }
 
-    public static String getDefaultStringDiplayLong(long data)
+    public static String getDefaultStringDisplayLong(long data)
     {
         String rv = "No Data Available";
         if(data != DEFAULT_lONG_VAL)
@@ -256,16 +254,16 @@ public class WeatherAppUtils
         return rv;
     }
 
-    public static String getDefaultStringDiplayDouble(double data)
+    public static String getDefaultStringDisplayDouble(double data)
     {
         String rv = "No Data Available";
-        if(data != DEFAULT_DOUBLE_VAL)
+        if(Double.compare(data,DEFAULT_DOUBLE_VAL) != 0)
             rv = "";
 
         return rv;
     }
 
-    public static String getDefaultStringDiplayString(String data)
+    public static String getDefaultStringDisplayString(String data)
     {
         String rv = "No Data Available";
         if(data != null && !data.equals(DEFAULT_STRING_VAL))

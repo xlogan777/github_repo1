@@ -248,7 +248,7 @@ public class WeatherDbProcessing
                         {
                             //this is a string.
                             String speed_name = parser.getAttributeValue(null,"name");
-                            String result = WeatherAppUtils.getDefaultStringDiplayString(speed_name);
+                            String result = WeatherAppUtils.getDefaultStringDisplayString(speed_name);
                             if(result.length() != 0)
                             {
                                 curr_weather_bean.setCurr_wind_speed_name(result);
@@ -264,7 +264,7 @@ public class WeatherDbProcessing
                             //this is a string
                             String wind_dir = parser.getAttributeValue(null,"code");
 
-                            String result = WeatherAppUtils.getDefaultStringDiplayString(wind_dir);
+                            String result = WeatherAppUtils.getDefaultStringDisplayString(wind_dir);
                             if(result.length() != 0)
                             {
                                 curr_weather_bean.setCurr_wind_dirr_code(result);
@@ -278,7 +278,7 @@ public class WeatherDbProcessing
                         {
                             //long, meter conv to miles.
                             String visibility = parser.getAttributeValue(null,"value");
-                            String result = WeatherAppUtils.getDefaultStringDiplayString(visibility);
+                            String result = WeatherAppUtils.getDefaultStringDisplayString(visibility);
                             if(result.length() != 0)
                             {
                                 curr_weather_bean.setCurr_visibility(WeatherAppUtils.DEFAULT_lONG_VAL);
@@ -293,7 +293,7 @@ public class WeatherDbProcessing
                         {
                             //this is a string.
                             String precip_mode = parser.getAttributeValue(null,"mode");
-                            String result = WeatherAppUtils.getDefaultStringDiplayString(precip_mode);
+                            String result = WeatherAppUtils.getDefaultStringDisplayString(precip_mode);
                             if(result.length() != 0)
                             {
                                 curr_weather_bean.setPrecipitation_mode(result);
@@ -304,7 +304,7 @@ public class WeatherDbProcessing
                             }
 
                             String precip_value = parser.getAttributeValue(null, "value");
-                            result = WeatherAppUtils.getDefaultStringDiplayString(precip_value);
+                            result = WeatherAppUtils.getDefaultStringDisplayString(precip_value);
                             if(result.length() != 0)
                             {
                                 curr_weather_bean.setPrecipitation_value(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
@@ -475,19 +475,160 @@ public class WeatherDbProcessing
             //get dao here.
             DailyWeatherInfoTableDao daily_weather_dao = daoSession.getDailyWeatherInfoTableDao();
 
-            //TODO: get the data for this city id and use those pojo objs to save this new data back.
-            //if there is no pojos then it is new insert data.
+            //get the list of current daily weather via city id.
+            BeanQueryParams qp = new BeanQueryParams();
+            qp.setCityId(cityId);
+            qp.setQueryParamType(BeanQueryParams.T_Query_Param_Type.E_DAILY_WEATHER_TABLE_LIST_TYPE);
+
+            //get list of daily weather items if it exits.
+            List<DailyWeatherInfoTable> daily_weather_list =
+                    WeatherDbProcessing.getBeanByQueryParamsList(qp, context, new DailyWeatherInfoTable());
 
             //read data from list and save to java bean to allow for saving to dao via this java bean.
             //using the city id.
             for(DailyForecast.Forecast daily_forecast : dailyList)
             {
                 //java bean to set for db
-                DailyWeatherInfoTable daily_weather = new DailyWeatherInfoTable();
+                DailyWeatherInfoTable daily_weather = null;
+
+                //remove first item from the list for the auto inc id, and save that to the
+                //item java bean item just the id.
+                if(daily_weather_list.size() > 0)
+                {
+                    //pop the head off the daily list from the DB.
+                    DailyWeatherInfoTable daily_item = daily_weather_list.remove(0);
+
+                    //assign the item from the list to the local vars here.
+                    //this will assign all new data.
+                    daily_weather = daily_item;
+                }
+                else
+                {
+                    //create new obj here.
+                    daily_weather = new DailyWeatherInfoTable();
+                }
+
+                //set the city id.
+                daily_weather.setCity_id(cityId);
 
                 if(daily_forecast.hasHumidity())
                 {
-                    daily_forecast.getHumidity();
+                    daily_weather.setDaily_humidity((double)daily_forecast.getHumidity());
+                }
+                else
+                {
+                    daily_weather.setDaily_humidity(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                }
+
+                if(daily_forecast.hasPercentageOfClouds())
+                {
+                    daily_weather.setDaily_cloud_pert((double)daily_forecast.getPercentageOfClouds());
+                }
+                else
+                {
+                    daily_weather.setDaily_cloud_pert(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                }
+
+                if(daily_forecast.hasPressure())
+                {
+                    daily_weather.setDaily_pressure((double)daily_forecast.getPressure());
+                }
+                else
+                {
+                    daily_weather.setDaily_pressure(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                }
+
+                if(daily_forecast.hasRain())
+                {
+                    daily_weather.setDaily_rain((double)daily_forecast.getRain());
+                }
+                else
+                {
+                    daily_weather.setDaily_rain(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                }
+
+                if(daily_forecast.hasSnow())
+                {
+                    daily_weather.setDaily_snow((double)daily_forecast.getSnow());
+                }
+                else
+                {
+                    daily_weather.setDaily_snow(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                }
+
+                if(daily_forecast.hasWindDegree())
+                {
+                    daily_weather.setDaily_wind_deg((double)daily_forecast.getWindDegree());
+                }
+                else
+                {
+                    daily_weather.setDaily_wind_deg(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                }
+
+                if(daily_forecast.hasWindSpeed())
+                {
+                    daily_weather.setDaily_wind_speed((double)daily_forecast.getWindSpeed());
+                }
+                else
+                {
+                    daily_weather.setDaily_wind_speed(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                }
+
+                //get the daily forecast for this item.
+                DailyForecast.Forecast.Temperature daily_temp = daily_forecast.getTemperatureInstance();
+
+                if(daily_temp.hasDayTemperature())
+                {
+                    daily_weather.setDaily_temp((double)daily_temp.getDayTemperature());
+                }
+                else
+                {
+                    daily_weather.setDaily_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                }
+
+                if(daily_temp.hasEveningTemperature())
+                {
+                    daily_weather.setDaily_evening_temp((double)daily_temp.getEveningTemperature());
+                }
+                else
+                {
+                    daily_weather.setDaily_evening_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                }
+
+                if(daily_temp.hasMaximumTemperature())
+                {
+                    daily_weather.setDaily_max_temp((double)daily_temp.getMaximumTemperature());
+                }
+                else
+                {
+                    daily_weather.setDaily_max_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                }
+
+                if(daily_temp.hasMinimumTemperature())
+                {
+                    daily_weather.setDaily_min_temp((double)daily_temp.getMinimumTemperature());
+                }
+                else
+                {
+                    daily_weather.setDaily_min_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                }
+
+                if(daily_temp.hasMorningTemperature())
+                {
+                    daily_weather.setDaily_morning_temp((double)daily_temp.getMorningTemperature());
+                }
+                else
+                {
+                    daily_weather.setDaily_morning_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                }
+
+                if(daily_temp.hasNightTemperature())
+                {
+                    daily_weather.setDaily_night_temp((double)daily_temp.getNightTemperature());
+                }
+                else
+                {
+                    daily_weather.setDaily_night_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
                 }
 
                 //save data to db via dao using java bean.
@@ -631,6 +772,21 @@ public class WeatherDbProcessing
                 items =  (List<CityBeanType>)dao.queryBuilder().where
                         (
                                 WeatherStationInfoTableDao.Properties.City_id.eq(queryParams.getCityId())
+                        ).list();
+
+                //return back the list to the caller.
+                rv = items;
+            }
+            else if(beanType instanceof DailyWeatherInfoTable &&
+                    queryParams.getQueryParamType() == BeanQueryParams.T_Query_Param_Type.E_DAILY_WEATHER_TABLE_LIST_TYPE)
+            {
+                //get the dao for daily weather info.
+                DailyWeatherInfoTableDao dao = daoSession.getDailyWeatherInfoTableDao();
+
+                //get the java bean using the dao obj but use the city id to find it.
+                items =  (List<CityBeanType>)dao.queryBuilder().where
+                        (
+                                DailyWeatherInfoTableDao.Properties.City_id.eq(queryParams.getCityId())
                         ).list();
 
                 //return back the list to the caller.
