@@ -227,6 +227,7 @@ public class MyWeatherDaoGenerator
       return weather_station_entity;
 	}
 	
+	//added comments.
 	public static Entity createDailyWeatherInfoTable(Schema schema)
 	{
 	   /*
