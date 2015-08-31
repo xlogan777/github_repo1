@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import jmtechsvcs.myweatherapp.activitypkg.CurrentWeatherActivity;
+import jmtechsvcs.myweatherapp.activitypkg.DailyWeatherForecastActivity;
 import jmtechsvcs.myweatherapp.activitypkg.WeatherStationDisplayActivity;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTable;
 import jmtechsvcs.myweatherapp.networkpkg.NetworkIntentSvc;
@@ -90,7 +91,18 @@ public class WeatherOptionsFragment extends DialogFragment{
                                 //start ng svc
                                 NetworkIntentSvc.startActionCityWeatherForecast(getActivity(), city_id);
 
-                                //TODO: add the call to the activity here for weather forecast.
+                                //add this to the android back stack for here to the next activity
+                                //being activated.
+                                Intent daily_weather_intent = new Intent(getActivity(), DailyWeatherForecastActivity.class);
+                                Bundle daily_bundle = new Bundle();
+                                daily_bundle.putLong("city_id",city_id);
+
+                                //add the bundle to the intent.
+                                daily_weather_intent.putExtras(daily_bundle);
+
+                                //start the activity with info on the city id to be used there.
+                                startActivity(daily_weather_intent);
+
                                 break;
 
 

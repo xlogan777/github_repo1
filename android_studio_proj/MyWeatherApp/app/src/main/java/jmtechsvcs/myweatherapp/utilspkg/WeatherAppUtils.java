@@ -21,6 +21,7 @@ import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by jimmy on 7/23/2015.
@@ -280,7 +281,7 @@ public class WeatherAppUtils
         try
         {
             //2015-08-15T11:00:07, from xml feed.
-            SimpleDateFormat dateFormat = new SimpleDateFormat(UTC_DATE_FORMAT);
+            SimpleDateFormat dateFormat = new SimpleDateFormat(UTC_DATE_FORMAT, Locale.US);
             Date inputDate = dateFormat.parse(input);
             Log.d(LOGTAG,inputDate.toString());
             rv = inputDate.getTime();
@@ -298,7 +299,7 @@ public class WeatherAppUtils
     {
         String rv = "";
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat(UTC_DATE_FORMAT);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(UTC_DATE_FORMAT, Locale.US);
         rv = dateFormat.format(new Date(utcSeconds));
         Log.d(LOGTAG,"date = "+rv);
 

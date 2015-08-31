@@ -57,6 +57,7 @@ public class MainWeatherActivity extends ActionBarActivity {
         //WeatherDbProcessing.updateCurrentWeatherStationInfoGeo("",getApplicationContext());
 
         Intent intent = new Intent(this, CitySearchActivity.class);
+        //Intent intent = new Intent(this, DailyWeatherForecastActivity.class);
         startActivity(intent);
     }
 

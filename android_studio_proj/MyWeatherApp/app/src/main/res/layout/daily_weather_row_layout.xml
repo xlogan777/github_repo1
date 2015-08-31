@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <!--private Double daily_night_temp;-->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="daily_temp"
+        android:id="@+id/daily_temp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="daily_temp_val"
+        android:id="@+id/daily_temp_val"
+        android:layout_marginLeft="36dp"
+        android:layout_marginStart="36dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/daily_morning"
+        android:layout_toEndOf="@+id/daily_morning"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="daily_min"
+        android:id="@+id/daily_min"
+        android:layout_below="@+id/daily_temp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="daily_min_val"
+        android:id="@+id/daily_min_val"
+        android:layout_below="@+id/daily_temp_val"
+        android:layout_alignLeft="@+id/daily_temp_val"
+        android:layout_alignStart="@+id/daily_temp_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="daily_max"
+        android:id="@+id/daily_max"
+        android:layout_below="@+id/daily_min"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="daily_max_val"
+        android:id="@+id/daily_max_val"
+        android:layout_above="@+id/daily_morning"
+        android:layout_alignLeft="@+id/daily_min_val"
+        android:layout_alignStart="@+id/daily_min_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="daily_morning"
+        android:id="@+id/daily_morning"
+        android:layout_below="@+id/daily_max"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="daily_morning_val"
+        android:id="@+id/daily_morning_val"
+        android:layout_below="@+id/daily_max_val"
+        android:layout_alignLeft="@+id/daily_max_val"
+        android:layout_alignStart="@+id/daily_max_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="daily_evening"
+        android:id="@+id/daily_evening"
+        android:layout_below="@+id/daily_morning"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="daily_evening_val"
+        android:id="@+id/daily_evening_val"
+        android:layout_below="@+id/daily_morning_val"
+        android:layout_alignLeft="@+id/daily_morning_val"
+        android:layout_alignStart="@+id/daily_morning_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="daily_night"
+        android:id="@+id/daily_night"
+        android:layout_below="@+id/daily_evening"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="daily_night_val"
+        android:id="@+id/daily_night_val"
+        android:layout_below="@+id/daily_evening_val"
+        android:layout_alignLeft="@+id/daily_evening_val"
+        android:layout_alignStart="@+id/daily_evening_val"/>
+</RelativeLayout>
