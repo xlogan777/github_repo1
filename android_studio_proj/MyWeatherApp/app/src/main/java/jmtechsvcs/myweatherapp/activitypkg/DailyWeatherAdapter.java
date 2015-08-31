@@ -61,6 +61,8 @@ public class DailyWeatherAdapter extends ArrayAdapter<DailyWeatherInfoTable>
         else
             ((TextView)rowView.findViewById(R.id.daily_temp_val)).setText(result);
 
+        //TODO: need to add other text view items here.
+
         //return the row view for this inflated item.
         return rowView;
     }
