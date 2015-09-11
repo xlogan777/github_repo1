@@ -42,7 +42,8 @@ public class MyWeatherDaoGenerator
 			DaoGenerator dao_generator = new DaoGenerator();
 			
 			//generate code based on schema and place in outdir.			
-			dao_generator.generateAll(schema, "c:/users/jimmy/desktop");
+			//dao_generator.generateAll(schema, "c:/users/jimmy/desktop");
+			dao_generator.generateAll(schema, "c:/users/menaj/desktop");
 			
 			System.out.println("JM...generated the tables from green dao.");
 		}
@@ -276,6 +277,8 @@ float getWindSpeed()
       daily_weather_entity.addDoubleProperty("daily_min_temp");
       daily_weather_entity.addDoubleProperty("daily_morning_temp");
       daily_weather_entity.addDoubleProperty("daily_night_temp");
+      
+      daily_weather_entity.addLongProperty("daily_weather_date");
       
       return daily_weather_entity;
 	}
