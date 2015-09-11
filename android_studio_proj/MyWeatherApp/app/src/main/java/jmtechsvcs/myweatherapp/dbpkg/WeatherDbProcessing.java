@@ -511,6 +511,15 @@ public class WeatherDbProcessing
                 //set the city id.
                 daily_weather.setCity_id(cityId);
 
+                if(daily_forecast.hasDateTime())
+                {
+                    daily_weather.setDaily_weather_date(daily_forecast.getDateTime().getTime());
+                }
+                else
+                {
+                    daily_weather.setDaily_weather_date(WeatherAppUtils.DEFAULT_lONG_VAL);
+                }
+
                 if(daily_forecast.hasHumidity())
                 {
                     daily_weather.setDaily_humidity((double)daily_forecast.getHumidity());
@@ -633,6 +642,8 @@ public class WeatherDbProcessing
 
                 //save data to db via dao using java bean.
                 daily_weather_dao.insertOrReplace(daily_weather);
+
+                //TODO: save the hourly list data here for the list provided using the dao obj.
             }
         }
         catch(Exception e)

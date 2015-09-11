@@ -38,6 +38,7 @@ public class DailyWeatherInfoTableDao extends AbstractDao<DailyWeatherInfoTable,
         public final static Property Daily_min_temp = new Property(12, Double.class, "daily_min_temp", false, "DAILY_MIN_TEMP");
         public final static Property Daily_morning_temp = new Property(13, Double.class, "daily_morning_temp", false, "DAILY_MORNING_TEMP");
         public final static Property Daily_night_temp = new Property(14, Double.class, "daily_night_temp", false, "DAILY_NIGHT_TEMP");
+        public final static Property Daily_weather_date = new Property(15, Long.class, "daily_weather_date", false, "DAILY_WEATHER_DATE");
     };
 
 
@@ -67,7 +68,8 @@ public class DailyWeatherInfoTableDao extends AbstractDao<DailyWeatherInfoTable,
                 "\"DAILY_MAX_TEMP\" REAL," + // 11: daily_max_temp
                 "\"DAILY_MIN_TEMP\" REAL," + // 12: daily_min_temp
                 "\"DAILY_MORNING_TEMP\" REAL," + // 13: daily_morning_temp
-                "\"DAILY_NIGHT_TEMP\" REAL);"); // 14: daily_night_temp
+                "\"DAILY_NIGHT_TEMP\" REAL," + // 14: daily_night_temp
+                "\"DAILY_WEATHER_DATE\" INTEGER);"); // 15: daily_weather_date
     }
 
     /** Drops the underlying database table. */
@@ -151,6 +153,11 @@ public class DailyWeatherInfoTableDao extends AbstractDao<DailyWeatherInfoTable,
         if (daily_night_temp != null) {
             stmt.bindDouble(15, daily_night_temp);
         }
+ 
+        Long daily_weather_date = entity.getDaily_weather_date();
+        if (daily_weather_date != null) {
+            stmt.bindLong(16, daily_weather_date);
+        }
     }
 
     /** @inheritdoc */
@@ -177,7 +184,8 @@ public class DailyWeatherInfoTableDao extends AbstractDao<DailyWeatherInfoTable,
             cursor.isNull(offset + 11) ? null : cursor.getDouble(offset + 11), // daily_max_temp
             cursor.isNull(offset + 12) ? null : cursor.getDouble(offset + 12), // daily_min_temp
             cursor.isNull(offset + 13) ? null : cursor.getDouble(offset + 13), // daily_morning_temp
-            cursor.isNull(offset + 14) ? null : cursor.getDouble(offset + 14) // daily_night_temp
+            cursor.isNull(offset + 14) ? null : cursor.getDouble(offset + 14), // daily_night_temp
+            cursor.isNull(offset + 15) ? null : cursor.getLong(offset + 15) // daily_weather_date
         );
         return entity;
     }
@@ -200,6 +208,7 @@ public class DailyWeatherInfoTableDao extends AbstractDao<DailyWeatherInfoTable,
         entity.setDaily_min_temp(cursor.isNull(offset + 12) ? null : cursor.getDouble(offset + 12));
         entity.setDaily_morning_temp(cursor.isNull(offset + 13) ? null : cursor.getDouble(offset + 13));
         entity.setDaily_night_temp(cursor.isNull(offset + 14) ? null : cursor.getDouble(offset + 14));
+        entity.setDaily_weather_date(cursor.isNull(offset + 15) ? null : cursor.getLong(offset + 15));
      }
     
     /** @inheritdoc */

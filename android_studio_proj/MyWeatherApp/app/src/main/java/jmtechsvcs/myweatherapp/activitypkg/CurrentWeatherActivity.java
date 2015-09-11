@@ -225,7 +225,7 @@ public class CurrentWeatherActivity extends ActionBarActivity
                 currWeatherTable.getCurr_main_humidity()
         );
         if(result.length() == 0)
-            ((TextView)findViewById(R.id.mainhumidity_val)).setText(MathUtils.getDegreeString(
+            ((TextView)findViewById(R.id.mainhumidity_val)).setText(MathUtils.getPercentString(
                     currWeatherTable.getCurr_main_humidity()
             )+"");
         else

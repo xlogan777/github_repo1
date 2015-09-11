@@ -61,7 +61,96 @@ public class DailyWeatherAdapter extends ArrayAdapter<DailyWeatherInfoTable>
         else
             ((TextView)rowView.findViewById(R.id.daily_temp_val)).setText(result);
 
-        //TODO: need to add other text view items here.
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getDaily_min_temp());
+        if(result.length() == 0)
+            ((TextView)rowView.findViewById(R.id.daily_min_val)).setText(
+                    MathUtils.getTempString(item_row.getDaily_min_temp()) + "");
+        else
+            ((TextView)rowView.findViewById(R.id.daily_min_val)).setText(result);
+
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getDaily_max_temp());
+        if(result.length() == 0)
+            ((TextView)rowView.findViewById(R.id.daily_max_val)).setText(
+                    MathUtils.getTempString(item_row.getDaily_max_temp()) + "");
+        else
+            ((TextView)rowView.findViewById(R.id.daily_max_val)).setText(result);
+
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getDaily_morning_temp());
+        if(result.length() == 0)
+            ((TextView)rowView.findViewById(R.id.daily_morning_val)).setText(
+                    MathUtils.getTempString(item_row.getDaily_morning_temp()) + "");
+        else
+            ((TextView)rowView.findViewById(R.id.daily_morning_val)).setText(result);
+
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getDaily_evening_temp());
+        if(result.length() == 0)
+            ((TextView)rowView.findViewById(R.id.daily_evening_val)).setText(
+                    MathUtils.getTempString(item_row.getDaily_evening_temp()) + "");
+        else
+            ((TextView)rowView.findViewById(R.id.daily_evening_val)).setText(result);
+
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getDaily_night_temp());
+        if(result.length() == 0)
+            ((TextView)rowView.findViewById(R.id.daily_night_val)).setText(
+                    MathUtils.getTempString(item_row.getDaily_night_temp()) + "");
+        else
+            ((TextView)rowView.findViewById(R.id.daily_night_val)).setText(result);
+
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getDaily_humidity());
+        if(result.length() == 0)
+            ((TextView)rowView.findViewById(R.id.daily_humidity_val)).setText(
+                    MathUtils.getPercentString((long) item_row.getDaily_humidity().doubleValue()) + "");
+        else
+            ((TextView)rowView.findViewById(R.id.daily_humidity_val)).setText(result);
+
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getDaily_cloud_pert());
+        if(result.length() == 0)
+            ((TextView)rowView.findViewById(R.id.daily_cloud_pect_val)).setText(
+                    MathUtils.getPercentString((long) item_row.getDaily_cloud_pert().doubleValue()) + "");
+        else
+            ((TextView)rowView.findViewById(R.id.daily_cloud_pect_val)).setText(result);
+
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getDaily_pressure());
+        if(result.length() == 0)
+            ((TextView)rowView.findViewById(R.id.daily_pressure_val)).setText(
+                    MathUtils.getPressureString((long) item_row.getDaily_pressure().doubleValue()) + "");
+        else
+            ((TextView)rowView.findViewById(R.id.daily_pressure_val)).setText(result);
+
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getDaily_rain());
+        if(result.length() == 0)
+            ((TextView)rowView.findViewById(R.id.daily_rain_val)).setText(
+                    MathUtils.getDistanceString(
+                            (long) MathUtils.convertMmToInches(item_row.getDaily_rain()), 'I') + "");
+        else
+            ((TextView)rowView.findViewById(R.id.daily_rain_val)).setText(result);
+
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getDaily_snow());
+        if(result.length() == 0)
+            ((TextView)rowView.findViewById(R.id.daily_snow_val)).setText(
+                    MathUtils.getDistanceString((long)item_row.getDaily_snow().doubleValue(), 'I') + "");
+        else
+            ((TextView)rowView.findViewById(R.id.daily_snow_val)).setText(result);
+
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getDaily_wind_deg());
+        if(result.length() == 0)
+            ((TextView)rowView.findViewById(R.id.daily_wind_deg_val)).setText(
+                            MathUtils.getDegreeString(item_row.getDaily_wind_deg()) + "");
+        else
+            ((TextView)rowView.findViewById(R.id.daily_wind_deg_val)).setText(result);
+
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getDaily_wind_speed());
+        if(result.length() == 0)
+            ((TextView)rowView.findViewById(R.id.daily_wind_speed_val)).setText(
+                    MathUtils.getVelocityString(item_row.getDaily_wind_speed()) + "");
+        else
+            ((TextView)rowView.findViewById(R.id.daily_wind_speed_val)).setText(result);
+
+        result = WeatherAppUtils.getDefaultStringDisplayLong(item_row.getDaily_weather_date());
+        if(result.length() == 0)
+            ((TextView)rowView.findViewById(R.id.weather_date_val)).setText(item_row.getDaily_weather_date() + "");
+        else
+            ((TextView)rowView.findViewById(R.id.weather_date_val)).setText(result);
 
         //return the row view for this inflated item.
         return rowView;

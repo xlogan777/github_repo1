@@ -24,6 +24,7 @@ public class DailyWeatherInfoTable {
     private Double daily_min_temp;
     private Double daily_morning_temp;
     private Double daily_night_temp;
+    private Long daily_weather_date;
 
     // KEEP FIELDS - put your custom fields here
     // KEEP FIELDS END
@@ -35,7 +36,7 @@ public class DailyWeatherInfoTable {
         this.id = id;
     }
 
-    public DailyWeatherInfoTable(Long id, long city_id, Double daily_humidity, Double daily_cloud_pert, Double daily_pressure, Double daily_rain, Double daily_snow, Double daily_wind_deg, Double daily_wind_speed, Double daily_temp, Double daily_evening_temp, Double daily_max_temp, Double daily_min_temp, Double daily_morning_temp, Double daily_night_temp) {
+    public DailyWeatherInfoTable(Long id, long city_id, Double daily_humidity, Double daily_cloud_pert, Double daily_pressure, Double daily_rain, Double daily_snow, Double daily_wind_deg, Double daily_wind_speed, Double daily_temp, Double daily_evening_temp, Double daily_max_temp, Double daily_min_temp, Double daily_morning_temp, Double daily_night_temp, Long daily_weather_date) {
         this.id = id;
         this.city_id = city_id;
         this.daily_humidity = daily_humidity;
@@ -51,6 +52,7 @@ public class DailyWeatherInfoTable {
         this.daily_min_temp = daily_min_temp;
         this.daily_morning_temp = daily_morning_temp;
         this.daily_night_temp = daily_night_temp;
+        this.daily_weather_date = daily_weather_date;
     }
 
     public Long getId() {
@@ -171,6 +173,14 @@ public class DailyWeatherInfoTable {
 
     public void setDaily_night_temp(Double daily_night_temp) {
         this.daily_night_temp = daily_night_temp;
+    }
+
+    public Long getDaily_weather_date() {
+        return daily_weather_date;
+    }
+
+    public void setDaily_weather_date(Long daily_weather_date) {
+        this.daily_weather_date = daily_weather_date;
     }
 
     // KEEP METHODS - put your custom methods here

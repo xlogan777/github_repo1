@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,17 +12,22 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.Date;
 import java.util.List;
 
 import jmtechsvcs.myweatherapp.R;
 import jmtechsvcs.myweatherapp.dbpkg.BeanQueryParams;
 import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTable;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.DailyWeatherInfoTable;
 
 //class to display the daily weather forecast using list activity as a default
 //container.
 public class DailyWeatherForecastActivity extends ListActivity
 {
+    private long cityId = 0;
+    private static final String LOGTAG = "DailyWthrForecastAct";
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -36,6 +42,9 @@ public class DailyWeatherForecastActivity extends ListActivity
 
         //get the city id from the bundle.
         long city_id = daily_bundle.getLong("city_id");
+
+        //save the city id to this activity class.
+        cityId = city_id;
 
         //get the application context.
         Context context = getApplicationContext();
@@ -64,11 +73,13 @@ public class DailyWeatherForecastActivity extends ListActivity
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id)
     {
-        //this gets the item selected to get the hourly data here for.
-        DailyWeatherAdapter item = (DailyWeatherAdapter) getListAdapter().getItem(position);
+        DailyWeatherInfoTable selectedFromList = (DailyWeatherInfoTable)getListView().getItemAtPosition(position);
+        Log.d(LOGTAG,"clicked on this item for the daily weather pos = "+position+
+                ", date = "+new Date(selectedFromList.getDaily_weather_date())+", city id = "+cityId);
 
-        //TODO: get the hourly data and launch another activity here for this new view.
-        //use the city id on this item to get the hourly data for display.
+        //TODO: use the item clicked on, to use the date of 3hrs weather data for the city id,
+        //use the city id, and the date of this item selected to return back the list of
+        //3 hourly items to display in another activity.
     }
 
     @Override
