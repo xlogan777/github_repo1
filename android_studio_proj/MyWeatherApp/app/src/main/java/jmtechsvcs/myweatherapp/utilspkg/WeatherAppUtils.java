@@ -258,7 +258,8 @@ public class WeatherAppUtils
     public static String getDefaultStringDisplayDouble(double data)
     {
         String rv = "No Data Available";
-        if(Double.compare(data,DEFAULT_DOUBLE_VAL) != 0)
+        if(Double.compare(data,DEFAULT_DOUBLE_VAL) != 0 &&
+           Double.compare(data,Double.NaN)!= 0)
             rv = "";
 
         return rv;

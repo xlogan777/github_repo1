@@ -170,14 +170,14 @@ public class CurrentWeatherActivity extends ActionBarActivity
             ((TextView)findViewById(R.id.sr_time_val)).setText(
                     WeatherAppUtils.getUtcFromUtcSeconds(currWeatherTable.getCurr_sys_sunrise_time())+"");
         else
-            ((TextView)findViewById(R.id.recentfeedtime_val)).setText(result);
+            ((TextView)findViewById(R.id.sr_time_val)).setText(result);
 
         result = WeatherAppUtils.getDefaultStringDisplayLong(currWeatherTable.getCurr_sys_sunset_time());
         if(result.length() == 0)
             ((TextView)findViewById(R.id.ss_time_val)).setText(
                     WeatherAppUtils.getUtcFromUtcSeconds(currWeatherTable.getCurr_sys_sunset_time())+"");
         else
-            ((TextView)findViewById(R.id.recentfeedtime_val)).setText(result);
+            ((TextView)findViewById(R.id.ss_time_val)).setText(result);
     }
 
     //this will load all the weather related info for the city.

@@ -1,6 +1,7 @@
 package jmtechsvcs.myweatherapp.activitypkg;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -117,7 +118,7 @@ public class DailyWeatherAdapter extends ArrayAdapter<DailyWeatherInfoTable>
         else
             ((TextView)rowView.findViewById(R.id.daily_pressure_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getDaily_rain());
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getDaily_rain().doubleValue());
         if(result.length() == 0)
             ((TextView)rowView.findViewById(R.id.daily_rain_val)).setText(
                     MathUtils.getDistanceString(
@@ -125,7 +126,7 @@ public class DailyWeatherAdapter extends ArrayAdapter<DailyWeatherInfoTable>
         else
             ((TextView)rowView.findViewById(R.id.daily_rain_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getDaily_snow());
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getDaily_snow().doubleValue());
         if(result.length() == 0)
             ((TextView)rowView.findViewById(R.id.daily_snow_val)).setText(
                     MathUtils.getDistanceString((long)item_row.getDaily_snow().doubleValue(), 'I') + "");
@@ -148,7 +149,8 @@ public class DailyWeatherAdapter extends ArrayAdapter<DailyWeatherInfoTable>
 
         result = WeatherAppUtils.getDefaultStringDisplayLong(item_row.getDaily_weather_date());
         if(result.length() == 0)
-            ((TextView)rowView.findViewById(R.id.weather_date_val)).setText(item_row.getDaily_weather_date() + "");
+            ((TextView)rowView.findViewById(R.id.weather_date_val)).setText(
+                    WeatherAppUtils.getUtcFromUtcSeconds(item_row.getDaily_weather_date()) + "");
         else
             ((TextView)rowView.findViewById(R.id.weather_date_val)).setText(result);
 
