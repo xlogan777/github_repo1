@@ -87,10 +87,10 @@ public class MyWeatherDaoGenerator
             "description": "broken clouds",//weather desc in the group
             "icon": "04n"//weather icon id, this shows the image icon
        */
-      city_weather_cond_entity.addLongProperty("curr_weather_id");
-      city_weather_cond_entity.addStringProperty("curr_weather_main");
-      city_weather_cond_entity.addStringProperty("curr_weather_desc");
-      city_weather_cond_entity.addStringProperty("curr_weather_icon");
+      city_weather_cond_entity.addLongProperty("curr_weather_id").notNull();
+      city_weather_cond_entity.addStringProperty("curr_weather_main").notNull();
+      city_weather_cond_entity.addStringProperty("curr_weather_desc").notNull();
+      city_weather_cond_entity.addStringProperty("curr_weather_icon").notNull();
       
       /*
        "main": {
@@ -104,13 +104,13 @@ public class MyWeatherDaoGenerator
     }
        */
       
-      city_weather_cond_entity.addDoubleProperty("curr_main_temp");
-      city_weather_cond_entity.addLongProperty("curr_main_pressure");
-      city_weather_cond_entity.addLongProperty("curr_main_humidity");
-      city_weather_cond_entity.addDoubleProperty("curr_main_temp_min");
-      city_weather_cond_entity.addDoubleProperty("curr_main_temp_max");
-      city_weather_cond_entity.addLongProperty("curr_main_sea_level");
-      city_weather_cond_entity.addLongProperty("curr_main_grnd_level");
+      city_weather_cond_entity.addDoubleProperty("curr_main_temp").notNull();
+      city_weather_cond_entity.addLongProperty("curr_main_pressure").notNull();
+      city_weather_cond_entity.addLongProperty("curr_main_humidity").notNull();
+      city_weather_cond_entity.addDoubleProperty("curr_main_temp_min").notNull();
+      city_weather_cond_entity.addDoubleProperty("curr_main_temp_max").notNull();
+      city_weather_cond_entity.addLongProperty("curr_main_sea_level").notNull();
+      city_weather_cond_entity.addLongProperty("curr_main_grnd_level").notNull();
       
       /*
        "wind": {
@@ -119,8 +119,8 @@ public class MyWeatherDaoGenerator
     },
        */
       
-      city_weather_cond_entity.addDoubleProperty("curr_wind_speed");
-      city_weather_cond_entity.addLongProperty("curr_wind_degs");
+      city_weather_cond_entity.addDoubleProperty("curr_wind_speed").notNull();
+      city_weather_cond_entity.addLongProperty("curr_wind_degs").notNull();
       
       
       /*
@@ -129,8 +129,8 @@ public class MyWeatherDaoGenerator
           <direction value="140" code="SE" name="SouthEast"/>
          </wind>
        */
-      city_weather_cond_entity.addStringProperty("curr_wind_speed_name");//from xml
-      city_weather_cond_entity.addStringProperty("curr_wind_dirr_code");//from xml
+      city_weather_cond_entity.addStringProperty("curr_wind_speed_name").notNull();//from xml
+      city_weather_cond_entity.addStringProperty("curr_wind_dirr_code").notNull();//from xml
       
       /*
        "clouds": {
@@ -138,33 +138,33 @@ public class MyWeatherDaoGenerator
     }
        */
       
-      city_weather_cond_entity.addLongProperty("curr_clouds_all");
+      city_weather_cond_entity.addLongProperty("curr_clouds_all").notNull();
       
       //<visibility value="10000"/>
-      city_weather_cond_entity.addLongProperty("curr_visibility");//from xml
+      city_weather_cond_entity.addLongProperty("curr_visibility").notNull();//from xml
       
       /*
        <precipitation mode="no" value = "100"/>
        */
-      city_weather_cond_entity.addStringProperty("precipitation_mode");//from xml
-      city_weather_cond_entity.addDoubleProperty("precipitation_value");//from xml
+      city_weather_cond_entity.addStringProperty("precipitation_mode").notNull();//from xml
+      city_weather_cond_entity.addDoubleProperty("precipitation_value").notNull();//from xml
       
       /*
        "rain":{"3h":3},//rain volume for the last 3 hrs
        */
-      city_weather_cond_entity.addDoubleProperty("curr_rain_last3hrs");
+      city_weather_cond_entity.addDoubleProperty("curr_rain_last3hrs").notNull();
       
       /*
        "snow":{"3h":3},//snow volume for the last 3 hrs
        */
       
-      city_weather_cond_entity.addDoubleProperty("curr_snow_last3hrs");
+      city_weather_cond_entity.addDoubleProperty("curr_snow_last3hrs").notNull();
       
       /*
        "dt": 1437667656//unix utc
        */
       
-      city_weather_cond_entity.addLongProperty("curr_data_calc_time");
+      city_weather_cond_entity.addLongProperty("curr_data_calc_time").notNull();
       
       /*
        "sys": {        
@@ -173,8 +173,8 @@ public class MyWeatherDaoGenerator
     }
        */
       
-      city_weather_cond_entity.addLongProperty("curr_sys_sunrise_time");
-      city_weather_cond_entity.addLongProperty("curr_sys_sunset_time");
+      city_weather_cond_entity.addLongProperty("curr_sys_sunrise_time").notNull();
+      city_weather_cond_entity.addLongProperty("curr_sys_sunset_time").notNull();
       
       return city_weather_cond_entity;
 	}
@@ -192,7 +192,7 @@ public class MyWeatherDaoGenerator
       weather_icon_entity.addStringProperty("image_path").notNull();
       
       //this is kept here in case we want to store the raw image as a blob
-      weather_icon_entity.addByteArrayProperty("image_raw");
+      weather_icon_entity.addByteArrayProperty("image_raw").notNull();
       
       return weather_icon_entity;
 	}
@@ -208,22 +208,22 @@ public class MyWeatherDaoGenerator
       //add non pk fields
       weather_station_entity.addLongProperty("city_id").notNull();
       
-      weather_station_entity.addStringProperty("station_name");
-      weather_station_entity.addDoubleProperty("station_temp");
-      weather_station_entity.addLongProperty("station_pressure");
-      weather_station_entity.addLongProperty("station_humidity");
-      weather_station_entity.addDoubleProperty("station_wind_speed");
-      weather_station_entity.addLongProperty("station_wind_deg");
-      weather_station_entity.addDoubleProperty("station_wind_gust");
-      weather_station_entity.addLongProperty("station_visibility_dist");
-      weather_station_entity.addDoubleProperty("station_calc_dewpt");
-      weather_station_entity.addDoubleProperty("station_calc_humidex");
-      weather_station_entity.addLongProperty("station_clouds_dist");
-      weather_station_entity.addStringProperty("station_clouds_cond");
-      weather_station_entity.addDoubleProperty("station_rain_1h");
-      weather_station_entity.addDoubleProperty("station_rain_24h");
-      weather_station_entity.addDoubleProperty("station_rain_today");
-      weather_station_entity.addLongProperty("last_update_time");
+      weather_station_entity.addStringProperty("station_name").notNull();
+      weather_station_entity.addDoubleProperty("station_temp").notNull();
+      weather_station_entity.addLongProperty("station_pressure").notNull();
+      weather_station_entity.addLongProperty("station_humidity").notNull();
+      weather_station_entity.addDoubleProperty("station_wind_speed").notNull();
+      weather_station_entity.addLongProperty("station_wind_deg").notNull();
+      weather_station_entity.addDoubleProperty("station_wind_gust").notNull();
+      weather_station_entity.addLongProperty("station_visibility_dist").notNull();
+      weather_station_entity.addDoubleProperty("station_calc_dewpt").notNull();
+      weather_station_entity.addDoubleProperty("station_calc_humidex").notNull();
+      weather_station_entity.addLongProperty("station_clouds_dist").notNull();
+      weather_station_entity.addStringProperty("station_clouds_cond").notNull();
+      weather_station_entity.addDoubleProperty("station_rain_1h").notNull();
+      weather_station_entity.addDoubleProperty("station_rain_24h").notNull();
+      weather_station_entity.addDoubleProperty("station_rain_today").notNull();
+      weather_station_entity.addLongProperty("last_update_time").notNull();
       
       return weather_station_entity;
 	}
@@ -263,22 +263,22 @@ float getWindSpeed()
       //add non pk fields
       daily_weather_entity.addLongProperty("city_id").notNull();
       
-      daily_weather_entity.addDoubleProperty("daily_humidity");  
-      daily_weather_entity.addDoubleProperty("daily_cloud_pert");
-      daily_weather_entity.addDoubleProperty("daily_pressure");
-      daily_weather_entity.addDoubleProperty("daily_rain");
-      daily_weather_entity.addDoubleProperty("daily_snow");
-      daily_weather_entity.addDoubleProperty("daily_wind_deg");
-      daily_weather_entity.addDoubleProperty("daily_wind_speed");
+      daily_weather_entity.addDoubleProperty("daily_humidity").notNull();  
+      daily_weather_entity.addDoubleProperty("daily_cloud_pert").notNull();
+      daily_weather_entity.addDoubleProperty("daily_pressure").notNull();
+      daily_weather_entity.addDoubleProperty("daily_rain").notNull();
+      daily_weather_entity.addDoubleProperty("daily_snow").notNull();
+      daily_weather_entity.addDoubleProperty("daily_wind_deg").notNull();
+      daily_weather_entity.addDoubleProperty("daily_wind_speed").notNull();
       
-      daily_weather_entity.addDoubleProperty("daily_temp");
-      daily_weather_entity.addDoubleProperty("daily_evening_temp");
-      daily_weather_entity.addDoubleProperty("daily_max_temp");
-      daily_weather_entity.addDoubleProperty("daily_min_temp");
-      daily_weather_entity.addDoubleProperty("daily_morning_temp");
-      daily_weather_entity.addDoubleProperty("daily_night_temp");
+      daily_weather_entity.addDoubleProperty("daily_temp").notNull();
+      daily_weather_entity.addDoubleProperty("daily_evening_temp").notNull();
+      daily_weather_entity.addDoubleProperty("daily_max_temp").notNull();
+      daily_weather_entity.addDoubleProperty("daily_min_temp").notNull();
+      daily_weather_entity.addDoubleProperty("daily_morning_temp").notNull();
+      daily_weather_entity.addDoubleProperty("daily_night_temp").notNull();
       
-      daily_weather_entity.addLongProperty("daily_weather_date");
+      daily_weather_entity.addLongProperty("daily_weather_date").notNull();
       
       return daily_weather_entity;
 	}
