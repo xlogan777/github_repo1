@@ -26,21 +26,21 @@ public class WeatherStationInfoTableDao extends AbstractDao<WeatherStationInfoTa
         public final static Property Station_id = new Property(0, long.class, "station_id", true, "STATION_ID");
         public final static Property City_id = new Property(1, long.class, "city_id", false, "CITY_ID");
         public final static Property Station_name = new Property(2, String.class, "station_name", false, "STATION_NAME");
-        public final static Property Station_temp = new Property(3, Double.class, "station_temp", false, "STATION_TEMP");
-        public final static Property Station_pressure = new Property(4, Long.class, "station_pressure", false, "STATION_PRESSURE");
-        public final static Property Station_humidity = new Property(5, Long.class, "station_humidity", false, "STATION_HUMIDITY");
-        public final static Property Station_wind_speed = new Property(6, Double.class, "station_wind_speed", false, "STATION_WIND_SPEED");
-        public final static Property Station_wind_deg = new Property(7, Long.class, "station_wind_deg", false, "STATION_WIND_DEG");
-        public final static Property Station_wind_gust = new Property(8, Double.class, "station_wind_gust", false, "STATION_WIND_GUST");
-        public final static Property Station_visibility_dist = new Property(9, Long.class, "station_visibility_dist", false, "STATION_VISIBILITY_DIST");
-        public final static Property Station_calc_dewpt = new Property(10, Double.class, "station_calc_dewpt", false, "STATION_CALC_DEWPT");
-        public final static Property Station_calc_humidex = new Property(11, Double.class, "station_calc_humidex", false, "STATION_CALC_HUMIDEX");
-        public final static Property Station_clouds_dist = new Property(12, Long.class, "station_clouds_dist", false, "STATION_CLOUDS_DIST");
+        public final static Property Station_temp = new Property(3, double.class, "station_temp", false, "STATION_TEMP");
+        public final static Property Station_pressure = new Property(4, long.class, "station_pressure", false, "STATION_PRESSURE");
+        public final static Property Station_humidity = new Property(5, long.class, "station_humidity", false, "STATION_HUMIDITY");
+        public final static Property Station_wind_speed = new Property(6, double.class, "station_wind_speed", false, "STATION_WIND_SPEED");
+        public final static Property Station_wind_deg = new Property(7, long.class, "station_wind_deg", false, "STATION_WIND_DEG");
+        public final static Property Station_wind_gust = new Property(8, double.class, "station_wind_gust", false, "STATION_WIND_GUST");
+        public final static Property Station_visibility_dist = new Property(9, long.class, "station_visibility_dist", false, "STATION_VISIBILITY_DIST");
+        public final static Property Station_calc_dewpt = new Property(10, double.class, "station_calc_dewpt", false, "STATION_CALC_DEWPT");
+        public final static Property Station_calc_humidex = new Property(11, double.class, "station_calc_humidex", false, "STATION_CALC_HUMIDEX");
+        public final static Property Station_clouds_dist = new Property(12, long.class, "station_clouds_dist", false, "STATION_CLOUDS_DIST");
         public final static Property Station_clouds_cond = new Property(13, String.class, "station_clouds_cond", false, "STATION_CLOUDS_COND");
-        public final static Property Station_rain_1h = new Property(14, Double.class, "station_rain_1h", false, "STATION_RAIN_1H");
-        public final static Property Station_rain_24h = new Property(15, Double.class, "station_rain_24h", false, "STATION_RAIN_24H");
-        public final static Property Station_rain_today = new Property(16, Double.class, "station_rain_today", false, "STATION_RAIN_TODAY");
-        public final static Property Last_update_time = new Property(17, Long.class, "last_update_time", false, "LAST_UPDATE_TIME");
+        public final static Property Station_rain_1h = new Property(14, double.class, "station_rain_1h", false, "STATION_RAIN_1H");
+        public final static Property Station_rain_24h = new Property(15, double.class, "station_rain_24h", false, "STATION_RAIN_24H");
+        public final static Property Station_rain_today = new Property(16, double.class, "station_rain_today", false, "STATION_RAIN_TODAY");
+        public final static Property Last_update_time = new Property(17, long.class, "last_update_time", false, "LAST_UPDATE_TIME");
     };
 
 
@@ -58,22 +58,22 @@ public class WeatherStationInfoTableDao extends AbstractDao<WeatherStationInfoTa
         db.execSQL("CREATE TABLE " + constraint + "\"WEATHER_STATION_INFO_TABLE\" (" + //
                 "\"STATION_ID\" INTEGER PRIMARY KEY NOT NULL ," + // 0: station_id
                 "\"CITY_ID\" INTEGER NOT NULL ," + // 1: city_id
-                "\"STATION_NAME\" TEXT," + // 2: station_name
-                "\"STATION_TEMP\" REAL," + // 3: station_temp
-                "\"STATION_PRESSURE\" INTEGER," + // 4: station_pressure
-                "\"STATION_HUMIDITY\" INTEGER," + // 5: station_humidity
-                "\"STATION_WIND_SPEED\" REAL," + // 6: station_wind_speed
-                "\"STATION_WIND_DEG\" INTEGER," + // 7: station_wind_deg
-                "\"STATION_WIND_GUST\" REAL," + // 8: station_wind_gust
-                "\"STATION_VISIBILITY_DIST\" INTEGER," + // 9: station_visibility_dist
-                "\"STATION_CALC_DEWPT\" REAL," + // 10: station_calc_dewpt
-                "\"STATION_CALC_HUMIDEX\" REAL," + // 11: station_calc_humidex
-                "\"STATION_CLOUDS_DIST\" INTEGER," + // 12: station_clouds_dist
-                "\"STATION_CLOUDS_COND\" TEXT," + // 13: station_clouds_cond
-                "\"STATION_RAIN_1H\" REAL," + // 14: station_rain_1h
-                "\"STATION_RAIN_24H\" REAL," + // 15: station_rain_24h
-                "\"STATION_RAIN_TODAY\" REAL," + // 16: station_rain_today
-                "\"LAST_UPDATE_TIME\" INTEGER);"); // 17: last_update_time
+                "\"STATION_NAME\" TEXT NOT NULL ," + // 2: station_name
+                "\"STATION_TEMP\" REAL NOT NULL ," + // 3: station_temp
+                "\"STATION_PRESSURE\" INTEGER NOT NULL ," + // 4: station_pressure
+                "\"STATION_HUMIDITY\" INTEGER NOT NULL ," + // 5: station_humidity
+                "\"STATION_WIND_SPEED\" REAL NOT NULL ," + // 6: station_wind_speed
+                "\"STATION_WIND_DEG\" INTEGER NOT NULL ," + // 7: station_wind_deg
+                "\"STATION_WIND_GUST\" REAL NOT NULL ," + // 8: station_wind_gust
+                "\"STATION_VISIBILITY_DIST\" INTEGER NOT NULL ," + // 9: station_visibility_dist
+                "\"STATION_CALC_DEWPT\" REAL NOT NULL ," + // 10: station_calc_dewpt
+                "\"STATION_CALC_HUMIDEX\" REAL NOT NULL ," + // 11: station_calc_humidex
+                "\"STATION_CLOUDS_DIST\" INTEGER NOT NULL ," + // 12: station_clouds_dist
+                "\"STATION_CLOUDS_COND\" TEXT NOT NULL ," + // 13: station_clouds_cond
+                "\"STATION_RAIN_1H\" REAL NOT NULL ," + // 14: station_rain_1h
+                "\"STATION_RAIN_24H\" REAL NOT NULL ," + // 15: station_rain_24h
+                "\"STATION_RAIN_TODAY\" REAL NOT NULL ," + // 16: station_rain_today
+                "\"LAST_UPDATE_TIME\" INTEGER NOT NULL );"); // 17: last_update_time
     }
 
     /** Drops the underlying database table. */
@@ -88,86 +88,22 @@ public class WeatherStationInfoTableDao extends AbstractDao<WeatherStationInfoTa
         stmt.clearBindings();
         stmt.bindLong(1, entity.getStation_id());
         stmt.bindLong(2, entity.getCity_id());
- 
-        String station_name = entity.getStation_name();
-        if (station_name != null) {
-            stmt.bindString(3, station_name);
-        }
- 
-        Double station_temp = entity.getStation_temp();
-        if (station_temp != null) {
-            stmt.bindDouble(4, station_temp);
-        }
- 
-        Long station_pressure = entity.getStation_pressure();
-        if (station_pressure != null) {
-            stmt.bindLong(5, station_pressure);
-        }
- 
-        Long station_humidity = entity.getStation_humidity();
-        if (station_humidity != null) {
-            stmt.bindLong(6, station_humidity);
-        }
- 
-        Double station_wind_speed = entity.getStation_wind_speed();
-        if (station_wind_speed != null) {
-            stmt.bindDouble(7, station_wind_speed);
-        }
- 
-        Long station_wind_deg = entity.getStation_wind_deg();
-        if (station_wind_deg != null) {
-            stmt.bindLong(8, station_wind_deg);
-        }
- 
-        Double station_wind_gust = entity.getStation_wind_gust();
-        if (station_wind_gust != null) {
-            stmt.bindDouble(9, station_wind_gust);
-        }
- 
-        Long station_visibility_dist = entity.getStation_visibility_dist();
-        if (station_visibility_dist != null) {
-            stmt.bindLong(10, station_visibility_dist);
-        }
- 
-        Double station_calc_dewpt = entity.getStation_calc_dewpt();
-        if (station_calc_dewpt != null) {
-            stmt.bindDouble(11, station_calc_dewpt);
-        }
- 
-        Double station_calc_humidex = entity.getStation_calc_humidex();
-        if (station_calc_humidex != null) {
-            stmt.bindDouble(12, station_calc_humidex);
-        }
- 
-        Long station_clouds_dist = entity.getStation_clouds_dist();
-        if (station_clouds_dist != null) {
-            stmt.bindLong(13, station_clouds_dist);
-        }
- 
-        String station_clouds_cond = entity.getStation_clouds_cond();
-        if (station_clouds_cond != null) {
-            stmt.bindString(14, station_clouds_cond);
-        }
- 
-        Double station_rain_1h = entity.getStation_rain_1h();
-        if (station_rain_1h != null) {
-            stmt.bindDouble(15, station_rain_1h);
-        }
- 
-        Double station_rain_24h = entity.getStation_rain_24h();
-        if (station_rain_24h != null) {
-            stmt.bindDouble(16, station_rain_24h);
-        }
- 
-        Double station_rain_today = entity.getStation_rain_today();
-        if (station_rain_today != null) {
-            stmt.bindDouble(17, station_rain_today);
-        }
- 
-        Long last_update_time = entity.getLast_update_time();
-        if (last_update_time != null) {
-            stmt.bindLong(18, last_update_time);
-        }
+        stmt.bindString(3, entity.getStation_name());
+        stmt.bindDouble(4, entity.getStation_temp());
+        stmt.bindLong(5, entity.getStation_pressure());
+        stmt.bindLong(6, entity.getStation_humidity());
+        stmt.bindDouble(7, entity.getStation_wind_speed());
+        stmt.bindLong(8, entity.getStation_wind_deg());
+        stmt.bindDouble(9, entity.getStation_wind_gust());
+        stmt.bindLong(10, entity.getStation_visibility_dist());
+        stmt.bindDouble(11, entity.getStation_calc_dewpt());
+        stmt.bindDouble(12, entity.getStation_calc_humidex());
+        stmt.bindLong(13, entity.getStation_clouds_dist());
+        stmt.bindString(14, entity.getStation_clouds_cond());
+        stmt.bindDouble(15, entity.getStation_rain_1h());
+        stmt.bindDouble(16, entity.getStation_rain_24h());
+        stmt.bindDouble(17, entity.getStation_rain_today());
+        stmt.bindLong(18, entity.getLast_update_time());
     }
 
     /** @inheritdoc */
@@ -182,22 +118,22 @@ public class WeatherStationInfoTableDao extends AbstractDao<WeatherStationInfoTa
         WeatherStationInfoTable entity = new WeatherStationInfoTable( //
             cursor.getLong(offset + 0), // station_id
             cursor.getLong(offset + 1), // city_id
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // station_name
-            cursor.isNull(offset + 3) ? null : cursor.getDouble(offset + 3), // station_temp
-            cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4), // station_pressure
-            cursor.isNull(offset + 5) ? null : cursor.getLong(offset + 5), // station_humidity
-            cursor.isNull(offset + 6) ? null : cursor.getDouble(offset + 6), // station_wind_speed
-            cursor.isNull(offset + 7) ? null : cursor.getLong(offset + 7), // station_wind_deg
-            cursor.isNull(offset + 8) ? null : cursor.getDouble(offset + 8), // station_wind_gust
-            cursor.isNull(offset + 9) ? null : cursor.getLong(offset + 9), // station_visibility_dist
-            cursor.isNull(offset + 10) ? null : cursor.getDouble(offset + 10), // station_calc_dewpt
-            cursor.isNull(offset + 11) ? null : cursor.getDouble(offset + 11), // station_calc_humidex
-            cursor.isNull(offset + 12) ? null : cursor.getLong(offset + 12), // station_clouds_dist
-            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // station_clouds_cond
-            cursor.isNull(offset + 14) ? null : cursor.getDouble(offset + 14), // station_rain_1h
-            cursor.isNull(offset + 15) ? null : cursor.getDouble(offset + 15), // station_rain_24h
-            cursor.isNull(offset + 16) ? null : cursor.getDouble(offset + 16), // station_rain_today
-            cursor.isNull(offset + 17) ? null : cursor.getLong(offset + 17) // last_update_time
+            cursor.getString(offset + 2), // station_name
+            cursor.getDouble(offset + 3), // station_temp
+            cursor.getLong(offset + 4), // station_pressure
+            cursor.getLong(offset + 5), // station_humidity
+            cursor.getDouble(offset + 6), // station_wind_speed
+            cursor.getLong(offset + 7), // station_wind_deg
+            cursor.getDouble(offset + 8), // station_wind_gust
+            cursor.getLong(offset + 9), // station_visibility_dist
+            cursor.getDouble(offset + 10), // station_calc_dewpt
+            cursor.getDouble(offset + 11), // station_calc_humidex
+            cursor.getLong(offset + 12), // station_clouds_dist
+            cursor.getString(offset + 13), // station_clouds_cond
+            cursor.getDouble(offset + 14), // station_rain_1h
+            cursor.getDouble(offset + 15), // station_rain_24h
+            cursor.getDouble(offset + 16), // station_rain_today
+            cursor.getLong(offset + 17) // last_update_time
         );
         return entity;
     }
@@ -207,22 +143,22 @@ public class WeatherStationInfoTableDao extends AbstractDao<WeatherStationInfoTa
     public void readEntity(Cursor cursor, WeatherStationInfoTable entity, int offset) {
         entity.setStation_id(cursor.getLong(offset + 0));
         entity.setCity_id(cursor.getLong(offset + 1));
-        entity.setStation_name(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setStation_temp(cursor.isNull(offset + 3) ? null : cursor.getDouble(offset + 3));
-        entity.setStation_pressure(cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4));
-        entity.setStation_humidity(cursor.isNull(offset + 5) ? null : cursor.getLong(offset + 5));
-        entity.setStation_wind_speed(cursor.isNull(offset + 6) ? null : cursor.getDouble(offset + 6));
-        entity.setStation_wind_deg(cursor.isNull(offset + 7) ? null : cursor.getLong(offset + 7));
-        entity.setStation_wind_gust(cursor.isNull(offset + 8) ? null : cursor.getDouble(offset + 8));
-        entity.setStation_visibility_dist(cursor.isNull(offset + 9) ? null : cursor.getLong(offset + 9));
-        entity.setStation_calc_dewpt(cursor.isNull(offset + 10) ? null : cursor.getDouble(offset + 10));
-        entity.setStation_calc_humidex(cursor.isNull(offset + 11) ? null : cursor.getDouble(offset + 11));
-        entity.setStation_clouds_dist(cursor.isNull(offset + 12) ? null : cursor.getLong(offset + 12));
-        entity.setStation_clouds_cond(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
-        entity.setStation_rain_1h(cursor.isNull(offset + 14) ? null : cursor.getDouble(offset + 14));
-        entity.setStation_rain_24h(cursor.isNull(offset + 15) ? null : cursor.getDouble(offset + 15));
-        entity.setStation_rain_today(cursor.isNull(offset + 16) ? null : cursor.getDouble(offset + 16));
-        entity.setLast_update_time(cursor.isNull(offset + 17) ? null : cursor.getLong(offset + 17));
+        entity.setStation_name(cursor.getString(offset + 2));
+        entity.setStation_temp(cursor.getDouble(offset + 3));
+        entity.setStation_pressure(cursor.getLong(offset + 4));
+        entity.setStation_humidity(cursor.getLong(offset + 5));
+        entity.setStation_wind_speed(cursor.getDouble(offset + 6));
+        entity.setStation_wind_deg(cursor.getLong(offset + 7));
+        entity.setStation_wind_gust(cursor.getDouble(offset + 8));
+        entity.setStation_visibility_dist(cursor.getLong(offset + 9));
+        entity.setStation_calc_dewpt(cursor.getDouble(offset + 10));
+        entity.setStation_calc_humidex(cursor.getDouble(offset + 11));
+        entity.setStation_clouds_dist(cursor.getLong(offset + 12));
+        entity.setStation_clouds_cond(cursor.getString(offset + 13));
+        entity.setStation_rain_1h(cursor.getDouble(offset + 14));
+        entity.setStation_rain_24h(cursor.getDouble(offset + 15));
+        entity.setStation_rain_today(cursor.getDouble(offset + 16));
+        entity.setLast_update_time(cursor.getLong(offset + 17));
      }
     
     /** @inheritdoc */

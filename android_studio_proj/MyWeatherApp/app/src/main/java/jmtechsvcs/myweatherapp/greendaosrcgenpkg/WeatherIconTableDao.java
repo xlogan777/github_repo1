@@ -45,7 +45,7 @@ public class WeatherIconTableDao extends AbstractDao<WeatherIconTable, String> {
                 "\"ICON_ID\" TEXT PRIMARY KEY NOT NULL ," + // 0: icon_id
                 "\"ICON_URL\" TEXT NOT NULL ," + // 1: icon_url
                 "\"IMAGE_PATH\" TEXT NOT NULL ," + // 2: image_path
-                "\"IMAGE_RAW\" BLOB);"); // 3: image_raw
+                "\"IMAGE_RAW\" BLOB NOT NULL );"); // 3: image_raw
     }
 
     /** Drops the underlying database table. */
@@ -61,11 +61,7 @@ public class WeatherIconTableDao extends AbstractDao<WeatherIconTable, String> {
         stmt.bindString(1, entity.getIcon_id());
         stmt.bindString(2, entity.getIcon_url());
         stmt.bindString(3, entity.getImage_path());
- 
-        byte[] image_raw = entity.getImage_raw();
-        if (image_raw != null) {
-            stmt.bindBlob(4, image_raw);
-        }
+        stmt.bindBlob(4, entity.getImage_raw());
     }
 
     /** @inheritdoc */
@@ -81,7 +77,7 @@ public class WeatherIconTableDao extends AbstractDao<WeatherIconTable, String> {
             cursor.getString(offset + 0), // icon_id
             cursor.getString(offset + 1), // icon_url
             cursor.getString(offset + 2), // image_path
-            cursor.isNull(offset + 3) ? null : cursor.getBlob(offset + 3) // image_raw
+            cursor.getBlob(offset + 3) // image_raw
         );
         return entity;
     }
@@ -92,7 +88,7 @@ public class WeatherIconTableDao extends AbstractDao<WeatherIconTable, String> {
         entity.setIcon_id(cursor.getString(offset + 0));
         entity.setIcon_url(cursor.getString(offset + 1));
         entity.setImage_path(cursor.getString(offset + 2));
-        entity.setImage_raw(cursor.isNull(offset + 3) ? null : cursor.getBlob(offset + 3));
+        entity.setImage_raw(cursor.getBlob(offset + 3));
      }
     
     /** @inheritdoc */

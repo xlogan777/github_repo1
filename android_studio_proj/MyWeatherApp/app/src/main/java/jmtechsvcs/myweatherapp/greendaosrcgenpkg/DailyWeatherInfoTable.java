@@ -11,20 +11,20 @@ public class DailyWeatherInfoTable {
 
     private Long id;
     private long city_id;
-    private Double daily_humidity;
-    private Double daily_cloud_pert;
-    private Double daily_pressure;
-    private Double daily_rain;
-    private Double daily_snow;
-    private Double daily_wind_deg;
-    private Double daily_wind_speed;
-    private Double daily_temp;
-    private Double daily_evening_temp;
-    private Double daily_max_temp;
-    private Double daily_min_temp;
-    private Double daily_morning_temp;
-    private Double daily_night_temp;
-    private Long daily_weather_date;
+    private double daily_humidity;
+    private double daily_cloud_pert;
+    private double daily_pressure;
+    private double daily_rain;
+    private double daily_snow;
+    private double daily_wind_deg;
+    private double daily_wind_speed;
+    private double daily_temp;
+    private double daily_evening_temp;
+    private double daily_max_temp;
+    private double daily_min_temp;
+    private double daily_morning_temp;
+    private double daily_night_temp;
+    private long daily_weather_date;
 
     // KEEP FIELDS - put your custom fields here
     // KEEP FIELDS END
@@ -36,7 +36,7 @@ public class DailyWeatherInfoTable {
         this.id = id;
     }
 
-    public DailyWeatherInfoTable(Long id, long city_id, Double daily_humidity, Double daily_cloud_pert, Double daily_pressure, Double daily_rain, Double daily_snow, Double daily_wind_deg, Double daily_wind_speed, Double daily_temp, Double daily_evening_temp, Double daily_max_temp, Double daily_min_temp, Double daily_morning_temp, Double daily_night_temp, Long daily_weather_date) {
+    public DailyWeatherInfoTable(Long id, long city_id, double daily_humidity, double daily_cloud_pert, double daily_pressure, double daily_rain, double daily_snow, double daily_wind_deg, double daily_wind_speed, double daily_temp, double daily_evening_temp, double daily_max_temp, double daily_min_temp, double daily_morning_temp, double daily_night_temp, long daily_weather_date) {
         this.id = id;
         this.city_id = city_id;
         this.daily_humidity = daily_humidity;
@@ -71,115 +71,115 @@ public class DailyWeatherInfoTable {
         this.city_id = city_id;
     }
 
-    public Double getDaily_humidity() {
+    public double getDaily_humidity() {
         return daily_humidity;
     }
 
-    public void setDaily_humidity(Double daily_humidity) {
+    public void setDaily_humidity(double daily_humidity) {
         this.daily_humidity = daily_humidity;
     }
 
-    public Double getDaily_cloud_pert() {
+    public double getDaily_cloud_pert() {
         return daily_cloud_pert;
     }
 
-    public void setDaily_cloud_pert(Double daily_cloud_pert) {
+    public void setDaily_cloud_pert(double daily_cloud_pert) {
         this.daily_cloud_pert = daily_cloud_pert;
     }
 
-    public Double getDaily_pressure() {
+    public double getDaily_pressure() {
         return daily_pressure;
     }
 
-    public void setDaily_pressure(Double daily_pressure) {
+    public void setDaily_pressure(double daily_pressure) {
         this.daily_pressure = daily_pressure;
     }
 
-    public Double getDaily_rain() {
+    public double getDaily_rain() {
         return daily_rain;
     }
 
-    public void setDaily_rain(Double daily_rain) {
+    public void setDaily_rain(double daily_rain) {
         this.daily_rain = daily_rain;
     }
 
-    public Double getDaily_snow() {
+    public double getDaily_snow() {
         return daily_snow;
     }
 
-    public void setDaily_snow(Double daily_snow) {
+    public void setDaily_snow(double daily_snow) {
         this.daily_snow = daily_snow;
     }
 
-    public Double getDaily_wind_deg() {
+    public double getDaily_wind_deg() {
         return daily_wind_deg;
     }
 
-    public void setDaily_wind_deg(Double daily_wind_deg) {
+    public void setDaily_wind_deg(double daily_wind_deg) {
         this.daily_wind_deg = daily_wind_deg;
     }
 
-    public Double getDaily_wind_speed() {
+    public double getDaily_wind_speed() {
         return daily_wind_speed;
     }
 
-    public void setDaily_wind_speed(Double daily_wind_speed) {
+    public void setDaily_wind_speed(double daily_wind_speed) {
         this.daily_wind_speed = daily_wind_speed;
     }
 
-    public Double getDaily_temp() {
+    public double getDaily_temp() {
         return daily_temp;
     }
 
-    public void setDaily_temp(Double daily_temp) {
+    public void setDaily_temp(double daily_temp) {
         this.daily_temp = daily_temp;
     }
 
-    public Double getDaily_evening_temp() {
+    public double getDaily_evening_temp() {
         return daily_evening_temp;
     }
 
-    public void setDaily_evening_temp(Double daily_evening_temp) {
+    public void setDaily_evening_temp(double daily_evening_temp) {
         this.daily_evening_temp = daily_evening_temp;
     }
 
-    public Double getDaily_max_temp() {
+    public double getDaily_max_temp() {
         return daily_max_temp;
     }
 
-    public void setDaily_max_temp(Double daily_max_temp) {
+    public void setDaily_max_temp(double daily_max_temp) {
         this.daily_max_temp = daily_max_temp;
     }
 
-    public Double getDaily_min_temp() {
+    public double getDaily_min_temp() {
         return daily_min_temp;
     }
 
-    public void setDaily_min_temp(Double daily_min_temp) {
+    public void setDaily_min_temp(double daily_min_temp) {
         this.daily_min_temp = daily_min_temp;
     }
 
-    public Double getDaily_morning_temp() {
+    public double getDaily_morning_temp() {
         return daily_morning_temp;
     }
 
-    public void setDaily_morning_temp(Double daily_morning_temp) {
+    public void setDaily_morning_temp(double daily_morning_temp) {
         this.daily_morning_temp = daily_morning_temp;
     }
 
-    public Double getDaily_night_temp() {
+    public double getDaily_night_temp() {
         return daily_night_temp;
     }
 
-    public void setDaily_night_temp(Double daily_night_temp) {
+    public void setDaily_night_temp(double daily_night_temp) {
         this.daily_night_temp = daily_night_temp;
     }
 
-    public Long getDaily_weather_date() {
+    public long getDaily_weather_date() {
         return daily_weather_date;
     }
 
-    public void setDaily_weather_date(Long daily_weather_date) {
+    public void setDaily_weather_date(long daily_weather_date) {
         this.daily_weather_date = daily_weather_date;
     }
 

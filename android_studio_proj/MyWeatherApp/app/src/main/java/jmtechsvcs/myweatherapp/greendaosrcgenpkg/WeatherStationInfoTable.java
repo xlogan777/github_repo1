@@ -11,22 +11,24 @@ public class WeatherStationInfoTable {
 
     private long station_id;
     private long city_id;
+    /** Not-null value. */
     private String station_name;
-    private Double station_temp;
-    private Long station_pressure;
-    private Long station_humidity;
-    private Double station_wind_speed;
-    private Long station_wind_deg;
-    private Double station_wind_gust;
-    private Long station_visibility_dist;
-    private Double station_calc_dewpt;
-    private Double station_calc_humidex;
-    private Long station_clouds_dist;
+    private double station_temp;
+    private long station_pressure;
+    private long station_humidity;
+    private double station_wind_speed;
+    private long station_wind_deg;
+    private double station_wind_gust;
+    private long station_visibility_dist;
+    private double station_calc_dewpt;
+    private double station_calc_humidex;
+    private long station_clouds_dist;
+    /** Not-null value. */
     private String station_clouds_cond;
-    private Double station_rain_1h;
-    private Double station_rain_24h;
-    private Double station_rain_today;
-    private Long last_update_time;
+    private double station_rain_1h;
+    private double station_rain_24h;
+    private double station_rain_today;
+    private long last_update_time;
 
     // KEEP FIELDS - put your custom fields here
     // KEEP FIELDS END
@@ -38,7 +40,7 @@ public class WeatherStationInfoTable {
         this.station_id = station_id;
     }
 
-    public WeatherStationInfoTable(long station_id, long city_id, String station_name, Double station_temp, Long station_pressure, Long station_humidity, Double station_wind_speed, Long station_wind_deg, Double station_wind_gust, Long station_visibility_dist, Double station_calc_dewpt, Double station_calc_humidex, Long station_clouds_dist, String station_clouds_cond, Double station_rain_1h, Double station_rain_24h, Double station_rain_today, Long last_update_time) {
+    public WeatherStationInfoTable(long station_id, long city_id, String station_name, double station_temp, long station_pressure, long station_humidity, double station_wind_speed, long station_wind_deg, double station_wind_gust, long station_visibility_dist, double station_calc_dewpt, double station_calc_humidex, long station_clouds_dist, String station_clouds_cond, double station_rain_1h, double station_rain_24h, double station_rain_today, long last_update_time) {
         this.station_id = station_id;
         this.city_id = city_id;
         this.station_name = station_name;
@@ -75,131 +77,135 @@ public class WeatherStationInfoTable {
         this.city_id = city_id;
     }
 
+    /** Not-null value. */
     public String getStation_name() {
         return station_name;
     }
 
+    /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setStation_name(String station_name) {
         this.station_name = station_name;
     }
 
-    public Double getStation_temp() {
+    public double getStation_temp() {
         return station_temp;
     }
 
-    public void setStation_temp(Double station_temp) {
+    public void setStation_temp(double station_temp) {
         this.station_temp = station_temp;
     }
 
-    public Long getStation_pressure() {
+    public long getStation_pressure() {
         return station_pressure;
     }
 
-    public void setStation_pressure(Long station_pressure) {
+    public void setStation_pressure(long station_pressure) {
         this.station_pressure = station_pressure;
     }
 
-    public Long getStation_humidity() {
+    public long getStation_humidity() {
         return station_humidity;
     }
 
-    public void setStation_humidity(Long station_humidity) {
+    public void setStation_humidity(long station_humidity) {
         this.station_humidity = station_humidity;
     }
 
-    public Double getStation_wind_speed() {
+    public double getStation_wind_speed() {
         return station_wind_speed;
     }
 
-    public void setStation_wind_speed(Double station_wind_speed) {
+    public void setStation_wind_speed(double station_wind_speed) {
         this.station_wind_speed = station_wind_speed;
     }
 
-    public Long getStation_wind_deg() {
+    public long getStation_wind_deg() {
         return station_wind_deg;
     }
 
-    public void setStation_wind_deg(Long station_wind_deg) {
+    public void setStation_wind_deg(long station_wind_deg) {
         this.station_wind_deg = station_wind_deg;
     }
 
-    public Double getStation_wind_gust() {
+    public double getStation_wind_gust() {
         return station_wind_gust;
     }
 
-    public void setStation_wind_gust(Double station_wind_gust) {
+    public void setStation_wind_gust(double station_wind_gust) {
         this.station_wind_gust = station_wind_gust;
     }
 
-    public Long getStation_visibility_dist() {
+    public long getStation_visibility_dist() {
         return station_visibility_dist;
     }
 
-    public void setStation_visibility_dist(Long station_visibility_dist) {
+    public void setStation_visibility_dist(long station_visibility_dist) {
         this.station_visibility_dist = station_visibility_dist;
     }
 
-    public Double getStation_calc_dewpt() {
+    public double getStation_calc_dewpt() {
         return station_calc_dewpt;
     }
 
-    public void setStation_calc_dewpt(Double station_calc_dewpt) {
+    public void setStation_calc_dewpt(double station_calc_dewpt) {
         this.station_calc_dewpt = station_calc_dewpt;
     }
 
-    public Double getStation_calc_humidex() {
+    public double getStation_calc_humidex() {
         return station_calc_humidex;
     }
 
-    public void setStation_calc_humidex(Double station_calc_humidex) {
+    public void setStation_calc_humidex(double station_calc_humidex) {
         this.station_calc_humidex = station_calc_humidex;
     }
 
-    public Long getStation_clouds_dist() {
+    public long getStation_clouds_dist() {
         return station_clouds_dist;
     }
 
-    public void setStation_clouds_dist(Long station_clouds_dist) {
+    public void setStation_clouds_dist(long station_clouds_dist) {
         this.station_clouds_dist = station_clouds_dist;
     }
 
+    /** Not-null value. */
     public String getStation_clouds_cond() {
         return station_clouds_cond;
     }
 
+    /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setStation_clouds_cond(String station_clouds_cond) {
         this.station_clouds_cond = station_clouds_cond;
     }
 
-    public Double getStation_rain_1h() {
+    public double getStation_rain_1h() {
         return station_rain_1h;
     }
 
-    public void setStation_rain_1h(Double station_rain_1h) {
+    public void setStation_rain_1h(double station_rain_1h) {
         this.station_rain_1h = station_rain_1h;
     }
 
-    public Double getStation_rain_24h() {
+    public double getStation_rain_24h() {
         return station_rain_24h;
     }
 
-    public void setStation_rain_24h(Double station_rain_24h) {
+    public void setStation_rain_24h(double station_rain_24h) {
         this.station_rain_24h = station_rain_24h;
     }
 
-    public Double getStation_rain_today() {
+    public double getStation_rain_today() {
         return station_rain_today;
     }
 
-    public void setStation_rain_today(Double station_rain_today) {
+    public void setStation_rain_today(double station_rain_today) {
         this.station_rain_today = station_rain_today;
     }
 
-    public Long getLast_update_time() {
+    public long getLast_update_time() {
         return last_update_time;
     }
 
-    public void setLast_update_time(Long last_update_time) {
+    public void setLast_update_time(long last_update_time) {
         this.last_update_time = last_update_time;
     }
 

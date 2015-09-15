@@ -15,6 +15,7 @@ public class WeatherIconTable {
     private String icon_url;
     /** Not-null value. */
     private String image_path;
+    /** Not-null value. */
     private byte[] image_raw;
 
     // KEEP FIELDS - put your custom fields here
@@ -64,10 +65,12 @@ public class WeatherIconTable {
         this.image_path = image_path;
     }
 
+    /** Not-null value. */
     public byte[] getImage_raw() {
         return image_raw;
     }
 
+    /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setImage_raw(byte[] image_raw) {
         this.image_raw = image_raw;
     }

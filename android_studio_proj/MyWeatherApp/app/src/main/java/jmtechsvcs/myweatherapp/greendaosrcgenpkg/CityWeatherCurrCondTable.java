@@ -10,30 +10,36 @@ package jmtechsvcs.myweatherapp.greendaosrcgenpkg;
 public class CityWeatherCurrCondTable {
 
     private long city_id;
-    private Long curr_weather_id;
+    private long curr_weather_id;
+    /** Not-null value. */
     private String curr_weather_main;
+    /** Not-null value. */
     private String curr_weather_desc;
+    /** Not-null value. */
     private String curr_weather_icon;
-    private Double curr_main_temp;
-    private Long curr_main_pressure;
-    private Long curr_main_humidity;
-    private Double curr_main_temp_min;
-    private Double curr_main_temp_max;
-    private Long curr_main_sea_level;
-    private Long curr_main_grnd_level;
-    private Double curr_wind_speed;
-    private Long curr_wind_degs;
+    private double curr_main_temp;
+    private long curr_main_pressure;
+    private long curr_main_humidity;
+    private double curr_main_temp_min;
+    private double curr_main_temp_max;
+    private long curr_main_sea_level;
+    private long curr_main_grnd_level;
+    private double curr_wind_speed;
+    private long curr_wind_degs;
+    /** Not-null value. */
     private String curr_wind_speed_name;
+    /** Not-null value. */
     private String curr_wind_dirr_code;
-    private Long curr_clouds_all;
-    private Long curr_visibility;
+    private long curr_clouds_all;
+    private long curr_visibility;
+    /** Not-null value. */
     private String precipitation_mode;
-    private Double precipitation_value;
-    private Double curr_rain_last3hrs;
-    private Double curr_snow_last3hrs;
-    private Long curr_data_calc_time;
-    private Long curr_sys_sunrise_time;
-    private Long curr_sys_sunset_time;
+    private double precipitation_value;
+    private double curr_rain_last3hrs;
+    private double curr_snow_last3hrs;
+    private long curr_data_calc_time;
+    private long curr_sys_sunrise_time;
+    private long curr_sys_sunset_time;
 
     // KEEP FIELDS - put your custom fields here
     // KEEP FIELDS END
@@ -45,7 +51,7 @@ public class CityWeatherCurrCondTable {
         this.city_id = city_id;
     }
 
-    public CityWeatherCurrCondTable(long city_id, Long curr_weather_id, String curr_weather_main, String curr_weather_desc, String curr_weather_icon, Double curr_main_temp, Long curr_main_pressure, Long curr_main_humidity, Double curr_main_temp_min, Double curr_main_temp_max, Long curr_main_sea_level, Long curr_main_grnd_level, Double curr_wind_speed, Long curr_wind_degs, String curr_wind_speed_name, String curr_wind_dirr_code, Long curr_clouds_all, Long curr_visibility, String precipitation_mode, Double precipitation_value, Double curr_rain_last3hrs, Double curr_snow_last3hrs, Long curr_data_calc_time, Long curr_sys_sunrise_time, Long curr_sys_sunset_time) {
+    public CityWeatherCurrCondTable(long city_id, long curr_weather_id, String curr_weather_main, String curr_weather_desc, String curr_weather_icon, double curr_main_temp, long curr_main_pressure, long curr_main_humidity, double curr_main_temp_min, double curr_main_temp_max, long curr_main_sea_level, long curr_main_grnd_level, double curr_wind_speed, long curr_wind_degs, String curr_wind_speed_name, String curr_wind_dirr_code, long curr_clouds_all, long curr_visibility, String precipitation_mode, double precipitation_value, double curr_rain_last3hrs, double curr_snow_last3hrs, long curr_data_calc_time, long curr_sys_sunrise_time, long curr_sys_sunset_time) {
         this.city_id = city_id;
         this.curr_weather_id = curr_weather_id;
         this.curr_weather_main = curr_weather_main;
@@ -81,195 +87,207 @@ public class CityWeatherCurrCondTable {
         this.city_id = city_id;
     }
 
-    public Long getCurr_weather_id() {
+    public long getCurr_weather_id() {
         return curr_weather_id;
     }
 
-    public void setCurr_weather_id(Long curr_weather_id) {
+    public void setCurr_weather_id(long curr_weather_id) {
         this.curr_weather_id = curr_weather_id;
     }
 
+    /** Not-null value. */
     public String getCurr_weather_main() {
         return curr_weather_main;
     }
 
+    /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setCurr_weather_main(String curr_weather_main) {
         this.curr_weather_main = curr_weather_main;
     }
 
+    /** Not-null value. */
     public String getCurr_weather_desc() {
         return curr_weather_desc;
     }
 
+    /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setCurr_weather_desc(String curr_weather_desc) {
         this.curr_weather_desc = curr_weather_desc;
     }
 
+    /** Not-null value. */
     public String getCurr_weather_icon() {
         return curr_weather_icon;
     }
 
+    /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setCurr_weather_icon(String curr_weather_icon) {
         this.curr_weather_icon = curr_weather_icon;
     }
 
-    public Double getCurr_main_temp() {
+    public double getCurr_main_temp() {
         return curr_main_temp;
     }
 
-    public void setCurr_main_temp(Double curr_main_temp) {
+    public void setCurr_main_temp(double curr_main_temp) {
         this.curr_main_temp = curr_main_temp;
     }
 
-    public Long getCurr_main_pressure() {
+    public long getCurr_main_pressure() {
         return curr_main_pressure;
     }
 
-    public void setCurr_main_pressure(Long curr_main_pressure) {
+    public void setCurr_main_pressure(long curr_main_pressure) {
         this.curr_main_pressure = curr_main_pressure;
     }
 
-    public Long getCurr_main_humidity() {
+    public long getCurr_main_humidity() {
         return curr_main_humidity;
     }
 
-    public void setCurr_main_humidity(Long curr_main_humidity) {
+    public void setCurr_main_humidity(long curr_main_humidity) {
         this.curr_main_humidity = curr_main_humidity;
     }
 
-    public Double getCurr_main_temp_min() {
+    public double getCurr_main_temp_min() {
         return curr_main_temp_min;
     }
 
-    public void setCurr_main_temp_min(Double curr_main_temp_min) {
+    public void setCurr_main_temp_min(double curr_main_temp_min) {
         this.curr_main_temp_min = curr_main_temp_min;
     }
 
-    public Double getCurr_main_temp_max() {
+    public double getCurr_main_temp_max() {
         return curr_main_temp_max;
     }
 
-    public void setCurr_main_temp_max(Double curr_main_temp_max) {
+    public void setCurr_main_temp_max(double curr_main_temp_max) {
         this.curr_main_temp_max = curr_main_temp_max;
     }
 
-    public Long getCurr_main_sea_level() {
+    public long getCurr_main_sea_level() {
         return curr_main_sea_level;
     }
 
-    public void setCurr_main_sea_level(Long curr_main_sea_level) {
+    public void setCurr_main_sea_level(long curr_main_sea_level) {
         this.curr_main_sea_level = curr_main_sea_level;
     }
 
-    public Long getCurr_main_grnd_level() {
+    public long getCurr_main_grnd_level() {
         return curr_main_grnd_level;
     }
 
-    public void setCurr_main_grnd_level(Long curr_main_grnd_level) {
+    public void setCurr_main_grnd_level(long curr_main_grnd_level) {
         this.curr_main_grnd_level = curr_main_grnd_level;
     }
 
-    public Double getCurr_wind_speed() {
+    public double getCurr_wind_speed() {
         return curr_wind_speed;
     }
 
-    public void setCurr_wind_speed(Double curr_wind_speed) {
+    public void setCurr_wind_speed(double curr_wind_speed) {
         this.curr_wind_speed = curr_wind_speed;
     }
 
-    public Long getCurr_wind_degs() {
+    public long getCurr_wind_degs() {
         return curr_wind_degs;
     }
 
-    public void setCurr_wind_degs(Long curr_wind_degs) {
+    public void setCurr_wind_degs(long curr_wind_degs) {
         this.curr_wind_degs = curr_wind_degs;
     }
 
+    /** Not-null value. */
     public String getCurr_wind_speed_name() {
         return curr_wind_speed_name;
     }
 
+    /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setCurr_wind_speed_name(String curr_wind_speed_name) {
         this.curr_wind_speed_name = curr_wind_speed_name;
     }
 
+    /** Not-null value. */
     public String getCurr_wind_dirr_code() {
         return curr_wind_dirr_code;
     }
 
+    /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setCurr_wind_dirr_code(String curr_wind_dirr_code) {
         this.curr_wind_dirr_code = curr_wind_dirr_code;
     }
 
-    public Long getCurr_clouds_all() {
+    public long getCurr_clouds_all() {
         return curr_clouds_all;
     }
 
-    public void setCurr_clouds_all(Long curr_clouds_all) {
+    public void setCurr_clouds_all(long curr_clouds_all) {
         this.curr_clouds_all = curr_clouds_all;
     }
 
-    public Long getCurr_visibility() {
+    public long getCurr_visibility() {
         return curr_visibility;
     }
 
-    public void setCurr_visibility(Long curr_visibility) {
+    public void setCurr_visibility(long curr_visibility) {
         this.curr_visibility = curr_visibility;
     }
 
+    /** Not-null value. */
     public String getPrecipitation_mode() {
         return precipitation_mode;
     }
 
+    /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setPrecipitation_mode(String precipitation_mode) {
         this.precipitation_mode = precipitation_mode;
     }
 
-    public Double getPrecipitation_value() {
+    public double getPrecipitation_value() {
         return precipitation_value;
     }
 
-    public void setPrecipitation_value(Double precipitation_value) {
+    public void setPrecipitation_value(double precipitation_value) {
         this.precipitation_value = precipitation_value;
     }
 
-    public Double getCurr_rain_last3hrs() {
+    public double getCurr_rain_last3hrs() {
         return curr_rain_last3hrs;
     }
 
-    public void setCurr_rain_last3hrs(Double curr_rain_last3hrs) {
+    public void setCurr_rain_last3hrs(double curr_rain_last3hrs) {
         this.curr_rain_last3hrs = curr_rain_last3hrs;
     }
 
-    public Double getCurr_snow_last3hrs() {
+    public double getCurr_snow_last3hrs() {
         return curr_snow_last3hrs;
     }
 
-    public void setCurr_snow_last3hrs(Double curr_snow_last3hrs) {
+    public void setCurr_snow_last3hrs(double curr_snow_last3hrs) {
         this.curr_snow_last3hrs = curr_snow_last3hrs;
     }
 
-    public Long getCurr_data_calc_time() {
+    public long getCurr_data_calc_time() {
         return curr_data_calc_time;
     }
 
-    public void setCurr_data_calc_time(Long curr_data_calc_time) {
+    public void setCurr_data_calc_time(long curr_data_calc_time) {
         this.curr_data_calc_time = curr_data_calc_time;
     }
 
-    public Long getCurr_sys_sunrise_time() {
+    public long getCurr_sys_sunrise_time() {
         return curr_sys_sunrise_time;
     }
 
-    public void setCurr_sys_sunrise_time(Long curr_sys_sunrise_time) {
+    public void setCurr_sys_sunrise_time(long curr_sys_sunrise_time) {
         this.curr_sys_sunrise_time = curr_sys_sunrise_time;
     }
 
-    public Long getCurr_sys_sunset_time() {
+    public long getCurr_sys_sunset_time() {
         return curr_sys_sunset_time;
     }
 
-    public void setCurr_sys_sunset_time(Long curr_sys_sunset_time) {
+    public void setCurr_sys_sunset_time(long curr_sys_sunset_time) {
         this.curr_sys_sunset_time = curr_sys_sunset_time;
     }
 

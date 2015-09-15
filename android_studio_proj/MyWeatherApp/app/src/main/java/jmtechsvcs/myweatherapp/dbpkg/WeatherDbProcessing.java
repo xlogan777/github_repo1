@@ -91,6 +91,9 @@ public class WeatherDbProcessing
 
                     iconTable.setImage_path(image_path);
 
+                    //set the raw image.
+                    iconTable.setImage_raw(rawImage);
+
                     //save bean using dao
                     dao.insert(iconTable);
                 }

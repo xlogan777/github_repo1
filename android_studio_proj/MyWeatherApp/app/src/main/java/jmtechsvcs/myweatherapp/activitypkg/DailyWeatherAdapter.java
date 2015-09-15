@@ -100,25 +100,25 @@ public class DailyWeatherAdapter extends ArrayAdapter<DailyWeatherInfoTable>
         result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getDaily_humidity());
         if(result.length() == 0)
             ((TextView)rowView.findViewById(R.id.daily_humidity_val)).setText(
-                    MathUtils.getPercentString((long) item_row.getDaily_humidity().doubleValue()) + "");
+                    MathUtils.getPercentString((long) item_row.getDaily_humidity()) + "");
         else
             ((TextView)rowView.findViewById(R.id.daily_humidity_val)).setText(result);
 
         result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getDaily_cloud_pert());
         if(result.length() == 0)
             ((TextView)rowView.findViewById(R.id.daily_cloud_pect_val)).setText(
-                    MathUtils.getPercentString((long) item_row.getDaily_cloud_pert().doubleValue()) + "");
+                    MathUtils.getPercentString((long) item_row.getDaily_cloud_pert()) + "");
         else
             ((TextView)rowView.findViewById(R.id.daily_cloud_pect_val)).setText(result);
 
         result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getDaily_pressure());
         if(result.length() == 0)
             ((TextView)rowView.findViewById(R.id.daily_pressure_val)).setText(
-                    MathUtils.getPressureString((long) item_row.getDaily_pressure().doubleValue()) + "");
+                    MathUtils.getPressureString((long) item_row.getDaily_pressure()) + "");
         else
             ((TextView)rowView.findViewById(R.id.daily_pressure_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getDaily_rain().doubleValue());
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getDaily_rain());
         if(result.length() == 0)
             ((TextView)rowView.findViewById(R.id.daily_rain_val)).setText(
                     MathUtils.getDistanceString(
@@ -126,10 +126,10 @@ public class DailyWeatherAdapter extends ArrayAdapter<DailyWeatherInfoTable>
         else
             ((TextView)rowView.findViewById(R.id.daily_rain_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getDaily_snow().doubleValue());
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getDaily_snow());
         if(result.length() == 0)
             ((TextView)rowView.findViewById(R.id.daily_snow_val)).setText(
-                    MathUtils.getDistanceString((long)item_row.getDaily_snow().doubleValue(), 'I') + "");
+                    MathUtils.getDistanceString((long)item_row.getDaily_snow(), 'I') + "");
         else
             ((TextView)rowView.findViewById(R.id.daily_snow_val)).setText(result);
 
