@@ -525,7 +525,11 @@ public class WeatherDbProcessing
 
                 if(daily_forecast.hasHumidity())
                 {
-                    daily_weather.setDaily_humidity((double)daily_forecast.getHumidity());
+                    float data = daily_forecast.getHumidity();
+                    if(Double.compare(data,Double.NaN) == 0)
+                        daily_weather.setDaily_humidity(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                    else
+                        daily_weather.setDaily_humidity((double)daily_forecast.getHumidity());
                 }
                 else
                 {
@@ -534,7 +538,12 @@ public class WeatherDbProcessing
 
                 if(daily_forecast.hasPercentageOfClouds())
                 {
-                    daily_weather.setDaily_cloud_pert((double)daily_forecast.getPercentageOfClouds());
+                    float data = daily_forecast.getPercentageOfClouds();
+
+                    if(Double.compare(data,Double.NaN) == 0)
+                        daily_weather.setDaily_cloud_pert(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                    else
+                        daily_weather.setDaily_cloud_pert((double)daily_forecast.getPercentageOfClouds());
                 }
                 else
                 {
@@ -543,7 +552,11 @@ public class WeatherDbProcessing
 
                 if(daily_forecast.hasPressure())
                 {
-                    daily_weather.setDaily_pressure((double)daily_forecast.getPressure());
+                    float data = daily_forecast.getPressure();
+                    if(Double.compare(data,Double.NaN)==0)
+                        daily_weather.setDaily_pressure(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                    else
+                        daily_weather.setDaily_pressure((double)daily_forecast.getPressure());
                 }
                 else
                 {
@@ -552,7 +565,11 @@ public class WeatherDbProcessing
 
                 if(daily_forecast.hasRain())
                 {
-                    daily_weather.setDaily_rain((double)daily_forecast.getRain());
+                    float data = daily_forecast.getRain();
+                    if(Double.compare(data,Double.NaN) == 0)
+                        daily_weather.setDaily_rain(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                    else
+                        daily_weather.setDaily_rain((double)daily_forecast.getRain());
                 }
                 else
                 {
@@ -561,7 +578,11 @@ public class WeatherDbProcessing
 
                 if(daily_forecast.hasSnow())
                 {
-                    daily_weather.setDaily_snow((double)daily_forecast.getSnow());
+                    float data = daily_forecast.getSnow();
+                    if(Double.compare(data,Double.NaN) == 0)
+                        daily_weather.setDaily_snow(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                    else
+                        daily_weather.setDaily_snow((double)daily_forecast.getSnow());
                 }
                 else
                 {
@@ -570,7 +591,11 @@ public class WeatherDbProcessing
 
                 if(daily_forecast.hasWindDegree())
                 {
-                    daily_weather.setDaily_wind_deg((double)daily_forecast.getWindDegree());
+                    float data = daily_forecast.getWindDegree();
+                    if(Double.compare(data,Double.NaN)==0)
+                        daily_weather.setDaily_wind_deg(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                    else
+                        daily_weather.setDaily_wind_deg((double)daily_forecast.getWindDegree());
                 }
                 else
                 {
@@ -579,7 +604,11 @@ public class WeatherDbProcessing
 
                 if(daily_forecast.hasWindSpeed())
                 {
-                    daily_weather.setDaily_wind_speed((double)daily_forecast.getWindSpeed());
+                    float data = daily_forecast.getWindSpeed();
+                    if(Double.compare(data,Double.NaN)==0)
+                        daily_weather.setDaily_wind_speed(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                    else
+                        daily_weather.setDaily_wind_speed((double)daily_forecast.getWindSpeed());
                 }
                 else
                 {
@@ -591,7 +620,11 @@ public class WeatherDbProcessing
 
                 if(daily_temp.hasDayTemperature())
                 {
-                    daily_weather.setDaily_temp((double)daily_temp.getDayTemperature());
+                    float data = daily_temp.getDayTemperature();
+                    if(Double.compare(data,Double.NaN)==0)
+                        daily_weather.setDaily_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                    else
+                        daily_weather.setDaily_temp((double)daily_temp.getDayTemperature());
                 }
                 else
                 {
@@ -600,7 +633,11 @@ public class WeatherDbProcessing
 
                 if(daily_temp.hasEveningTemperature())
                 {
-                    daily_weather.setDaily_evening_temp((double)daily_temp.getEveningTemperature());
+                    float data = daily_temp.getEveningTemperature();
+                    if(Double.compare(data,Double.NaN)==0)
+                        daily_weather.setDaily_evening_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                    else
+                        daily_weather.setDaily_evening_temp((double)daily_temp.getEveningTemperature());
                 }
                 else
                 {
@@ -609,7 +646,11 @@ public class WeatherDbProcessing
 
                 if(daily_temp.hasMaximumTemperature())
                 {
-                    daily_weather.setDaily_max_temp((double)daily_temp.getMaximumTemperature());
+                    float data = daily_temp.getMaximumTemperature();
+                    if(Double.compare(data,Double.NaN)==0)
+                        daily_weather.setDaily_max_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                    else
+                        daily_weather.setDaily_max_temp((double)daily_temp.getMaximumTemperature());
                 }
                 else
                 {
@@ -618,7 +659,11 @@ public class WeatherDbProcessing
 
                 if(daily_temp.hasMinimumTemperature())
                 {
-                    daily_weather.setDaily_min_temp((double)daily_temp.getMinimumTemperature());
+                    float data = daily_temp.getMinimumTemperature();
+                    if(Double.compare(data,Double.NaN)==0)
+                        daily_weather.setDaily_min_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                    else
+                        daily_weather.setDaily_min_temp((double)daily_temp.getMinimumTemperature());
                 }
                 else
                 {
@@ -627,7 +672,11 @@ public class WeatherDbProcessing
 
                 if(daily_temp.hasMorningTemperature())
                 {
-                    daily_weather.setDaily_morning_temp((double)daily_temp.getMorningTemperature());
+                    float data = daily_temp.getMorningTemperature();
+                    if(Double.compare(data,Double.NaN)==0)
+                        daily_weather.setDaily_morning_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                    else
+                        daily_weather.setDaily_morning_temp((double)daily_temp.getMorningTemperature());
                 }
                 else
                 {
@@ -636,7 +685,11 @@ public class WeatherDbProcessing
 
                 if(daily_temp.hasNightTemperature())
                 {
-                    daily_weather.setDaily_night_temp((double)daily_temp.getNightTemperature());
+                    float data = daily_temp.getNightTemperature();
+                    if(Double.compare(data,Double.NaN)==0)
+                        daily_weather.setDaily_night_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                    else
+                        daily_weather.setDaily_night_temp((double)daily_temp.getNightTemperature());
                 }
                 else
                 {

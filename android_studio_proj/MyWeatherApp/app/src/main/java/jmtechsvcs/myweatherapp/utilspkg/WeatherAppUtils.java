@@ -239,9 +239,10 @@ public class WeatherAppUtils
     public static String [] getDialogList()
     {
         String [] weather_opts =
-                {"Current City Weather",
-                 "5 day / 3 hourly forecast",
-                 "Weather stations Info for city"};
+                {"Current Weather Info",
+                 "5 Day Forecast",
+                 "Current Day, 3 hourly forecast",
+                 "Current Weather From Stations"};
 
         return weather_opts;
     }

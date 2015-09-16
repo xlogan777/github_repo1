@@ -88,6 +88,7 @@ public class WeatherOptionsFragment extends DialogFragment{
 
                             case 1:
 
+                                //daily forecast.
                                 //start ng svc
                                 NetworkIntentSvc.startActionCityWeatherForecast(getActivity(), city_id);
 
@@ -105,9 +106,12 @@ public class WeatherOptionsFragment extends DialogFragment{
 
                                 break;
 
-
-                            //weather station information processing.
                             case 2:
+                                //TODO: do this processing for 3 hourly forecast.
+                                break;
+
+                            case 3:
+                                //weather station information processing.
 
                                 //start the bg service, with helper method to load params to bg processing.
                                 NetworkIntentSvc.startActionCurrentWeatherStationGeo
