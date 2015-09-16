@@ -153,7 +153,7 @@ public class NetworkIntentSvc extends IntentService
                 long cityId = bundle.getLong("cityId");
 
                 //call handler for this action
-                handleCityForecastAction(cityId);
+                handleDailyCityForecastAction(cityId);
             }
             else
             {
@@ -236,7 +236,7 @@ public class NetworkIntentSvc extends IntentService
         }
     }
 
-    private void handleCityForecastAction(long cityId)
+    private void handleDailyCityForecastAction(long cityId)
     {
         try
         {
@@ -245,33 +245,33 @@ public class NetworkIntentSvc extends IntentService
             OpenWeatherMap owm = new
                     OpenWeatherMap(OpenWeatherMap.Units.IMPERIAL, WeatherMapUrls.API_KEY);
 
-            //list of hourly forecast objs.
-            List<HourlyForecast.Forecast> hourly_list = new ArrayList<HourlyForecast.Forecast>();
-
-            //get the hourly forecast by city id.
-            HourlyForecast hourlyForecast_obj = owm.hourlyForecastByCityCode(cityId);
-
-            //checking data retrieval was successful or not
-            if(hourlyForecast_obj.isValid())
-            {
-                //get the count from the hourly obj if it has one.
-                int hourly_cnt =
-                        hourlyForecast_obj.hasForecastCount() ?
-                                hourlyForecast_obj.getForecastCount() : 0;
-
-                Log.d(LOGTAG,"hourly count = "+hourly_cnt);
-
-                for(int i = 0; i < hourly_cnt; i++)
-                {
-                    //get the hourly forecast obj from the main forecast obj.
-                    HourlyForecast.Forecast  hr_forecast =
-                            hourlyForecast_obj.getForecastInstance(i);
-
-                    //add this item to this hourly list.
-                    //this list is for a city id.
-                    hourly_list.add(hr_forecast);
-                }
-            }
+//            //list of hourly forecast objs.
+//            List<HourlyForecast.Forecast> hourly_list = new ArrayList<HourlyForecast.Forecast>();
+//
+//            //get the hourly forecast by city id.
+//            HourlyForecast hourlyForecast_obj = owm.hourlyForecastByCityCode(cityId);
+//
+//            //checking data retrieval was successful or not
+//            if(hourlyForecast_obj.isValid())
+//            {
+//                //get the count from the hourly obj if it has one.
+//                int hourly_cnt =
+//                        hourlyForecast_obj.hasForecastCount() ?
+//                                hourlyForecast_obj.getForecastCount() : 0;
+//
+//                Log.d(LOGTAG,"hourly count = "+hourly_cnt);
+//
+//                for(int i = 0; i < hourly_cnt; i++)
+//                {
+//                    //get the hourly forecast obj from the main forecast obj.
+//                    HourlyForecast.Forecast  hr_forecast =
+//                            hourlyForecast_obj.getForecastInstance(i);
+//
+//                    //add this item to this hourly list.
+//                    //this list is for a city id.
+//                    hourly_list.add(hr_forecast);
+//                }
+//            }
 
             //list of daily objs.
             List<DailyForecast.Forecast> daily_list = new ArrayList<DailyForecast.Forecast>();
@@ -302,7 +302,7 @@ public class NetworkIntentSvc extends IntentService
 
             //process these lists accordingly.
             WeatherDbProcessing.updateDailyHourlyCityWeatherForecast
-                    (getApplicationContext(), daily_list, hourly_list, cityId);
+                    (getApplicationContext(), daily_list, cityId);
         }
         catch(Exception e)
         {

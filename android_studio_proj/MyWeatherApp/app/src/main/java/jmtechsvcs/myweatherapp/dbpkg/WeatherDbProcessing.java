@@ -467,7 +467,6 @@ public class WeatherDbProcessing
     public static void updateDailyHourlyCityWeatherForecast
             (Context context,
              List<DailyForecast.Forecast> dailyList,
-             List<HourlyForecast.Forecast> hourlyList,
              long cityId)
     {
         try
@@ -698,8 +697,6 @@ public class WeatherDbProcessing
 
                 //save data to db via dao using java bean.
                 daily_weather_dao.insertOrReplace(daily_weather);
-
-                //TODO: save the hourly list data here for the list provided using the dao obj.
             }
         }
         catch(Exception e)
