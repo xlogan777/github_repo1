@@ -1,5 +1,6 @@
 package jmtechsvcs.myweatherapp.activitypkg;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -53,12 +54,27 @@ public class MainWeatherActivity extends ActionBarActivity {
             startActivity(intent);
         }
 
+//        ProgressDialog progress = ProgressDialog.show(this, "Loading", "Wait while loading...");
+//
+//        try
+//        {
+//            Thread.sleep(30000);
+//        }
+//        catch (Exception e){
+//
+//        }
+//
+//// To dismiss the dialog
+//        progress.dismiss();
+
+        //ProgressDialog.show(this, "Loading", "Wait while loading...");
+
         //testing the parsing of the weather_station.json file.
         //WeatherDbProcessing.updateCurrentWeatherStationInfoGeo("",getApplicationContext());
 
-        Intent intent = new Intent(this, CitySearchActivity.class);
+        //Intent intent = new Intent(this, CitySearchActivity.class);
         //Intent intent = new Intent(this, DailyWeatherForecastActivity.class);
-        startActivity(intent);
+        //startActivity(intent);
     }
 
     private void sendMsgToIntentSvc(long cityId)

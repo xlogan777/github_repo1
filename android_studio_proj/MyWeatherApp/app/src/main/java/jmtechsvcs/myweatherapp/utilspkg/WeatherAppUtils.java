@@ -37,6 +37,18 @@ public class WeatherAppUtils
     public final static String DEFAULT_STRING_VAL = "DEFAULT_STRING_VAL";
     public final static String UTC_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
+    //action to be used for stopping of the loading spinner
+    public static final String STOP_SPINNER_ACTION = "STOP_SPINNER_ACTION";
+
+    //action to be used for invoking current weather activity.
+    public static final String START_CURRENT_WEATHER_ACTIVITY = "START_CURRENT_WEATHER_ACTIVITY";
+
+    //action to be used for daily weather loading.
+    public static final String START_DAILY_WEATHER_ACTIVITY = "START_DAILY_WEATHER_ACTIVITY";
+
+    //action to be use for weather station loading.
+    public static final String START_WEATHER_STATION_ACTIVITY = "START_WEATHER_STATION_ACTIVITY";
+
     //returns a json string from the input stream or empty string if something went wrong.
     //it does not close the input stream..that is left to the caller.
     public static String getJsonStringFromStream(InputStream inputStream)
@@ -306,5 +318,29 @@ public class WeatherAppUtils
         Log.d(LOGTAG,"date = "+rv);
 
         return rv;
+    }
+
+    public static void localSleep(long seconds)
+    {
+        long my_secs = -1;
+        if(seconds > 20 && seconds < 5)
+        {
+            my_secs = 5;
+        }
+        else
+        {
+            my_secs = seconds;
+        }
+
+        my_secs *= 1000;//make it millis
+
+        try
+        {
+            Thread.sleep(my_secs);
+        }
+        catch (Exception e)
+        {
+            WeatherAppUtils.getStackTrace(e);
+        }
     }
 }

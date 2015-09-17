@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import jmtechsvcs.myweatherapp.activitypkg.CitySearchActivity;
 import jmtechsvcs.myweatherapp.activitypkg.CurrentWeatherActivity;
 import jmtechsvcs.myweatherapp.activitypkg.DailyWeatherForecastActivity;
 import jmtechsvcs.myweatherapp.activitypkg.WeatherStationDisplayActivity;
@@ -51,17 +52,17 @@ public class WeatherOptionsFragment extends DialogFragment{
                         //get the city id from the data item.
                         long city_id = data.getCity_id();
 
-                        //get the city name
-                        String cn = data.getName();//city name
-
-                        //get the country code
-                        String cc = data.getCountry();//country code
-
                         //get the lat
                         double lat = data.getLat();
 
                         //get the long
                         double lon = data.getLon();
+
+                        //get the parent activity
+                        CitySearchActivity citySearchActivity = (CitySearchActivity)getActivity();
+
+                        //load the spinner here.
+                        citySearchActivity.showLoadingDialog();
 
                         //this handles which item was selected.
                         switch(which)
@@ -72,18 +73,6 @@ public class WeatherOptionsFragment extends DialogFragment{
                                 //start the bg service, with helper method to load params to bg processing.
                                 NetworkIntentSvc.startActionCurrentWeather(getActivity(), city_id);
 
-                                //add this to the android back stack for here to the next activity
-                                //being activated.
-                                Intent curr_weather_intent = new Intent(getActivity(), CurrentWeatherActivity.class);
-                                Bundle curr_bundle = new Bundle();
-                                curr_bundle.putLong("city_id",city_id);
-
-                                //add the bundle to the intent.
-                                curr_weather_intent.putExtras(curr_bundle);
-
-                                //start the activity with info on the city id to be used there.
-                                startActivity(curr_weather_intent);
-
                                 break;
 
                             case 1:
@@ -91,18 +80,6 @@ public class WeatherOptionsFragment extends DialogFragment{
                                 //daily forecast.
                                 //start ng svc
                                 NetworkIntentSvc.startActionCityWeatherForecast(getActivity(), city_id);
-
-                                //add this to the android back stack for here to the next activity
-                                //being activated.
-                                Intent daily_weather_intent = new Intent(getActivity(), DailyWeatherForecastActivity.class);
-                                Bundle daily_bundle = new Bundle();
-                                daily_bundle.putLong("city_id",city_id);
-
-                                //add the bundle to the intent.
-                                daily_weather_intent.putExtras(daily_bundle);
-
-                                //start the activity with info on the city id to be used there.
-                                startActivity(daily_weather_intent);
 
                                 break;
 
@@ -116,18 +93,6 @@ public class WeatherOptionsFragment extends DialogFragment{
                                 //start the bg service, with helper method to load params to bg processing.
                                 NetworkIntentSvc.startActionCurrentWeatherStationGeo
                                         (getActivity(), lat, lon, city_id);
-
-                                //add this to the android back stack for here to the next activity
-                                //being activated.
-                                Intent station_intent = new Intent(getActivity(), WeatherStationDisplayActivity.class);
-                                Bundle station_bundle = new Bundle();
-                                station_bundle.putLong("city_id",city_id);
-
-                                //add the bundle to the intent.
-                                station_intent.putExtras(station_bundle);
-
-                                //start the activity with weather station info.
-                                startActivity(station_intent);
 
                                 break;
                         }

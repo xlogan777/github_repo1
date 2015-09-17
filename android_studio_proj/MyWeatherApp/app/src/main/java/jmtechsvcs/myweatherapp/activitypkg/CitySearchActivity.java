@@ -3,6 +3,11 @@ package jmtechsvcs.myweatherapp.activitypkg;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,10 +21,13 @@ import java.util.List;
 
 import jmtechsvcs.myweatherapp.R;
 import jmtechsvcs.myweatherapp.fragmentpkg.CityListFragment;
+import jmtechsvcs.myweatherapp.fragmentpkg.SpinnerDialog;
 import jmtechsvcs.myweatherapp.fragmentpkg.WeatherOptionsFragment;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTable;
 import jmtechsvcs.myweatherapp.dbpkg.BeanQueryParams;
 import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
+import jmtechsvcs.myweatherapp.networkpkg.NetworkIntentSvc;
+import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 
 public class CitySearchActivity extends ActionBarActivity implements CityListFragment.OnFragmentInteractionListener
 {
@@ -56,54 +64,83 @@ public class CitySearchActivity extends ActionBarActivity implements CityListFra
 
         //add the event handler for search event.
         search_button.setOnClickListener(new Button.OnClickListener(){
-             public void onClick(View view){
+             public void onClick(View view) {
                  Log.d(LOGTAG, "clicked the search button.");
 
                  //remove fragment.
                  removeFragment();
 
                  //get the text from both the cc and the city edit boxes.
-                 String city_name = ((EditText)findViewById(R.id.city_name_input)).getText().toString();
-                 String cc = ((EditText)findViewById(R.id.cc_input)).getText().toString();
+                 String city_name = ((EditText) findViewById(R.id.city_name_input)).getText().toString();
+                 String cc = ((EditText) findViewById(R.id.cc_input)).getText().toString();
 
-                 //use these 2 params to get the list of cities this matches.
-                 Log.d(LOGTAG, "cityname = " + city_name + ", cc = " + cc);
-
-                 //set the query params for the db processing api
-                 BeanQueryParams bqp = new BeanQueryParams();
-                 bqp.setQueryParamType(BeanQueryParams.T_Query_Param_Type.E_CITY_INFO_TABLE_LIST_TYPE);
-                 bqp.setCityName(city_name);
-                 bqp.setCountryCode(cc);
-
-                 //get the list of items here to set for the
-                 List<CityInfoTable> list_city_info =
-                         WeatherDbProcessing.getBeanByQueryParamsList(bqp, getApplicationContext(), new CityInfoTable());
-
-                 if(list_city_info != null && list_city_info.size() > 0)
-                 {
-                     //assign the city list to the list used by the fragment.
-                     cityList = list_city_info;
-
-                     //get the frag mgr and create a tx to add frags.
-                     FragmentManager fm = getFragmentManager();
-                     FragmentTransaction ft = fm.beginTransaction();
-
-                     //create the fragment.
-                     CityListFragment frag = new CityListFragment();
-
-                     //add fragment to main activity layout
-                     ft.add(R.id.frame_frag_layout, frag);
-
-                     //commit this activity.
-                     ft.commit();
+                 //if we dont have any data then do nothing.
+                 if (city_name.length() == 0 && cc.length() == 0) {
+                     Log.d(LOGTAG, "no data to use for search..do nothing.");
                  }
                  else
                  {
-                     Log.d(LOGTAG, "no data to display for fragments.");
-                 }
+                     //use these 2 params to get the list of cities this matches.
+                     Log.d(LOGTAG, "cityname = " + city_name + ", cc = " + cc);
+
+                     //set the query params for the db processing api
+                     BeanQueryParams bqp = new BeanQueryParams();
+                     bqp.setQueryParamType(BeanQueryParams.T_Query_Param_Type.E_CITY_INFO_TABLE_LIST_TYPE);
+                     bqp.setCityName(city_name);
+                     bqp.setCountryCode(cc);
+
+                     //get the list of items here to set for the
+                     List<CityInfoTable> list_city_info =
+                             WeatherDbProcessing.getBeanByQueryParamsList(bqp, getApplicationContext(), new CityInfoTable());
+
+                     if (list_city_info != null && list_city_info.size() > 0) {
+                         //assign the city list to the list used by the fragment.
+                         cityList = list_city_info;
+
+                         //get the frag mgr and create a tx to add frags.
+                         FragmentManager fm = getFragmentManager();
+                         FragmentTransaction ft = fm.beginTransaction();
+
+                         //create the fragment.
+                         CityListFragment frag = new CityListFragment();
+
+                         //add fragment to main activity layout
+                         ft.add(R.id.frame_frag_layout, frag);
+
+                         //commit this activity.
+                         ft.commit();
+                     }
+                     else
+                     {
+                         Log.d(LOGTAG, "no data to display for fragments.");
+                     }
+                }
              }
          }
         );
+    }
+
+    protected void onResume()
+    {
+        super.onResume();
+
+        //intent filter to allow for listening to this set of actions.
+        IntentFilter iff = new IntentFilter("CallBackAction");
+        iff.addAction(WeatherAppUtils.STOP_SPINNER_ACTION);
+        iff.addAction(WeatherAppUtils.START_CURRENT_WEATHER_ACTIVITY);
+        iff.addAction(WeatherAppUtils.START_DAILY_WEATHER_ACTIVITY);
+        iff.addAction(WeatherAppUtils.START_WEATHER_STATION_ACTIVITY);
+
+        //register with local rcv
+        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, iff);
+    }
+
+    protected void onPause()
+    {
+        super.onPause();
+
+        //unregister with rcv
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver);
     }
 
     public void removeFragment()
@@ -171,6 +208,91 @@ public class CitySearchActivity extends ActionBarActivity implements CityListFra
         optionsFragment.setData(data);
 
         //show the fragment and also tied to the frag mgr
-        optionsFragment.show(getFragmentManager(),"WeatherOptionsFragment");
+        optionsFragment.show(getFragmentManager(), "WeatherOptionsFragment");
+    }
+
+    //local broadcast receiver.
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver()
+    {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // intent can contain anydata
+            Log.d(LOGTAG, "onReceive called for usage.");
+
+            if(intent.getAction().equals(WeatherAppUtils.STOP_SPINNER_ACTION))
+            {
+                //stop the loading spinner.
+                stopLoadingDialog();
+            }
+            else if(intent.getAction().equals(WeatherAppUtils.START_CURRENT_WEATHER_ACTIVITY))
+            {
+                //add this to the android back stack for here to the next activity
+                //being activated.
+                Intent curr_weather_intent = new Intent(CitySearchActivity.this, CurrentWeatherActivity.class);
+
+                //add the bundle to the intent.
+                curr_weather_intent.putExtras(intent.getExtras());
+
+                //start the activity with info on the city id to be used there.
+                startActivity(curr_weather_intent);
+            }
+            else if(intent.getAction().equals(WeatherAppUtils.START_DAILY_WEATHER_ACTIVITY))
+            {
+                //add this to the android back stack for here to the next activity
+                //being activated.
+                Intent daily_weather_intent = new Intent(CitySearchActivity.this, DailyWeatherForecastActivity.class);
+
+                //add the bundle to the intent.
+                daily_weather_intent.putExtras(intent.getExtras());
+
+                //start the activity with info on the city id to be used there.
+                startActivity(daily_weather_intent);
+            }
+            else if(intent.getAction().equals(WeatherAppUtils.START_WEATHER_STATION_ACTIVITY))
+            {
+                //add this to the android back stack for here to the next activity
+                //being activated.
+                Intent weather_station_intent = new Intent(CitySearchActivity.this, WeatherStationDisplayActivity.class);
+
+                //add the bundle to the intent.
+                weather_station_intent.putExtras(intent.getExtras());
+
+                //start the activity with info on the city id to be used there.
+                startActivity(weather_station_intent);
+            }
+        }
+    };
+
+    public void showLoadingDialog()
+    {
+        //get a frag tx and check to see if we have another spinner.
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getFragmentManager().findFragmentByTag("SpinnerDialog");
+
+        //remove a prev spinner..
+        if(prev != null)
+        {
+            ft.remove(prev);
+        }
+
+        //create the loading spinner here
+        SpinnerDialog my_frag = new SpinnerDialog();
+
+        //load the fragment spinner here.
+        my_frag.show(ft, "SpinnerDialog");
+    }
+
+    public void stopLoadingDialog()
+    {
+        //get the frag tx with id
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getFragmentManager().findFragmentByTag("SpinnerDialog");
+
+        //if we found it remove it and commit it.
+        if (prev != null)
+        {
+            ft.remove(prev);
+            ft.commit();
+        }
     }
 }

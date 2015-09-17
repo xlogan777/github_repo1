@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import net.aksingh.owmjapis.CurrentWeather;
@@ -14,6 +15,7 @@ import net.aksingh.owmjapis.OpenWeatherMap;
 import java.util.ArrayList;
 import java.util.List;
 
+import jmtechsvcs.myweatherapp.activitypkg.CurrentWeatherActivity;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityWeatherCurrCondTable;
 import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
 import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
@@ -214,6 +216,19 @@ public class NetworkIntentSvc extends IntentService
                 Log.d(LOGTAG,"issue with the weather icon from the java bean returned back from the update current weather dao.");
             }
         }
+
+        //send intents via android system.
+        sendIntents(WeatherAppUtils.START_CURRENT_WEATHER_ACTIVITY, cityId);
+
+        //invoke activity from this intent service
+//        Intent dialogIntent = new Intent(getBaseContext(), CurrentWeatherActivity.class);
+//        Bundle curr_bundle = new Bundle();
+//        curr_bundle.putLong("city_id", cityId);
+//
+//        //add the bundle to the intent.
+//        dialogIntent.putExtras(curr_bundle);
+//        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        getApplication().startActivity(dialogIntent);//invoke the start of the
     }
 
     private void handleCurrentWeatherStationGeoAction(double lat, double lon, long cityId)
@@ -234,6 +249,9 @@ public class NetworkIntentSvc extends IntentService
             //update the dao using the json string and providing the app context.
             WeatherDbProcessing.updateCurrentWeatherStationInfoGeo(payload.getStringPayload(), getApplicationContext(), cityId);
         }
+
+        //send intents via android system.
+        sendIntents(WeatherAppUtils.START_WEATHER_STATION_ACTIVITY, cityId);
     }
 
     private void handleDailyCityForecastAction(long cityId)
@@ -308,5 +326,30 @@ public class NetworkIntentSvc extends IntentService
         {
             Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
         }
+
+        //send intents via android system.
+        sendIntents(WeatherAppUtils.START_DAILY_WEATHER_ACTIVITY, cityId);
+    }
+
+    private void sendIntents(String activityAction, long cityId)
+    {
+        //sleep for 5 secs
+        WeatherAppUtils.localSleep(5);
+
+        //stop the spinner via an intent with broadcast rcv
+        Intent stop_spinner_intent = new Intent();
+        stop_spinner_intent.setAction(WeatherAppUtils.STOP_SPINNER_ACTION);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(stop_spinner_intent);
+
+        //command to load a specific activity via an intent for the
+        //broadcast rcv
+        Intent command_intent = new Intent();
+        command_intent.setAction(activityAction);
+
+        Bundle curr_bundle = new Bundle();
+        curr_bundle.putLong("city_id", cityId);
+        command_intent.putExtras(curr_bundle);
+
+        LocalBroadcastManager.getInstance(this).sendBroadcast(command_intent);
     }
 }
