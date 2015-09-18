@@ -8,4 +8,24 @@
 //        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //        getApplication().startActivity(dialogIntent);
 
+<include layout="@layout/city_info_row_layout"/>
+
+<FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/daily_weather_id"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+<FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/pressure"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/weather_station_id">
+    </FrameLayout>
+
 

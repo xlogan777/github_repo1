@@ -7,6 +7,9 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import jmtechsvcs.myweatherapp.activitypkg.CitySearchActivity;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTable;
 import jmtechsvcs.myweatherapp.networkpkg.NetworkIntentSvc;
@@ -43,16 +46,7 @@ public class WeatherOptionsFragment extends DialogFragment{
                         // The 'which' argument contains the index position
                         // of the selected item
 
-                        Log.d(LOGTAG,"picked this choice = "+weather_opts[which]);
-
-                        //get the city id from the data item.
-                        long city_id = data.getCity_id();
-
-                        //get the lat
-                        double lat = data.getLat();
-
-                        //get the long
-                        double lon = data.getLon();
+                        Log.d(LOGTAG, "picked this choice = " + weather_opts[which]);
 
                         //get the parent activity
                         CitySearchActivity citySearchActivity = (CitySearchActivity)getActivity();
@@ -67,7 +61,7 @@ public class WeatherOptionsFragment extends DialogFragment{
                             case 0:
 
                                 //start the bg service, with helper method to load params to bg processing.
-                                NetworkIntentSvc.startActionCurrentWeather(getActivity(), city_id);
+                                NetworkIntentSvc.startActionCurrentWeather(getActivity(), data);
 
                                 break;
 
@@ -75,7 +69,7 @@ public class WeatherOptionsFragment extends DialogFragment{
 
                                 //daily forecast.
                                 //start ng svc
-                                NetworkIntentSvc.startActionCityWeatherForecast(getActivity(), city_id);
+                                NetworkIntentSvc.startActionCityWeatherForecast(getActivity(), data);
 
                                 break;
 
@@ -88,7 +82,7 @@ public class WeatherOptionsFragment extends DialogFragment{
 
                                 //start the bg service, with helper method to load params to bg processing.
                                 NetworkIntentSvc.startActionCurrentWeatherStationGeo
-                                        (getActivity(), lat, lon, city_id);
+                                        (getActivity(), data);
 
                                 break;
                         }

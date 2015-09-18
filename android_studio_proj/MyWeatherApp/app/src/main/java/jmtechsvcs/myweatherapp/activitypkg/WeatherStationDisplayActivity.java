@@ -41,135 +41,29 @@ public class WeatherStationDisplayActivity extends ActionBarActivity
         Bundle bundle = intent.getExtras();
 
         //this is the city id needed to ge the current weather data.
-        long city_id = bundle.getLong("city_id");
+        long city_id = bundle.getLong("cityId");
+
+        //get the city id from the item row for the text view.
+        TextView textView = (TextView)findViewById(R.id.city_id_vals);
+        textView.setText(bundle.getLong("cityId")+"");
+
+        //get the city name and country code, and add it to the text view.
+        textView = (TextView)findViewById(R.id.cn_cc_vals);
+        textView.setText(bundle.getString("cn")+", "+bundle.getString("cc"));
+
+        //get the lat from item row and add it to the text view.
+        textView = (TextView)findViewById(R.id.lat_vals);
+        textView.setText(bundle.getDouble("lat")+"");
+
+        //get the long from the item row and add it to the text view.
+        textView = (TextView)findViewById(R.id.lon_vals);
+        textView.setText(bundle.getDouble("lon")+"");
 
         //get the application context.
         Context context = getApplicationContext();
 
-        BeanQueryParams qp = new BeanQueryParams();
-        qp.setCityId(city_id);//city id is used for curr weather data.
-
-        qp.setQueryParamType(BeanQueryParams.T_Query_Param_Type.E_CURR_CITY_WEATHER_TABLE_TYPE);
-        CityWeatherCurrCondTable curr_weather_data = new CityWeatherCurrCondTable();
-        curr_weather_data = WeatherDbProcessing.getBeanByQueryParams(qp, context, curr_weather_data);
-
-        //get the current city info using city id.
-        qp.setQueryParamType(BeanQueryParams.T_Query_Param_Type.E_CITY_INFO_TABLE_TYPE);
-        CityInfoTable city_info_table = new CityInfoTable();
-        city_info_table = WeatherDbProcessing.getBeanByQueryParams(qp, context, city_info_table);
-
-        if(curr_weather_data != null && city_info_table != null)
-        {
-            //get the image icon and allow to have it loaded to the image view.
-            //setup the query params for access to the icon data.
-            qp.setQueryParamType(BeanQueryParams.T_Query_Param_Type.E_IMG_ICON_TABLE_TYPE);
-            qp.setCityId(-1);
-            qp.setIconId(curr_weather_data.getCurr_weather_icon());
-
-            WeatherIconTable weatherIconTable = new WeatherIconTable();
-            weatherIconTable = WeatherDbProcessing.getBeanByQueryParams(qp, context, weatherIconTable);
-
-            if(weatherIconTable != null)
-            {
-                //load city info
-                loadCityInfo(city_info_table);
-
-                //load curr weather data.
-                loadCityWeatherInfo(curr_weather_data);
-
-                //load weather icon
-                loadCityWeatherIcon(weatherIconTable);
-
-                //load the weather stations for this curr city data.
-                loadWeatherStations(city_id, context);
-            }
-            else
-            {
-                setDefaultView();
-            }
-        }
-        else
-        {
-            setDefaultView();
-        }
-    }
-
-    private void loadCityInfo(CityInfoTable cityInfoTable)
-    {
-        //set the city name and the country code.
-        ((TextView)findViewById(R.id.cn_name_val)).setText(cityInfoTable.getName());
-        ((TextView)findViewById(R.id.cc_name_val)).setText(cityInfoTable.getCountry());
-    }
-
-    private void loadCityWeatherInfo(CityWeatherCurrCondTable currWeatherTable)
-    {
-        String result = WeatherAppUtils.getDefaultStringDisplayDouble(currWeatherTable.getCurr_main_temp());
-        if(result.length() == 0)
-            ((TextView)findViewById(R.id.tempature_val)).setText(MathUtils.getTempString(
-                    currWeatherTable.getCurr_main_temp())+"");
-        else
-            ((TextView)findViewById(R.id.tempature_val)).setText(result);
-
-        result = WeatherAppUtils.getDefaultStringDisplayLong(currWeatherTable.getCurr_main_pressure());
-        if(result.length() == 0)
-            ((TextView)findViewById(R.id.pressure_val)).setText(MathUtils.getPressureString(
-                    currWeatherTable.getCurr_main_pressure()
-            )+"");
-        else
-            ((TextView)findViewById(R.id.pressure_val)).setText(result);
-
-        result = WeatherAppUtils.getDefaultStringDisplayLong(
-                currWeatherTable.getCurr_main_humidity()
-        );
-        if(result.length() == 0)
-            ((TextView)findViewById(R.id.humidity_val)).setText(MathUtils.getDegreeString(
-                    currWeatherTable.getCurr_main_humidity()
-            )+"");
-        else
-            ((TextView)findViewById(R.id.humidity_val)).setText(result);
-
-        result = WeatherAppUtils.getDefaultStringDisplayDouble(currWeatherTable.getCurr_main_temp_min());
-        if(result.length() == 0)
-            ((TextView)findViewById(R.id.temp_min_val)).setText(
-                    MathUtils.getTempString(currWeatherTable.getCurr_main_temp_min()) + "");
-        else
-            ((TextView)findViewById(R.id.temp_min_val)).setText(result);
-
-
-        result = WeatherAppUtils.getDefaultStringDisplayDouble(
-                currWeatherTable.getCurr_main_temp_max()
-        );
-        if(result.length() == 0)
-            ((TextView)findViewById(R.id.temp_max_val)).setText(MathUtils.getTempString(currWeatherTable.getCurr_main_temp_max())+"");
-        else
-            ((TextView)findViewById(R.id.temp_max_val)).setText(result);
-    }
-
-    private void loadCityWeatherIcon(WeatherIconTable weatherIconTable)
-    {
-        try
-        {
-            //get the image path from the bean obj.
-            String img_path = weatherIconTable.getImage_path();
-
-            if(img_path != null && img_path.length() > 0)
-            {
-                //get png file from folder.
-                Bitmap bitmap = WeatherAppUtils.readPngFile(img_path, 150, 150);
-
-                //use resized bit map.
-                if(bitmap != null)
-                {
-                    //set the image bit map here.
-                    ((ImageView)findViewById(R.id.imageView_id)).setImageBitmap(bitmap);
-                    Log.d(LOGTAG, "loaded the image bit map...bit map file = " + img_path);
-                }
-            }
-        }
-        catch(Exception e)
-        {
-            Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
-        }
+        //load the weather stations for this curr city data.
+        loadWeatherStations(city_id, context);
     }
 
     //get the weather station data via dao, and create fragment for this to display.
@@ -204,19 +98,6 @@ public class WeatherStationDisplayActivity extends ActionBarActivity
             //commit this activity.
             ft.commit();
         }
-    }
-
-    //data view to empty string since we can't load weather data.
-    private void setDefaultView()
-    {
-        ((TextView)findViewById(R.id.cn_name_val)).setText("no city data available");
-        ((TextView)findViewById(R.id.cc_name_val)).setText("no city data available");
-
-        ((TextView)findViewById(R.id.tempature_val)).setText("");
-        ((TextView)findViewById(R.id.temp_min_val)).setText("");
-        ((TextView)findViewById(R.id.temp_max_val)).setText("");
-        ((TextView)findViewById(R.id.humidity_val)).setText("");
-        ((TextView)findViewById(R.id.pressure_val)).setText("");
     }
 
     @Override

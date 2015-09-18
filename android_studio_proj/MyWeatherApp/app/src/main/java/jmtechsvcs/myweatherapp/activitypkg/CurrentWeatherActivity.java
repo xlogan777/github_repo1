@@ -38,7 +38,7 @@ public class CurrentWeatherActivity extends ActionBarActivity
         Bundle bundle = intent.getExtras();
 
         //this is the city id needed to ge the current weather data.
-        long city_id = bundle.getLong("city_id");
+        long city_id = bundle.getLong("cityId");
 
         //get the application context.
         Context context = getApplicationContext();

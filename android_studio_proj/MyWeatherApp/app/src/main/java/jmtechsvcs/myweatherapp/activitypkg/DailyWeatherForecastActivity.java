@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -37,7 +38,23 @@ public class DailyWeatherForecastActivity extends ActionBarActivity
         Bundle daily_bundle = data.getExtras();
 
         //get the city id from the bundle.
-        long city_id = daily_bundle.getLong("city_id");
+        long city_id = daily_bundle.getLong("cityId");
+
+        //get the city id from the item row for the text view.
+        TextView textView = (TextView)findViewById(R.id.city_id_vals);
+        textView.setText(daily_bundle.getLong("cityId")+"");
+
+        //get the city name and country code, and add it to the text view.
+        textView = (TextView)findViewById(R.id.cn_cc_vals);
+        textView.setText(daily_bundle.getString("cn")+", "+daily_bundle.getString("cc"));
+
+        //get the lat from item row and add it to the text view.
+        textView = (TextView)findViewById(R.id.lat_vals);
+        textView.setText(daily_bundle.getDouble("lat")+"");
+
+        //get the long from the item row and add it to the text view.
+        textView = (TextView)findViewById(R.id.lon_vals);
+        textView.setText(daily_bundle.getDouble("lon")+"");
 
         //save the city id to this activity class.
         cityId = city_id;

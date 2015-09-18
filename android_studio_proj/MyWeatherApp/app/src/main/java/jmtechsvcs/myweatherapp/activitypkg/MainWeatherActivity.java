@@ -80,7 +80,7 @@ public class MainWeatherActivity extends ActionBarActivity {
     private void sendMsgToIntentSvc(long cityId)
     {
         //start the bg service, with helper method to load params to bg processing.
-        NetworkIntentSvc.startActionCurrentWeather(this, cityId);
+        //NetworkIntentSvc.startActionCurrentWeather(this, cityId);
     }
 
     @Override

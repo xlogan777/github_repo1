@@ -13,6 +13,7 @@ import net.aksingh.owmjapis.OpenWeatherMap;
 import java.util.ArrayList;
 import java.util.List;
 
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTable;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityWeatherCurrCondTable;
 import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
 import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
@@ -46,7 +47,7 @@ public class NetworkIntentSvc extends IntentService
      *
      * @see IntentService
      */
-    public static void startActionCurrentWeather(Context context, long cityId)
+    public static void startActionCurrentWeather(Context context, CityInfoTable data)
     {
         //create intent with this activity as the sending activity, and the calling service.
         Intent mServiceIntent = new Intent(context, NetworkIntentSvc.class);
@@ -54,15 +55,8 @@ public class NetworkIntentSvc extends IntentService
         //set the action to this intent.
         mServiceIntent.setAction(CURRENT_WEATHER_ACTION);
 
-        //create bundle to save data in it.
-        Bundle bundle = new Bundle();
-        bundle.putLong("cityId", cityId);
-
-        //save bundle to this intent.
-        mServiceIntent.putExtras(bundle);
-
-        //start the service
-        context.startService(mServiceIntent);
+        //create bundle for service call.
+        bundleAndServiceCall(data, context, mServiceIntent);
     }
 
     /**
@@ -71,7 +65,7 @@ public class NetworkIntentSvc extends IntentService
      *
      * @see IntentService
      */
-    public static void startActionCurrentWeatherStationGeo(Context context, double lat, double lon, long cityId)
+    public static void startActionCurrentWeatherStationGeo(Context context, CityInfoTable data)
     {
         //create intent with this activity as the sending activity, and the calling service.
         Intent mServiceIntent = new Intent(context, NetworkIntentSvc.class);
@@ -79,20 +73,11 @@ public class NetworkIntentSvc extends IntentService
         //set the action to this intent.
         mServiceIntent.setAction(CURRENT_WEATHER_STATION_GEO_ACTION);
 
-        //create bundle to save data in it.
-        Bundle bundle = new Bundle();
-        bundle.putDouble("lat", lat);
-        bundle.putDouble("lon", lon);
-        bundle.putLong("cityId",cityId);
-
-        //save bundle to this intent.
-        mServiceIntent.putExtras(bundle);
-
-        //start the service
-        context.startService(mServiceIntent);
+        //create bundle for service call.
+        bundleAndServiceCall(data, context, mServiceIntent);
     }
 
-    public static void startActionCityWeatherForecast(Context context, long cityId)
+    public static void startActionCityWeatherForecast(Context context, CityInfoTable data)
     {
         //create intent with this activity as the sending activity, and the calling service.
         Intent mServiceIntent = new Intent(context, NetworkIntentSvc.class);
@@ -100,15 +85,27 @@ public class NetworkIntentSvc extends IntentService
         //set the action to this intent.
         mServiceIntent.setAction(WEATHER_DAILY_FORECAST_ACTION);
 
+        //create bundle for service call.
+        bundleAndServiceCall(data, context, mServiceIntent);
+    }
+
+    private static void bundleAndServiceCall(CityInfoTable data, Context context, Intent intent)
+    {
         //create bundle to save data in it.
         Bundle bundle = new Bundle();
-        bundle.putLong("cityId", cityId);
+
+        //save data to the bundle.
+        bundle.putLong("cityId", data.getCity_id());
+        bundle.putString("cn", data.getName());
+        bundle.putString("cc", data.getCountry());
+        bundle.putDouble("lat", data.getLat());
+        bundle.putDouble("lon",data.getLon());
 
         //save bundle to this intent.
-        mServiceIntent.putExtras(bundle);
+        intent.putExtras(bundle);
 
         //start the service
-        context.startService(mServiceIntent);
+        context.startService(intent);
     }
 
     @Override
@@ -124,35 +121,24 @@ public class NetworkIntentSvc extends IntentService
                 //get the bundle from the intent
                 Bundle bundle = intent.getExtras();
 
-                //get the data from the bundle.
-                long cityId = bundle.getLong("cityId");
-
-                //call handler fuction for this action.
-                handleCurrentWeatherAction(cityId);
+                //call handler function for this action.
+                handleCurrentWeatherAction(bundle);
             }
             //handle the weather station by lat/lon processing.
             else if(CURRENT_WEATHER_STATION_GEO_ACTION.equals(action))
             {
                 Bundle bundle = intent.getExtras();
 
-                //get the data from the bundle.
-                double lat = bundle.getDouble("lat");
-                double lon = bundle.getDouble("lon");
-                long cityId = bundle.getLong("cityId");
-
                 //call handler for this action
-                handleCurrentWeatherStationGeoAction(lat, lon, cityId);
+                handleCurrentWeatherStationGeoAction(bundle);
             }
             else if(WEATHER_DAILY_FORECAST_ACTION.equals(action))
             {
                 //get the bundle from the intent
                 Bundle bundle = intent.getExtras();
 
-                //get the data from the bundle.
-                long cityId = bundle.getLong("cityId");
-
                 //call handler for this action
-                handleDailyCityForecastAction(cityId);
+                handleDailyCityForecastAction(bundle);
             }
             else
             {
@@ -164,15 +150,17 @@ public class NetworkIntentSvc extends IntentService
     /*
         internal method to handler the processing.
      */
-    private void handleCurrentWeatherAction(long cityId)
+    private void handleCurrentWeatherAction(Bundle bundle)
     {
+        long cityId = bundle.getLong("cityId");
+
         Log.d(LOGTAG,"city id = "+cityId);
 
         //create the weather url with city id
         String curr_weather_url = WeatherMapUrls.getCurrentWeatherByCityId("" + cityId);
 
         //get more weather data with xml based url.
-        String curr_weather_url_xml = WeatherMapUrls.getCurrentWeatherByCityIdXml(""+cityId);
+        String curr_weather_url_xml = WeatherMapUrls.getCurrentWeatherByCityIdXml("" + cityId);
 
         //get the payload from the http get for the current weather json data
         DataPayload payload = NetworkProcessing.httpGetProcessing(curr_weather_url, DataPayload.T_Payload_Type.E_JSON_PAYLOAD_TYPE);
@@ -215,11 +203,15 @@ public class NetworkIntentSvc extends IntentService
         }
 
         //send intents via android system.
-        sendIntents(WeatherAppUtils.START_CURRENT_WEATHER_ACTIVITY, cityId);
+        sendIntents(WeatherAppUtils.START_CURRENT_WEATHER_ACTIVITY, bundle);
     }
 
-    private void handleCurrentWeatherStationGeoAction(double lat, double lon, long cityId)
+    private void handleCurrentWeatherStationGeoAction(Bundle bundle)
     {
+        double lat = bundle.getDouble("lat");
+        double lon = bundle.getDouble("lon");
+        long cityId = bundle.getLong("cityId");
+
         Log.d(LOGTAG,"lat = "+lat+", lon = "+lon);
 
         //create the weather station url with geo location.
@@ -238,45 +230,46 @@ public class NetworkIntentSvc extends IntentService
         }
 
         //send intents via android system.
-        sendIntents(WeatherAppUtils.START_WEATHER_STATION_ACTIVITY, cityId);
+        sendIntents(WeatherAppUtils.START_WEATHER_STATION_ACTIVITY, bundle);
     }
 
-    private void handleDailyCityForecastAction(long cityId)
+    private void handleDailyCityForecastAction(Bundle bundle)
     {
-        try
-        {
+        long cityId = bundle.getLong("cityId");
+
+        try {
             // declaring object of "OpenWeatherMap" class
             //setup with api key and the units needed which is imperial.
             OpenWeatherMap owm = new
                     OpenWeatherMap(OpenWeatherMap.Units.IMPERIAL, WeatherMapUrls.API_KEY);
 
-//            //list of hourly forecast objs.
-//            List<HourlyForecast.Forecast> hourly_list = new ArrayList<HourlyForecast.Forecast>();
-//
-//            //get the hourly forecast by city id.
-//            HourlyForecast hourlyForecast_obj = owm.hourlyForecastByCityCode(cityId);
-//
-//            //checking data retrieval was successful or not
-//            if(hourlyForecast_obj.isValid())
-//            {
-//                //get the count from the hourly obj if it has one.
-//                int hourly_cnt =
-//                        hourlyForecast_obj.hasForecastCount() ?
-//                                hourlyForecast_obj.getForecastCount() : 0;
-//
-//                Log.d(LOGTAG,"hourly count = "+hourly_cnt);
-//
-//                for(int i = 0; i < hourly_cnt; i++)
-//                {
-//                    //get the hourly forecast obj from the main forecast obj.
-//                    HourlyForecast.Forecast  hr_forecast =
-//                            hourlyForecast_obj.getForecastInstance(i);
-//
-//                    //add this item to this hourly list.
-//                    //this list is for a city id.
-//                    hourly_list.add(hr_forecast);
-//                }
-//            }
+            //            //list of hourly forecast objs.
+            //            List<HourlyForecast.Forecast> hourly_list = new ArrayList<HourlyForecast.Forecast>();
+            //
+            //            //get the hourly forecast by city id.
+            //            HourlyForecast hourlyForecast_obj = owm.hourlyForecastByCityCode(cityId);
+            //
+            //            //checking data retrieval was successful or not
+            //            if(hourlyForecast_obj.isValid())
+            //            {
+            //                //get the count from the hourly obj if it has one.
+            //                int hourly_cnt =
+            //                        hourlyForecast_obj.hasForecastCount() ?
+            //                                hourlyForecast_obj.getForecastCount() : 0;
+            //
+            //                Log.d(LOGTAG,"hourly count = "+hourly_cnt);
+            //
+            //                for(int i = 0; i < hourly_cnt; i++)
+            //                {
+            //                    //get the hourly forecast obj from the main forecast obj.
+            //                    HourlyForecast.Forecast  hr_forecast =
+            //                            hourlyForecast_obj.getForecastInstance(i);
+            //
+            //                    //add this item to this hourly list.
+            //                    //this list is for a city id.
+            //                    hourly_list.add(hr_forecast);
+            //                }
+            //            }
 
             //list of daily objs.
             List<DailyForecast.Forecast> daily_list = new ArrayList<DailyForecast.Forecast>();
@@ -286,17 +279,15 @@ public class NetworkIntentSvc extends IntentService
             DailyForecast dailyForecast = owm.dailyForecastByCityCode(cityId, cnt);
 
             //check if daily forecast is valid.
-            if(dailyForecast.isValid())
-            {
+            if (dailyForecast.isValid()) {
                 //get the cnt if it exists.
                 int daily_cnt = dailyForecast.hasForecastCount() ?
                         dailyForecast.getForecastCount() : 0;
 
-                Log.d(LOGTAG,"daily count = "+daily_cnt);
+                Log.d(LOGTAG, "daily count = " + daily_cnt);
 
                 //pull all items for this city id for daily data.
-                for(int i = 0; i < daily_cnt; i++)
-                {
+                for (int i = 0; i < daily_cnt; i++) {
                     //get daily info
                     DailyForecast.Forecast day_forecast = dailyForecast.getForecastInstance(i);
 
@@ -309,16 +300,16 @@ public class NetworkIntentSvc extends IntentService
             WeatherDbProcessing.updateDailyHourlyCityWeatherForecast
                     (getApplicationContext(), daily_list, cityId);
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
         }
 
         //send intents via android system.
-        sendIntents(WeatherAppUtils.START_DAILY_WEATHER_ACTIVITY, cityId);
+        sendIntents(WeatherAppUtils.START_DAILY_WEATHER_ACTIVITY, bundle);
     }
 
-    private void sendIntents(String activityAction, long cityId)
+    private void sendIntents(String activityAction, Bundle bundle)
     {
         //sleep for 5 secs
         WeatherAppUtils.localSleep(5);
@@ -333,10 +324,10 @@ public class NetworkIntentSvc extends IntentService
         Intent command_intent = new Intent();
         command_intent.setAction(activityAction);
 
-        Bundle curr_bundle = new Bundle();
-        curr_bundle.putLong("city_id", cityId);
-        command_intent.putExtras(curr_bundle);
+        //save bundle to this intent.
+        command_intent.putExtras(bundle);
 
+        //broadcast intent.
         LocalBroadcastManager.getInstance(this).sendBroadcast(command_intent);
     }
 }
