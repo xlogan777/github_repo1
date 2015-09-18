@@ -200,8 +200,25 @@ public class CitySearchActivity extends ActionBarActivity implements CityListFra
         this.showWeatherOptions(data);
     }
 
+    private void removeDialogFragmentViaTag(String tag)
+    {
+        //get a frag tx and check to see if we have another frag.
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getFragmentManager().findFragmentByTag(tag);
+
+        //remove frag if it exists.
+        if(prev != null)
+        {
+            ft.remove(prev);
+            ft.commit();
+        }
+    }
+
     private void showWeatherOptions(CityInfoTable data)
     {
+        //remove the frag if it exists.
+        removeDialogFragmentViaTag("WeatherOptionsFragment");
+
         //create the dialog fragment and show the fragment with hooks for it to the
         //fragment mgr.
         WeatherOptionsFragment optionsFragment = new WeatherOptionsFragment();
@@ -265,34 +282,19 @@ public class CitySearchActivity extends ActionBarActivity implements CityListFra
 
     public void showLoadingDialog()
     {
-        //get a frag tx and check to see if we have another spinner.
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        Fragment prev = getFragmentManager().findFragmentByTag("SpinnerDialog");
-
-        //remove a prev spinner..
-        if(prev != null)
-        {
-            ft.remove(prev);
-        }
+        //remove fragment
+        removeDialogFragmentViaTag("SpinnerDialog");
 
         //create the loading spinner here
         SpinnerDialog my_frag = new SpinnerDialog();
 
         //load the fragment spinner here.
-        my_frag.show(ft, "SpinnerDialog");
+        my_frag.show(getFragmentManager(), "SpinnerDialog");
     }
 
     public void stopLoadingDialog()
     {
-        //get the frag tx with id
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        Fragment prev = getFragmentManager().findFragmentByTag("SpinnerDialog");
-
-        //if we found it remove it and commit it.
-        if (prev != null)
-        {
-            ft.remove(prev);
-            ft.commit();
-        }
+        //remove fragment.
+        removeDialogFragmentViaTag("SpinnerDialog");
     }
 }

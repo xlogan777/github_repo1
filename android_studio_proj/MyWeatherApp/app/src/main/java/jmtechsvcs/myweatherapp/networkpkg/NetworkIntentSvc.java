@@ -7,15 +7,12 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import net.aksingh.owmjapis.CurrentWeather;
 import net.aksingh.owmjapis.DailyForecast;
-import net.aksingh.owmjapis.HourlyForecast;
 import net.aksingh.owmjapis.OpenWeatherMap;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import jmtechsvcs.myweatherapp.activitypkg.CurrentWeatherActivity;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityWeatherCurrCondTable;
 import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
 import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
@@ -219,16 +216,6 @@ public class NetworkIntentSvc extends IntentService
 
         //send intents via android system.
         sendIntents(WeatherAppUtils.START_CURRENT_WEATHER_ACTIVITY, cityId);
-
-        //invoke activity from this intent service
-//        Intent dialogIntent = new Intent(getBaseContext(), CurrentWeatherActivity.class);
-//        Bundle curr_bundle = new Bundle();
-//        curr_bundle.putLong("city_id", cityId);
-//
-//        //add the bundle to the intent.
-//        dialogIntent.putExtras(curr_bundle);
-//        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        getApplication().startActivity(dialogIntent);//invoke the start of the
     }
 
     private void handleCurrentWeatherStationGeoAction(double lat, double lon, long cityId)

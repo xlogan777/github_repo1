@@ -1,0 +1,11 @@
+//invoke activity from this intent service
+//        Intent dialogIntent = new Intent(getBaseContext(), CurrentWeatherActivity.class);
+//        Bundle curr_bundle = new Bundle();
+//        curr_bundle.putLong("city_id", cityId);
+//
+//        //add the bundle to the intent.
+//        dialogIntent.putExtras(curr_bundle);
+//        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        getApplication().startActivity(dialogIntent);
+
+

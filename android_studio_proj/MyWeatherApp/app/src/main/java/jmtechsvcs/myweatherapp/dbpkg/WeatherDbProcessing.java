@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import net.aksingh.owmjapis.DailyForecast;
-import net.aksingh.owmjapis.HourlyForecast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

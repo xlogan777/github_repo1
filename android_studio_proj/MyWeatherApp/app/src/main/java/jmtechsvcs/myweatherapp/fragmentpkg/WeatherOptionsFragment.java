@@ -4,14 +4,10 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
 import jmtechsvcs.myweatherapp.activitypkg.CitySearchActivity;
-import jmtechsvcs.myweatherapp.activitypkg.CurrentWeatherActivity;
-import jmtechsvcs.myweatherapp.activitypkg.DailyWeatherForecastActivity;
-import jmtechsvcs.myweatherapp.activitypkg.WeatherStationDisplayActivity;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTable;
 import jmtechsvcs.myweatherapp.networkpkg.NetworkIntentSvc;
 import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;

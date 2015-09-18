@@ -1,7 +1,6 @@
 package jmtechsvcs.myweatherapp.fragmentpkg;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import java.util.List;
 
 import jmtechsvcs.myweatherapp.R;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTable;
-import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 
 /**
  * Created by jimmy on 8/20/2015.
