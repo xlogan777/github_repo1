@@ -57,33 +57,27 @@ public class WeatherOptionsFragment extends DialogFragment{
                         //this handles which item was selected.
                         switch(which)
                         {
-                            //current weather option.
                             case 0:
-
-                                //start the bg service, with helper method to load params to bg processing.
+                                //current weather option.
                                 NetworkIntentSvc.startActionCurrentWeather(getActivity(), data);
-
                                 break;
 
                             case 1:
 
                                 //daily forecast.
-                                //start ng svc
-                                NetworkIntentSvc.startActionCityWeatherForecast(getActivity(), data);
-
+                                NetworkIntentSvc.startActionDailyCityWeatherForecast(getActivity(), data);
                                 break;
 
                             case 2:
-                                //TODO: do this processing for 3 hourly forecast.
+
+                                //hourly forecast
+                                NetworkIntentSvc.startActionCurrentHourlyForecast(getActivity(), data);
                                 break;
 
                             case 3:
-                                //weather station information processing.
 
-                                //start the bg service, with helper method to load params to bg processing.
-                                NetworkIntentSvc.startActionCurrentWeatherStationGeo
-                                        (getActivity(), data);
-
+                                //weather station info.
+                                NetworkIntentSvc.startActionCurrentWeatherStationGeo(getActivity(), data);
                                 break;
                         }
                     }

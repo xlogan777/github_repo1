@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import net.aksingh.owmjapis.DailyForecast;
+import net.aksingh.owmjapis.HourlyForecast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -463,7 +464,7 @@ public class WeatherDbProcessing
         }
     }
 
-    public static void updateDailyHourlyCityWeatherForecast
+    public static void updateDailyCityWeatherForecast
             (Context context,
              List<DailyForecast.Forecast> dailyList,
              long cityId)
@@ -699,6 +700,42 @@ public class WeatherDbProcessing
             }
         }
         catch(Exception e)
+        {
+            Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
+        }
+    }
+
+    public static void updateyHourlyCityWeatherForecast
+    (Context context,
+     List<HourlyForecast.Forecast> hourlyList,
+     long cityId)
+    {
+        try
+        {
+            //get the dao session.
+            DaoSession daoSession = getDaoSession(context);
+
+            //TODO: need to create dao here..
+            //get dao here.
+//            DailyWeatherInfoTableDao hourly_weather_dao = daoSession.getDailyWeatherInfoTableDao();
+//
+//            //get the list of current daily weather via city id.
+//            BeanQueryParams qp = new BeanQueryParams();
+//            qp.setCityId(cityId);
+//            qp.setQueryParamType(BeanQueryParams.T_Query_Param_Type.E_DAILY_WEATHER_TABLE_LIST_TYPE);
+//
+//            //get list of daily weather items if it exits.
+//            List<DailyWeatherInfoTable> daily_weather_list =
+//                    WeatherDbProcessing.getBeanByQueryParamsList(qp, context, new DailyWeatherInfoTable());
+
+            //read data from list and save to java bean to allow for saving to dao via this java bean.
+            //using the city id.
+            for(HourlyForecast.Forecast hourly_forecast : hourlyList)
+            {
+
+            }
+        }
+        catch (Exception e)
         {
             Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
         }

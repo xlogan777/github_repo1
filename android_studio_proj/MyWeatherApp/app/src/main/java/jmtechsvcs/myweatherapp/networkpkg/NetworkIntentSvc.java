@@ -8,6 +8,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import net.aksingh.owmjapis.DailyForecast;
+import net.aksingh.owmjapis.HourlyForecast;
 import net.aksingh.owmjapis.OpenWeatherMap;
 
 import java.util.ArrayList;
@@ -35,6 +36,9 @@ public class NetworkIntentSvc extends IntentService
 
     //action to be used to allow processing in the handler method.
     private static final String WEATHER_DAILY_FORECAST_ACTION = "WEATHER_DAILY_FORECAST_ACTION";
+
+    //action to be used to allow for hourly processing.
+    private static final String CURRENT_HOURLY_FORECAST_ACTION = "CURRENT_HOURLY_FORECAST_ACTION";
 
     public NetworkIntentSvc()
     {
@@ -77,13 +81,25 @@ public class NetworkIntentSvc extends IntentService
         bundleAndServiceCall(data, context, mServiceIntent);
     }
 
-    public static void startActionCityWeatherForecast(Context context, CityInfoTable data)
+    public static void startActionDailyCityWeatherForecast(Context context, CityInfoTable data)
     {
         //create intent with this activity as the sending activity, and the calling service.
         Intent mServiceIntent = new Intent(context, NetworkIntentSvc.class);
 
         //set the action to this intent.
         mServiceIntent.setAction(WEATHER_DAILY_FORECAST_ACTION);
+
+        //create bundle for service call.
+        bundleAndServiceCall(data, context, mServiceIntent);
+    }
+
+    public static void startActionCurrentHourlyForecast(Context context, CityInfoTable data)
+    {
+        //create intent with this activity as the sending activity, and the calling service.
+        Intent mServiceIntent = new Intent(context, NetworkIntentSvc.class);
+
+        //set the action to this intent.
+        mServiceIntent.setAction(CURRENT_HOURLY_FORECAST_ACTION);
 
         //create bundle for service call.
         bundleAndServiceCall(data, context, mServiceIntent);
@@ -113,32 +129,33 @@ public class NetworkIntentSvc extends IntentService
     {
         if(intent != null)
         {
-            final String action = intent.getAction();
+            //get the action from the intent.
+            String action = intent.getAction();
+
+            //get the bundle from the intent
+            Bundle bundle = intent.getExtras();
 
             //handle the current weather action based intent.
             if(CURRENT_WEATHER_ACTION.equals(action))
             {
-                //get the bundle from the intent
-                Bundle bundle = intent.getExtras();
-
                 //call handler function for this action.
                 handleCurrentWeatherAction(bundle);
             }
             //handle the weather station by lat/lon processing.
             else if(CURRENT_WEATHER_STATION_GEO_ACTION.equals(action))
             {
-                Bundle bundle = intent.getExtras();
-
                 //call handler for this action
                 handleCurrentWeatherStationGeoAction(bundle);
             }
             else if(WEATHER_DAILY_FORECAST_ACTION.equals(action))
             {
-                //get the bundle from the intent
-                Bundle bundle = intent.getExtras();
-
                 //call handler for this action
                 handleDailyCityForecastAction(bundle);
+            }
+            else if(CURRENT_HOURLY_FORECAST_ACTION.equals(action))
+            {
+                //call handler for this action
+                handleCurrentHourlyForecastAction(bundle);
             }
             else
             {
@@ -243,34 +260,6 @@ public class NetworkIntentSvc extends IntentService
             OpenWeatherMap owm = new
                     OpenWeatherMap(OpenWeatherMap.Units.IMPERIAL, WeatherMapUrls.API_KEY);
 
-            //            //list of hourly forecast objs.
-            //            List<HourlyForecast.Forecast> hourly_list = new ArrayList<HourlyForecast.Forecast>();
-            //
-            //            //get the hourly forecast by city id.
-            //            HourlyForecast hourlyForecast_obj = owm.hourlyForecastByCityCode(cityId);
-            //
-            //            //checking data retrieval was successful or not
-            //            if(hourlyForecast_obj.isValid())
-            //            {
-            //                //get the count from the hourly obj if it has one.
-            //                int hourly_cnt =
-            //                        hourlyForecast_obj.hasForecastCount() ?
-            //                                hourlyForecast_obj.getForecastCount() : 0;
-            //
-            //                Log.d(LOGTAG,"hourly count = "+hourly_cnt);
-            //
-            //                for(int i = 0; i < hourly_cnt; i++)
-            //                {
-            //                    //get the hourly forecast obj from the main forecast obj.
-            //                    HourlyForecast.Forecast  hr_forecast =
-            //                            hourlyForecast_obj.getForecastInstance(i);
-            //
-            //                    //add this item to this hourly list.
-            //                    //this list is for a city id.
-            //                    hourly_list.add(hr_forecast);
-            //                }
-            //            }
-
             //list of daily objs.
             List<DailyForecast.Forecast> daily_list = new ArrayList<DailyForecast.Forecast>();
 
@@ -297,7 +286,7 @@ public class NetworkIntentSvc extends IntentService
             }
 
             //process these lists accordingly.
-            WeatherDbProcessing.updateDailyHourlyCityWeatherForecast
+            WeatherDbProcessing.updateDailyCityWeatherForecast
                     (getApplicationContext(), daily_list, cityId);
         }
         catch (Exception e)
@@ -307,6 +296,58 @@ public class NetworkIntentSvc extends IntentService
 
         //send intents via android system.
         sendIntents(WeatherAppUtils.START_DAILY_WEATHER_ACTIVITY_ACTION, bundle);
+    }
+
+    private void handleCurrentHourlyForecastAction(Bundle bundle)
+    {
+        long cityId = bundle.getLong("cityId");
+
+        try
+        {
+            // declaring object of "OpenWeatherMap" class
+            //setup with api key and the units needed which is imperial.
+            OpenWeatherMap owm = new
+                    OpenWeatherMap(OpenWeatherMap.Units.IMPERIAL, WeatherMapUrls.API_KEY);
+
+            //list of hourly forecast objs.
+            List<HourlyForecast.Forecast> hourly_list = new ArrayList<HourlyForecast.Forecast>();
+
+            //get the hourly forecast by city id.
+            HourlyForecast hourlyForecast_obj = owm.hourlyForecastByCityCode(cityId);
+
+            //checking data retrieval was successful or not
+            if(hourlyForecast_obj.isValid())
+            {
+                //get the count from the hourly obj if it has one.
+                int hourly_cnt =
+                        hourlyForecast_obj.hasForecastCount() ?
+                                hourlyForecast_obj.getForecastCount() : 0;
+
+                Log.d(LOGTAG,"hourly count = "+hourly_cnt);
+
+                for(int i = 0; i < hourly_cnt; i++)
+                {
+                    //get the hourly forecast obj from the main forecast obj.
+                    HourlyForecast.Forecast  hr_forecast =
+                            hourlyForecast_obj.getForecastInstance(i);
+
+                    //add this item to this hourly list.
+                    //this list is for a city id.
+                    hourly_list.add(hr_forecast);
+                }
+            }
+
+            //process these lists accordingly.
+            WeatherDbProcessing.updateyHourlyCityWeatherForecast
+                    (getApplicationContext(), hourly_list, cityId);
+        }
+        catch (Exception e)
+        {
+            Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
+        }
+
+        //send intents via android system.
+        sendIntents(WeatherAppUtils.START_CURRENT_HOURLY_FORECAST_ACTIVITY_ACTION, bundle);
     }
 
     private void sendIntents(String activityAction, Bundle bundle)
