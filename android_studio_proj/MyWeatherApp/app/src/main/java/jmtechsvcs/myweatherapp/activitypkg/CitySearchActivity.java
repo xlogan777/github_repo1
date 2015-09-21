@@ -236,6 +236,8 @@ public class CitySearchActivity extends ActionBarActivity implements CityListFra
             // intent can contain anydata
             Log.d(LOGTAG, "onReceive called for usage.");
 
+            Intent local_intent = null;
+
             if(intent.getAction().equals(WeatherAppUtils.STOP_SPINNER_ACTION))
             {
                 //stop the loading spinner.
@@ -245,37 +247,29 @@ public class CitySearchActivity extends ActionBarActivity implements CityListFra
             {
                 //add this to the android back stack for here to the next activity
                 //being activated.
-                Intent curr_weather_intent = new Intent(CitySearchActivity.this, CurrentWeatherActivity.class);
-
-                //add the bundle to the intent.
-                curr_weather_intent.putExtras(intent.getExtras());
-
-                //start the activity with info on the city id to be used there.
-                startActivity(curr_weather_intent);
+                local_intent = new Intent(CitySearchActivity.this, CurrentWeatherActivity.class);
             }
             else if(intent.getAction().equals(WeatherAppUtils.START_DAILY_WEATHER_ACTIVITY))
             {
                 //add this to the android back stack for here to the next activity
                 //being activated.
-                Intent daily_weather_intent = new Intent(CitySearchActivity.this, DailyWeatherForecastActivity.class);
-
-                //add the bundle to the intent.
-                daily_weather_intent.putExtras(intent.getExtras());
-
-                //start the activity with info on the city id to be used there.
-                startActivity(daily_weather_intent);
+                local_intent = new Intent(CitySearchActivity.this, DailyWeatherForecastActivity.class);
             }
             else if(intent.getAction().equals(WeatherAppUtils.START_WEATHER_STATION_ACTIVITY))
             {
                 //add this to the android back stack for here to the next activity
                 //being activated.
-                Intent weather_station_intent = new Intent(CitySearchActivity.this, WeatherStationDisplayActivity.class);
+                local_intent = new Intent(CitySearchActivity.this, WeatherStationDisplayActivity.class);
+            }
 
+            //check to see if we have a valid intent.
+            if(local_intent != null)
+            {
                 //add the bundle to the intent.
-                weather_station_intent.putExtras(intent.getExtras());
+                local_intent.putExtras(intent.getExtras());
 
                 //start the activity with info on the city id to be used there.
-                startActivity(weather_station_intent);
+                startActivity(local_intent);
             }
         }
     };
