@@ -127,9 +127,9 @@ public class CitySearchActivity extends ActionBarActivity implements CityListFra
         //intent filter to allow for listening to this set of actions.
         IntentFilter iff = new IntentFilter("CallBackAction");
         iff.addAction(WeatherAppUtils.STOP_SPINNER_ACTION);
-        iff.addAction(WeatherAppUtils.START_CURRENT_WEATHER_ACTIVITY);
-        iff.addAction(WeatherAppUtils.START_DAILY_WEATHER_ACTIVITY);
-        iff.addAction(WeatherAppUtils.START_WEATHER_STATION_ACTIVITY);
+        iff.addAction(WeatherAppUtils.START_CURRENT_WEATHER_ACTIVITY_ACTION);
+        iff.addAction(WeatherAppUtils.START_DAILY_WEATHER_ACTIVITY_ACTION);
+        iff.addAction(WeatherAppUtils.START_WEATHER_STATION_ACTIVITY_ACTION);
 
         //register with local rcv
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, iff);
@@ -243,19 +243,19 @@ public class CitySearchActivity extends ActionBarActivity implements CityListFra
                 //stop the loading spinner.
                 stopLoadingDialog();
             }
-            else if(intent.getAction().equals(WeatherAppUtils.START_CURRENT_WEATHER_ACTIVITY))
+            else if(intent.getAction().equals(WeatherAppUtils.START_CURRENT_WEATHER_ACTIVITY_ACTION))
             {
                 //add this to the android back stack for here to the next activity
                 //being activated.
                 local_intent = new Intent(CitySearchActivity.this, CurrentWeatherActivity.class);
             }
-            else if(intent.getAction().equals(WeatherAppUtils.START_DAILY_WEATHER_ACTIVITY))
+            else if(intent.getAction().equals(WeatherAppUtils.START_DAILY_WEATHER_ACTIVITY_ACTION))
             {
                 //add this to the android back stack for here to the next activity
                 //being activated.
                 local_intent = new Intent(CitySearchActivity.this, DailyWeatherForecastActivity.class);
             }
-            else if(intent.getAction().equals(WeatherAppUtils.START_WEATHER_STATION_ACTIVITY))
+            else if(intent.getAction().equals(WeatherAppUtils.START_WEATHER_STATION_ACTIVITY_ACTION))
             {
                 //add this to the android back stack for here to the next activity
                 //being activated.

@@ -40,13 +40,13 @@ public class WeatherAppUtils
     public static final String STOP_SPINNER_ACTION = "STOP_SPINNER_ACTION";
 
     //action to be used for invoking current weather activity.
-    public static final String START_CURRENT_WEATHER_ACTIVITY = "START_CURRENT_WEATHER_ACTIVITY";
+    public static final String START_CURRENT_WEATHER_ACTIVITY_ACTION = "START_CURRENT_WEATHER_ACTIVITY_ACTION";
 
     //action to be used for daily weather loading.
-    public static final String START_DAILY_WEATHER_ACTIVITY = "START_DAILY_WEATHER_ACTIVITY";
+    public static final String START_DAILY_WEATHER_ACTIVITY_ACTION = "START_DAILY_WEATHER_ACTIVITY_ACTION";
 
     //action to be use for weather station loading.
-    public static final String START_WEATHER_STATION_ACTIVITY = "START_WEATHER_STATION_ACTIVITY";
+    public static final String START_WEATHER_STATION_ACTIVITY_ACTION = "START_WEATHER_STATION_ACTIVITY_ACTION";
 
     //returns a json string from the input stream or empty string if something went wrong.
     //it does not close the input stream..that is left to the caller.

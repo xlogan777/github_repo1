@@ -203,7 +203,7 @@ public class NetworkIntentSvc extends IntentService
         }
 
         //send intents via android system.
-        sendIntents(WeatherAppUtils.START_CURRENT_WEATHER_ACTIVITY, bundle);
+        sendIntents(WeatherAppUtils.START_CURRENT_WEATHER_ACTIVITY_ACTION, bundle);
     }
 
     private void handleCurrentWeatherStationGeoAction(Bundle bundle)
@@ -230,7 +230,7 @@ public class NetworkIntentSvc extends IntentService
         }
 
         //send intents via android system.
-        sendIntents(WeatherAppUtils.START_WEATHER_STATION_ACTIVITY, bundle);
+        sendIntents(WeatherAppUtils.START_WEATHER_STATION_ACTIVITY_ACTION, bundle);
     }
 
     private void handleDailyCityForecastAction(Bundle bundle)
@@ -306,7 +306,7 @@ public class NetworkIntentSvc extends IntentService
         }
 
         //send intents via android system.
-        sendIntents(WeatherAppUtils.START_DAILY_WEATHER_ACTIVITY, bundle);
+        sendIntents(WeatherAppUtils.START_DAILY_WEATHER_ACTIVITY_ACTION, bundle);
     }
 
     private void sendIntents(String activityAction, Bundle bundle)
