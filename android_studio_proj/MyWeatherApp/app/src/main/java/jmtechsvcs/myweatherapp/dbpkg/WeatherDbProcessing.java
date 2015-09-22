@@ -23,6 +23,8 @@ import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityWeatherCurrCondTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.DailyWeatherInfoTable;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.DailyWeatherInfoTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.DaoSession;
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.HourlyWeatherInfoTable;
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.HourlyWeatherInfoTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherIconTable;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherIconTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherStationInfoTable;
@@ -715,24 +717,192 @@ public class WeatherDbProcessing
             //get the dao session.
             DaoSession daoSession = getDaoSession(context);
 
-            //TODO: need to create dao here..
             //get dao here.
-//            DailyWeatherInfoTableDao hourly_weather_dao = daoSession.getDailyWeatherInfoTableDao();
-//
-//            //get the list of current daily weather via city id.
-//            BeanQueryParams qp = new BeanQueryParams();
-//            qp.setCityId(cityId);
-//            qp.setQueryParamType(BeanQueryParams.T_Query_Param_Type.E_DAILY_WEATHER_TABLE_LIST_TYPE);
-//
-//            //get list of daily weather items if it exits.
-//            List<DailyWeatherInfoTable> daily_weather_list =
-//                    WeatherDbProcessing.getBeanByQueryParamsList(qp, context, new DailyWeatherInfoTable());
+            HourlyWeatherInfoTableDao hourly_weather_dao = daoSession.getHourlyWeatherInfoTableDao();
+
+            //get the list of current daily weather via city id.
+            BeanQueryParams qp = new BeanQueryParams();
+            qp.setCityId(cityId);
+            qp.setQueryParamType(BeanQueryParams.T_Query_Param_Type.E_HOURLY_WEATHER_TABLE_LIST_TYPE);
+
+            //get list of daily weather items if it exits.
+            List<HourlyWeatherInfoTable> hourly_weather_list =
+                    WeatherDbProcessing.getBeanByQueryParamsList(qp, context, new HourlyWeatherInfoTable());
 
             //read data from list and save to java bean to allow for saving to dao via this java bean.
             //using the city id.
             for(HourlyForecast.Forecast hourly_forecast : hourlyList)
             {
+                //java bean to set for db
+                HourlyWeatherInfoTable hourly_weather = null;
 
+                //remove first item from the list for the auto inc id, and save that to the
+                //item java bean item just the id.
+                if(hourly_weather_list.size() > 0)
+                {
+                    //pop the head off the daily list from the DB.
+                    HourlyWeatherInfoTable hourly_item = hourly_weather_list.remove(0);
+
+                    //assign the item from the list to the local vars here.
+                    //this will assign all new data.
+                    hourly_weather = hourly_item;
+                }
+                else
+                {
+                    //create new obj here.
+                    hourly_weather = new HourlyWeatherInfoTable();
+                }
+
+                //set the city id.
+                hourly_weather.setCity_id(cityId);
+
+                if(hourly_forecast.hasDateTime())
+                {
+                    hourly_weather.setHourly_weather_date(hourly_forecast.getDateTime().getTime());
+                }
+                else
+                {
+                    hourly_weather.setHourly_weather_date(WeatherAppUtils.DEFAULT_lONG_VAL);
+                }
+
+                HourlyForecast.Forecast.Clouds clouds = hourly_forecast.getCloudsInstance();
+
+                if(clouds.hasPercentageOfClouds())
+                {
+                    float data = clouds.getPercentageOfClouds();
+
+                    if(Double.compare(data,Double.NaN) == 0)
+                        hourly_weather.setHourly_cloud_pert(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                    else
+                        hourly_weather.setHourly_cloud_pert((double)clouds.getPercentageOfClouds());
+                }
+                else
+                {
+                    hourly_weather.setHourly_cloud_pert(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                }
+
+                HourlyForecast.Forecast.Main main = hourly_forecast.getMainInstance();
+
+                if(main.hasHumidity())
+                {
+                    float data = main.getHumidity();
+                    if(Double.compare(data,Double.NaN) == 0)
+                        hourly_weather.setHourly_humidity(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                    else
+                        hourly_weather.setHourly_humidity((double) main.getHumidity());
+                }
+                else
+                {
+                    hourly_weather.setHourly_humidity(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                }
+
+                if(main.hasMaxTemperature())
+                {
+                    float data = main.getMaxTemperature();
+                    if(Double.compare(data,Double.NaN)==0)
+                        hourly_weather.setHourly_max_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                    else
+                        hourly_weather.setHourly_max_temp((double) main.getMaxTemperature());
+                }
+                else
+                {
+                    hourly_weather.setHourly_max_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                }
+
+                if(main.hasMinTemperature())
+                {
+                    float data = main.getMinTemperature();
+                    if(Double.compare(data,Double.NaN)==0)
+                        hourly_weather.setHourly_min_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                    else
+                        hourly_weather.setHourly_min_temp((double) main.getMinTemperature());
+                }
+                else
+                {
+                    hourly_weather.setHourly_min_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                }
+
+                if(main.hasPressure())
+                {
+                    float data = main.getPressure();
+                    if(Double.compare(data,Double.NaN)==0)
+                        hourly_weather.setHourly_pressure(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                    else
+                        hourly_weather.setHourly_pressure((double) main.getPressure());
+                }
+                else
+                {
+                    hourly_weather.setHourly_pressure(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                }
+
+                if(main.hasTemperature())
+                {
+                    float data = main.getTemperature();
+                    if(Double.compare(data,Double.NaN)==0)
+                        hourly_weather.setHourly_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                    else
+                        hourly_weather.setHourly_temp((double) main.getTemperature());
+                }
+                else
+                {
+                    hourly_weather.setHourly_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                }
+
+                if(main.hasGroundLevel())
+                {
+                    float data = main.getGroundLevel();
+                    if(Double.compare(data,Double.NaN)==0)
+                        hourly_weather.setHourly_gnd_level(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                    else
+                        hourly_weather.setHourly_gnd_level((double) main.getGroundLevel());
+                }
+                else
+                {
+                    hourly_weather.setHourly_gnd_level(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                }
+
+                if(main.hasSeaLevel())
+                {
+                    float data = main.getSeaLevel();
+                    if(Double.compare(data,Double.NaN)==0)
+                        hourly_weather.setHourly_sea_level(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                    else
+                        hourly_weather.setHourly_sea_level((double) main.getSeaLevel());
+                }
+                else
+                {
+                    hourly_weather.setHourly_sea_level(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                }
+
+                HourlyForecast.Forecast.Wind wind = hourly_forecast.getWindInstance();
+                if(wind.hasWindDegree())
+                {
+                    float data = wind.getWindDegree();
+                    if(Double.compare(data,Double.NaN)==0)
+                        hourly_weather.setHourly_wind_deg(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                    else
+                        hourly_weather.setHourly_wind_deg((double) wind.getWindDegree());
+                }
+                else
+                {
+                    hourly_weather.setHourly_wind_deg(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                }
+
+                if(wind.hasWindSpeed())
+                {
+                    float data = wind.getWindSpeed();
+                    if(Double.compare(data,Double.NaN)==0)
+                        hourly_weather.setHourly_wind_speed(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                    else
+                        hourly_weather.setHourly_wind_speed((double) wind.getWindSpeed());
+                }
+                else
+                {
+                    hourly_weather.setHourly_wind_speed(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                }
+
+                //save data to db via dao using java bean.
+                hourly_weather_dao.insertOrReplace(hourly_weather);
             }
         }
         catch (Exception e)
@@ -887,6 +1057,21 @@ public class WeatherDbProcessing
                 items =  (List<CityBeanType>)dao.queryBuilder().where
                         (
                                 DailyWeatherInfoTableDao.Properties.City_id.eq(queryParams.getCityId())
+                        ).list();
+
+                //return back the list to the caller.
+                rv = items;
+            }
+            else if(beanType instanceof HourlyWeatherInfoTable &&
+                    queryParams.getQueryParamType() == BeanQueryParams.T_Query_Param_Type.E_HOURLY_WEATHER_TABLE_LIST_TYPE)
+            {
+                //get the dao for daily weather info.
+                HourlyWeatherInfoTableDao dao = daoSession.getHourlyWeatherInfoTableDao();
+
+                //get the java bean using the dao obj but use the city id to find it.
+                items =  (List<CityBeanType>)dao.queryBuilder().where
+                        (
+                                HourlyWeatherInfoTableDao.Properties.City_id.eq(queryParams.getCityId())
                         ).list();
 
                 //return back the list to the caller.

@@ -8,6 +8,7 @@ import android.util.Log;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityWeatherCurrCondTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.DailyWeatherInfoTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.DaoMaster;
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.HourlyWeatherInfoTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherIconTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherStationInfoTableDao;
 
@@ -18,7 +19,7 @@ public class WeatherDbHelper extends SQLiteOpenHelper
 {
     //this allows for automatic upgrade of data bases when the version number
     //is increased. incease it by 1 as u see fit.
-    private static final int SCHEMA_VERSION = 3;//db version.
+    private static final int SCHEMA_VERSION = 4;//db version.
 
     private static String LOGTAG = "WeatherDbHelper";
 
@@ -53,6 +54,9 @@ public class WeatherDbHelper extends SQLiteOpenHelper
 
             //drop the table here if it exists.
             DailyWeatherInfoTableDao.dropTable(db, true);
+
+            //drop the table if it exists here.
+            HourlyWeatherInfoTableDao.dropTable(db, true);
 
             //create all needed tables.
             onCreate(db);

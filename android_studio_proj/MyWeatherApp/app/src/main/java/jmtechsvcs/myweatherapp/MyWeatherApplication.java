@@ -23,6 +23,7 @@ import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityWeatherCurrCondTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.DailyWeatherInfoTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.DaoMaster;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.DaoSession;
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.HourlyWeatherInfoTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherIconTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherStationInfoTableDao;
 import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
@@ -103,7 +104,7 @@ public class MyWeatherApplication extends Application
     private boolean checkDataBase()
     {
         File databaseFile = new File(DB_PATH + DB_NAME);
-        boolean status = (databaseFile.exists()/*&& databaseFile.isFile()*/);
+        boolean status = databaseFile.exists();
 
         return status;
     }
@@ -201,7 +202,8 @@ public class MyWeatherApplication extends Application
             CityWeatherCurrCondTableDao.createTable(db, true);
             WeatherIconTableDao.createTable(db, true);
             WeatherStationInfoTableDao.createTable(db, true);
-            DailyWeatherInfoTableDao.createTable(db,true);
+            DailyWeatherInfoTableDao.createTable(db, true);
+            HourlyWeatherInfoTableDao.createTable(db, true);
         }// end if else dbExist
     }
 
