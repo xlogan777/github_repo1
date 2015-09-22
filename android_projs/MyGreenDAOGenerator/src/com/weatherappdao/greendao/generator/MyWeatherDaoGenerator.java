@@ -33,7 +33,10 @@ public class MyWeatherDaoGenerator
 		Entity weather_station_entity =  createWeatherStationInfoTable(schema);
 		
 		System.out.println("create daily weather info table");
-      Entity daily_weather_entity =  createDailyWeatherInfoTable(schema);
+      Entity daily_weather_entity = createDailyWeatherInfoTable(schema);
+      
+      System.out.println("create hourly weather info table");
+      Entity hourly_weather_entity = createHourlyWeatherInfoTable(schema);
 		
 		//generate the source code
 		try
@@ -228,7 +231,6 @@ public class MyWeatherDaoGenerator
       return weather_station_entity;
 	}
 	
-	//added comments.
 	public static Entity createDailyWeatherInfoTable(Schema schema)
 	{
 	   /*
@@ -282,4 +284,30 @@ float getWindSpeed()
       
       return daily_weather_entity;
 	}
+	
+	  public static Entity createHourlyWeatherInfoTable(Schema schema)
+	  {
+	      //table name
+	      Entity hourly_weather_entity = schema.addEntity("HourlyWeatherInfoTable");
+	      
+	      //add pk, this will be a auto inc pk since we will have the same items repeated here
+	      //and will be updated accordingly.
+	      hourly_weather_entity.addIdProperty().primaryKey().autoincrement();
+	      
+	      //add non pk fields
+	      hourly_weather_entity.addLongProperty("city_id").notNull();
+	      hourly_weather_entity.addLongProperty("hourly_weather_date").notNull();
+	      hourly_weather_entity.addDoubleProperty("hourly_cloud_pert").notNull();
+	      hourly_weather_entity.addDoubleProperty("hourly_humidity").notNull();
+	      hourly_weather_entity.addDoubleProperty("hourly_max_temp").notNull();
+	      hourly_weather_entity.addDoubleProperty("hourly_min_temp").notNull();
+	      hourly_weather_entity.addDoubleProperty("hourly_pressure").notNull();
+	      hourly_weather_entity.addDoubleProperty("hourly_temp").notNull();
+	      hourly_weather_entity.addDoubleProperty("hourly_sea_level").notNull();
+	      hourly_weather_entity.addDoubleProperty("hourly_gnd_level").notNull();
+	      hourly_weather_entity.addDoubleProperty("hourly_wind_deg").notNull();
+	      hourly_weather_entity.addDoubleProperty("hourly_wind_speed").notNull();
+	      	      
+	      return hourly_weather_entity;
+	  }
 }
