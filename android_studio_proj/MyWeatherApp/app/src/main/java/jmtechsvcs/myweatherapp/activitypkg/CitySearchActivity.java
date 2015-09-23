@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -17,6 +18,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import jmtechsvcs.myweatherapp.R;
@@ -39,10 +45,42 @@ public class CitySearchActivity extends ActionBarActivity implements CityListFra
         return cityList;
     }
 
+//    public String md5(String s) {
+//        try {
+//            // Create MD5 Hash
+//            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+//            digest.update(s.getBytes());
+//            byte messageDigest[] = digest.digest();
+//
+//            // Create Hex String
+//            StringBuffer hexString = new StringBuffer();
+//            for (int i=0; i<messageDigest.length; i++)
+//                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+//            return hexString.toString();
+//
+//        } catch (NoSuchAlgorithmException e) {
+//            e.printStackTrace();
+//        }
+//        return "";
+//    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_search);
+
+        //add the google admob view for add display.
+        AdView mAdView = (AdView)findViewById(R.id.adView);
+        //AdRequest request = new AdRequest.Builder().build();
+        AdRequest request = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                .addTestDevice("CA21EF673EA1B4FDE2DBBC38FFA4DFE")  // LG G2 phone md5 hash id.
+                .build();
+        mAdView.loadAd(request);
+
+//        String android_id = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
+//        String deviceId = md5(android_id).toUpperCase();
+//        Log.d(LOGTAG,"device_id = "+deviceId);
 
         final Button search_button = (Button)findViewById(R.id.performsearch);
         final Button clear_button = (Button)findViewById(R.id.cleardata);
