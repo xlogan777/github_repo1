@@ -11,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import jmtechsvcs.myweatherapp.R;
@@ -18,6 +20,7 @@ import jmtechsvcs.myweatherapp.dbpkg.BeanQueryParams;
 import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
 import jmtechsvcs.myweatherapp.fragmentpkg.HourlyWeatherFragment;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.HourlyWeatherInfoTable;
+import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 
 public class HourlyWeatherActivity extends AppCompatActivity
 {
@@ -68,8 +71,36 @@ public class HourlyWeatherActivity extends AppCompatActivity
         List<HourlyWeatherInfoTable> hourly_weather_param =
                 WeatherDbProcessing.getBeanByQueryParamsList(qp, context, new HourlyWeatherInfoTable());
 
+        //save only the current dates here.
+        List<HourlyWeatherInfoTable> current_date_list = new ArrayList<HourlyWeatherInfoTable>();
+
+        for(HourlyWeatherInfoTable items : hourly_weather_param)
+        {
+            //create a new date obj from the date seconds.
+            Date item_date = new Date(items.getHourly_weather_date());
+            Date current_date = new Date();
+
+            //check to see if the are the same day.
+            boolean status = WeatherAppUtils.isSameDay(item_date,current_date);
+
+            //add to list for current day.
+            if(status)
+            {
+                current_date_list.add(items);
+            }
+        }
+
+        //need to check to see if we have items to display..if we dont
+        //then we need to copy 1 days worth of data to the display list.
+        if(current_date_list.size() == 0 && hourly_weather_param.size() >= 8 )
+        {
+            //take the next day items from the main list and copy that to the
+            //list to be used here.
+            current_date_list.addAll(hourly_weather_param.subList(0,8));
+        }
+
         //check to see if we have data to show.
-        if(hourly_weather_param != null && hourly_weather_param.size() > 0)
+        if(current_date_list != null && current_date_list.size() > 0)
         {
             //create fragment here and provide the list here to show.
             //get the frag mgr and create a tx to add frags.
@@ -80,7 +111,7 @@ public class HourlyWeatherActivity extends AppCompatActivity
             HourlyWeatherFragment frag = new HourlyWeatherFragment();
 
             //set data to be used by this fragment.
-            frag.setHourlyWeatherList(hourly_weather_param);
+            frag.setHourlyWeatherList(current_date_list);
 
             //add fragment to main activity layout
             ft.add(R.id.hourly_weather_id, frag);
@@ -91,7 +122,6 @@ public class HourlyWeatherActivity extends AppCompatActivity
         else
         {
             Log.d(LOGTAG, "nothing to display for hourly weather");
-            //TODO: display something else..could not show data.
         }
     }
 

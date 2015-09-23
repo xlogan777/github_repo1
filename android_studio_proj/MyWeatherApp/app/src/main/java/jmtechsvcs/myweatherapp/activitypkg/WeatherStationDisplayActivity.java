@@ -99,6 +99,10 @@ public class WeatherStationDisplayActivity extends AppCompatActivity
             //commit this activity.
             ft.commit();
         }
+        else
+        {
+            Log.d(LOGTAG, "nothing to display for weather stations");
+        }
     }
 
     @Override

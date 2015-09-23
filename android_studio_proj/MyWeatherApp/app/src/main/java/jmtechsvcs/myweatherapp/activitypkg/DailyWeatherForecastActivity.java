@@ -95,7 +95,6 @@ public class DailyWeatherForecastActivity extends AppCompatActivity
         else
         {
             Log.d(LOGTAG,"nothing to display for daily weather");
-            //TODO: display something else..could not show data.
         }
     }
 

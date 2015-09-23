@@ -4,4 +4,226 @@
     android:layout_height="match_parent"
     android:id="@+id/hourly_row_layout">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="HourlyWeather"
+        android:id="@+id/HourlyWeather"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="HourlyDate_Val"
+        android:id="@+id/HourlyDate_Val"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/HourlyWeather"
+        android:layout_toEndOf="@+id/HourlyWeather"
+        android:layout_marginLeft="38dp"
+        android:layout_marginStart="38dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="HourlyCloudsPerct"
+        android:id="@+id/HourlyCloudsPerct"
+        android:layout_below="@+id/HourlyWeather"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="HourlyCloudsPerct_Val"
+        android:id="@+id/HourlyCloudsPerct_Val"
+        android:layout_below="@+id/HourlyDate_Val"
+        android:layout_alignLeft="@+id/HourlyDate_Val"
+        android:layout_alignStart="@+id/HourlyDate_Val" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="HourlyHumidity"
+        android:id="@+id/HourlyHumidity"
+        android:layout_below="@+id/HourlyCloudsPerct"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="HourlyHumidity_Val"
+        android:id="@+id/HourlyHumidity_Val"
+        android:layout_below="@+id/HourlyCloudsPerct_Val"
+        android:layout_alignLeft="@+id/HourlyCloudsPerct_Val"
+        android:layout_alignStart="@+id/HourlyCloudsPerct_Val" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="HourlyMaxTemp"
+        android:id="@+id/HourlyMaxTemp"
+        android:layout_below="@+id/HourlyHumidity"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="HourlyMaxTemp_Val"
+        android:id="@+id/HourlyMaxTemp_Val"
+        android:layout_below="@+id/HourlyHumidity_Val"
+        android:layout_alignLeft="@+id/HourlyHumidity_Val"
+        android:layout_alignStart="@+id/HourlyHumidity_Val" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="HourlyMinTemp"
+        android:id="@+id/HourlyMinTemp"
+        android:layout_below="@+id/HourlyMaxTemp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="HourlyMinTemp_Val"
+        android:id="@+id/HourlyMinTemp_Val"
+        android:layout_below="@+id/HourlyMaxTemp_Val"
+        android:layout_alignLeft="@+id/HourlyMaxTemp_Val"
+        android:layout_alignStart="@+id/HourlyMaxTemp_Val" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="HourlyTemp"
+        android:id="@+id/HourlyTemp"
+        android:layout_below="@+id/HourlyMinTemp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="HourlyTemp_Val"
+        android:id="@+id/HourlyTemp_Val"
+        android:layout_below="@+id/HourlyMinTemp_Val"
+        android:layout_alignLeft="@+id/HourlyMinTemp_Val"
+        android:layout_alignStart="@+id/HourlyMinTemp_Val" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="HourlyPressure"
+        android:id="@+id/HourlyPressure"
+        android:layout_below="@+id/HourlyTemp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="HourlyPressure_Val"
+        android:id="@+id/HourlyPressure_Val"
+        android:layout_alignTop="@+id/HourlyPressure"
+        android:layout_alignLeft="@+id/HourlyTemp_Val"
+        android:layout_alignStart="@+id/HourlyTemp_Val" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="HourlySeaLevel"
+        android:id="@+id/HourlySeaLevel"
+        android:layout_below="@+id/HourlyPressure"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="HourlySeaLevel_Val"
+        android:id="@+id/HourlySeaLevel_Val"
+        android:layout_below="@+id/HourlyPressure_Val"
+        android:layout_alignLeft="@+id/HourlyPressure_Val"
+        android:layout_alignStart="@+id/HourlyPressure_Val" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="HourlyGndLevel"
+        android:id="@+id/HourlyGndLevel"
+        android:layout_below="@+id/HourlySeaLevel"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="HourlyGndLevel_Val"
+        android:id="@+id/HourlyGndLevel_Val"
+        android:layout_below="@+id/HourlySeaLevel_Val"
+        android:layout_alignLeft="@+id/HourlySeaLevel_Val"
+        android:layout_alignStart="@+id/HourlySeaLevel_Val" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="HourlyWindDeg"
+        android:id="@+id/HourlyWindDeg"
+        android:layout_below="@+id/HourlyGndLevel"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="HourlyWindDeg_Val"
+        android:id="@+id/HourlyWindDeg_Val"
+        android:layout_below="@+id/HourlyGndLevel_Val"
+        android:layout_alignLeft="@+id/HourlyGndLevel_Val"
+        android:layout_alignStart="@+id/HourlyGndLevel_Val" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="HourlyWindSpeed"
+        android:id="@+id/HourlyWindSpeed"
+        android:layout_below="@+id/HourlyWindDeg"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="HourlyWindSpeed_Val"
+        android:id="@+id/HourlyWindSpeed_Val"
+        android:layout_below="@+id/HourlyWindDeg_Val"
+        android:layout_alignLeft="@+id/HourlyWindDeg_Val"
+        android:layout_alignStart="@+id/HourlyWindDeg_Val" />
+
 </RelativeLayout>
