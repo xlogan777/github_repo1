@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,7 +27,7 @@ import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherStationInfoTable;
 import jmtechsvcs.myweatherapp.utilspkg.MathUtils;
 import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 
-public class WeatherStationDisplayActivity extends ActionBarActivity
+public class WeatherStationDisplayActivity extends AppCompatActivity
 {
     private static final String LOGTAG = "WeathtationDispActivity";
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,7 +24,7 @@ import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 /*
     this class handles the display of the current weather data for a city.
  */
-public class CurrentWeatherActivity extends ActionBarActivity
+public class CurrentWeatherActivity extends AppCompatActivity
 {
     private static final String LOGTAG = "CurrentWeatherActivity";
 

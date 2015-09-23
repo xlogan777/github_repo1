@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +21,7 @@ import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
 import jmtechsvcs.myweatherapp.fragmentpkg.DailyWeatherFragment;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.DailyWeatherInfoTable;
 
-public class DailyWeatherForecastActivity extends ActionBarActivity
+public class DailyWeatherForecastActivity extends AppCompatActivity
 {
     private long cityId = 0;
     private static final String LOGTAG = "DailyWthrForecastAct";

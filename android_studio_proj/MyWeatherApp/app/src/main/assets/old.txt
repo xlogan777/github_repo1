@@ -29,3 +29,28 @@
     </FrameLayout>
 
 
+//this will return the md5 hash id.
+//    public String md5(String s) {
+//        try {
+//            // Create MD5 Hash
+//            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+//            digest.update(s.getBytes());
+//            byte messageDigest[] = digest.digest();
+//
+//            // Create Hex String
+//            StringBuffer hexString = new StringBuffer();
+//            for (int i=0; i<messageDigest.length; i++)
+//                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+//            return hexString.toString();
+//
+//        } catch (NoSuchAlgorithmException e) {
+//            e.printStackTrace();
+//        }
+//        return "";
+//    }
+
+//this get the hash id and prints it.
+//        String android_id = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
+//        String deviceId = md5(android_id).toUpperCase();
+//        Log.d(LOGTAG,"device_id = "+deviceId);
+
