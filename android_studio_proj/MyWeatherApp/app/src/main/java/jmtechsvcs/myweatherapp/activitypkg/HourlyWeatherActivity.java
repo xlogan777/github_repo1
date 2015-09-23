@@ -16,6 +16,7 @@ import java.util.List;
 import jmtechsvcs.myweatherapp.R;
 import jmtechsvcs.myweatherapp.dbpkg.BeanQueryParams;
 import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
+import jmtechsvcs.myweatherapp.fragmentpkg.HourlyWeatherFragment;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.HourlyWeatherInfoTable;
 
 public class HourlyWeatherActivity extends AppCompatActivity
@@ -67,9 +68,6 @@ public class HourlyWeatherActivity extends AppCompatActivity
         List<HourlyWeatherInfoTable> hourly_weather_param =
                 WeatherDbProcessing.getBeanByQueryParamsList(qp, context, new HourlyWeatherInfoTable());
 
-        //need to only show todays hours items only..for every 3 hrs by using the date obj.
-
-        Log.d(LOGTAG,"size of hourly list = "+hourly_weather_param.size());
         //check to see if we have data to show.
         if(hourly_weather_param != null && hourly_weather_param.size() > 0)
         {
@@ -78,15 +76,14 @@ public class HourlyWeatherActivity extends AppCompatActivity
             FragmentManager fm = getFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
 
-            //TODO: create the fragment here.
-//            //create the fragment.
-//            DailyWeatherFragment frag = new DailyWeatherFragment();
-//
-//            //set data to be used by this fragment.
-//            frag.setDailyWeatherList(daily_weather_param);
-//
-//            //add fragment to main activity layout
-//            ft.add(R.id.hourly_weather_id, frag);
+            //create the fragment.
+            HourlyWeatherFragment frag = new HourlyWeatherFragment();
+
+            //set data to be used by this fragment.
+            frag.setHourlyWeatherList(hourly_weather_param);
+
+            //add fragment to main activity layout
+            ft.add(R.id.hourly_weather_id, frag);
 
             //commit this activity.
             ft.commit();
