@@ -26,31 +26,9 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Enter Country Code"
         android:id="@+id/searchcountrycode"
-        android:layout_alignTop="@+id/cc_input"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/city_name_input"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/searchcountrycode"
-        android:layout_alignEnd="@+id/searchcountrycode"
-        android:inputType="textCapSentences"/>
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/cc_input"
         android:layout_below="@+id/city_name_input"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/searchcountrycode"
-        android:layout_alignEnd="@+id/searchcountrycode"
-        android:inputType="textCapSentences"/>
+        android:layout_alignParentStart="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -60,7 +38,7 @@
         android:id="@+id/performsearch"
         android:layout_below="@+id/cc_input"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -68,20 +46,20 @@
         android:layout_height="wrap_content"
         android:text="Clear"
         android:id="@+id/cleardata"
-        android:layout_above="@+id/frame_frag_layout"
-        android:layout_toRightOf="@+id/performsearch"
-        android:layout_toEndOf="@+id/performsearch"/>
+        android:layout_alignTop="@+id/performsearch"
+        android:layout_toRightOf="@+id/searchcityname"
+        android:layout_toEndOf="@+id/searchcityname" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/performsearch"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/frame_frag_layout"
         android:layout_above="@+id/adView"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/performsearch">
     </FrameLayout>
 
     <com.google.android.gms.ads.AdView
@@ -93,5 +71,25 @@
         ads:adSize="BANNER"
         ads:adUnitId="@string/banner_ad_unit_id">
     </com.google.android.gms.ads.AdView>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/city_name_input"
+        android:layout_below="@+id/searchcityname"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/searchcityname"
+        android:layout_alignEnd="@+id/searchcityname" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cc_input"
+        android:layout_below="@+id/searchcountrycode"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/city_name_input"
+        android:layout_alignEnd="@+id/city_name_input" />
 
 </RelativeLayout>
