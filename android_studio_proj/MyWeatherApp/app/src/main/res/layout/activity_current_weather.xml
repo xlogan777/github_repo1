@@ -33,6 +33,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Coordinates"
         android:id="@+id/coordinates"
+        android:layout_marginTop="21dp"
         android:layout_below="@+id/cityname"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
@@ -63,8 +64,10 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="lat_val"
         android:id="@+id/lat_val"
-        android:layout_alignTop="@+id/Lat"
-        android:layout_centerHorizontal="true"/>
+        android:layout_alignBaseline="@+id/Lat"
+        android:layout_alignBottom="@+id/Lat"
+        android:layout_alignLeft="@+id/lon_val"
+        android:layout_alignStart="@+id/lon_val"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -73,8 +76,8 @@
         android:text="lon_val"
         android:id="@+id/lon_val"
         android:layout_above="@+id/times"
-        android:layout_alignLeft="@+id/lat_val"
-        android:layout_alignStart="@+id/lat_val"/>
+        android:layout_alignLeft="@+id/recentfeedtime_val"
+        android:layout_alignStart="@+id/recentfeedtime_val"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -82,6 +85,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Times"
         android:id="@+id/times"
+        android:layout_marginTop="25dp"
         android:layout_below="@+id/Lon"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
@@ -122,27 +126,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="recentfeedtime_val"
         android:id="@+id/recentfeedtime_val"
-        android:layout_alignBottom="@+id/LastUpdateTime"
-        android:layout_alignLeft="@+id/lon_val"
-        android:layout_alignStart="@+id/lon_val"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="sr_time_val"
-        android:id="@+id/sr_time_val"
-        android:layout_below="@+id/recentfeedtime_val"
-        android:layout_alignLeft="@+id/recentfeedtime_val"
-        android:layout_alignStart="@+id/recentfeedtime_val"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="ss_time_val"
-        android:id="@+id/ss_time_val"
-        android:layout_below="@+id/sr_time_val"
+        android:layout_alignTop="@+id/LastUpdateTime"
         android:layout_alignLeft="@+id/sr_time_val"
         android:layout_alignStart="@+id/sr_time_val"/>
 
@@ -150,8 +134,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="sr_time_val"
+        android:id="@+id/sr_time_val"
+        android:layout_above="@+id/ss_time_val"
+        android:layout_alignLeft="@+id/ss_time_val"
+        android:layout_alignStart="@+id/ss_time_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="ss_time_val"
+        android:id="@+id/ss_time_val"
+        android:layout_above="@+id/weather"
+        android:layout_alignLeft="@+id/weatherid_val"
+        android:layout_alignStart="@+id/weatherid_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Weather"
         android:id="@+id/weather"
+        android:layout_marginTop="28dp"
         android:layout_below="@+id/SunSet"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
@@ -282,27 +287,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="weatherid_val"
         android:id="@+id/weatherid_val"
-        android:layout_above="@+id/weathermain"
-        android:layout_alignLeft="@+id/ss_time_val"
-        android:layout_alignStart="@+id/ss_time_val"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="weathermain_val"
-        android:id="@+id/weathermain_val"
-        android:layout_below="@+id/weatherid_val"
-        android:layout_alignLeft="@+id/weatherid_val"
-        android:layout_alignStart="@+id/weatherid_val"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="weatherdesc_val"
-        android:id="@+id/weatherdesc_val"
-        android:layout_below="@+id/weathermain_val"
+        android:layout_below="@+id/weather"
         android:layout_alignLeft="@+id/weathermain_val"
         android:layout_alignStart="@+id/weathermain_val"/>
 
@@ -310,9 +295,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="maintemp_val"
-        android:id="@+id/maintemp_val"
-        android:layout_below="@+id/weatherdesc_val"
+        android:text="weathermain_val"
+        android:id="@+id/weathermain_val"
+        android:layout_above="@+id/weatherdesc_val"
         android:layout_alignLeft="@+id/weatherdesc_val"
         android:layout_alignStart="@+id/weatherdesc_val"/>
 
@@ -320,9 +305,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="mainpressure_val"
-        android:id="@+id/mainpressure_val"
-        android:layout_below="@+id/maintemp_val"
+        android:text="weatherdesc_val"
+        android:id="@+id/weatherdesc_val"
+        android:layout_above="@+id/maintemp_val"
         android:layout_alignLeft="@+id/maintemp_val"
         android:layout_alignStart="@+id/maintemp_val"/>
 
@@ -330,39 +315,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="mainhumidity_val"
-        android:id="@+id/mainhumidity_val"
-        android:layout_below="@+id/mainpressure_val"
-        android:layout_alignLeft="@+id/mainpressure_val"
-        android:layout_alignStart="@+id/mainpressure_val"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="mintemp_val"
-        android:id="@+id/mintemp_val"
-        android:layout_below="@+id/mainhumidity_val"
-        android:layout_alignLeft="@+id/mainhumidity_val"
-        android:layout_alignStart="@+id/mainhumidity_val"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="maxtemp_val"
-        android:id="@+id/maxtemp_val"
-        android:layout_below="@+id/mintemp_val"
-        android:layout_alignLeft="@+id/mintemp_val"
-        android:layout_alignStart="@+id/mintemp_val"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="sealevel_val"
-        android:id="@+id/sealevel_val"
-        android:layout_below="@+id/maxtemp_val"
+        android:text="maintemp_val"
+        android:id="@+id/maintemp_val"
+        android:layout_above="@+id/mainpressure_val"
         android:layout_alignLeft="@+id/maxtemp_val"
         android:layout_alignStart="@+id/maxtemp_val"/>
 
@@ -370,11 +325,61 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="grndlevel_val"
-        android:id="@+id/grndlevel_val"
-        android:layout_below="@+id/sealevel_val"
+        android:text="mainpressure_val"
+        android:id="@+id/mainpressure_val"
+        android:layout_above="@+id/mainhumidity_val"
+        android:layout_alignLeft="@+id/mainhumidity_val"
+        android:layout_alignStart="@+id/mainhumidity_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="mainhumidity_val"
+        android:id="@+id/mainhumidity_val"
+        android:layout_above="@+id/mintemp_val"
+        android:layout_alignLeft="@+id/mintemp_val"
+        android:layout_alignStart="@+id/mintemp_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="mintemp_val"
+        android:id="@+id/mintemp_val"
+        android:layout_above="@+id/maxtemp_val"
+        android:layout_alignLeft="@+id/windspeed_val"
+        android:layout_alignStart="@+id/windspeed_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="maxtemp_val"
+        android:id="@+id/maxtemp_val"
+        android:layout_above="@+id/sealevel_val"
         android:layout_alignLeft="@+id/sealevel_val"
         android:layout_alignStart="@+id/sealevel_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="sealevel_val"
+        android:id="@+id/sealevel_val"
+        android:layout_above="@+id/grndlevel_val"
+        android:layout_alignLeft="@+id/grndlevel_val"
+        android:layout_alignStart="@+id/grndlevel_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="grndlevel_val"
+        android:id="@+id/grndlevel_val"
+        android:layout_above="@+id/windspeed"
+        android:layout_alignLeft="@+id/clouds_val"
+        android:layout_alignStart="@+id/clouds_val"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -383,8 +388,8 @@
         android:text="windspeed_val"
         android:id="@+id/windspeed_val"
         android:layout_below="@+id/grndlevel_val"
-        android:layout_alignLeft="@+id/grndlevel_val"
-        android:layout_alignStart="@+id/grndlevel_val"/>
+        android:layout_alignLeft="@+id/windspeedname_val"
+        android:layout_alignStart="@+id/windspeedname_val"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -392,9 +397,9 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="clouds_val"
         android:id="@+id/clouds_val"
-        android:layout_alignTop="@+id/clouds"
-        android:layout_alignLeft="@+id/windspeed_val"
-        android:layout_alignStart="@+id/windspeed_val"/>
+        android:layout_above="@+id/precipitationmode_val"
+        android:layout_alignLeft="@+id/precipitationvalue_val"
+        android:layout_alignStart="@+id/precipitationvalue_val"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -402,9 +407,9 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="countrycode"
         android:id="@+id/countrycode"
-        android:layout_alignTop="@+id/cityname"
-        android:layout_alignLeft="@+id/lat_val"
-        android:layout_alignStart="@+id/lat_val"/>
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/windspeedname"
+        android:layout_toEndOf="@+id/windspeedname"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -423,8 +428,8 @@
         android:text="windspeedname_val"
         android:id="@+id/windspeedname_val"
         android:layout_below="@+id/windspeed_val"
-        android:layout_alignLeft="@+id/windspeed_val"
-        android:layout_alignStart="@+id/windspeed_val"/>
+        android:layout_alignLeft="@+id/windspeeddirrection_val"
+        android:layout_alignStart="@+id/windspeeddirrection_val"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -442,9 +447,9 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="windspeeddirrection_val"
         android:id="@+id/windspeeddirrection_val"
-        android:layout_alignTop="@+id/windspeeddirrection"
-        android:layout_alignLeft="@+id/windspeedname_val"
-        android:layout_alignStart="@+id/windspeedname_val"/>
+        android:layout_above="@+id/visibility_val"
+        android:layout_alignLeft="@+id/visibility_val"
+        android:layout_alignStart="@+id/visibility_val"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -462,9 +467,9 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="visibility_val"
         android:id="@+id/visibility_val"
-        android:layout_below="@+id/windspeeddirrection_val"
-        android:layout_alignLeft="@+id/windspeeddirrection_val"
-        android:layout_alignStart="@+id/windspeeddirrection_val"/>
+        android:layout_above="@+id/clouds_val"
+        android:layout_alignLeft="@+id/precipitationmode_val"
+        android:layout_alignStart="@+id/precipitationmode_val"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -482,7 +487,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="precipitationmode_val"
         android:id="@+id/precipitationmode_val"
-        android:layout_below="@+id/clouds_val"
+        android:layout_below="@+id/clouds"
         android:layout_alignLeft="@+id/clouds_val"
         android:layout_alignStart="@+id/clouds_val"/>
 
@@ -503,16 +508,18 @@
         android:text="precipitationvalue_val"
         android:id="@+id/precipitationvalue_val"
         android:layout_below="@+id/precipitationmode_val"
-        android:layout_alignLeft="@+id/precipitationmode_val"
-        android:layout_alignStart="@+id/precipitationmode_val"/>
+        android:layout_toRightOf="@+id/windspeeddirrection"
+        android:layout_toEndOf="@+id/windspeeddirrection"
+        android:layout_marginLeft="39dp"
+        android:layout_marginStart="39dp"/>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/weather_icon"
-        android:layout_alignTop="@+id/countrycode"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/windspeeddirrection_val"
+        android:layout_toEndOf="@+id/windspeeddirrection_val"/>
 
 </RelativeLayout>
 </ScrollView>
