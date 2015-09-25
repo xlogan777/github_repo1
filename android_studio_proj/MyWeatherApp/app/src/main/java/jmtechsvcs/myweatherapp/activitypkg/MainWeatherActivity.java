@@ -1,13 +1,13 @@
 package jmtechsvcs.myweatherapp.activitypkg;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebView;
 
 import jmtechsvcs.myweatherapp.R;
 
 //test
-public class MainWeatherActivity extends AppCompatActivity {
+public class MainWeatherActivity extends Activity {
 
     private static String LOGTAG = "MainWeatherActivity";
 

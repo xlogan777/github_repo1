@@ -1,17 +1,12 @@
 package jmtechsvcs.myweatherapp.activitypkg;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -20,14 +15,9 @@ import jmtechsvcs.myweatherapp.R;
 import jmtechsvcs.myweatherapp.dbpkg.BeanQueryParams;
 import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
 import jmtechsvcs.myweatherapp.fragmentpkg.WeatherStationFragment;
-import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTable;
-import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityWeatherCurrCondTable;
-import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherIconTable;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherStationInfoTable;
-import jmtechsvcs.myweatherapp.utilspkg.MathUtils;
-import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 
-public class WeatherStationDisplayActivity extends AppCompatActivity
+public class WeatherStationDisplayActivity extends Activity
 {
     private static final String LOGTAG = "WeathtationDispActivity";
 
@@ -105,27 +95,27 @@ public class WeatherStationDisplayActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_weather_station_display, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if(id == R.id.action_settings){
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu)
+//    {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_weather_station_display, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item)
+//    {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if(id == R.id.action_settings){
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 }

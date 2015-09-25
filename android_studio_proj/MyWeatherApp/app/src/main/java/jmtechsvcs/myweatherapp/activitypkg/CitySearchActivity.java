@@ -1,5 +1,6 @@
 package jmtechsvcs.myweatherapp.activitypkg;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -7,22 +8,19 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import jmtechsvcs.myweatherapp.R;
@@ -32,10 +30,9 @@ import jmtechsvcs.myweatherapp.fragmentpkg.WeatherOptionsFragment;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTable;
 import jmtechsvcs.myweatherapp.dbpkg.BeanQueryParams;
 import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
-import jmtechsvcs.myweatherapp.networkpkg.NetworkIntentSvc;
 import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 
-public class CitySearchActivity extends ActionBarActivity implements CityListFragment.OnFragmentInteractionListener
+public class CitySearchActivity extends Activity implements CityListFragment.OnFragmentInteractionListener
 {
     private static String LOGTAG = "CitySearchActivity";
     private List<CityInfoTable> cityList;
@@ -91,6 +88,9 @@ public class CitySearchActivity extends ActionBarActivity implements CityListFra
                  String city_name = ((EditText) findViewById(R.id.city_name_input)).getText().toString();
                  String cc = ((EditText) findViewById(R.id.cc_input)).getText().toString();
 
+                 //hide the keyboard input here.
+                 hideKeyboardInput(view);
+
                  //if we dont have any data then do nothing.
                  if (city_name.length() == 0 && cc.length() == 0) {
                      Log.d(LOGTAG, "no data to use for search..do nothing.");
@@ -135,6 +135,18 @@ public class CitySearchActivity extends ActionBarActivity implements CityListFra
              }
          }
         );
+    }
+
+    private void hideKeyboardInput(View view)
+    {
+        //get the input method service from the app context.
+        InputMethodManager im = (InputMethodManager)
+                getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        //using the view, get the window and hide the soft input method, the keyboard in this case
+        im.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
+        //getCurrentFocus().getWindowToken(),
     }
 
     protected void onResume()
@@ -189,27 +201,27 @@ public class CitySearchActivity extends ActionBarActivity implements CityListFra
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_city_search, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if(id == R.id.action_settings){
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu){
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_city_search, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item){
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if(id == R.id.action_settings){
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     public void onFragmentInteraction(CityInfoTable data)
