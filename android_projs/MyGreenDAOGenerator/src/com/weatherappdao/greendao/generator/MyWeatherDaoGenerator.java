@@ -45,8 +45,8 @@ public class MyWeatherDaoGenerator
 			DaoGenerator dao_generator = new DaoGenerator();
 			
 			//generate code based on schema and place in outdir.			
-			//dao_generator.generateAll(schema, "c:/users/jimmy/desktop");
-			dao_generator.generateAll(schema, "c:/users/menaj/desktop");
+			dao_generator.generateAll(schema, "c:/users/jimmy/desktop");
+			//dao_generator.generateAll(schema, "c:/users/menaj/desktop");
 			
 			System.out.println("JM...generated the tables from green dao.");
 		}
@@ -234,25 +234,16 @@ public class MyWeatherDaoGenerator
 	public static Entity createDailyWeatherInfoTable(Schema schema)
 	{
 	   /*
-	    float  getHumidity() 
-float getPercentageOfClouds() 
-float getPressure() 
-float getRain() 
-java.lang.String  getRawResponse() 
-int   getResponseCode() 
-float getSnow() 
-DailyForecast.Forecast.Temperature  getTemperatureInstance() 
-float getWindDegree() 
-float getWindSpeed()  
-	   
-	   DailyForecast.Forecast.Temperature  getTemperatureInstance()	   
-	    float  getDayTemperature() 
-      float getEveningTemperature() 
-      float getMaximumTemperature() 
-      float getMinimumTemperature() 
-      float getMorningTemperature() 
-      float getNightTemperature() 
-
+	    <time day="2015-10-08">
+<symbol number="600" name="light snow" var="13d"/>
+<precipitation value="0.91" type="rain"/>
+<windDirection deg="306" code="NW" name="Northwest"/>
+<windSpeed mps="15.68" name="High wind, near gale"/>
+<temperature day="37.78" min="27.99" max="39.45" night="33.04" eve="37" morn="27.99"/>
+<pressure unit="hPa" value="1008.27"/>
+<humidity value="92" unit="%"/>
+<clouds value="broken clouds" all="64" unit="%"/>
+</time>
 	    */
 	   
 	   //table name
@@ -265,21 +256,46 @@ float getWindSpeed()
       //add non pk fields
       daily_weather_entity.addLongProperty("city_id").notNull();
       
-      daily_weather_entity.addDoubleProperty("daily_humidity").notNull();  
-      daily_weather_entity.addDoubleProperty("daily_cloud_pert").notNull();
-      daily_weather_entity.addDoubleProperty("daily_pressure").notNull();
-      daily_weather_entity.addDoubleProperty("daily_rain").notNull();
-      daily_weather_entity.addDoubleProperty("daily_snow").notNull();
-      daily_weather_entity.addDoubleProperty("daily_wind_deg").notNull();
-      daily_weather_entity.addDoubleProperty("daily_wind_speed").notNull();
+      //<symbol number="600" name="light snow" var="13d"/>
+      daily_weather_entity.addLongProperty("daily_symbol_number").notNull();
+      daily_weather_entity.addStringProperty("daily_symbol_name").notNull();
+      daily_weather_entity.addStringProperty("daily_symbol_var").notNull();
       
+      //<precipitation value="0.91" type="rain"/>
+      daily_weather_entity.addDoubleProperty("daily_precip_value").notNull();
+      daily_weather_entity.addStringProperty("daily_precip_type").notNull();
+      
+      //<windDirection deg="306" code="NW" name="Northwest"/>
+      daily_weather_entity.addLongProperty("wind_dirr_deg").notNull();
+      daily_weather_entity.addStringProperty("wind_dirr_code").notNull();
+      daily_weather_entity.addStringProperty("wind_dirr_name").notNull();
+      
+      //<windSpeed mps="15.68" name="High wind, near gale"/>
+      daily_weather_entity.addDoubleProperty("wind_speed_mps").notNull();
+      daily_weather_entity.addStringProperty("wind_speed_name").notNull();
+      
+      //<temperature day="37.78" min="27.99" max="39.45" night="33.04" eve="37" morn="27.99"/>
       daily_weather_entity.addDoubleProperty("daily_temp").notNull();
-      daily_weather_entity.addDoubleProperty("daily_evening_temp").notNull();
-      daily_weather_entity.addDoubleProperty("daily_max_temp").notNull();
       daily_weather_entity.addDoubleProperty("daily_min_temp").notNull();
-      daily_weather_entity.addDoubleProperty("daily_morning_temp").notNull();
+      daily_weather_entity.addDoubleProperty("daily_max_temp").notNull();
       daily_weather_entity.addDoubleProperty("daily_night_temp").notNull();
+      daily_weather_entity.addDoubleProperty("daily_evening_temp").notNull();
+      daily_weather_entity.addDoubleProperty("daily_morning_temp").notNull();
       
+      //<pressure unit="hPa" value="1008.27"/>
+      daily_weather_entity.addStringProperty("pressure_unit").notNull();
+      daily_weather_entity.addDoubleProperty("pressure_value").notNull();
+      
+      //<humidity value="92" unit="%"/>
+      daily_weather_entity.addLongProperty("humidity_val").notNull();
+      daily_weather_entity.addStringProperty("humidity_unit").notNull();
+      
+      //<clouds value="broken clouds" all="64" unit="%"/>
+      daily_weather_entity.addStringProperty("clouds_val").notNull();
+      daily_weather_entity.addLongProperty("clouds_all").notNull();
+      daily_weather_entity.addStringProperty("clouds_unit").notNull();
+      
+      //<time day="2015-10-08">
       daily_weather_entity.addLongProperty("daily_weather_date").notNull();
       
       return daily_weather_entity;
