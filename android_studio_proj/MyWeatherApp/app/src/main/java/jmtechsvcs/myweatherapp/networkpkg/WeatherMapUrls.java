@@ -27,6 +27,17 @@ public class WeatherMapUrls
     //weather station id end pt.
     private final static String CURRENT_WEATHER_STATION_END_PT = "http://api.openweathermap.org/data/2.5/station?id=";
 
+    //daily weather forecast end pt
+    private final static String DAILY_WEATHER_FORECAST_END_PT = "http://api.openweathermap.org/data/2.5/forecast/daily?id=";
+
+    public static String getDailyWeatherForecastEndPt(String cityId)
+    {
+        String rv = DAILY_WEATHER_FORECAST_END_PT+cityId+"&mode=xml&units=imperial&cnt=5&"+APP_ID;
+        Log.d(LOGTAG,rv);
+
+        return rv;
+    }
+
     public static String getCurrentWeatherByCityId(String cityId)
     {
         String rv = CURRENT_WEATHER_END_PT+"id="+cityId+"&units=imperial&"+APP_ID;

@@ -254,44 +254,19 @@ public class NetworkIntentSvc extends IntentService
     {
         long cityId = bundle.getLong("cityId");
 
-        try {
-            // declaring object of "OpenWeatherMap" class
-            //setup with api key and the units needed which is imperial.
-            OpenWeatherMap owm = new
-                    OpenWeatherMap(OpenWeatherMap.Units.IMPERIAL, WeatherMapUrls.API_KEY);
+        String daily_forecast_end_pt = WeatherMapUrls.getDailyWeatherForecastEndPt(cityId+"");
 
-            //list of daily objs.
-            List<DailyForecast.Forecast> daily_list = new ArrayList<DailyForecast.Forecast>();
+        //get the payload from the http get for this current weather as a stream.
+        DataPayload stream_payload =
+                NetworkProcessing.httpGetProcessing(
+                        daily_forecast_end_pt, DataPayload.T_Payload_Type.E_BYTE_STREAM_PAYLOAD_TYPE
+                );
 
-            //get the daily forecast by city id.
-            byte cnt = 5;//only request 5 days.
-            DailyForecast dailyForecast = owm.dailyForecastByCityCode(cityId, cnt);
-
-            //check if daily forecast is valid.
-            if (dailyForecast.isValid()) {
-                //get the cnt if it exists.
-                int daily_cnt = dailyForecast.hasForecastCount() ?
-                        dailyForecast.getForecastCount() : 0;
-
-                Log.d(LOGTAG, "daily count = " + daily_cnt);
-
-                //pull all items for this city id for daily data.
-                for (int i = 0; i < daily_cnt; i++) {
-                    //get daily info
-                    DailyForecast.Forecast day_forecast = dailyForecast.getForecastInstance(i);
-
-                    //add item to this list to allow for processing based on city id.
-                    daily_list.add(day_forecast);
-                }
-            }
-
-            //process these lists accordingly.
-            WeatherDbProcessing.updateDailyCityWeatherForecast
-                    (getApplicationContext(), daily_list, cityId);
-        }
-        catch (Exception e)
+        if(stream_payload.getInputStreamPayload() != null)
         {
-            Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
+            //update the weather data with the data stream.
+            WeatherDbProcessing.updateDailyCityWeatherForecast
+                    (getApplicationContext(), stream_payload.getInputStreamPayload(), cityId);
         }
 
         //send intents via android system.

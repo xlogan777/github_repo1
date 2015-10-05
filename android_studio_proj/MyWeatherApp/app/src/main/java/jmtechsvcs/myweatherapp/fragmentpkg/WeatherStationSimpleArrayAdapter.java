@@ -65,7 +65,7 @@ public class WeatherStationSimpleArrayAdapter extends ArrayAdapter<WeatherStatio
         textView.setText(item_row.getStation_id()+"");
 
         textView = (TextView)rowView.findViewById(R.id.station_time_val);
-        textView.setText(WeatherAppUtils.getUtcFromUtcSeconds(item_row.getLast_update_time())+"");
+        textView.setText(WeatherAppUtils.getUtcFromUtcSeconds(item_row.getLast_update_time(),WeatherAppUtils.UTC_DATE_FORMAT_hms)+"");
 
         //any else is optional to display..so treat it that way.
         String result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getStation_temp());

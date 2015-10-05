@@ -19,7 +19,7 @@ public class WeatherDbHelper extends SQLiteOpenHelper
 {
     //this allows for automatic upgrade of data bases when the version number
     //is increased. incease it by 1 as u see fit.
-    private static final int SCHEMA_VERSION = 4;//db version.
+    private static final int SCHEMA_VERSION = 5;//db version.
 
     private static String LOGTAG = "WeatherDbHelper";
 

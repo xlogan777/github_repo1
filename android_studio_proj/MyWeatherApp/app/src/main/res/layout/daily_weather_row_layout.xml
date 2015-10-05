@@ -10,7 +10,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="daily_temp"
         android:id="@+id/daily_temp"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/weather_date"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
 
@@ -20,11 +20,11 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="daily_temp_val"
         android:id="@+id/daily_temp_val"
-        android:layout_marginLeft="36dp"
-        android:layout_marginStart="36dp"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/daily_morning"
-        android:layout_toEndOf="@+id/daily_morning"/>
+        android:layout_marginLeft="56dp"
+        android:layout_marginStart="56dp"
+        android:layout_alignTop="@+id/daily_temp"
+        android:layout_toRightOf="@+id/daily_precipitation"
+        android:layout_toEndOf="@+id/daily_precipitation"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -42,9 +42,9 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="daily_min_val"
         android:id="@+id/daily_min_val"
-        android:layout_below="@+id/daily_temp_val"
-        android:layout_alignLeft="@+id/daily_temp_val"
-        android:layout_alignStart="@+id/daily_temp_val"/>
+        android:layout_above="@+id/daily_max_val"
+        android:layout_alignLeft="@+id/daily_max_val"
+        android:layout_alignStart="@+id/daily_max_val"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -62,9 +62,9 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="daily_max_val"
         android:id="@+id/daily_max_val"
-        android:layout_above="@+id/daily_morning"
-        android:layout_alignLeft="@+id/daily_min_val"
-        android:layout_alignStart="@+id/daily_min_val"/>
+        android:layout_below="@+id/daily_min"
+        android:layout_alignLeft="@+id/daily_temp_val"
+        android:layout_alignStart="@+id/daily_temp_val"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -102,9 +102,9 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="daily_evening_val"
         android:id="@+id/daily_evening_val"
-        android:layout_below="@+id/daily_morning_val"
-        android:layout_alignLeft="@+id/daily_morning_val"
-        android:layout_alignStart="@+id/daily_morning_val"/>
+        android:layout_above="@+id/daily_night_val"
+        android:layout_alignLeft="@+id/daily_night_val"
+        android:layout_alignStart="@+id/daily_night_val"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -122,9 +122,9 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="daily_night_val"
         android:id="@+id/daily_night_val"
-        android:layout_below="@+id/daily_evening_val"
-        android:layout_alignLeft="@+id/daily_evening_val"
-        android:layout_alignStart="@+id/daily_evening_val"/>
+        android:layout_below="@+id/daily_evening"
+        android:layout_alignLeft="@+id/daily_max_val"
+        android:layout_alignStart="@+id/daily_max_val"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -142,9 +142,9 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="daily_humidity_val"
         android:id="@+id/daily_humidity_val"
-        android:layout_below="@+id/daily_night_val"
+        android:layout_above="@+id/daily_cloud_pect_val"
         android:layout_alignLeft="@+id/daily_night_val"
-        android:layout_alignStart="@+id/daily_night_val" />
+        android:layout_alignStart="@+id/daily_night_val"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -162,9 +162,9 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="daily_cloud_pect_val"
         android:id="@+id/daily_cloud_pect_val"
-        android:layout_below="@+id/daily_humidity_val"
+        android:layout_alignTop="@+id/daily_cloud_pect"
         android:layout_alignLeft="@+id/daily_humidity_val"
-        android:layout_alignStart="@+id/daily_humidity_val" />
+        android:layout_alignStart="@+id/daily_humidity_val"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -182,49 +182,9 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="daily_pressure_val"
         android:id="@+id/daily_pressure_val"
-        android:layout_below="@+id/daily_cloud_pect_val"
+        android:layout_above="@+id/daily_precipitation"
         android:layout_alignLeft="@+id/daily_cloud_pect_val"
-        android:layout_alignStart="@+id/daily_cloud_pect_val" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="daily_rain"
-        android:id="@+id/daily_rain"
-        android:layout_below="@+id/daily_pressure"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="daily_rain_val"
-        android:id="@+id/daily_rain_val"
-        android:layout_below="@+id/daily_pressure_val"
-        android:layout_alignLeft="@+id/daily_pressure_val"
-        android:layout_alignStart="@+id/daily_pressure_val" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="daily_snow"
-        android:id="@+id/daily_snow"
-        android:layout_below="@+id/daily_rain"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="daily_snow_val"
-        android:id="@+id/daily_snow_val"
-        android:layout_below="@+id/daily_rain_val"
-        android:layout_alignLeft="@+id/daily_rain_val"
-        android:layout_alignStart="@+id/daily_rain_val" />
+        android:layout_alignStart="@+id/daily_cloud_pect_val"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -232,9 +192,9 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="daily_wind_deg"
         android:id="@+id/daily_wind_deg"
-        android:layout_below="@+id/daily_snow"
+        android:layout_below="@+id/daily_precipitation"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -242,9 +202,9 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="daily_wind_deg_val"
         android:id="@+id/daily_wind_deg_val"
-        android:layout_alignTop="@+id/daily_wind_deg"
-        android:layout_alignLeft="@+id/daily_snow_val"
-        android:layout_alignStart="@+id/daily_snow_val" />
+        android:layout_above="@+id/daily_wind_speed_val"
+        android:layout_alignLeft="@+id/daily_precipitation_val"
+        android:layout_alignStart="@+id/daily_precipitation_val"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -262,9 +222,29 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="daily_wind_speed_val"
         android:id="@+id/daily_wind_speed_val"
-        android:layout_below="@+id/daily_wind_deg_val"
+        android:layout_alignTop="@+id/daily_wind_speed"
         android:layout_alignLeft="@+id/daily_wind_deg_val"
-        android:layout_alignStart="@+id/daily_wind_deg_val" />
+        android:layout_alignStart="@+id/daily_wind_deg_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="daily_precipitation"
+        android:id="@+id/daily_precipitation"
+        android:layout_below="@+id/daily_pressure"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="daily_precipitation_val"
+        android:id="@+id/daily_precipitation_val"
+        android:layout_below="@+id/daily_pressure_val"
+        android:layout_alignLeft="@+id/daily_pressure_val"
+        android:layout_alignStart="@+id/daily_pressure_val"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -272,9 +252,9 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="weather_date"
         android:id="@+id/weather_date"
-        android:layout_below="@+id/daily_wind_speed"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -282,7 +262,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="weather_date_val"
         android:id="@+id/weather_date_val"
-        android:layout_below="@+id/daily_wind_speed_val"
-        android:layout_alignLeft="@+id/daily_wind_speed_val"
-        android:layout_alignStart="@+id/daily_wind_speed_val" />
+        android:layout_above="@+id/daily_temp"
+        android:layout_alignLeft="@+id/daily_temp_val"
+        android:layout_alignStart="@+id/daily_temp_val"/>
 </RelativeLayout>

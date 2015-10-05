@@ -35,7 +35,8 @@ public class WeatherAppUtils
     public final static long DEFAULT_lONG_VAL = Long.MAX_VALUE;
     public final static double DEFAULT_DOUBLE_VAL = Double.MAX_VALUE;
     public final static String DEFAULT_STRING_VAL = "DEFAULT_STRING_VAL";
-    public final static String UTC_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+    public final static String UTC_DATE_FORMAT_hms = "yyyy-MM-dd'T'HH:mm:ss";
+    public final static String UTC_DATE_FORMAT = "yyyy-MM-dd";
 
     //action to be used for stopping of the loading spinner
     public static final String STOP_SPINNER_ACTION = "STOP_SPINNER_ACTION";
@@ -294,14 +295,14 @@ public class WeatherAppUtils
     }
 
     //parse utc formatted string and get a long seconds value.
-    public static long getUtcSecondsFromDateString(String input)
+    public static long getUtcSecondsFromDateString(String input, String format)
     {
         long rv = DEFAULT_lONG_VAL;
 
         try
         {
             //2015-08-15T11:00:07, from xml feed.
-            SimpleDateFormat dateFormat = new SimpleDateFormat(UTC_DATE_FORMAT, Locale.US);
+            SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.US);
             Date inputDate = dateFormat.parse(input);
             Log.d(LOGTAG,inputDate.toString());
             rv = inputDate.getTime();
@@ -315,11 +316,11 @@ public class WeatherAppUtils
     }
 
     //get a string value from utc seconds in the format specified.
-    public static String getUtcFromUtcSeconds(long utcSeconds)
+    public static String getUtcFromUtcSeconds(long utcSeconds, String format)
     {
         String rv = "";
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat(UTC_DATE_FORMAT, Locale.US);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.US);
         rv = dateFormat.format(new Date(utcSeconds));
         Log.d(LOGTAG,"date = "+rv);
 

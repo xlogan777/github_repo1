@@ -161,21 +161,21 @@ public class CurrentWeatherActivity extends Activity
 
         if(result.length() == 0)
             ((TextView)findViewById(R.id.recentfeedtime_val)).setText(
-                WeatherAppUtils.getUtcFromUtcSeconds(currWeatherTable.getCurr_data_calc_time())+"");
+                WeatherAppUtils.getUtcFromUtcSeconds(currWeatherTable.getCurr_data_calc_time(), WeatherAppUtils.UTC_DATE_FORMAT_hms)+"");
         else
             ((TextView)findViewById(R.id.recentfeedtime_val)).setText(result);
 
         result = WeatherAppUtils.getDefaultStringDisplayLong(currWeatherTable.getCurr_sys_sunrise_time());
         if(result.length() == 0)
             ((TextView)findViewById(R.id.sr_time_val)).setText(
-                    WeatherAppUtils.getUtcFromUtcSeconds(currWeatherTable.getCurr_sys_sunrise_time())+"");
+                    WeatherAppUtils.getUtcFromUtcSeconds(currWeatherTable.getCurr_sys_sunrise_time(), WeatherAppUtils.UTC_DATE_FORMAT_hms)+"");
         else
             ((TextView)findViewById(R.id.sr_time_val)).setText(result);
 
         result = WeatherAppUtils.getDefaultStringDisplayLong(currWeatherTable.getCurr_sys_sunset_time());
         if(result.length() == 0)
             ((TextView)findViewById(R.id.ss_time_val)).setText(
-                    WeatherAppUtils.getUtcFromUtcSeconds(currWeatherTable.getCurr_sys_sunset_time())+"");
+                    WeatherAppUtils.getUtcFromUtcSeconds(currWeatherTable.getCurr_sys_sunset_time(), WeatherAppUtils.UTC_DATE_FORMAT_hms)+"");
         else
             ((TextView)findViewById(R.id.ss_time_val)).setText(result);
     }

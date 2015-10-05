@@ -3,7 +3,6 @@ package jmtechsvcs.myweatherapp.dbpkg;
 import android.content.Context;
 import android.util.Log;
 
-import net.aksingh.owmjapis.DailyForecast;
 import net.aksingh.owmjapis.HourlyForecast;
 
 import org.json.JSONArray;
@@ -233,10 +232,10 @@ public class WeatherDbProcessing
                         {
                             //need to create long values here. for time
                             String sun_rise = parser.getAttributeValue(null,"rise");
-                            long sun_rise_val = WeatherAppUtils.getUtcSecondsFromDateString(sun_rise);
+                            long sun_rise_val = WeatherAppUtils.getUtcSecondsFromDateString(sun_rise, WeatherAppUtils.UTC_DATE_FORMAT_hms);
 
                             String sun_set = parser.getAttributeValue(null, "set");
-                            long sun_set_val = WeatherAppUtils.getUtcSecondsFromDateString(sun_set);
+                            long sun_set_val = WeatherAppUtils.getUtcSecondsFromDateString(sun_set, WeatherAppUtils.UTC_DATE_FORMAT_hms);
 
                             //update pojo with this times.
                             curr_weather_bean.setCurr_sys_sunrise_time(sun_rise_val);
@@ -246,7 +245,7 @@ public class WeatherDbProcessing
                         {
                             //need to create long value here for time
                             String lastupdate = parser.getAttributeValue(null,"value");
-                            long last_update_val = WeatherAppUtils.getUtcSecondsFromDateString(lastupdate);
+                            long last_update_val = WeatherAppUtils.getUtcSecondsFromDateString(lastupdate, WeatherAppUtils.UTC_DATE_FORMAT_hms);
                             curr_weather_bean.setCurr_data_calc_time(last_update_val);
                         }
                         else if(name.equals("speed"))
@@ -466,10 +465,7 @@ public class WeatherDbProcessing
         }
     }
 
-    public static void updateDailyCityWeatherForecast
-            (Context context,
-             List<DailyForecast.Forecast> dailyList,
-             long cityId)
+    public static void updateDailyCityWeatherForecast(Context context, ByteArrayInputStream bis, long cityId)
     {
         try
         {
@@ -488,218 +484,375 @@ public class WeatherDbProcessing
             List<DailyWeatherInfoTable> daily_weather_list =
                     WeatherDbProcessing.getBeanByQueryParamsList(qp, context, new DailyWeatherInfoTable());
 
-            //read data from list and save to java bean to allow for saving to dao via this java bean.
-            //using the city id.
-            for(DailyForecast.Forecast daily_forecast : dailyList)
+            //parse the data
+            //parse the xml stream here.
+            //create a factory obj for the xml pull parser.
+            XmlPullParserFactory xmlFactoryObject = XmlPullParserFactory.newInstance();
+
+            //create an xml pull parser from the pull parser factory.
+            XmlPullParser parser = xmlFactoryObject.newPullParser();
+
+            //set the input to the xml pull parser here.
+            parser.setInput(bis, null);
+
+            //get the event type and begin the parsing.
+            int event = parser.getEventType();
+
+            //java bean to set for db
+            DailyWeatherInfoTable daily_weather = null;
+
+            //check if u havent reached the end.
+            while(event != XmlPullParser.END_DOCUMENT)
             {
-                //java bean to set for db
-                DailyWeatherInfoTable daily_weather = null;
+                //get the name of the tag
+                String name = parser.getName();
 
-                //remove first item from the list for the auto inc id, and save that to the
-                //item java bean item just the id.
-                if(daily_weather_list.size() > 0)
+                //this will switch on the different event, tag names here
+                //like <abc>, or </abc> which are start and end tags.
+                switch (event)
                 {
-                    //pop the head off the daily list from the DB.
-                    DailyWeatherInfoTable daily_item = daily_weather_list.remove(0);
+                    case XmlPullParser.START_DOCUMENT:
+                        Log.d(LOGTAG,"start doc parsing.");
+                        break;
 
-                    //assign the item from the list to the local vars here.
-                    //this will assign all new data.
-                    daily_weather = daily_item;
-                }
-                else
-                {
-                    //create new obj here.
-                    daily_weather = new DailyWeatherInfoTable();
+                    //this is to handle elements data inside tags.
+                    case XmlPullParser.TEXT:
+                        break;
+
+                    case XmlPullParser.START_TAG:
+
+                        if(name.equals("time"))
+                        {
+                            //get obj from list if it exists, otherwise create a new java bean.
+                            //setup obj ref to null.
+                            daily_weather = null;
+
+                            //remove first item from the list for the auto inc id, and save that to the
+                            //item java bean item just the id.
+                            if(daily_weather_list.size() > 0)
+                            {
+                                //pop the head off the daily list from the DB.
+                                DailyWeatherInfoTable daily_item = daily_weather_list.remove(0);
+
+                                //assign the item from the list to the local vars here.
+                                //this will assign all new data.
+                                daily_weather = daily_item;
+                            }
+                            else
+                            {
+                                //create new obj here.
+                                daily_weather = new DailyWeatherInfoTable();
+                            }
+
+                            //set the city id.
+                            daily_weather.setCity_id(cityId);
+
+                            String time = parser.getAttributeValue(null, "day");
+                            String result = WeatherAppUtils.getDefaultStringDisplayString(time);
+                            if(result.length() != 0)
+                            {
+                                daily_weather.setDaily_weather_date(WeatherAppUtils.DEFAULT_lONG_VAL);
+                            }
+                            else
+                            {
+                                long time_val = WeatherAppUtils.getUtcSecondsFromDateString(time, WeatherAppUtils.UTC_DATE_FORMAT);
+                                daily_weather.setDaily_weather_date(time_val);
+                            }
+                        }
+                        else if(name.equals("symbol"))
+                        {
+                            //need to create long value here for time
+                            String number = parser.getAttributeValue(null,"number");
+                            String result = WeatherAppUtils.getDefaultStringDisplayString(number);
+                            if(daily_weather != null){
+                                if(result.length() != 0){
+                                    daily_weather.setDaily_symbol_number(WeatherAppUtils.DEFAULT_lONG_VAL);
+                                }else{
+
+                                    daily_weather.setDaily_symbol_number(Long.parseLong(number));
+                                }
+                            }
+
+                            String name_xml = parser.getAttributeValue(null, "name");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(name_xml);
+                            if(daily_weather != null){
+                                if(result.length() != 0){
+                                    daily_weather.setDaily_symbol_name(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                }else{
+
+                                    daily_weather.setDaily_symbol_name(name_xml);
+                                }
+                            }
+
+                            String var_xml = parser.getAttributeValue(null,"var");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(var_xml);
+                            if(daily_weather != null){
+                                if(result.length() != 0){
+                                    daily_weather.setDaily_symbol_var(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                }else{
+
+                                    daily_weather.setDaily_symbol_var(var_xml);
+                                }
+                            }
+                        }
+                        else if(name.equals("precipitation"))
+                        {
+                            String value_xml = parser.getAttributeValue(null, "value");
+                            String result = WeatherAppUtils.getDefaultStringDisplayString(value_xml);
+                            if(daily_weather != null){
+                                if(result.length() != 0){
+                                    daily_weather.setDaily_precip_value(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                                }else{
+
+                                    daily_weather.setDaily_precip_value(Double.parseDouble(value_xml));
+                                }
+                            }
+
+                            String type_xml = parser.getAttributeValue(null, "type");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(type_xml);
+                            if(daily_weather != null){
+                                if(result.length() != 0){
+                                    daily_weather.setDaily_precip_type(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                }else{
+
+                                    daily_weather.setDaily_precip_type(type_xml);
+                                }
+                            }
+                        }
+                        else if(name.equals("windDirection"))
+                        {
+                            String deg_xml = parser.getAttributeValue(null,"deg");
+                            String result = WeatherAppUtils.getDefaultStringDisplayString(deg_xml);
+                            if(daily_weather != null){
+                                if(result.length() != 0){
+                                    daily_weather.setWind_dirr_deg(WeatherAppUtils.DEFAULT_lONG_VAL);
+                                }else{
+
+                                    daily_weather.setWind_dirr_deg(Long.parseLong(deg_xml));
+                                }
+                            }
+
+                            String code_xml = parser.getAttributeValue(null, "code");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(code_xml);
+                            if(daily_weather != null){
+                                if(result.length() != 0){
+                                    daily_weather.setWind_dirr_code(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                }else{
+
+                                    daily_weather.setWind_dirr_code(code_xml);
+                                }
+                            }
+
+                            String name_xml = parser.getAttributeValue(null,"name");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(name_xml);
+                            if(daily_weather != null){
+                                if(result.length() != 0){
+                                    daily_weather.setWind_dirr_name(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                }else{
+
+                                    daily_weather.setWind_dirr_name(name_xml);
+                                }
+                            }
+                        }
+                        else if(name.equals("windSpeed"))
+                        {
+                            String mps_xml = parser.getAttributeValue(null, "mps");
+                            String result = WeatherAppUtils.getDefaultStringDisplayString(mps_xml);
+                            if(daily_weather != null){
+                                if(result.length() != 0){
+                                    daily_weather.setWind_speed_mps(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                                }else{
+
+                                    daily_weather.setWind_speed_mps(Double.parseDouble(mps_xml));
+                                }
+                            }
+
+                            String name_xml = parser.getAttributeValue(null, "name");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(name_xml);
+                            if(daily_weather != null){
+                                if(result.length() != 0){
+                                    daily_weather.setWind_speed_name(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                }else{
+
+                                    daily_weather.setWind_speed_name(name_xml);
+                                }
+                            }
+                        }
+                        else if(name.equals("temperature"))
+                        {
+                            String day_xml = parser.getAttributeValue(null,"day");
+                            String result = WeatherAppUtils.getDefaultStringDisplayString(day_xml);
+                            if(daily_weather != null){
+                                if(result.length() != 0){
+                                    daily_weather.setDaily_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                                }else{
+
+                                    daily_weather.setDaily_temp(Double.parseDouble(day_xml));
+                                }
+                            }
+
+                            String min_xml = parser.getAttributeValue(null, "min");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(min_xml);
+                            if(daily_weather != null){
+                                if(result.length() != 0){
+                                    daily_weather.setDaily_min_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                                }else{
+
+                                    daily_weather.setDaily_min_temp(Double.parseDouble(min_xml));
+                                }
+                            }
+
+                            String max_xml = parser.getAttributeValue(null,"max");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(max_xml);
+                            if(daily_weather != null){
+                                if(result.length() != 0){
+                                    daily_weather.setDaily_max_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                                }else{
+
+                                    daily_weather.setDaily_max_temp(Double.parseDouble(max_xml));
+                                }
+                            }
+
+                            String night_xml = parser.getAttributeValue(null,"night");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(night_xml);
+                            if(daily_weather != null){
+                                if(result.length() != 0){
+                                    daily_weather.setDaily_night_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                                }else{
+
+                                    daily_weather.setDaily_night_temp(Double.parseDouble(night_xml));
+                                }
+                            }
+
+                            String eve_xml = parser.getAttributeValue(null,"eve");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(eve_xml);
+                            if(daily_weather != null){
+                                if(result.length() != 0){
+                                    daily_weather.setDaily_evening_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                                }else{
+
+                                    daily_weather.setDaily_evening_temp(Double.parseDouble(eve_xml));
+                                }
+                            }
+
+                            String morn_xml = parser.getAttributeValue(null,"morn");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(morn_xml);
+                            if(daily_weather != null){
+                                if(result.length() != 0){
+                                    daily_weather.setDaily_morning_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                                }else{
+
+                                    daily_weather.setDaily_morning_temp(Double.parseDouble(morn_xml));
+                                }
+                            }
+                        }
+                        else if(name.equals("pressure"))
+                        {
+                            String unit_xml = parser.getAttributeValue(null,"unit");
+                            String result = WeatherAppUtils.getDefaultStringDisplayString(unit_xml);
+                            if(daily_weather != null){
+                                if(result.length() != 0){
+                                    daily_weather.setPressure_unit(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                }else{
+
+                                    daily_weather.setPressure_unit(unit_xml);
+                                }
+                            }
+
+                            String value_xml = parser.getAttributeValue(null, "value");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(value_xml);
+                            if(daily_weather != null){
+                                if(result.length() != 0){
+                                    daily_weather.setPressure_value(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                                }else{
+
+                                    daily_weather.setPressure_value(Double.parseDouble(value_xml));
+                                }
+                            }
+                        }
+                        else if(name.equals("humidity"))
+                        {
+                            String value_xml = parser.getAttributeValue(null,"value");
+                            String result = WeatherAppUtils.getDefaultStringDisplayString(value_xml);
+                            if(daily_weather != null){
+                                if(result.length() != 0){
+                                    daily_weather.setHumidity_val(WeatherAppUtils.DEFAULT_lONG_VAL);
+                                }else{
+
+                                    daily_weather.setHumidity_val(Long.parseLong(value_xml));
+                                }
+                            }
+
+                            String unit_xml = parser.getAttributeValue(null, "unit");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(unit_xml);
+                            if(daily_weather != null){
+                                if(result.length() != 0){
+                                    daily_weather.setHumidity_unit(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                }else{
+
+                                    daily_weather.setHumidity_unit(unit_xml);
+                                }
+                            }
+                        }
+                        else if(name.equals("clouds"))
+                        {
+                            String value_xml = parser.getAttributeValue(null, "value");
+                            String result = WeatherAppUtils.getDefaultStringDisplayString(value_xml);
+                            if(daily_weather != null){
+                                if(result.length() != 0){
+                                    daily_weather.setClouds_val(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                }else{
+
+                                    daily_weather.setClouds_val(value_xml);
+                                }
+                            }
+
+                            String all_xml = parser.getAttributeValue(null, "all");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(all_xml);
+                            if(daily_weather != null){
+                                if(result.length() != 0){
+                                    daily_weather.setClouds_all(WeatherAppUtils.DEFAULT_lONG_VAL);
+                                }else{
+
+                                    daily_weather.setClouds_all(Long.parseLong(all_xml));
+                                }
+                            }
+
+                            String unit_xml = parser.getAttributeValue(null, "unit");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(unit_xml);
+                            if(daily_weather != null){
+                                if(result.length() != 0){
+                                    daily_weather.setClouds_unit(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                }else{
+
+                                    daily_weather.setClouds_unit(unit_xml);
+                                }
+                            }
+                        }
+
+                        break;
+
+                    case XmlPullParser.END_TAG:
+
+                        //save the data using the end tag of time element which is the end
+                        //of a item.
+                        if(name.equals("time"))
+                        {
+                            if(daily_weather != null)
+                            {
+                                //save data to db via dao using java bean.
+                                daily_weather_dao.insertOrReplace(daily_weather);
+                            }
+                        }
+
+                        break;
                 }
 
-                //set the city id.
-                daily_weather.setCity_id(cityId);
-
-                if(daily_forecast.hasDateTime())
-                {
-                    daily_weather.setDaily_weather_date(daily_forecast.getDateTime().getTime());
-                }
-                else
-                {
-                    daily_weather.setDaily_weather_date(WeatherAppUtils.DEFAULT_lONG_VAL);
-                }
-
-                if(daily_forecast.hasHumidity())
-                {
-                    float data = daily_forecast.getHumidity();
-                    if(Double.compare(data,Double.NaN) == 0)
-                        daily_weather.setDaily_humidity(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                    else
-                        daily_weather.setDaily_humidity((double)daily_forecast.getHumidity());
-                }
-                else
-                {
-                    daily_weather.setDaily_humidity(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                }
-
-                if(daily_forecast.hasPercentageOfClouds())
-                {
-                    float data = daily_forecast.getPercentageOfClouds();
-
-                    if(Double.compare(data,Double.NaN) == 0)
-                        daily_weather.setDaily_cloud_pert(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                    else
-                        daily_weather.setDaily_cloud_pert((double)daily_forecast.getPercentageOfClouds());
-                }
-                else
-                {
-                    daily_weather.setDaily_cloud_pert(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                }
-
-                if(daily_forecast.hasPressure())
-                {
-                    float data = daily_forecast.getPressure();
-                    if(Double.compare(data,Double.NaN)==0)
-                        daily_weather.setDaily_pressure(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                    else
-                        daily_weather.setDaily_pressure((double)daily_forecast.getPressure());
-                }
-                else
-                {
-                    daily_weather.setDaily_pressure(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                }
-
-                if(daily_forecast.hasRain())
-                {
-                    float data = daily_forecast.getRain();
-                    if(Double.compare(data,Double.NaN) == 0)
-                        daily_weather.setDaily_rain(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                    else
-                        daily_weather.setDaily_rain((double)daily_forecast.getRain());
-                }
-                else
-                {
-                    daily_weather.setDaily_rain(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                }
-
-                if(daily_forecast.hasSnow())
-                {
-                    float data = daily_forecast.getSnow();
-                    if(Double.compare(data,Double.NaN) == 0)
-                        daily_weather.setDaily_snow(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                    else
-                        daily_weather.setDaily_snow((double)daily_forecast.getSnow());
-                }
-                else
-                {
-                    daily_weather.setDaily_snow(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                }
-
-                if(daily_forecast.hasWindDegree())
-                {
-                    float data = daily_forecast.getWindDegree();
-                    if(Double.compare(data,Double.NaN)==0)
-                        daily_weather.setDaily_wind_deg(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                    else
-                        daily_weather.setDaily_wind_deg((double)daily_forecast.getWindDegree());
-                }
-                else
-                {
-                    daily_weather.setDaily_wind_deg(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                }
-
-                if(daily_forecast.hasWindSpeed())
-                {
-                    float data = daily_forecast.getWindSpeed();
-                    if(Double.compare(data,Double.NaN)==0)
-                        daily_weather.setDaily_wind_speed(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                    else
-                        daily_weather.setDaily_wind_speed((double)daily_forecast.getWindSpeed());
-                }
-                else
-                {
-                    daily_weather.setDaily_wind_speed(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                }
-
-                //get the daily forecast for this item.
-                DailyForecast.Forecast.Temperature daily_temp = daily_forecast.getTemperatureInstance();
-
-                if(daily_temp.hasDayTemperature())
-                {
-                    float data = daily_temp.getDayTemperature();
-                    if(Double.compare(data,Double.NaN)==0)
-                        daily_weather.setDaily_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                    else
-                        daily_weather.setDaily_temp((double)daily_temp.getDayTemperature());
-                }
-                else
-                {
-                    daily_weather.setDaily_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                }
-
-                if(daily_temp.hasEveningTemperature())
-                {
-                    float data = daily_temp.getEveningTemperature();
-                    if(Double.compare(data,Double.NaN)==0)
-                        daily_weather.setDaily_evening_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                    else
-                        daily_weather.setDaily_evening_temp((double)daily_temp.getEveningTemperature());
-                }
-                else
-                {
-                    daily_weather.setDaily_evening_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                }
-
-                if(daily_temp.hasMaximumTemperature())
-                {
-                    float data = daily_temp.getMaximumTemperature();
-                    if(Double.compare(data,Double.NaN)==0)
-                        daily_weather.setDaily_max_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                    else
-                        daily_weather.setDaily_max_temp((double)daily_temp.getMaximumTemperature());
-                }
-                else
-                {
-                    daily_weather.setDaily_max_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                }
-
-                if(daily_temp.hasMinimumTemperature())
-                {
-                    float data = daily_temp.getMinimumTemperature();
-                    if(Double.compare(data,Double.NaN)==0)
-                        daily_weather.setDaily_min_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                    else
-                        daily_weather.setDaily_min_temp((double)daily_temp.getMinimumTemperature());
-                }
-                else
-                {
-                    daily_weather.setDaily_min_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                }
-
-                if(daily_temp.hasMorningTemperature())
-                {
-                    float data = daily_temp.getMorningTemperature();
-                    if(Double.compare(data,Double.NaN)==0)
-                        daily_weather.setDaily_morning_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                    else
-                        daily_weather.setDaily_morning_temp((double)daily_temp.getMorningTemperature());
-                }
-                else
-                {
-                    daily_weather.setDaily_morning_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                }
-
-                if(daily_temp.hasNightTemperature())
-                {
-                    float data = daily_temp.getNightTemperature();
-                    if(Double.compare(data,Double.NaN)==0)
-                        daily_weather.setDaily_night_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                    else
-                        daily_weather.setDaily_night_temp((double)daily_temp.getNightTemperature());
-                }
-                else
-                {
-                    daily_weather.setDaily_night_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                }
-
-                //save data to db via dao using java bean.
-                daily_weather_dao.insertOrReplace(daily_weather);
+                //get the next event.
+                event = parser.next();
             }
+
+            Log.d(LOGTAG,"end doc parsing");
         }
         catch(Exception e)
         {
@@ -995,15 +1148,13 @@ public class WeatherDbProcessing
             (BeanQueryParams queryParams, Context context, CityBeanType beanType)
     {
         //data type used in this generic function.
-        List<CityBeanType> rv = null;
+        //item list.
+        List<CityBeanType> items = new ArrayList<CityBeanType>();
 
         try
         {
             //get the dao session.
             DaoSession daoSession = getDaoSession(context);
-
-            //item list.
-            List<CityBeanType> items = new ArrayList<CityBeanType>();
 
             if(beanType instanceof CityInfoTable &&
                     queryParams.getQueryParamType() == BeanQueryParams.T_Query_Param_Type.E_CITY_INFO_TABLE_LIST_TYPE)
@@ -1028,9 +1179,6 @@ public class WeatherDbProcessing
                     items = (List<CityBeanType>)dao.queryBuilder().where
                             (CityInfoTableDao.Properties.Name.like("%"+queryParams.getCityName()+"%")).list();
                 }
-
-                //return back the list to the caller.
-                rv = items;
             }
             else if(beanType instanceof WeatherStationInfoTable &&
                     queryParams.getQueryParamType() == BeanQueryParams.T_Query_Param_Type.E_WEATHER_STATION_TABLE_LIST_TYPE)
@@ -1043,9 +1191,6 @@ public class WeatherDbProcessing
                         (
                                 WeatherStationInfoTableDao.Properties.City_id.eq(queryParams.getCityId())
                         ).list();
-
-                //return back the list to the caller.
-                rv = items;
             }
             else if(beanType instanceof DailyWeatherInfoTable &&
                     queryParams.getQueryParamType() == BeanQueryParams.T_Query_Param_Type.E_DAILY_WEATHER_TABLE_LIST_TYPE)
@@ -1058,9 +1203,6 @@ public class WeatherDbProcessing
                         (
                                 DailyWeatherInfoTableDao.Properties.City_id.eq(queryParams.getCityId())
                         ).list();
-
-                //return back the list to the caller.
-                rv = items;
             }
             else if(beanType instanceof HourlyWeatherInfoTable &&
                     queryParams.getQueryParamType() == BeanQueryParams.T_Query_Param_Type.E_HOURLY_WEATHER_TABLE_LIST_TYPE)
@@ -1073,9 +1215,6 @@ public class WeatherDbProcessing
                         (
                                 HourlyWeatherInfoTableDao.Properties.City_id.eq(queryParams.getCityId())
                         ).list();
-
-                //return back the list to the caller.
-                rv = items;
             }
 
             if(items.size() == 0)
@@ -1092,6 +1231,6 @@ public class WeatherDbProcessing
             Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
         }
 
-        return rv;
+        return items;
     }
 }

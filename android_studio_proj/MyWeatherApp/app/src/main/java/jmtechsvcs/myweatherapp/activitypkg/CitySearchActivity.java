@@ -51,12 +51,12 @@ public class CitySearchActivity extends Activity implements CityListFragment.OnF
         //for $$$ purposes.
         //add the google admob view for add display.
         //https://developers.google.com/admob/android/quick-start
-        AdView mAdView = (AdView)findViewById(R.id.adView);
-        AdRequest request = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-                .addTestDevice("CA21EF673EA1B4FDE2DBBC38FFA4DFE")  // LG G2 phone md5 hash id.
-                .build();
-        mAdView.loadAd(request);
+//        AdView mAdView = (AdView)findViewById(R.id.adView);
+//        AdRequest request = new AdRequest.Builder()
+//                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+//                .addTestDevice("CA21EF673EA1B4FDE2DBBC38FFA4DFE")  // LG G2 phone md5 hash id.
+//                .build();
+//        mAdView.loadAd(request);
 
         final Button search_button = (Button)findViewById(R.id.performsearch);
         final Button clear_button = (Button)findViewById(R.id.cleardata);

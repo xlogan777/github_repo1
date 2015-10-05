@@ -58,7 +58,7 @@ public class HourlyWeatherAdapter extends ArrayAdapter<HourlyWeatherInfoTable>
 
         if(result.length() == 0)
             ((TextView)rowView.findViewById(R.id.HourlyDate_Val)).setText(
-                    WeatherAppUtils.getUtcFromUtcSeconds(item_row.getHourly_weather_date()) + "");
+                    WeatherAppUtils.getUtcFromUtcSeconds(item_row.getHourly_weather_date(),WeatherAppUtils.UTC_DATE_FORMAT_hms) + "");
         else
             ((TextView)rowView.findViewById(R.id.HourlyDate_Val)).setText(result);
 
