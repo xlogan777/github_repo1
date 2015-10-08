@@ -23,7 +23,7 @@ public class HourlyWeatherInfoTable {
     private double hourly_precip_value;
     /** Not-null value. */
     private String hourly_precip_type;
-    private long hourly_wind_dirr_deg;
+    private double hourly_wind_dirr_deg;
     /** Not-null value. */
     private String hourly_wind_dirr_code;
     /** Not-null value. */
@@ -44,7 +44,7 @@ public class HourlyWeatherInfoTable {
     private String hourly_humidity_unit;
     /** Not-null value. */
     private String hourly_clouds_val;
-    private long hourly_clouds_all;
+    private double hourly_clouds_all;
     /** Not-null value. */
     private String hourly_clouds_unit;
 
@@ -58,7 +58,7 @@ public class HourlyWeatherInfoTable {
         this.id = id;
     }
 
-    public HourlyWeatherInfoTable(Long id, long city_id, long hourly_from_weather_date, long hourly_to_weather_date, long hourly_symbol_number, String hourly_symbol_name, String hourly_symbol_var, String hourly_precip_unit, double hourly_precip_value, String hourly_precip_type, long hourly_wind_dirr_deg, String hourly_wind_dirr_code, String hourly_wind_dirr_name, double hourly_wind_speed_mps, String hourly_wind_speed_name, String hourly_unit, double hourly_temp_value, double hourly_min_temp, double hourly_max_temp, String hourly_pressure_unit, double hourly_pressure_value, long hourly_humidity_val, String hourly_humidity_unit, String hourly_clouds_val, long hourly_clouds_all, String hourly_clouds_unit) {
+    public HourlyWeatherInfoTable(Long id, long city_id, long hourly_from_weather_date, long hourly_to_weather_date, long hourly_symbol_number, String hourly_symbol_name, String hourly_symbol_var, String hourly_precip_unit, double hourly_precip_value, String hourly_precip_type, double hourly_wind_dirr_deg, String hourly_wind_dirr_code, String hourly_wind_dirr_name, double hourly_wind_speed_mps, String hourly_wind_speed_name, String hourly_unit, double hourly_temp_value, double hourly_min_temp, double hourly_max_temp, String hourly_pressure_unit, double hourly_pressure_value, long hourly_humidity_val, String hourly_humidity_unit, String hourly_clouds_val, double hourly_clouds_all, String hourly_clouds_unit) {
         this.id = id;
         this.city_id = city_id;
         this.hourly_from_weather_date = hourly_from_weather_date;
@@ -175,11 +175,11 @@ public class HourlyWeatherInfoTable {
         this.hourly_precip_type = hourly_precip_type;
     }
 
-    public long getHourly_wind_dirr_deg() {
+    public double getHourly_wind_dirr_deg() {
         return hourly_wind_dirr_deg;
     }
 
-    public void setHourly_wind_dirr_deg(long hourly_wind_dirr_deg) {
+    public void setHourly_wind_dirr_deg(double hourly_wind_dirr_deg) {
         this.hourly_wind_dirr_deg = hourly_wind_dirr_deg;
     }
 
@@ -301,11 +301,11 @@ public class HourlyWeatherInfoTable {
         this.hourly_clouds_val = hourly_clouds_val;
     }
 
-    public long getHourly_clouds_all() {
+    public double getHourly_clouds_all() {
         return hourly_clouds_all;
     }
 
-    public void setHourly_clouds_all(long hourly_clouds_all) {
+    public void setHourly_clouds_all(double hourly_clouds_all) {
         this.hourly_clouds_all = hourly_clouds_all;
     }
 

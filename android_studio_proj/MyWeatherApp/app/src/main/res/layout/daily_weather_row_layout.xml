@@ -254,9 +254,10 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="weather_date"
         android:id="@+id/weather_date"
+        android:layout_marginTop="40dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -393,6 +394,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/imageDailyView"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/daily_precipitation_val"
-        android:layout_toEndOf="@+id/daily_precipitation_val"/>
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
 </RelativeLayout>

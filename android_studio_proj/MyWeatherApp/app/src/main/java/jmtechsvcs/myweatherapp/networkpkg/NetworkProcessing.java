@@ -19,7 +19,7 @@ import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 public class NetworkProcessing 
 {
 	private static String LOGTAG = "NetworkProcessing";
-    private static final int TIMEOUT = 15000;//15 secs timeout
+    private static final int TIMEOUT = 60000;//timeout for http call.
 
 	/*
 	 * function that does http GET request using a url.

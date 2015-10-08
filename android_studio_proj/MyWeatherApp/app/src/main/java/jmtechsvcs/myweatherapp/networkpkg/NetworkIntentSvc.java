@@ -7,12 +7,7 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import net.aksingh.owmjapis.DailyForecast;
-import net.aksingh.owmjapis.HourlyForecast;
-import net.aksingh.owmjapis.OpenWeatherMap;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTable;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityWeatherCurrCondTable;
@@ -203,15 +198,7 @@ public class NetworkIntentSvc extends IntentService
                curr_cond.getCurr_weather_icon() != null &&
                curr_cond.getCurr_weather_icon().length() > 0)
             {
-                //create the weather icon url.
-                String weather_icon_url = WeatherMapUrls.getWeatherIconByIconId(curr_cond.getCurr_weather_icon());
-
-                //get the payload from the http get for the weather icon.
-                payload = NetworkProcessing.httpGetProcessing(weather_icon_url, DataPayload.T_Payload_Type.E_BYTE_ARRAY_PAYLOAD_TYPE);
-
-                //save the icon data into the DB.
-                WeatherDbProcessing.updateWeatherIcon
-                        (curr_cond.getCurr_weather_icon(), weather_icon_url, payload.getBytePayload(), getApplicationContext());
+                WeatherAppUtils.getAndSaveIconData(curr_cond.getCurr_weather_icon(), getApplicationContext());
             }
             else
             {
@@ -254,7 +241,7 @@ public class NetworkIntentSvc extends IntentService
     {
         long cityId = bundle.getLong("cityId");
 
-        String daily_forecast_end_pt = WeatherMapUrls.getDailyWeatherForecastEndPt(cityId+"");
+        String daily_forecast_end_pt = WeatherMapUrls.getDailyWeatherForecastEndPt(cityId + "");
 
         //get the payload from the http get for this current weather as a stream.
         DataPayload stream_payload =
@@ -265,8 +252,15 @@ public class NetworkIntentSvc extends IntentService
         if(stream_payload.getInputStreamPayload() != null)
         {
             //update the weather data with the data stream.
-            WeatherDbProcessing.updateDailyCityWeatherForecast
+            Map<String,String> icon_map =
+                    WeatherDbProcessing.updateDailyCityWeatherForecast
                     (getApplicationContext(), stream_payload.getInputStreamPayload(), cityId);
+
+            //loop over all the keys..and get and update the DB if needed.
+            for(String data : icon_map.keySet())
+            {
+                WeatherAppUtils.getAndSaveIconData(data, getApplicationContext());
+            }
         }
 
         //send intents via android system.
@@ -277,48 +271,26 @@ public class NetworkIntentSvc extends IntentService
     {
         long cityId = bundle.getLong("cityId");
 
-        try
+        String hourly_forecast_end_pt = WeatherMapUrls.getHourlyWeatherForecastEndPt(cityId + "");
+
+        //get the payload from the http get for this current weather as a stream.
+        DataPayload stream_payload =
+                NetworkProcessing.httpGetProcessing(
+                        hourly_forecast_end_pt, DataPayload.T_Payload_Type.E_BYTE_STREAM_PAYLOAD_TYPE
+                );
+
+        if(stream_payload.getInputStreamPayload() != null)
         {
-            // declaring object of "OpenWeatherMap" class
-            //setup with api key and the units needed which is imperial.
-            OpenWeatherMap owm = new
-                    OpenWeatherMap(OpenWeatherMap.Units.IMPERIAL, WeatherMapUrls.API_KEY);
-
-            //list of hourly forecast objs.
-            List<HourlyForecast.Forecast> hourly_list = new ArrayList<HourlyForecast.Forecast>();
-
-            //get the hourly forecast by city id.
-            HourlyForecast hourlyForecast_obj = owm.hourlyForecastByCityCode(cityId);
-
-            //checking data retrieval was successful or not
-            if(hourlyForecast_obj.isValid())
-            {
-                //get the count from the hourly obj if it has one.
-                int hourly_cnt =
-                        hourlyForecast_obj.hasForecastCount() ?
-                                hourlyForecast_obj.getForecastCount() : 0;
-
-                Log.d(LOGTAG,"hourly count = "+hourly_cnt);
-
-                for(int i = 0; i < hourly_cnt; i++)
-                {
-                    //get the hourly forecast obj from the main forecast obj.
-                    HourlyForecast.Forecast  hr_forecast =
-                            hourlyForecast_obj.getForecastInstance(i);
-
-                    //add this item to this hourly list.
-                    //this list is for a city id.
-                    hourly_list.add(hr_forecast);
-                }
-            }
-
             //process these lists accordingly.
-            WeatherDbProcessing.updateyHourlyCityWeatherForecast
-                    (getApplicationContext(), hourly_list, cityId);
-        }
-        catch (Exception e)
-        {
-            Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
+            Map<String,String> icon_map =
+                    WeatherDbProcessing.updateyHourlyCityWeatherForecast
+                            (getApplicationContext(), stream_payload.getInputStreamPayload(), cityId);
+
+            //loop over all the keys..and get and update the DB if needed.
+            for(String data : icon_map.keySet())
+            {
+                WeatherAppUtils.getAndSaveIconData(data, getApplicationContext());
+            }
         }
 
         //send intents via android system.

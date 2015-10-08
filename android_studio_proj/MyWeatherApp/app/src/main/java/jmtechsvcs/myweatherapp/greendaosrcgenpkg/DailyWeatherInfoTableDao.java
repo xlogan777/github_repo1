@@ -30,25 +30,26 @@ public class DailyWeatherInfoTableDao extends AbstractDao<DailyWeatherInfoTable,
         public final static Property Daily_symbol_var = new Property(4, String.class, "daily_symbol_var", false, "DAILY_SYMBOL_VAR");
         public final static Property Daily_precip_value = new Property(5, double.class, "daily_precip_value", false, "DAILY_PRECIP_VALUE");
         public final static Property Daily_precip_type = new Property(6, String.class, "daily_precip_type", false, "DAILY_PRECIP_TYPE");
-        public final static Property Wind_dirr_deg = new Property(7, long.class, "wind_dirr_deg", false, "WIND_DIRR_DEG");
-        public final static Property Wind_dirr_code = new Property(8, String.class, "wind_dirr_code", false, "WIND_DIRR_CODE");
-        public final static Property Wind_dirr_name = new Property(9, String.class, "wind_dirr_name", false, "WIND_DIRR_NAME");
-        public final static Property Wind_speed_mps = new Property(10, double.class, "wind_speed_mps", false, "WIND_SPEED_MPS");
-        public final static Property Wind_speed_name = new Property(11, String.class, "wind_speed_name", false, "WIND_SPEED_NAME");
-        public final static Property Daily_temp = new Property(12, double.class, "daily_temp", false, "DAILY_TEMP");
-        public final static Property Daily_min_temp = new Property(13, double.class, "daily_min_temp", false, "DAILY_MIN_TEMP");
-        public final static Property Daily_max_temp = new Property(14, double.class, "daily_max_temp", false, "DAILY_MAX_TEMP");
-        public final static Property Daily_night_temp = new Property(15, double.class, "daily_night_temp", false, "DAILY_NIGHT_TEMP");
-        public final static Property Daily_evening_temp = new Property(16, double.class, "daily_evening_temp", false, "DAILY_EVENING_TEMP");
-        public final static Property Daily_morning_temp = new Property(17, double.class, "daily_morning_temp", false, "DAILY_MORNING_TEMP");
-        public final static Property Pressure_unit = new Property(18, String.class, "pressure_unit", false, "PRESSURE_UNIT");
-        public final static Property Pressure_value = new Property(19, double.class, "pressure_value", false, "PRESSURE_VALUE");
-        public final static Property Humidity_val = new Property(20, long.class, "humidity_val", false, "HUMIDITY_VAL");
-        public final static Property Humidity_unit = new Property(21, String.class, "humidity_unit", false, "HUMIDITY_UNIT");
-        public final static Property Clouds_val = new Property(22, String.class, "clouds_val", false, "CLOUDS_VAL");
-        public final static Property Clouds_all = new Property(23, long.class, "clouds_all", false, "CLOUDS_ALL");
-        public final static Property Clouds_unit = new Property(24, String.class, "clouds_unit", false, "CLOUDS_UNIT");
-        public final static Property Daily_weather_date = new Property(25, long.class, "daily_weather_date", false, "DAILY_WEATHER_DATE");
+        public final static Property Daily_precip_unit = new Property(7, String.class, "daily_precip_unit", false, "DAILY_PRECIP_UNIT");
+        public final static Property Daily_wind_dirr_deg = new Property(8, long.class, "daily_wind_dirr_deg", false, "DAILY_WIND_DIRR_DEG");
+        public final static Property Daily_wind_dirr_code = new Property(9, String.class, "daily_wind_dirr_code", false, "DAILY_WIND_DIRR_CODE");
+        public final static Property Daily_wind_dirr_name = new Property(10, String.class, "daily_wind_dirr_name", false, "DAILY_WIND_DIRR_NAME");
+        public final static Property Daily_wind_speed_mps = new Property(11, double.class, "daily_wind_speed_mps", false, "DAILY_WIND_SPEED_MPS");
+        public final static Property Daily_wind_speed_name = new Property(12, String.class, "daily_wind_speed_name", false, "DAILY_WIND_SPEED_NAME");
+        public final static Property Daily_temp = new Property(13, double.class, "daily_temp", false, "DAILY_TEMP");
+        public final static Property Daily_min_temp = new Property(14, double.class, "daily_min_temp", false, "DAILY_MIN_TEMP");
+        public final static Property Daily_max_temp = new Property(15, double.class, "daily_max_temp", false, "DAILY_MAX_TEMP");
+        public final static Property Daily_night_temp = new Property(16, double.class, "daily_night_temp", false, "DAILY_NIGHT_TEMP");
+        public final static Property Daily_evening_temp = new Property(17, double.class, "daily_evening_temp", false, "DAILY_EVENING_TEMP");
+        public final static Property Daily_morning_temp = new Property(18, double.class, "daily_morning_temp", false, "DAILY_MORNING_TEMP");
+        public final static Property Daily_pressure_unit = new Property(19, String.class, "daily_pressure_unit", false, "DAILY_PRESSURE_UNIT");
+        public final static Property Daily_pressure_value = new Property(20, double.class, "daily_pressure_value", false, "DAILY_PRESSURE_VALUE");
+        public final static Property Daily_humidity_val = new Property(21, long.class, "daily_humidity_val", false, "DAILY_HUMIDITY_VAL");
+        public final static Property Daily_humidity_unit = new Property(22, String.class, "daily_humidity_unit", false, "DAILY_HUMIDITY_UNIT");
+        public final static Property Daily_clouds_val = new Property(23, String.class, "daily_clouds_val", false, "DAILY_CLOUDS_VAL");
+        public final static Property Daily_clouds_all = new Property(24, double.class, "daily_clouds_all", false, "DAILY_CLOUDS_ALL");
+        public final static Property Daily_clouds_unit = new Property(25, String.class, "daily_clouds_unit", false, "DAILY_CLOUDS_UNIT");
+        public final static Property Daily_weather_date = new Property(26, long.class, "daily_weather_date", false, "DAILY_WEATHER_DATE");
     };
 
 
@@ -71,25 +72,26 @@ public class DailyWeatherInfoTableDao extends AbstractDao<DailyWeatherInfoTable,
                 "\"DAILY_SYMBOL_VAR\" TEXT NOT NULL ," + // 4: daily_symbol_var
                 "\"DAILY_PRECIP_VALUE\" REAL NOT NULL ," + // 5: daily_precip_value
                 "\"DAILY_PRECIP_TYPE\" TEXT NOT NULL ," + // 6: daily_precip_type
-                "\"WIND_DIRR_DEG\" INTEGER NOT NULL ," + // 7: wind_dirr_deg
-                "\"WIND_DIRR_CODE\" TEXT NOT NULL ," + // 8: wind_dirr_code
-                "\"WIND_DIRR_NAME\" TEXT NOT NULL ," + // 9: wind_dirr_name
-                "\"WIND_SPEED_MPS\" REAL NOT NULL ," + // 10: wind_speed_mps
-                "\"WIND_SPEED_NAME\" TEXT NOT NULL ," + // 11: wind_speed_name
-                "\"DAILY_TEMP\" REAL NOT NULL ," + // 12: daily_temp
-                "\"DAILY_MIN_TEMP\" REAL NOT NULL ," + // 13: daily_min_temp
-                "\"DAILY_MAX_TEMP\" REAL NOT NULL ," + // 14: daily_max_temp
-                "\"DAILY_NIGHT_TEMP\" REAL NOT NULL ," + // 15: daily_night_temp
-                "\"DAILY_EVENING_TEMP\" REAL NOT NULL ," + // 16: daily_evening_temp
-                "\"DAILY_MORNING_TEMP\" REAL NOT NULL ," + // 17: daily_morning_temp
-                "\"PRESSURE_UNIT\" TEXT NOT NULL ," + // 18: pressure_unit
-                "\"PRESSURE_VALUE\" REAL NOT NULL ," + // 19: pressure_value
-                "\"HUMIDITY_VAL\" INTEGER NOT NULL ," + // 20: humidity_val
-                "\"HUMIDITY_UNIT\" TEXT NOT NULL ," + // 21: humidity_unit
-                "\"CLOUDS_VAL\" TEXT NOT NULL ," + // 22: clouds_val
-                "\"CLOUDS_ALL\" INTEGER NOT NULL ," + // 23: clouds_all
-                "\"CLOUDS_UNIT\" TEXT NOT NULL ," + // 24: clouds_unit
-                "\"DAILY_WEATHER_DATE\" INTEGER NOT NULL );"); // 25: daily_weather_date
+                "\"DAILY_PRECIP_UNIT\" TEXT NOT NULL ," + // 7: daily_precip_unit
+                "\"DAILY_WIND_DIRR_DEG\" INTEGER NOT NULL ," + // 8: daily_wind_dirr_deg
+                "\"DAILY_WIND_DIRR_CODE\" TEXT NOT NULL ," + // 9: daily_wind_dirr_code
+                "\"DAILY_WIND_DIRR_NAME\" TEXT NOT NULL ," + // 10: daily_wind_dirr_name
+                "\"DAILY_WIND_SPEED_MPS\" REAL NOT NULL ," + // 11: daily_wind_speed_mps
+                "\"DAILY_WIND_SPEED_NAME\" TEXT NOT NULL ," + // 12: daily_wind_speed_name
+                "\"DAILY_TEMP\" REAL NOT NULL ," + // 13: daily_temp
+                "\"DAILY_MIN_TEMP\" REAL NOT NULL ," + // 14: daily_min_temp
+                "\"DAILY_MAX_TEMP\" REAL NOT NULL ," + // 15: daily_max_temp
+                "\"DAILY_NIGHT_TEMP\" REAL NOT NULL ," + // 16: daily_night_temp
+                "\"DAILY_EVENING_TEMP\" REAL NOT NULL ," + // 17: daily_evening_temp
+                "\"DAILY_MORNING_TEMP\" REAL NOT NULL ," + // 18: daily_morning_temp
+                "\"DAILY_PRESSURE_UNIT\" TEXT NOT NULL ," + // 19: daily_pressure_unit
+                "\"DAILY_PRESSURE_VALUE\" REAL NOT NULL ," + // 20: daily_pressure_value
+                "\"DAILY_HUMIDITY_VAL\" INTEGER NOT NULL ," + // 21: daily_humidity_val
+                "\"DAILY_HUMIDITY_UNIT\" TEXT NOT NULL ," + // 22: daily_humidity_unit
+                "\"DAILY_CLOUDS_VAL\" TEXT NOT NULL ," + // 23: daily_clouds_val
+                "\"DAILY_CLOUDS_ALL\" REAL NOT NULL ," + // 24: daily_clouds_all
+                "\"DAILY_CLOUDS_UNIT\" TEXT NOT NULL ," + // 25: daily_clouds_unit
+                "\"DAILY_WEATHER_DATE\" INTEGER NOT NULL );"); // 26: daily_weather_date
     }
 
     /** Drops the underlying database table. */
@@ -113,25 +115,26 @@ public class DailyWeatherInfoTableDao extends AbstractDao<DailyWeatherInfoTable,
         stmt.bindString(5, entity.getDaily_symbol_var());
         stmt.bindDouble(6, entity.getDaily_precip_value());
         stmt.bindString(7, entity.getDaily_precip_type());
-        stmt.bindLong(8, entity.getWind_dirr_deg());
-        stmt.bindString(9, entity.getWind_dirr_code());
-        stmt.bindString(10, entity.getWind_dirr_name());
-        stmt.bindDouble(11, entity.getWind_speed_mps());
-        stmt.bindString(12, entity.getWind_speed_name());
-        stmt.bindDouble(13, entity.getDaily_temp());
-        stmt.bindDouble(14, entity.getDaily_min_temp());
-        stmt.bindDouble(15, entity.getDaily_max_temp());
-        stmt.bindDouble(16, entity.getDaily_night_temp());
-        stmt.bindDouble(17, entity.getDaily_evening_temp());
-        stmt.bindDouble(18, entity.getDaily_morning_temp());
-        stmt.bindString(19, entity.getPressure_unit());
-        stmt.bindDouble(20, entity.getPressure_value());
-        stmt.bindLong(21, entity.getHumidity_val());
-        stmt.bindString(22, entity.getHumidity_unit());
-        stmt.bindString(23, entity.getClouds_val());
-        stmt.bindLong(24, entity.getClouds_all());
-        stmt.bindString(25, entity.getClouds_unit());
-        stmt.bindLong(26, entity.getDaily_weather_date());
+        stmt.bindString(8, entity.getDaily_precip_unit());
+        stmt.bindLong(9, entity.getDaily_wind_dirr_deg());
+        stmt.bindString(10, entity.getDaily_wind_dirr_code());
+        stmt.bindString(11, entity.getDaily_wind_dirr_name());
+        stmt.bindDouble(12, entity.getDaily_wind_speed_mps());
+        stmt.bindString(13, entity.getDaily_wind_speed_name());
+        stmt.bindDouble(14, entity.getDaily_temp());
+        stmt.bindDouble(15, entity.getDaily_min_temp());
+        stmt.bindDouble(16, entity.getDaily_max_temp());
+        stmt.bindDouble(17, entity.getDaily_night_temp());
+        stmt.bindDouble(18, entity.getDaily_evening_temp());
+        stmt.bindDouble(19, entity.getDaily_morning_temp());
+        stmt.bindString(20, entity.getDaily_pressure_unit());
+        stmt.bindDouble(21, entity.getDaily_pressure_value());
+        stmt.bindLong(22, entity.getDaily_humidity_val());
+        stmt.bindString(23, entity.getDaily_humidity_unit());
+        stmt.bindString(24, entity.getDaily_clouds_val());
+        stmt.bindDouble(25, entity.getDaily_clouds_all());
+        stmt.bindString(26, entity.getDaily_clouds_unit());
+        stmt.bindLong(27, entity.getDaily_weather_date());
     }
 
     /** @inheritdoc */
@@ -151,25 +154,26 @@ public class DailyWeatherInfoTableDao extends AbstractDao<DailyWeatherInfoTable,
             cursor.getString(offset + 4), // daily_symbol_var
             cursor.getDouble(offset + 5), // daily_precip_value
             cursor.getString(offset + 6), // daily_precip_type
-            cursor.getLong(offset + 7), // wind_dirr_deg
-            cursor.getString(offset + 8), // wind_dirr_code
-            cursor.getString(offset + 9), // wind_dirr_name
-            cursor.getDouble(offset + 10), // wind_speed_mps
-            cursor.getString(offset + 11), // wind_speed_name
-            cursor.getDouble(offset + 12), // daily_temp
-            cursor.getDouble(offset + 13), // daily_min_temp
-            cursor.getDouble(offset + 14), // daily_max_temp
-            cursor.getDouble(offset + 15), // daily_night_temp
-            cursor.getDouble(offset + 16), // daily_evening_temp
-            cursor.getDouble(offset + 17), // daily_morning_temp
-            cursor.getString(offset + 18), // pressure_unit
-            cursor.getDouble(offset + 19), // pressure_value
-            cursor.getLong(offset + 20), // humidity_val
-            cursor.getString(offset + 21), // humidity_unit
-            cursor.getString(offset + 22), // clouds_val
-            cursor.getLong(offset + 23), // clouds_all
-            cursor.getString(offset + 24), // clouds_unit
-            cursor.getLong(offset + 25) // daily_weather_date
+            cursor.getString(offset + 7), // daily_precip_unit
+            cursor.getLong(offset + 8), // daily_wind_dirr_deg
+            cursor.getString(offset + 9), // daily_wind_dirr_code
+            cursor.getString(offset + 10), // daily_wind_dirr_name
+            cursor.getDouble(offset + 11), // daily_wind_speed_mps
+            cursor.getString(offset + 12), // daily_wind_speed_name
+            cursor.getDouble(offset + 13), // daily_temp
+            cursor.getDouble(offset + 14), // daily_min_temp
+            cursor.getDouble(offset + 15), // daily_max_temp
+            cursor.getDouble(offset + 16), // daily_night_temp
+            cursor.getDouble(offset + 17), // daily_evening_temp
+            cursor.getDouble(offset + 18), // daily_morning_temp
+            cursor.getString(offset + 19), // daily_pressure_unit
+            cursor.getDouble(offset + 20), // daily_pressure_value
+            cursor.getLong(offset + 21), // daily_humidity_val
+            cursor.getString(offset + 22), // daily_humidity_unit
+            cursor.getString(offset + 23), // daily_clouds_val
+            cursor.getDouble(offset + 24), // daily_clouds_all
+            cursor.getString(offset + 25), // daily_clouds_unit
+            cursor.getLong(offset + 26) // daily_weather_date
         );
         return entity;
     }
@@ -184,25 +188,26 @@ public class DailyWeatherInfoTableDao extends AbstractDao<DailyWeatherInfoTable,
         entity.setDaily_symbol_var(cursor.getString(offset + 4));
         entity.setDaily_precip_value(cursor.getDouble(offset + 5));
         entity.setDaily_precip_type(cursor.getString(offset + 6));
-        entity.setWind_dirr_deg(cursor.getLong(offset + 7));
-        entity.setWind_dirr_code(cursor.getString(offset + 8));
-        entity.setWind_dirr_name(cursor.getString(offset + 9));
-        entity.setWind_speed_mps(cursor.getDouble(offset + 10));
-        entity.setWind_speed_name(cursor.getString(offset + 11));
-        entity.setDaily_temp(cursor.getDouble(offset + 12));
-        entity.setDaily_min_temp(cursor.getDouble(offset + 13));
-        entity.setDaily_max_temp(cursor.getDouble(offset + 14));
-        entity.setDaily_night_temp(cursor.getDouble(offset + 15));
-        entity.setDaily_evening_temp(cursor.getDouble(offset + 16));
-        entity.setDaily_morning_temp(cursor.getDouble(offset + 17));
-        entity.setPressure_unit(cursor.getString(offset + 18));
-        entity.setPressure_value(cursor.getDouble(offset + 19));
-        entity.setHumidity_val(cursor.getLong(offset + 20));
-        entity.setHumidity_unit(cursor.getString(offset + 21));
-        entity.setClouds_val(cursor.getString(offset + 22));
-        entity.setClouds_all(cursor.getLong(offset + 23));
-        entity.setClouds_unit(cursor.getString(offset + 24));
-        entity.setDaily_weather_date(cursor.getLong(offset + 25));
+        entity.setDaily_precip_unit(cursor.getString(offset + 7));
+        entity.setDaily_wind_dirr_deg(cursor.getLong(offset + 8));
+        entity.setDaily_wind_dirr_code(cursor.getString(offset + 9));
+        entity.setDaily_wind_dirr_name(cursor.getString(offset + 10));
+        entity.setDaily_wind_speed_mps(cursor.getDouble(offset + 11));
+        entity.setDaily_wind_speed_name(cursor.getString(offset + 12));
+        entity.setDaily_temp(cursor.getDouble(offset + 13));
+        entity.setDaily_min_temp(cursor.getDouble(offset + 14));
+        entity.setDaily_max_temp(cursor.getDouble(offset + 15));
+        entity.setDaily_night_temp(cursor.getDouble(offset + 16));
+        entity.setDaily_evening_temp(cursor.getDouble(offset + 17));
+        entity.setDaily_morning_temp(cursor.getDouble(offset + 18));
+        entity.setDaily_pressure_unit(cursor.getString(offset + 19));
+        entity.setDaily_pressure_value(cursor.getDouble(offset + 20));
+        entity.setDaily_humidity_val(cursor.getLong(offset + 21));
+        entity.setDaily_humidity_unit(cursor.getString(offset + 22));
+        entity.setDaily_clouds_val(cursor.getString(offset + 23));
+        entity.setDaily_clouds_all(cursor.getDouble(offset + 24));
+        entity.setDaily_clouds_unit(cursor.getString(offset + 25));
+        entity.setDaily_weather_date(cursor.getLong(offset + 26));
      }
     
     /** @inheritdoc */

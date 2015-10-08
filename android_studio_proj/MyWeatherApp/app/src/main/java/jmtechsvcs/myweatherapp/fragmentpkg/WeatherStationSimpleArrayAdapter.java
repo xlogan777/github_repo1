@@ -125,8 +125,7 @@ public class WeatherStationSimpleArrayAdapter extends ArrayAdapter<WeatherStatio
             ((TextView)rowView.findViewById(R.id.visibility_val)).
                     setText(
                             MathUtils.getDistanceString(
-                                    (long) MathUtils.convertMetersToMiles(
-                                            item_row.getStation_visibility_dist()), 'M') + "");
+                                    MathUtils.convertMetersToMiles(item_row.getStation_visibility_dist()), 'M') + "");
         else
             ((TextView)rowView.findViewById(R.id.visibility_val)).setText(result);
 
@@ -159,8 +158,7 @@ public class WeatherStationSimpleArrayAdapter extends ArrayAdapter<WeatherStatio
         result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getStation_rain_today());
         if(result.length() == 0)
             ((TextView)rowView.findViewById(R.id.rain_today_val)).setText(
-                    MathUtils.getDistanceString(
-                            (long) MathUtils.convertMmToInches(item_row.getStation_rain_today()), 'I') + "");
+                    MathUtils.getDistanceString(MathUtils.convertMmToInches(item_row.getStation_rain_today()), 'I') + "");
         else
             ((TextView)rowView.findViewById(R.id.rain_today_val)).setText(result);
 

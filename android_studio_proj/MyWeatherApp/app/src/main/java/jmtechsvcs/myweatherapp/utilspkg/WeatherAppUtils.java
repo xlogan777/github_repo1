@@ -28,6 +28,9 @@ import jmtechsvcs.myweatherapp.R;
 import jmtechsvcs.myweatherapp.dbpkg.BeanQueryParams;
 import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherIconTable;
+import jmtechsvcs.myweatherapp.networkpkg.DataPayload;
+import jmtechsvcs.myweatherapp.networkpkg.NetworkProcessing;
+import jmtechsvcs.myweatherapp.networkpkg.WeatherMapUrls;
 
 /**
  * Created by jimmy on 7/23/2015.
@@ -411,5 +414,27 @@ public class WeatherAppUtils
         weatherIconTable = WeatherDbProcessing.getBeanByQueryParams(qp, context, weatherIconTable);
 
         return weatherIconTable;
+    }
+
+    public static void getAndSaveIconData(String iconId, Context context)
+    {
+        //check if this icon exists in the DB first before the effort to get new icon and
+        //do db stuff.
+        boolean iconFound = WeatherDbProcessing.weatherIconExists(iconId, context);
+
+        //only try to get the data if the icon doesnt exists in the db.
+        if(!iconFound)
+        {
+            //create the weather icon url.
+            String weather_icon_url = WeatherMapUrls.getWeatherIconByIconId(iconId);
+
+            //get the payload from the http get for the weather icon.
+            DataPayload payload = NetworkProcessing.httpGetProcessing
+                    (weather_icon_url, DataPayload.T_Payload_Type.E_BYTE_ARRAY_PAYLOAD_TYPE);
+
+            //save the icon data into the DB.
+            WeatherDbProcessing.updateWeatherIcon
+                    (iconId, weather_icon_url, payload.getBytePayload(), context);
+        }
     }
 }

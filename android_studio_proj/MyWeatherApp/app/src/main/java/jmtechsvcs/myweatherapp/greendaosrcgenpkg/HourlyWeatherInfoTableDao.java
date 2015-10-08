@@ -33,7 +33,7 @@ public class HourlyWeatherInfoTableDao extends AbstractDao<HourlyWeatherInfoTabl
         public final static Property Hourly_precip_unit = new Property(7, String.class, "hourly_precip_unit", false, "HOURLY_PRECIP_UNIT");
         public final static Property Hourly_precip_value = new Property(8, double.class, "hourly_precip_value", false, "HOURLY_PRECIP_VALUE");
         public final static Property Hourly_precip_type = new Property(9, String.class, "hourly_precip_type", false, "HOURLY_PRECIP_TYPE");
-        public final static Property Hourly_wind_dirr_deg = new Property(10, long.class, "hourly_wind_dirr_deg", false, "HOURLY_WIND_DIRR_DEG");
+        public final static Property Hourly_wind_dirr_deg = new Property(10, double.class, "hourly_wind_dirr_deg", false, "HOURLY_WIND_DIRR_DEG");
         public final static Property Hourly_wind_dirr_code = new Property(11, String.class, "hourly_wind_dirr_code", false, "HOURLY_WIND_DIRR_CODE");
         public final static Property Hourly_wind_dirr_name = new Property(12, String.class, "hourly_wind_dirr_name", false, "HOURLY_WIND_DIRR_NAME");
         public final static Property Hourly_wind_speed_mps = new Property(13, double.class, "hourly_wind_speed_mps", false, "HOURLY_WIND_SPEED_MPS");
@@ -47,7 +47,7 @@ public class HourlyWeatherInfoTableDao extends AbstractDao<HourlyWeatherInfoTabl
         public final static Property Hourly_humidity_val = new Property(21, long.class, "hourly_humidity_val", false, "HOURLY_HUMIDITY_VAL");
         public final static Property Hourly_humidity_unit = new Property(22, String.class, "hourly_humidity_unit", false, "HOURLY_HUMIDITY_UNIT");
         public final static Property Hourly_clouds_val = new Property(23, String.class, "hourly_clouds_val", false, "HOURLY_CLOUDS_VAL");
-        public final static Property Hourly_clouds_all = new Property(24, long.class, "hourly_clouds_all", false, "HOURLY_CLOUDS_ALL");
+        public final static Property Hourly_clouds_all = new Property(24, double.class, "hourly_clouds_all", false, "HOURLY_CLOUDS_ALL");
         public final static Property Hourly_clouds_unit = new Property(25, String.class, "hourly_clouds_unit", false, "HOURLY_CLOUDS_UNIT");
     };
 
@@ -74,7 +74,7 @@ public class HourlyWeatherInfoTableDao extends AbstractDao<HourlyWeatherInfoTabl
                 "\"HOURLY_PRECIP_UNIT\" TEXT NOT NULL ," + // 7: hourly_precip_unit
                 "\"HOURLY_PRECIP_VALUE\" REAL NOT NULL ," + // 8: hourly_precip_value
                 "\"HOURLY_PRECIP_TYPE\" TEXT NOT NULL ," + // 9: hourly_precip_type
-                "\"HOURLY_WIND_DIRR_DEG\" INTEGER NOT NULL ," + // 10: hourly_wind_dirr_deg
+                "\"HOURLY_WIND_DIRR_DEG\" REAL NOT NULL ," + // 10: hourly_wind_dirr_deg
                 "\"HOURLY_WIND_DIRR_CODE\" TEXT NOT NULL ," + // 11: hourly_wind_dirr_code
                 "\"HOURLY_WIND_DIRR_NAME\" TEXT NOT NULL ," + // 12: hourly_wind_dirr_name
                 "\"HOURLY_WIND_SPEED_MPS\" REAL NOT NULL ," + // 13: hourly_wind_speed_mps
@@ -88,7 +88,7 @@ public class HourlyWeatherInfoTableDao extends AbstractDao<HourlyWeatherInfoTabl
                 "\"HOURLY_HUMIDITY_VAL\" INTEGER NOT NULL ," + // 21: hourly_humidity_val
                 "\"HOURLY_HUMIDITY_UNIT\" TEXT NOT NULL ," + // 22: hourly_humidity_unit
                 "\"HOURLY_CLOUDS_VAL\" TEXT NOT NULL ," + // 23: hourly_clouds_val
-                "\"HOURLY_CLOUDS_ALL\" INTEGER NOT NULL ," + // 24: hourly_clouds_all
+                "\"HOURLY_CLOUDS_ALL\" REAL NOT NULL ," + // 24: hourly_clouds_all
                 "\"HOURLY_CLOUDS_UNIT\" TEXT NOT NULL );"); // 25: hourly_clouds_unit
     }
 
@@ -116,7 +116,7 @@ public class HourlyWeatherInfoTableDao extends AbstractDao<HourlyWeatherInfoTabl
         stmt.bindString(8, entity.getHourly_precip_unit());
         stmt.bindDouble(9, entity.getHourly_precip_value());
         stmt.bindString(10, entity.getHourly_precip_type());
-        stmt.bindLong(11, entity.getHourly_wind_dirr_deg());
+        stmt.bindDouble(11, entity.getHourly_wind_dirr_deg());
         stmt.bindString(12, entity.getHourly_wind_dirr_code());
         stmt.bindString(13, entity.getHourly_wind_dirr_name());
         stmt.bindDouble(14, entity.getHourly_wind_speed_mps());
@@ -130,7 +130,7 @@ public class HourlyWeatherInfoTableDao extends AbstractDao<HourlyWeatherInfoTabl
         stmt.bindLong(22, entity.getHourly_humidity_val());
         stmt.bindString(23, entity.getHourly_humidity_unit());
         stmt.bindString(24, entity.getHourly_clouds_val());
-        stmt.bindLong(25, entity.getHourly_clouds_all());
+        stmt.bindDouble(25, entity.getHourly_clouds_all());
         stmt.bindString(26, entity.getHourly_clouds_unit());
     }
 
@@ -154,7 +154,7 @@ public class HourlyWeatherInfoTableDao extends AbstractDao<HourlyWeatherInfoTabl
             cursor.getString(offset + 7), // hourly_precip_unit
             cursor.getDouble(offset + 8), // hourly_precip_value
             cursor.getString(offset + 9), // hourly_precip_type
-            cursor.getLong(offset + 10), // hourly_wind_dirr_deg
+            cursor.getDouble(offset + 10), // hourly_wind_dirr_deg
             cursor.getString(offset + 11), // hourly_wind_dirr_code
             cursor.getString(offset + 12), // hourly_wind_dirr_name
             cursor.getDouble(offset + 13), // hourly_wind_speed_mps
@@ -168,7 +168,7 @@ public class HourlyWeatherInfoTableDao extends AbstractDao<HourlyWeatherInfoTabl
             cursor.getLong(offset + 21), // hourly_humidity_val
             cursor.getString(offset + 22), // hourly_humidity_unit
             cursor.getString(offset + 23), // hourly_clouds_val
-            cursor.getLong(offset + 24), // hourly_clouds_all
+            cursor.getDouble(offset + 24), // hourly_clouds_all
             cursor.getString(offset + 25) // hourly_clouds_unit
         );
         return entity;
@@ -187,7 +187,7 @@ public class HourlyWeatherInfoTableDao extends AbstractDao<HourlyWeatherInfoTabl
         entity.setHourly_precip_unit(cursor.getString(offset + 7));
         entity.setHourly_precip_value(cursor.getDouble(offset + 8));
         entity.setHourly_precip_type(cursor.getString(offset + 9));
-        entity.setHourly_wind_dirr_deg(cursor.getLong(offset + 10));
+        entity.setHourly_wind_dirr_deg(cursor.getDouble(offset + 10));
         entity.setHourly_wind_dirr_code(cursor.getString(offset + 11));
         entity.setHourly_wind_dirr_name(cursor.getString(offset + 12));
         entity.setHourly_wind_speed_mps(cursor.getDouble(offset + 13));
@@ -201,7 +201,7 @@ public class HourlyWeatherInfoTableDao extends AbstractDao<HourlyWeatherInfoTabl
         entity.setHourly_humidity_val(cursor.getLong(offset + 21));
         entity.setHourly_humidity_unit(cursor.getString(offset + 22));
         entity.setHourly_clouds_val(cursor.getString(offset + 23));
-        entity.setHourly_clouds_all(cursor.getLong(offset + 24));
+        entity.setHourly_clouds_all(cursor.getDouble(offset + 24));
         entity.setHourly_clouds_unit(cursor.getString(offset + 25));
      }
     

@@ -2,6 +2,7 @@ package jmtechsvcs.myweatherapp.fragmentpkg;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,46 +101,45 @@ public class DailyWeatherAdapter extends ArrayAdapter<DailyWeatherInfoTable>
         else
             ((TextView)rowView.findViewById(R.id.daily_night_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDisplayLong(item_row.getHumidity_val());
+        result = WeatherAppUtils.getDefaultStringDisplayLong(item_row.getDaily_humidity_val());
         if(result.length() == 0)
             ((TextView)rowView.findViewById(R.id.daily_humidity_val)).setText(
-                    MathUtils.getPercentString(item_row.getHumidity_val()) + "");
+                    MathUtils.getPercentString(item_row.getDaily_humidity_val()) + "");
         else
             ((TextView)rowView.findViewById(R.id.daily_humidity_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDisplayLong(item_row.getClouds_all());
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getDaily_clouds_all());
         if(result.length() == 0)
             ((TextView)rowView.findViewById(R.id.daily_cloud_pect_val)).setText(
-                    MathUtils.getPercentString(item_row.getClouds_all()) + "");
+                    MathUtils.getPercentString(item_row.getDaily_clouds_all()) + "");
         else
             ((TextView)rowView.findViewById(R.id.daily_cloud_pect_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getPressure_value());
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getDaily_pressure_value());
         if(result.length() == 0)
             ((TextView)rowView.findViewById(R.id.daily_pressure_val)).setText(
-                    MathUtils.getPressureString((long)item_row.getPressure_value()) + "");
+                    MathUtils.getPressureString((long)item_row.getDaily_pressure_value()) + "");
         else
             ((TextView)rowView.findViewById(R.id.daily_pressure_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getPressure_value());
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getDaily_precip_value());
         if(result.length() == 0)
             ((TextView)rowView.findViewById(R.id.daily_precipitation_val)).setText(
-                    MathUtils.getDistanceString(
-                            (long)item_row.getPressure_value(), 'I') + "");
+                    MathUtils.getDistanceString(item_row.getDaily_precip_value(), 'I') + "");
         else
             ((TextView)rowView.findViewById(R.id.daily_precipitation_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDisplayLong(item_row.getWind_dirr_deg());
+        result = WeatherAppUtils.getDefaultStringDisplayLong(item_row.getDaily_wind_dirr_deg());
         if(result.length() == 0)
             ((TextView)rowView.findViewById(R.id.daily_wind_deg_val)).setText(
-                            MathUtils.getDegreeString(item_row.getWind_dirr_deg()) + "");
+                            MathUtils.getDegreeString(item_row.getDaily_wind_dirr_deg()) + "");
         else
             ((TextView)rowView.findViewById(R.id.daily_wind_deg_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getWind_speed_mps());
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getDaily_wind_speed_mps());
         if(result.length() == 0)
             ((TextView)rowView.findViewById(R.id.daily_wind_speed_val)).setText(
-                    MathUtils.getVelocityString(item_row.getWind_speed_mps()) + "");
+                    MathUtils.getVelocityString(item_row.getDaily_wind_speed_mps()) + "");
         else
             ((TextView)rowView.findViewById(R.id.daily_wind_speed_val)).setText(result);
 
@@ -162,27 +162,27 @@ public class DailyWeatherAdapter extends ArrayAdapter<DailyWeatherInfoTable>
         else
             ((TextView)rowView.findViewById(R.id.daily_precip_type_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDisplayString(item_row.getDaily_precip_type());
+        result = WeatherAppUtils.getDefaultStringDisplayString(item_row.getDaily_wind_dirr_code());
         if(result.length() == 0)
-            ((TextView)rowView.findViewById(R.id.daily_wind_dirr_code_val)).setText(item_row.getDaily_precip_type());
+            ((TextView)rowView.findViewById(R.id.daily_wind_dirr_code_val)).setText(item_row.getDaily_wind_dirr_code());
         else
             ((TextView)rowView.findViewById(R.id.daily_wind_dirr_code_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDisplayString(item_row.getWind_dirr_name());
+        result = WeatherAppUtils.getDefaultStringDisplayString(item_row.getDaily_wind_dirr_name());
         if(result.length() == 0)
-            ((TextView)rowView.findViewById(R.id.daily_wind_name_val)).setText(item_row.getWind_dirr_name());
+            ((TextView)rowView.findViewById(R.id.daily_wind_name_val)).setText(item_row.getDaily_wind_dirr_name());
         else
             ((TextView)rowView.findViewById(R.id.daily_wind_name_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDisplayString(item_row.getWind_speed_name());
+        result = WeatherAppUtils.getDefaultStringDisplayString(item_row.getDaily_wind_speed_name());
         if(result.length() == 0)
-            ((TextView)rowView.findViewById(R.id.daily_wind_speed_name_val)).setText(item_row.getWind_speed_name());
+            ((TextView)rowView.findViewById(R.id.daily_wind_speed_name_val)).setText(item_row.getDaily_wind_speed_name());
         else
             ((TextView)rowView.findViewById(R.id.daily_wind_speed_name_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDisplayString(item_row.getClouds_val());
+        result = WeatherAppUtils.getDefaultStringDisplayString(item_row.getDaily_clouds_val());
         if(result.length() == 0)
-            ((TextView)rowView.findViewById(R.id.daily_clouds_val)).setText(item_row.getClouds_val());
+            ((TextView)rowView.findViewById(R.id.daily_clouds_val)).setText(item_row.getDaily_clouds_val());
         else
             ((TextView)rowView.findViewById(R.id.daily_clouds_val)).setText(result);
 
@@ -202,6 +202,7 @@ public class DailyWeatherAdapter extends ArrayAdapter<DailyWeatherInfoTable>
             {
                 //set the image bit map here.
                 ((ImageView)rowView.findViewById(R.id.imageDailyView)).setImageBitmap(bitmap);
+                Log.d(LOGTAG,"loaded icon weather data for daily weather.");
             }
         }
 

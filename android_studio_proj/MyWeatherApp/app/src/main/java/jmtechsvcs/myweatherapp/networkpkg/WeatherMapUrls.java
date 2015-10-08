@@ -30,6 +30,17 @@ public class WeatherMapUrls
     //daily weather forecast end pt
     private final static String DAILY_WEATHER_FORECAST_END_PT = "http://api.openweathermap.org/data/2.5/forecast/daily?id=";
 
+    //hourly weather forecast end pt
+    private final static String HOURLY_WEATHER_FORECAST_END_PT = "http://api.openweathermap.org/data/2.5/forecast?id=";
+
+    public static String getHourlyWeatherForecastEndPt(String cityId)
+    {
+        String rv = HOURLY_WEATHER_FORECAST_END_PT+cityId+"&mode=xml&units=imperial&"+APP_ID;
+        Log.d(LOGTAG,rv);
+
+        return rv;
+    }
+
     public static String getDailyWeatherForecastEndPt(String cityId)
     {
         String rv = DAILY_WEATHER_FORECAST_END_PT+cityId+"&mode=xml&units=imperial&cnt=5&"+APP_ID;

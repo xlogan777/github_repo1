@@ -19,14 +19,16 @@ public class DailyWeatherInfoTable {
     private double daily_precip_value;
     /** Not-null value. */
     private String daily_precip_type;
-    private long wind_dirr_deg;
     /** Not-null value. */
-    private String wind_dirr_code;
+    private String daily_precip_unit;
+    private long daily_wind_dirr_deg;
     /** Not-null value. */
-    private String wind_dirr_name;
-    private double wind_speed_mps;
+    private String daily_wind_dirr_code;
     /** Not-null value. */
-    private String wind_speed_name;
+    private String daily_wind_dirr_name;
+    private double daily_wind_speed_mps;
+    /** Not-null value. */
+    private String daily_wind_speed_name;
     private double daily_temp;
     private double daily_min_temp;
     private double daily_max_temp;
@@ -34,16 +36,16 @@ public class DailyWeatherInfoTable {
     private double daily_evening_temp;
     private double daily_morning_temp;
     /** Not-null value. */
-    private String pressure_unit;
-    private double pressure_value;
-    private long humidity_val;
+    private String daily_pressure_unit;
+    private double daily_pressure_value;
+    private long daily_humidity_val;
     /** Not-null value. */
-    private String humidity_unit;
+    private String daily_humidity_unit;
     /** Not-null value. */
-    private String clouds_val;
-    private long clouds_all;
+    private String daily_clouds_val;
+    private double daily_clouds_all;
     /** Not-null value. */
-    private String clouds_unit;
+    private String daily_clouds_unit;
     private long daily_weather_date;
 
     // KEEP FIELDS - put your custom fields here
@@ -56,7 +58,7 @@ public class DailyWeatherInfoTable {
         this.id = id;
     }
 
-    public DailyWeatherInfoTable(Long id, long city_id, long daily_symbol_number, String daily_symbol_name, String daily_symbol_var, double daily_precip_value, String daily_precip_type, long wind_dirr_deg, String wind_dirr_code, String wind_dirr_name, double wind_speed_mps, String wind_speed_name, double daily_temp, double daily_min_temp, double daily_max_temp, double daily_night_temp, double daily_evening_temp, double daily_morning_temp, String pressure_unit, double pressure_value, long humidity_val, String humidity_unit, String clouds_val, long clouds_all, String clouds_unit, long daily_weather_date) {
+    public DailyWeatherInfoTable(Long id, long city_id, long daily_symbol_number, String daily_symbol_name, String daily_symbol_var, double daily_precip_value, String daily_precip_type, String daily_precip_unit, long daily_wind_dirr_deg, String daily_wind_dirr_code, String daily_wind_dirr_name, double daily_wind_speed_mps, String daily_wind_speed_name, double daily_temp, double daily_min_temp, double daily_max_temp, double daily_night_temp, double daily_evening_temp, double daily_morning_temp, String daily_pressure_unit, double daily_pressure_value, long daily_humidity_val, String daily_humidity_unit, String daily_clouds_val, double daily_clouds_all, String daily_clouds_unit, long daily_weather_date) {
         this.id = id;
         this.city_id = city_id;
         this.daily_symbol_number = daily_symbol_number;
@@ -64,24 +66,25 @@ public class DailyWeatherInfoTable {
         this.daily_symbol_var = daily_symbol_var;
         this.daily_precip_value = daily_precip_value;
         this.daily_precip_type = daily_precip_type;
-        this.wind_dirr_deg = wind_dirr_deg;
-        this.wind_dirr_code = wind_dirr_code;
-        this.wind_dirr_name = wind_dirr_name;
-        this.wind_speed_mps = wind_speed_mps;
-        this.wind_speed_name = wind_speed_name;
+        this.daily_precip_unit = daily_precip_unit;
+        this.daily_wind_dirr_deg = daily_wind_dirr_deg;
+        this.daily_wind_dirr_code = daily_wind_dirr_code;
+        this.daily_wind_dirr_name = daily_wind_dirr_name;
+        this.daily_wind_speed_mps = daily_wind_speed_mps;
+        this.daily_wind_speed_name = daily_wind_speed_name;
         this.daily_temp = daily_temp;
         this.daily_min_temp = daily_min_temp;
         this.daily_max_temp = daily_max_temp;
         this.daily_night_temp = daily_night_temp;
         this.daily_evening_temp = daily_evening_temp;
         this.daily_morning_temp = daily_morning_temp;
-        this.pressure_unit = pressure_unit;
-        this.pressure_value = pressure_value;
-        this.humidity_val = humidity_val;
-        this.humidity_unit = humidity_unit;
-        this.clouds_val = clouds_val;
-        this.clouds_all = clouds_all;
-        this.clouds_unit = clouds_unit;
+        this.daily_pressure_unit = daily_pressure_unit;
+        this.daily_pressure_value = daily_pressure_value;
+        this.daily_humidity_val = daily_humidity_val;
+        this.daily_humidity_unit = daily_humidity_unit;
+        this.daily_clouds_val = daily_clouds_val;
+        this.daily_clouds_all = daily_clouds_all;
+        this.daily_clouds_unit = daily_clouds_unit;
         this.daily_weather_date = daily_weather_date;
     }
 
@@ -147,50 +150,60 @@ public class DailyWeatherInfoTable {
         this.daily_precip_type = daily_precip_type;
     }
 
-    public long getWind_dirr_deg() {
-        return wind_dirr_deg;
-    }
-
-    public void setWind_dirr_deg(long wind_dirr_deg) {
-        this.wind_dirr_deg = wind_dirr_deg;
-    }
-
     /** Not-null value. */
-    public String getWind_dirr_code() {
-        return wind_dirr_code;
+    public String getDaily_precip_unit() {
+        return daily_precip_unit;
     }
 
     /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setWind_dirr_code(String wind_dirr_code) {
-        this.wind_dirr_code = wind_dirr_code;
+    public void setDaily_precip_unit(String daily_precip_unit) {
+        this.daily_precip_unit = daily_precip_unit;
+    }
+
+    public long getDaily_wind_dirr_deg() {
+        return daily_wind_dirr_deg;
+    }
+
+    public void setDaily_wind_dirr_deg(long daily_wind_dirr_deg) {
+        this.daily_wind_dirr_deg = daily_wind_dirr_deg;
     }
 
     /** Not-null value. */
-    public String getWind_dirr_name() {
-        return wind_dirr_name;
+    public String getDaily_wind_dirr_code() {
+        return daily_wind_dirr_code;
     }
 
     /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setWind_dirr_name(String wind_dirr_name) {
-        this.wind_dirr_name = wind_dirr_name;
-    }
-
-    public double getWind_speed_mps() {
-        return wind_speed_mps;
-    }
-
-    public void setWind_speed_mps(double wind_speed_mps) {
-        this.wind_speed_mps = wind_speed_mps;
+    public void setDaily_wind_dirr_code(String daily_wind_dirr_code) {
+        this.daily_wind_dirr_code = daily_wind_dirr_code;
     }
 
     /** Not-null value. */
-    public String getWind_speed_name() {
-        return wind_speed_name;
+    public String getDaily_wind_dirr_name() {
+        return daily_wind_dirr_name;
     }
 
     /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setWind_speed_name(String wind_speed_name) {
-        this.wind_speed_name = wind_speed_name;
+    public void setDaily_wind_dirr_name(String daily_wind_dirr_name) {
+        this.daily_wind_dirr_name = daily_wind_dirr_name;
+    }
+
+    public double getDaily_wind_speed_mps() {
+        return daily_wind_speed_mps;
+    }
+
+    public void setDaily_wind_speed_mps(double daily_wind_speed_mps) {
+        this.daily_wind_speed_mps = daily_wind_speed_mps;
+    }
+
+    /** Not-null value. */
+    public String getDaily_wind_speed_name() {
+        return daily_wind_speed_name;
+    }
+
+    /** Not-null value; ensure this value is available before it is saved to the database. */
+    public void setDaily_wind_speed_name(String daily_wind_speed_name) {
+        this.daily_wind_speed_name = daily_wind_speed_name;
     }
 
     public double getDaily_temp() {
@@ -242,67 +255,67 @@ public class DailyWeatherInfoTable {
     }
 
     /** Not-null value. */
-    public String getPressure_unit() {
-        return pressure_unit;
+    public String getDaily_pressure_unit() {
+        return daily_pressure_unit;
     }
 
     /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setPressure_unit(String pressure_unit) {
-        this.pressure_unit = pressure_unit;
+    public void setDaily_pressure_unit(String daily_pressure_unit) {
+        this.daily_pressure_unit = daily_pressure_unit;
     }
 
-    public double getPressure_value() {
-        return pressure_value;
+    public double getDaily_pressure_value() {
+        return daily_pressure_value;
     }
 
-    public void setPressure_value(double pressure_value) {
-        this.pressure_value = pressure_value;
+    public void setDaily_pressure_value(double daily_pressure_value) {
+        this.daily_pressure_value = daily_pressure_value;
     }
 
-    public long getHumidity_val() {
-        return humidity_val;
+    public long getDaily_humidity_val() {
+        return daily_humidity_val;
     }
 
-    public void setHumidity_val(long humidity_val) {
-        this.humidity_val = humidity_val;
+    public void setDaily_humidity_val(long daily_humidity_val) {
+        this.daily_humidity_val = daily_humidity_val;
     }
 
     /** Not-null value. */
-    public String getHumidity_unit() {
-        return humidity_unit;
+    public String getDaily_humidity_unit() {
+        return daily_humidity_unit;
     }
 
     /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setHumidity_unit(String humidity_unit) {
-        this.humidity_unit = humidity_unit;
+    public void setDaily_humidity_unit(String daily_humidity_unit) {
+        this.daily_humidity_unit = daily_humidity_unit;
     }
 
     /** Not-null value. */
-    public String getClouds_val() {
-        return clouds_val;
+    public String getDaily_clouds_val() {
+        return daily_clouds_val;
     }
 
     /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setClouds_val(String clouds_val) {
-        this.clouds_val = clouds_val;
+    public void setDaily_clouds_val(String daily_clouds_val) {
+        this.daily_clouds_val = daily_clouds_val;
     }
 
-    public long getClouds_all() {
-        return clouds_all;
+    public double getDaily_clouds_all() {
+        return daily_clouds_all;
     }
 
-    public void setClouds_all(long clouds_all) {
-        this.clouds_all = clouds_all;
+    public void setDaily_clouds_all(double daily_clouds_all) {
+        this.daily_clouds_all = daily_clouds_all;
     }
 
     /** Not-null value. */
-    public String getClouds_unit() {
-        return clouds_unit;
+    public String getDaily_clouds_unit() {
+        return daily_clouds_unit;
     }
 
     /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setClouds_unit(String clouds_unit) {
-        this.clouds_unit = clouds_unit;
+    public void setDaily_clouds_unit(String daily_clouds_unit) {
+        this.daily_clouds_unit = daily_clouds_unit;
     }
 
     public long getDaily_weather_date() {

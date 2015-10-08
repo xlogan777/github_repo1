@@ -245,31 +245,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="sealevel"
-        android:id="@+id/sealevel"
-        android:layout_below="@+id/maxtemp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="grndlevel"
-        android:id="@+id/grndlevel"
-        android:layout_below="@+id/sealevel"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="windspeed"
         android:id="@+id/windspeed"
-        android:layout_below="@+id/grndlevel"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/maxtemp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -357,29 +337,9 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="maxtemp_val"
         android:id="@+id/maxtemp_val"
-        android:layout_above="@+id/sealevel_val"
-        android:layout_alignLeft="@+id/sealevel_val"
-        android:layout_alignStart="@+id/sealevel_val"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="sealevel_val"
-        android:id="@+id/sealevel_val"
-        android:layout_above="@+id/grndlevel_val"
-        android:layout_alignLeft="@+id/grndlevel_val"
-        android:layout_alignStart="@+id/grndlevel_val"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="grndlevel_val"
-        android:id="@+id/grndlevel_val"
         android:layout_above="@+id/windspeed"
         android:layout_alignLeft="@+id/clouds_val"
-        android:layout_alignStart="@+id/clouds_val"/>
+        android:layout_alignStart="@+id/clouds_val" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -387,9 +347,9 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="windspeed_val"
         android:id="@+id/windspeed_val"
-        android:layout_below="@+id/grndlevel_val"
-        android:layout_alignLeft="@+id/windspeedname_val"
-        android:layout_alignStart="@+id/windspeedname_val"/>
+        android:layout_below="@+id/maxtemp_val"
+        android:layout_alignLeft="@+id/maxtemp_val"
+        android:layout_alignStart="@+id/maxtemp_val" />
 
     <TextView
         android:layout_width="wrap_content"

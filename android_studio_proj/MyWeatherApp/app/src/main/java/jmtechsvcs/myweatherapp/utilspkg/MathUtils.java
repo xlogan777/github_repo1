@@ -20,6 +20,31 @@ public class MathUtils
         return speed+" mph";
     }
 
+    public static String getDistanceString(double distance, char unit)
+    {
+        String rv = distance+" in";
+
+        switch(unit)
+        {
+            //miles from meters.
+            case 'M':
+                rv = distance+" miles";
+                break;
+
+            //mm to inches.
+            case 'I':
+                rv = distance+" in";
+                break;
+
+            default:
+
+                Log.d(LOGTAG,"default to inches");
+                break;
+        }
+
+        return rv;
+    }
+
     public static String getDistanceString(long distance, char unit)
     {
         String rv = distance+" in";
@@ -48,6 +73,11 @@ public class MathUtils
     public static String getPressureString(long pressure)
     {
         return pressure+" hPa";
+    }
+
+    public static String getPercentString(double percentage)
+    {
+        return percentage+"%";
     }
 
     public static String getPercentString(long percentage)

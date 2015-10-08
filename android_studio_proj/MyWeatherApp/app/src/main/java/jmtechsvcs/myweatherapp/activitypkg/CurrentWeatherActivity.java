@@ -119,8 +119,10 @@ public class CurrentWeatherActivity extends Activity
         ((TextView)findViewById(R.id.mainhumidity_val)).setText("");
         ((TextView)findViewById(R.id.mintemp_val)).setText("");
         ((TextView)findViewById(R.id.maxtemp_val)).setText("");
-        ((TextView)findViewById(R.id.sealevel_val)).setText("");
-        ((TextView)findViewById(R.id.grndlevel_val)).setText("");
+
+//        ((TextView)findViewById(R.id.sealevel_val)).setText("");
+//        ((TextView)findViewById(R.id.grndlevel_val)).setText("");
+
         ((TextView)findViewById(R.id.windspeed_val)).setText("");
         ((TextView)findViewById(R.id.clouds_val)).setText("");
 
@@ -250,21 +252,21 @@ public class CurrentWeatherActivity extends Activity
         else
             ((TextView)findViewById(R.id.maxtemp_val)).setText(result);
 
-        result = WeatherAppUtils.getDefaultStringDisplayLong(currWeatherTable.getCurr_main_sea_level());
-        if(result.length() == 0)
-            ((TextView)findViewById(R.id.sealevel_val)).setText(MathUtils.getPressureString(currWeatherTable.getCurr_main_sea_level())+"");
-        else
-            ((TextView)findViewById(R.id.sealevel_val)).setText(result);
-
-        result = WeatherAppUtils.getDefaultStringDisplayLong(
-                currWeatherTable.getCurr_main_grnd_level()
-        );
-        if(result.length() == 0)
-            ((TextView)findViewById(R.id.grndlevel_val)).setText(MathUtils.getPressureString(
-                    currWeatherTable.getCurr_main_grnd_level()
-            )+"");
-        else
-            ((TextView)findViewById(R.id.grndlevel_val)).setText(result);
+//        result = WeatherAppUtils.getDefaultStringDisplayLong(currWeatherTable.getCurr_main_sea_level());
+//        if(result.length() == 0)
+//            ((TextView)findViewById(R.id.sealevel_val)).setText(MathUtils.getPressureString(currWeatherTable.getCurr_main_sea_level())+"");
+//        else
+//            ((TextView)findViewById(R.id.sealevel_val)).setText(result);
+//
+//        result = WeatherAppUtils.getDefaultStringDisplayLong(
+//                currWeatherTable.getCurr_main_grnd_level()
+//        );
+//        if(result.length() == 0)
+//            ((TextView)findViewById(R.id.grndlevel_val)).setText(MathUtils.getPressureString(
+//                    currWeatherTable.getCurr_main_grnd_level()
+//            )+"");
+//        else
+//            ((TextView)findViewById(R.id.grndlevel_val)).setText(result);
 
         result = WeatherAppUtils.getDefaultStringDisplayDouble(currWeatherTable.getCurr_wind_speed());
         if(result.length() == 0)

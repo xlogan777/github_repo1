@@ -3,8 +3,6 @@ package jmtechsvcs.myweatherapp.dbpkg;
 import android.content.Context;
 import android.util.Log;
 
-import net.aksingh.owmjapis.HourlyForecast;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
@@ -12,7 +10,9 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import jmtechsvcs.myweatherapp.MyWeatherApplication;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTable;
@@ -48,6 +48,41 @@ public class WeatherDbProcessing
 
         //return the dao session from the context.
         return dao_session;
+    }
+
+    /*
+     * this will check if the icon exists or not.
+     */
+    public static boolean weatherIconExists(String iconId, Context context)
+    {
+        boolean rv = false;
+
+        try
+        {
+            //get the dao session.
+            DaoSession daoSession = getDaoSession(context);
+
+            //get the dao from the dao session.
+            WeatherIconTableDao dao = daoSession.getWeatherIconTableDao();
+
+            //check to see if the icon exists in the DB first.
+            List<WeatherIconTable> items = (List<WeatherIconTable>) dao.queryBuilder().where
+                    (
+                            WeatherIconTableDao.Properties.Icon_id.eq(iconId)
+                    ).list();
+
+            //if the size of the list is > 0, then we have the icon in DB..
+            if(items.size() > 0)
+            {
+                rv = true;
+            }
+        }
+        catch(Exception e)
+        {
+            Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
+        }
+
+        return rv;
     }
 
     /*
@@ -465,8 +500,11 @@ public class WeatherDbProcessing
         }
     }
 
-    public static void updateDailyCityWeatherForecast(Context context, ByteArrayInputStream bis, long cityId)
+    public static Map<String, String> updateDailyCityWeatherForecast(Context context, ByteArrayInputStream bis, long cityId)
     {
+        //map to hold all the icon ids.
+        Map<String, String> icon_map = new HashMap<String, String>();
+
         try
         {
             //get the dao session.
@@ -592,19 +630,34 @@ public class WeatherDbProcessing
                                 }else{
 
                                     daily_weather.setDaily_symbol_var(var_xml);
+
+                                    //add the icon id to the map.
+                                    icon_map.put(var_xml,var_xml);
                                 }
                             }
                         }
                         else if(name.equals("precipitation"))
                         {
+                            String unit_xml = parser.getAttributeValue(null, "unit");
+                            String result = WeatherAppUtils.getDefaultStringDisplayString(unit_xml);
+                            if(daily_weather != null){
+                                if(result.length() != 0){
+                                    daily_weather.setDaily_precip_unit(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                }else{
+
+                                    daily_weather.setDaily_precip_unit(unit_xml);
+                                }
+                            }
+
                             String value_xml = parser.getAttributeValue(null, "value");
-                            String result = WeatherAppUtils.getDefaultStringDisplayString(value_xml);
+                            result = WeatherAppUtils.getDefaultStringDisplayString(value_xml);
                             if(daily_weather != null){
                                 if(result.length() != 0){
                                     daily_weather.setDaily_precip_value(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
                                 }else{
 
                                     daily_weather.setDaily_precip_value(Double.parseDouble(value_xml));
+                                    Log.d(LOGTAG,"precip value = "+value_xml);
                                 }
                             }
 
@@ -625,10 +678,10 @@ public class WeatherDbProcessing
                             String result = WeatherAppUtils.getDefaultStringDisplayString(deg_xml);
                             if(daily_weather != null){
                                 if(result.length() != 0){
-                                    daily_weather.setWind_dirr_deg(WeatherAppUtils.DEFAULT_lONG_VAL);
+                                    daily_weather.setDaily_wind_dirr_deg(WeatherAppUtils.DEFAULT_lONG_VAL);
                                 }else{
 
-                                    daily_weather.setWind_dirr_deg(Long.parseLong(deg_xml));
+                                    daily_weather.setDaily_wind_dirr_deg(Long.parseLong(deg_xml));
                                 }
                             }
 
@@ -636,10 +689,10 @@ public class WeatherDbProcessing
                             result = WeatherAppUtils.getDefaultStringDisplayString(code_xml);
                             if(daily_weather != null){
                                 if(result.length() != 0){
-                                    daily_weather.setWind_dirr_code(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                    daily_weather.setDaily_wind_dirr_code(WeatherAppUtils.DEFAULT_STRING_VAL);
                                 }else{
 
-                                    daily_weather.setWind_dirr_code(code_xml);
+                                    daily_weather.setDaily_wind_dirr_code(code_xml);
                                 }
                             }
 
@@ -647,10 +700,10 @@ public class WeatherDbProcessing
                             result = WeatherAppUtils.getDefaultStringDisplayString(name_xml);
                             if(daily_weather != null){
                                 if(result.length() != 0){
-                                    daily_weather.setWind_dirr_name(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                    daily_weather.setDaily_wind_dirr_name(WeatherAppUtils.DEFAULT_STRING_VAL);
                                 }else{
 
-                                    daily_weather.setWind_dirr_name(name_xml);
+                                    daily_weather.setDaily_wind_dirr_name(name_xml);
                                 }
                             }
                         }
@@ -660,10 +713,10 @@ public class WeatherDbProcessing
                             String result = WeatherAppUtils.getDefaultStringDisplayString(mps_xml);
                             if(daily_weather != null){
                                 if(result.length() != 0){
-                                    daily_weather.setWind_speed_mps(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                                    daily_weather.setDaily_wind_speed_mps(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
                                 }else{
 
-                                    daily_weather.setWind_speed_mps(Double.parseDouble(mps_xml));
+                                    daily_weather.setDaily_wind_speed_mps(Double.parseDouble(mps_xml));
                                 }
                             }
 
@@ -671,10 +724,10 @@ public class WeatherDbProcessing
                             result = WeatherAppUtils.getDefaultStringDisplayString(name_xml);
                             if(daily_weather != null){
                                 if(result.length() != 0){
-                                    daily_weather.setWind_speed_name(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                    daily_weather.setDaily_wind_speed_name(WeatherAppUtils.DEFAULT_STRING_VAL);
                                 }else{
 
-                                    daily_weather.setWind_speed_name(name_xml);
+                                    daily_weather.setDaily_wind_speed_name(name_xml);
                                 }
                             }
                         }
@@ -752,10 +805,10 @@ public class WeatherDbProcessing
                             String result = WeatherAppUtils.getDefaultStringDisplayString(unit_xml);
                             if(daily_weather != null){
                                 if(result.length() != 0){
-                                    daily_weather.setPressure_unit(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                    daily_weather.setDaily_pressure_unit(WeatherAppUtils.DEFAULT_STRING_VAL);
                                 }else{
 
-                                    daily_weather.setPressure_unit(unit_xml);
+                                    daily_weather.setDaily_pressure_unit(unit_xml);
                                 }
                             }
 
@@ -763,10 +816,10 @@ public class WeatherDbProcessing
                             result = WeatherAppUtils.getDefaultStringDisplayString(value_xml);
                             if(daily_weather != null){
                                 if(result.length() != 0){
-                                    daily_weather.setPressure_value(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                                    daily_weather.setDaily_pressure_value(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
                                 }else{
 
-                                    daily_weather.setPressure_value(Double.parseDouble(value_xml));
+                                    daily_weather.setDaily_pressure_value(Double.parseDouble(value_xml));
                                 }
                             }
                         }
@@ -776,10 +829,10 @@ public class WeatherDbProcessing
                             String result = WeatherAppUtils.getDefaultStringDisplayString(value_xml);
                             if(daily_weather != null){
                                 if(result.length() != 0){
-                                    daily_weather.setHumidity_val(WeatherAppUtils.DEFAULT_lONG_VAL);
+                                    daily_weather.setDaily_humidity_val(WeatherAppUtils.DEFAULT_lONG_VAL);
                                 }else{
 
-                                    daily_weather.setHumidity_val(Long.parseLong(value_xml));
+                                    daily_weather.setDaily_humidity_val(Long.parseLong(value_xml));
                                 }
                             }
 
@@ -787,10 +840,10 @@ public class WeatherDbProcessing
                             result = WeatherAppUtils.getDefaultStringDisplayString(unit_xml);
                             if(daily_weather != null){
                                 if(result.length() != 0){
-                                    daily_weather.setHumidity_unit(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                    daily_weather.setDaily_humidity_unit(WeatherAppUtils.DEFAULT_STRING_VAL);
                                 }else{
 
-                                    daily_weather.setHumidity_unit(unit_xml);
+                                    daily_weather.setDaily_humidity_unit(unit_xml);
                                 }
                             }
                         }
@@ -800,10 +853,10 @@ public class WeatherDbProcessing
                             String result = WeatherAppUtils.getDefaultStringDisplayString(value_xml);
                             if(daily_weather != null){
                                 if(result.length() != 0){
-                                    daily_weather.setClouds_val(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                    daily_weather.setDaily_clouds_val(WeatherAppUtils.DEFAULT_STRING_VAL);
                                 }else{
 
-                                    daily_weather.setClouds_val(value_xml);
+                                    daily_weather.setDaily_clouds_val(value_xml);
                                 }
                             }
 
@@ -811,10 +864,11 @@ public class WeatherDbProcessing
                             result = WeatherAppUtils.getDefaultStringDisplayString(all_xml);
                             if(daily_weather != null){
                                 if(result.length() != 0){
-                                    daily_weather.setClouds_all(WeatherAppUtils.DEFAULT_lONG_VAL);
+                                    daily_weather.setDaily_clouds_all(WeatherAppUtils.DEFAULT_lONG_VAL);
                                 }else{
 
-                                    daily_weather.setClouds_all(Long.parseLong(all_xml));
+                                    daily_weather.setDaily_clouds_all(Long.parseLong(all_xml));
+                                    Log.d(LOGTAG,"clouds = "+all_xml);
                                 }
                             }
 
@@ -822,10 +876,10 @@ public class WeatherDbProcessing
                             result = WeatherAppUtils.getDefaultStringDisplayString(unit_xml);
                             if(daily_weather != null){
                                 if(result.length() != 0){
-                                    daily_weather.setClouds_unit(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                    daily_weather.setDaily_clouds_unit(WeatherAppUtils.DEFAULT_STRING_VAL);
                                 }else{
 
-                                    daily_weather.setClouds_unit(unit_xml);
+                                    daily_weather.setDaily_clouds_unit(unit_xml);
                                 }
                             }
                         }
@@ -858,13 +912,15 @@ public class WeatherDbProcessing
         {
             Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
         }
+
+        return icon_map;
     }
 
-    public static void updateyHourlyCityWeatherForecast
-    (Context context,
-     List<HourlyForecast.Forecast> hourlyList,
-     long cityId)
+    public static Map<String, String> updateyHourlyCityWeatherForecast(Context context, ByteArrayInputStream bis, long cityId)
     {
+        //map to hold all the icon ids.
+        Map<String, String> icon_map = new HashMap<String, String>();
+
         try
         {
             //get the dao session.
@@ -882,186 +938,386 @@ public class WeatherDbProcessing
             List<HourlyWeatherInfoTable> hourly_weather_list =
                     WeatherDbProcessing.getBeanByQueryParamsList(qp, context, new HourlyWeatherInfoTable());
 
-            //read data from list and save to java bean to allow for saving to dao via this java bean.
-            //using the city id.
-            for(HourlyForecast.Forecast hourly_forecast : hourlyList)
+            //parse the data
+            //parse the xml stream here.
+            //create a factory obj for the xml pull parser.
+            XmlPullParserFactory xmlFactoryObject = XmlPullParserFactory.newInstance();
+
+            //create an xml pull parser from the pull parser factory.
+            XmlPullParser parser = xmlFactoryObject.newPullParser();
+
+            //set the input to the xml pull parser here.
+            parser.setInput(bis, null);
+
+            //get the event type and begin the parsing.
+            int event = parser.getEventType();
+
+            //java bean to set for db
+            HourlyWeatherInfoTable hourly_weather = null;
+
+            //check if u havent reached the end.
+            while(event != XmlPullParser.END_DOCUMENT)
             {
-                //java bean to set for db
-                HourlyWeatherInfoTable hourly_weather = null;
+                //get the name of the tag
+                String name = parser.getName();
 
-                //remove first item from the list for the auto inc id, and save that to the
-                //item java bean item just the id.
-                if(hourly_weather_list.size() > 0)
+                //this will switch on the different event, tag names here
+                //like <abc>, or </abc> which are start and end tags.
+                switch (event)
                 {
-                    //pop the head off the daily list from the DB.
-                    HourlyWeatherInfoTable hourly_item = hourly_weather_list.remove(0);
+                    case XmlPullParser.START_DOCUMENT:
+                        Log.d(LOGTAG,"start doc parsing.");
+                        break;
 
-                    //assign the item from the list to the local vars here.
-                    //this will assign all new data.
-                    hourly_weather = hourly_item;
-                }
-                else
-                {
-                    //create new obj here.
-                    hourly_weather = new HourlyWeatherInfoTable();
+                    //this is to handle elements data inside tags.
+                    case XmlPullParser.TEXT:
+                        break;
+
+                    case XmlPullParser.START_TAG:
+
+                        if(name.equals("time"))
+                        {
+                            //get obj from list if it exists, otherwise create a new java bean.
+                            //setup obj ref to null.
+                            hourly_weather = null;
+
+                            //remove first item from the list for the auto inc id, and save that to the
+                            //item java bean item just the id.
+                            if(hourly_weather_list.size() > 0)
+                            {
+                                //pop the head off the daily list from the DB.
+                                HourlyWeatherInfoTable daily_item = hourly_weather_list.remove(0);
+
+                                //assign the item from the list to the local vars here.
+                                //this will assign all new data.
+                                hourly_weather = daily_item;
+                            }
+                            else
+                            {
+                                //create new obj here.
+                                hourly_weather = new HourlyWeatherInfoTable();
+                            }
+
+                            //set the city id.
+                            hourly_weather.setCity_id(cityId);
+
+                            String from_time = parser.getAttributeValue(null, "from");
+                            String result = WeatherAppUtils.getDefaultStringDisplayString(from_time);
+                            if(result.length() != 0)
+                            {
+                                hourly_weather.setHourly_from_weather_date(WeatherAppUtils.DEFAULT_lONG_VAL);
+                            }
+                            else
+                            {
+                                long time_val = WeatherAppUtils.getUtcSecondsFromDateString(from_time, WeatherAppUtils.UTC_DATE_FORMAT_hms);
+                                hourly_weather.setHourly_from_weather_date(time_val);
+                            }
+
+                            String to_time = parser.getAttributeValue(null, "to");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(from_time);
+                            if(result.length() != 0)
+                            {
+                                hourly_weather.setHourly_to_weather_date(WeatherAppUtils.DEFAULT_lONG_VAL);
+                            }
+                            else
+                            {
+                                long time_val = WeatherAppUtils.getUtcSecondsFromDateString(to_time, WeatherAppUtils.UTC_DATE_FORMAT_hms);
+                                hourly_weather.setHourly_to_weather_date(time_val);
+                            }
+                        }
+                        else if(name.equals("symbol"))
+                        {
+                            //need to create long value here for time
+                            String number = parser.getAttributeValue(null,"number");
+                            String result = WeatherAppUtils.getDefaultStringDisplayString(number);
+                            if(hourly_weather != null){
+                                if(result.length() != 0){
+                                    hourly_weather.setHourly_symbol_number(WeatherAppUtils.DEFAULT_lONG_VAL);
+                                }else{
+
+                                    hourly_weather.setHourly_symbol_number(Long.parseLong(number));
+                                }
+                            }
+
+                            String name_xml = parser.getAttributeValue(null, "name");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(name_xml);
+                            if(hourly_weather != null){
+                                if(result.length() != 0){
+                                    hourly_weather.setHourly_symbol_name(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                }else{
+
+                                    hourly_weather.setHourly_symbol_name(name_xml);
+                                }
+                            }
+
+                            String var_xml = parser.getAttributeValue(null,"var");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(var_xml);
+                            if(hourly_weather != null){
+                                if(result.length() != 0){
+                                    hourly_weather.setHourly_symbol_var(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                }else{
+
+                                    hourly_weather.setHourly_symbol_var(var_xml);
+
+                                    //add to map the icon id.
+                                    icon_map.put(var_xml,var_xml);
+                                }
+                            }
+                        }
+                        else if(name.equals("precipitation"))
+                        {
+                            String value_xml = parser.getAttributeValue(null, "value");
+                            String result = WeatherAppUtils.getDefaultStringDisplayString(value_xml);
+                            if(hourly_weather != null){
+                                if(result.length() != 0){
+                                    hourly_weather.setHourly_precip_value(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                                }else{
+
+                                    hourly_weather.setHourly_precip_value(Double.parseDouble(value_xml));
+                                }
+                            }
+
+                            String type_xml = parser.getAttributeValue(null, "type");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(type_xml);
+                            if(hourly_weather != null){
+                                if(result.length() != 0){
+                                    hourly_weather.setHourly_precip_type(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                }else{
+
+                                    hourly_weather.setHourly_precip_type(type_xml);
+                                }
+                            }
+
+                            String unit_xml = parser.getAttributeValue(null, "unit");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(type_xml);
+                            if(hourly_weather != null){
+                                if(result.length() != 0){
+                                    hourly_weather.setHourly_precip_unit(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                }else{
+
+                                    hourly_weather.setHourly_precip_unit(unit_xml);
+                                }
+                            }
+                        }
+                        else if(name.equals("windDirection"))
+                        {
+                            String deg_xml = parser.getAttributeValue(null,"deg");
+                            String result = WeatherAppUtils.getDefaultStringDisplayString(deg_xml);
+                            if(hourly_weather != null){
+                                if(result.length() != 0){
+                                    hourly_weather.setHourly_wind_dirr_deg(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                                }else{
+
+                                    hourly_weather.setHourly_wind_dirr_deg(Double.parseDouble(deg_xml));
+                                }
+                            }
+
+                            String code_xml = parser.getAttributeValue(null, "code");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(code_xml);
+                            if(hourly_weather != null){
+                                if(result.length() != 0){
+                                    hourly_weather.setHourly_wind_dirr_code(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                }else{
+
+                                    hourly_weather.setHourly_wind_dirr_code(code_xml);
+                                }
+                            }
+
+                            String name_xml = parser.getAttributeValue(null,"name");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(name_xml);
+                            if(hourly_weather != null){
+                                if(result.length() != 0){
+                                    hourly_weather.setHourly_wind_dirr_name(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                }else{
+
+                                    hourly_weather.setHourly_wind_dirr_name(name_xml);
+                                }
+                            }
+                        }
+                        else if(name.equals("windSpeed"))
+                        {
+                            String mps_xml = parser.getAttributeValue(null, "mps");
+                            String result = WeatherAppUtils.getDefaultStringDisplayString(mps_xml);
+                            if(hourly_weather != null){
+                                if(result.length() != 0){
+                                    hourly_weather.setHourly_wind_speed_mps(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                                }else{
+
+                                    hourly_weather.setHourly_wind_speed_mps(Double.parseDouble(mps_xml));
+                                }
+                            }
+
+                            String name_xml = parser.getAttributeValue(null, "name");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(name_xml);
+                            if(hourly_weather != null){
+                                if(result.length() != 0){
+                                    hourly_weather.setHourly_wind_speed_name(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                }else{
+
+                                    hourly_weather.setHourly_wind_speed_name(name_xml);
+                                }
+                            }
+                        }
+                        else if(name.equals("temperature"))
+                        {
+                            String unit_xml = parser.getAttributeValue(null, "unit");
+                            String result = WeatherAppUtils.getDefaultStringDisplayString(unit_xml);
+                            if(hourly_weather != null){
+                                if(result.length() != 0){
+                                    hourly_weather.setHourly_unit(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                }else{
+
+                                    hourly_weather.setHourly_unit(unit_xml);
+                                }
+                            }
+
+                            String value_xml = parser.getAttributeValue(null, "value");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(value_xml);
+                            if(hourly_weather != null){
+                                if(result.length() != 0){
+                                    hourly_weather.setHourly_temp_value(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                                }else{
+
+                                    hourly_weather.setHourly_temp_value(Double.parseDouble(value_xml));
+                                }
+                            }
+
+                            String min_xml = parser.getAttributeValue(null, "min");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(min_xml);
+                            if(hourly_weather != null){
+                                if(result.length() != 0){
+                                    hourly_weather.setHourly_min_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                                }else{
+
+                                    hourly_weather.setHourly_min_temp(Double.parseDouble(min_xml));
+                                }
+                            }
+
+                            String max_xml = parser.getAttributeValue(null,"max");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(max_xml);
+                            if(hourly_weather != null){
+                                if(result.length() != 0){
+                                    hourly_weather.setHourly_max_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                                }else{
+
+                                    hourly_weather.setHourly_max_temp(Double.parseDouble(max_xml));
+                                }
+                            }
+                        }
+                        else if(name.equals("pressure"))
+                        {
+                            String unit_xml = parser.getAttributeValue(null,"unit");
+                            String result = WeatherAppUtils.getDefaultStringDisplayString(unit_xml);
+                            if(hourly_weather != null){
+                                if(result.length() != 0){
+                                    hourly_weather.setHourly_pressure_unit(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                }else{
+
+                                    hourly_weather.setHourly_pressure_unit(unit_xml);
+                                }
+                            }
+
+                            String value_xml = parser.getAttributeValue(null, "value");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(value_xml);
+                            if(hourly_weather != null){
+                                if(result.length() != 0){
+                                    hourly_weather.setHourly_pressure_value(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
+                                }else{
+
+                                    hourly_weather.setHourly_pressure_value(Double.parseDouble(value_xml));
+                                }
+                            }
+                        }
+                        else if(name.equals("humidity"))
+                        {
+                            String value_xml = parser.getAttributeValue(null,"value");
+                            String result = WeatherAppUtils.getDefaultStringDisplayString(value_xml);
+                            if(hourly_weather != null){
+                                if(result.length() != 0){
+                                    hourly_weather.setHourly_humidity_val(WeatherAppUtils.DEFAULT_lONG_VAL);
+                                }else{
+
+                                    hourly_weather.setHourly_humidity_val(Long.parseLong(value_xml));
+                                }
+                            }
+
+                            String unit_xml = parser.getAttributeValue(null, "unit");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(unit_xml);
+                            if(hourly_weather != null){
+                                if(result.length() != 0){
+                                    hourly_weather.setHourly_humidity_unit(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                }else{
+
+                                    hourly_weather.setHourly_humidity_unit(unit_xml);
+                                }
+                            }
+                        }
+                        else if(name.equals("clouds"))
+                        {
+                            String value_xml = parser.getAttributeValue(null, "value");
+                            String result = WeatherAppUtils.getDefaultStringDisplayString(value_xml);
+                            if(hourly_weather != null){
+                                if(result.length() != 0){
+                                    hourly_weather.setHourly_clouds_val(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                }else{
+
+                                    hourly_weather.setHourly_clouds_val(value_xml);
+                                }
+                            }
+
+                            String all_xml = parser.getAttributeValue(null, "all");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(all_xml);
+                            if(hourly_weather != null){
+                                if(result.length() != 0){
+                                    hourly_weather.setHourly_clouds_all(WeatherAppUtils.DEFAULT_lONG_VAL);
+                                }else{
+
+                                    hourly_weather.setHourly_clouds_all(Long.parseLong(all_xml));
+                                }
+                            }
+
+                            String unit_xml = parser.getAttributeValue(null, "unit");
+                            result = WeatherAppUtils.getDefaultStringDisplayString(unit_xml);
+                            if(hourly_weather != null){
+                                if(result.length() != 0){
+                                    hourly_weather.setHourly_clouds_unit(WeatherAppUtils.DEFAULT_STRING_VAL);
+                                }else{
+
+                                    hourly_weather.setHourly_clouds_unit(unit_xml);
+                                }
+                            }
+                        }
+
+                        break;
+
+                    case XmlPullParser.END_TAG:
+
+                        //save the data using the end tag of time element which is the end
+                        //of a item.
+                        if(name.equals("time"))
+                        {
+                            if(hourly_weather != null)
+                            {
+                                //save data to db via dao using java bean.
+                                hourly_weather_dao.insertOrReplace(hourly_weather);
+                            }
+                        }
+
+                        break;
                 }
 
-                //set the city id.
-                hourly_weather.setCity_id(cityId);
-
-                if(hourly_forecast.hasDateTime())
-                {
-                    hourly_weather.setHourly_weather_date(hourly_forecast.getDateTime().getTime());
-                }
-                else
-                {
-                    hourly_weather.setHourly_weather_date(WeatherAppUtils.DEFAULT_lONG_VAL);
-                }
-
-                HourlyForecast.Forecast.Clouds clouds = hourly_forecast.getCloudsInstance();
-
-                if(clouds.hasPercentageOfClouds())
-                {
-                    float data = clouds.getPercentageOfClouds();
-
-                    if(Double.compare(data,Double.NaN) == 0)
-                        hourly_weather.setHourly_cloud_pert(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                    else
-                        hourly_weather.setHourly_cloud_pert((double)clouds.getPercentageOfClouds());
-                }
-                else
-                {
-                    hourly_weather.setHourly_cloud_pert(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                }
-
-                HourlyForecast.Forecast.Main main = hourly_forecast.getMainInstance();
-
-                if(main.hasHumidity())
-                {
-                    float data = main.getHumidity();
-                    if(Double.compare(data,Double.NaN) == 0)
-                        hourly_weather.setHourly_humidity(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                    else
-                        hourly_weather.setHourly_humidity((double) main.getHumidity());
-                }
-                else
-                {
-                    hourly_weather.setHourly_humidity(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                }
-
-                if(main.hasMaxTemperature())
-                {
-                    float data = main.getMaxTemperature();
-                    if(Double.compare(data,Double.NaN)==0)
-                        hourly_weather.setHourly_max_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                    else
-                        hourly_weather.setHourly_max_temp((double) main.getMaxTemperature());
-                }
-                else
-                {
-                    hourly_weather.setHourly_max_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                }
-
-                if(main.hasMinTemperature())
-                {
-                    float data = main.getMinTemperature();
-                    if(Double.compare(data,Double.NaN)==0)
-                        hourly_weather.setHourly_min_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                    else
-                        hourly_weather.setHourly_min_temp((double) main.getMinTemperature());
-                }
-                else
-                {
-                    hourly_weather.setHourly_min_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                }
-
-                if(main.hasPressure())
-                {
-                    float data = main.getPressure();
-                    if(Double.compare(data,Double.NaN)==0)
-                        hourly_weather.setHourly_pressure(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                    else
-                        hourly_weather.setHourly_pressure((double) main.getPressure());
-                }
-                else
-                {
-                    hourly_weather.setHourly_pressure(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                }
-
-                if(main.hasTemperature())
-                {
-                    float data = main.getTemperature();
-                    if(Double.compare(data,Double.NaN)==0)
-                        hourly_weather.setHourly_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                    else
-                        hourly_weather.setHourly_temp((double) main.getTemperature());
-                }
-                else
-                {
-                    hourly_weather.setHourly_temp(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                }
-
-                if(main.hasGroundLevel())
-                {
-                    float data = main.getGroundLevel();
-                    if(Double.compare(data,Double.NaN)==0)
-                        hourly_weather.setHourly_gnd_level(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                    else
-                        hourly_weather.setHourly_gnd_level((double) main.getGroundLevel());
-                }
-                else
-                {
-                    hourly_weather.setHourly_gnd_level(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                }
-
-                if(main.hasSeaLevel())
-                {
-                    float data = main.getSeaLevel();
-                    if(Double.compare(data,Double.NaN)==0)
-                        hourly_weather.setHourly_sea_level(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                    else
-                        hourly_weather.setHourly_sea_level((double) main.getSeaLevel());
-                }
-                else
-                {
-                    hourly_weather.setHourly_sea_level(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                }
-
-                HourlyForecast.Forecast.Wind wind = hourly_forecast.getWindInstance();
-                if(wind.hasWindDegree())
-                {
-                    float data = wind.getWindDegree();
-                    if(Double.compare(data,Double.NaN)==0)
-                        hourly_weather.setHourly_wind_deg(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                    else
-                        hourly_weather.setHourly_wind_deg((double) wind.getWindDegree());
-                }
-                else
-                {
-                    hourly_weather.setHourly_wind_deg(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                }
-
-                if(wind.hasWindSpeed())
-                {
-                    float data = wind.getWindSpeed();
-                    if(Double.compare(data,Double.NaN)==0)
-                        hourly_weather.setHourly_wind_speed(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                    else
-                        hourly_weather.setHourly_wind_speed((double) wind.getWindSpeed());
-                }
-                else
-                {
-                    hourly_weather.setHourly_wind_speed(WeatherAppUtils.DEFAULT_DOUBLE_VAL);
-                }
-
-                //save data to db via dao using java bean.
-                hourly_weather_dao.insertOrReplace(hourly_weather);
+                //get the next event.
+                event = parser.next();
             }
+
+            Log.d(LOGTAG,"end doc parsing");
         }
         catch (Exception e)
         {
             Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
         }
+
+        return icon_map;
     }
 
     /*
