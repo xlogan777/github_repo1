@@ -75,7 +75,8 @@ public class HourlyWeatherActivity extends Activity
         for(HourlyWeatherInfoTable items : hourly_weather_param)
         {
             //create a new date obj from the date seconds.
-            Date item_date = new Date(items.getHourly_weather_date());
+            //use the from date as the time test.
+            Date item_date = new Date(items.getHourly_from_weather_date());
             Date current_date = new Date();
 
             //check to see if the are the same day.

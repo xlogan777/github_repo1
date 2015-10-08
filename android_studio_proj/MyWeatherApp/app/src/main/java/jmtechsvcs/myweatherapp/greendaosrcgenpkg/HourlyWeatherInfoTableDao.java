@@ -25,17 +25,30 @@ public class HourlyWeatherInfoTableDao extends AbstractDao<HourlyWeatherInfoTabl
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property City_id = new Property(1, long.class, "city_id", false, "CITY_ID");
-        public final static Property Hourly_weather_date = new Property(2, long.class, "hourly_weather_date", false, "HOURLY_WEATHER_DATE");
-        public final static Property Hourly_cloud_pert = new Property(3, double.class, "hourly_cloud_pert", false, "HOURLY_CLOUD_PERT");
-        public final static Property Hourly_humidity = new Property(4, double.class, "hourly_humidity", false, "HOURLY_HUMIDITY");
-        public final static Property Hourly_max_temp = new Property(5, double.class, "hourly_max_temp", false, "HOURLY_MAX_TEMP");
-        public final static Property Hourly_min_temp = new Property(6, double.class, "hourly_min_temp", false, "HOURLY_MIN_TEMP");
-        public final static Property Hourly_pressure = new Property(7, double.class, "hourly_pressure", false, "HOURLY_PRESSURE");
-        public final static Property Hourly_temp = new Property(8, double.class, "hourly_temp", false, "HOURLY_TEMP");
-        public final static Property Hourly_sea_level = new Property(9, double.class, "hourly_sea_level", false, "HOURLY_SEA_LEVEL");
-        public final static Property Hourly_gnd_level = new Property(10, double.class, "hourly_gnd_level", false, "HOURLY_GND_LEVEL");
-        public final static Property Hourly_wind_deg = new Property(11, double.class, "hourly_wind_deg", false, "HOURLY_WIND_DEG");
-        public final static Property Hourly_wind_speed = new Property(12, double.class, "hourly_wind_speed", false, "HOURLY_WIND_SPEED");
+        public final static Property Hourly_from_weather_date = new Property(2, long.class, "hourly_from_weather_date", false, "HOURLY_FROM_WEATHER_DATE");
+        public final static Property Hourly_to_weather_date = new Property(3, long.class, "hourly_to_weather_date", false, "HOURLY_TO_WEATHER_DATE");
+        public final static Property Hourly_symbol_number = new Property(4, long.class, "hourly_symbol_number", false, "HOURLY_SYMBOL_NUMBER");
+        public final static Property Hourly_symbol_name = new Property(5, String.class, "hourly_symbol_name", false, "HOURLY_SYMBOL_NAME");
+        public final static Property Hourly_symbol_var = new Property(6, String.class, "hourly_symbol_var", false, "HOURLY_SYMBOL_VAR");
+        public final static Property Hourly_precip_unit = new Property(7, String.class, "hourly_precip_unit", false, "HOURLY_PRECIP_UNIT");
+        public final static Property Hourly_precip_value = new Property(8, double.class, "hourly_precip_value", false, "HOURLY_PRECIP_VALUE");
+        public final static Property Hourly_precip_type = new Property(9, String.class, "hourly_precip_type", false, "HOURLY_PRECIP_TYPE");
+        public final static Property Hourly_wind_dirr_deg = new Property(10, long.class, "hourly_wind_dirr_deg", false, "HOURLY_WIND_DIRR_DEG");
+        public final static Property Hourly_wind_dirr_code = new Property(11, String.class, "hourly_wind_dirr_code", false, "HOURLY_WIND_DIRR_CODE");
+        public final static Property Hourly_wind_dirr_name = new Property(12, String.class, "hourly_wind_dirr_name", false, "HOURLY_WIND_DIRR_NAME");
+        public final static Property Hourly_wind_speed_mps = new Property(13, double.class, "hourly_wind_speed_mps", false, "HOURLY_WIND_SPEED_MPS");
+        public final static Property Hourly_wind_speed_name = new Property(14, String.class, "hourly_wind_speed_name", false, "HOURLY_WIND_SPEED_NAME");
+        public final static Property Hourly_unit = new Property(15, String.class, "hourly_unit", false, "HOURLY_UNIT");
+        public final static Property Hourly_temp_value = new Property(16, double.class, "hourly_temp_value", false, "HOURLY_TEMP_VALUE");
+        public final static Property Hourly_min_temp = new Property(17, double.class, "hourly_min_temp", false, "HOURLY_MIN_TEMP");
+        public final static Property Hourly_max_temp = new Property(18, double.class, "hourly_max_temp", false, "HOURLY_MAX_TEMP");
+        public final static Property Hourly_pressure_unit = new Property(19, String.class, "hourly_pressure_unit", false, "HOURLY_PRESSURE_UNIT");
+        public final static Property Hourly_pressure_value = new Property(20, double.class, "hourly_pressure_value", false, "HOURLY_PRESSURE_VALUE");
+        public final static Property Hourly_humidity_val = new Property(21, long.class, "hourly_humidity_val", false, "HOURLY_HUMIDITY_VAL");
+        public final static Property Hourly_humidity_unit = new Property(22, String.class, "hourly_humidity_unit", false, "HOURLY_HUMIDITY_UNIT");
+        public final static Property Hourly_clouds_val = new Property(23, String.class, "hourly_clouds_val", false, "HOURLY_CLOUDS_VAL");
+        public final static Property Hourly_clouds_all = new Property(24, long.class, "hourly_clouds_all", false, "HOURLY_CLOUDS_ALL");
+        public final static Property Hourly_clouds_unit = new Property(25, String.class, "hourly_clouds_unit", false, "HOURLY_CLOUDS_UNIT");
     };
 
 
@@ -53,17 +66,30 @@ public class HourlyWeatherInfoTableDao extends AbstractDao<HourlyWeatherInfoTabl
         db.execSQL("CREATE TABLE " + constraint + "\"HOURLY_WEATHER_INFO_TABLE\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"CITY_ID\" INTEGER NOT NULL ," + // 1: city_id
-                "\"HOURLY_WEATHER_DATE\" INTEGER NOT NULL ," + // 2: hourly_weather_date
-                "\"HOURLY_CLOUD_PERT\" REAL NOT NULL ," + // 3: hourly_cloud_pert
-                "\"HOURLY_HUMIDITY\" REAL NOT NULL ," + // 4: hourly_humidity
-                "\"HOURLY_MAX_TEMP\" REAL NOT NULL ," + // 5: hourly_max_temp
-                "\"HOURLY_MIN_TEMP\" REAL NOT NULL ," + // 6: hourly_min_temp
-                "\"HOURLY_PRESSURE\" REAL NOT NULL ," + // 7: hourly_pressure
-                "\"HOURLY_TEMP\" REAL NOT NULL ," + // 8: hourly_temp
-                "\"HOURLY_SEA_LEVEL\" REAL NOT NULL ," + // 9: hourly_sea_level
-                "\"HOURLY_GND_LEVEL\" REAL NOT NULL ," + // 10: hourly_gnd_level
-                "\"HOURLY_WIND_DEG\" REAL NOT NULL ," + // 11: hourly_wind_deg
-                "\"HOURLY_WIND_SPEED\" REAL NOT NULL );"); // 12: hourly_wind_speed
+                "\"HOURLY_FROM_WEATHER_DATE\" INTEGER NOT NULL ," + // 2: hourly_from_weather_date
+                "\"HOURLY_TO_WEATHER_DATE\" INTEGER NOT NULL ," + // 3: hourly_to_weather_date
+                "\"HOURLY_SYMBOL_NUMBER\" INTEGER NOT NULL ," + // 4: hourly_symbol_number
+                "\"HOURLY_SYMBOL_NAME\" TEXT NOT NULL ," + // 5: hourly_symbol_name
+                "\"HOURLY_SYMBOL_VAR\" TEXT NOT NULL ," + // 6: hourly_symbol_var
+                "\"HOURLY_PRECIP_UNIT\" TEXT NOT NULL ," + // 7: hourly_precip_unit
+                "\"HOURLY_PRECIP_VALUE\" REAL NOT NULL ," + // 8: hourly_precip_value
+                "\"HOURLY_PRECIP_TYPE\" TEXT NOT NULL ," + // 9: hourly_precip_type
+                "\"HOURLY_WIND_DIRR_DEG\" INTEGER NOT NULL ," + // 10: hourly_wind_dirr_deg
+                "\"HOURLY_WIND_DIRR_CODE\" TEXT NOT NULL ," + // 11: hourly_wind_dirr_code
+                "\"HOURLY_WIND_DIRR_NAME\" TEXT NOT NULL ," + // 12: hourly_wind_dirr_name
+                "\"HOURLY_WIND_SPEED_MPS\" REAL NOT NULL ," + // 13: hourly_wind_speed_mps
+                "\"HOURLY_WIND_SPEED_NAME\" TEXT NOT NULL ," + // 14: hourly_wind_speed_name
+                "\"HOURLY_UNIT\" TEXT NOT NULL ," + // 15: hourly_unit
+                "\"HOURLY_TEMP_VALUE\" REAL NOT NULL ," + // 16: hourly_temp_value
+                "\"HOURLY_MIN_TEMP\" REAL NOT NULL ," + // 17: hourly_min_temp
+                "\"HOURLY_MAX_TEMP\" REAL NOT NULL ," + // 18: hourly_max_temp
+                "\"HOURLY_PRESSURE_UNIT\" TEXT NOT NULL ," + // 19: hourly_pressure_unit
+                "\"HOURLY_PRESSURE_VALUE\" REAL NOT NULL ," + // 20: hourly_pressure_value
+                "\"HOURLY_HUMIDITY_VAL\" INTEGER NOT NULL ," + // 21: hourly_humidity_val
+                "\"HOURLY_HUMIDITY_UNIT\" TEXT NOT NULL ," + // 22: hourly_humidity_unit
+                "\"HOURLY_CLOUDS_VAL\" TEXT NOT NULL ," + // 23: hourly_clouds_val
+                "\"HOURLY_CLOUDS_ALL\" INTEGER NOT NULL ," + // 24: hourly_clouds_all
+                "\"HOURLY_CLOUDS_UNIT\" TEXT NOT NULL );"); // 25: hourly_clouds_unit
     }
 
     /** Drops the underlying database table. */
@@ -82,17 +108,30 @@ public class HourlyWeatherInfoTableDao extends AbstractDao<HourlyWeatherInfoTabl
             stmt.bindLong(1, id);
         }
         stmt.bindLong(2, entity.getCity_id());
-        stmt.bindLong(3, entity.getHourly_weather_date());
-        stmt.bindDouble(4, entity.getHourly_cloud_pert());
-        stmt.bindDouble(5, entity.getHourly_humidity());
-        stmt.bindDouble(6, entity.getHourly_max_temp());
-        stmt.bindDouble(7, entity.getHourly_min_temp());
-        stmt.bindDouble(8, entity.getHourly_pressure());
-        stmt.bindDouble(9, entity.getHourly_temp());
-        stmt.bindDouble(10, entity.getHourly_sea_level());
-        stmt.bindDouble(11, entity.getHourly_gnd_level());
-        stmt.bindDouble(12, entity.getHourly_wind_deg());
-        stmt.bindDouble(13, entity.getHourly_wind_speed());
+        stmt.bindLong(3, entity.getHourly_from_weather_date());
+        stmt.bindLong(4, entity.getHourly_to_weather_date());
+        stmt.bindLong(5, entity.getHourly_symbol_number());
+        stmt.bindString(6, entity.getHourly_symbol_name());
+        stmt.bindString(7, entity.getHourly_symbol_var());
+        stmt.bindString(8, entity.getHourly_precip_unit());
+        stmt.bindDouble(9, entity.getHourly_precip_value());
+        stmt.bindString(10, entity.getHourly_precip_type());
+        stmt.bindLong(11, entity.getHourly_wind_dirr_deg());
+        stmt.bindString(12, entity.getHourly_wind_dirr_code());
+        stmt.bindString(13, entity.getHourly_wind_dirr_name());
+        stmt.bindDouble(14, entity.getHourly_wind_speed_mps());
+        stmt.bindString(15, entity.getHourly_wind_speed_name());
+        stmt.bindString(16, entity.getHourly_unit());
+        stmt.bindDouble(17, entity.getHourly_temp_value());
+        stmt.bindDouble(18, entity.getHourly_min_temp());
+        stmt.bindDouble(19, entity.getHourly_max_temp());
+        stmt.bindString(20, entity.getHourly_pressure_unit());
+        stmt.bindDouble(21, entity.getHourly_pressure_value());
+        stmt.bindLong(22, entity.getHourly_humidity_val());
+        stmt.bindString(23, entity.getHourly_humidity_unit());
+        stmt.bindString(24, entity.getHourly_clouds_val());
+        stmt.bindLong(25, entity.getHourly_clouds_all());
+        stmt.bindString(26, entity.getHourly_clouds_unit());
     }
 
     /** @inheritdoc */
@@ -107,17 +146,30 @@ public class HourlyWeatherInfoTableDao extends AbstractDao<HourlyWeatherInfoTabl
         HourlyWeatherInfoTable entity = new HourlyWeatherInfoTable( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getLong(offset + 1), // city_id
-            cursor.getLong(offset + 2), // hourly_weather_date
-            cursor.getDouble(offset + 3), // hourly_cloud_pert
-            cursor.getDouble(offset + 4), // hourly_humidity
-            cursor.getDouble(offset + 5), // hourly_max_temp
-            cursor.getDouble(offset + 6), // hourly_min_temp
-            cursor.getDouble(offset + 7), // hourly_pressure
-            cursor.getDouble(offset + 8), // hourly_temp
-            cursor.getDouble(offset + 9), // hourly_sea_level
-            cursor.getDouble(offset + 10), // hourly_gnd_level
-            cursor.getDouble(offset + 11), // hourly_wind_deg
-            cursor.getDouble(offset + 12) // hourly_wind_speed
+            cursor.getLong(offset + 2), // hourly_from_weather_date
+            cursor.getLong(offset + 3), // hourly_to_weather_date
+            cursor.getLong(offset + 4), // hourly_symbol_number
+            cursor.getString(offset + 5), // hourly_symbol_name
+            cursor.getString(offset + 6), // hourly_symbol_var
+            cursor.getString(offset + 7), // hourly_precip_unit
+            cursor.getDouble(offset + 8), // hourly_precip_value
+            cursor.getString(offset + 9), // hourly_precip_type
+            cursor.getLong(offset + 10), // hourly_wind_dirr_deg
+            cursor.getString(offset + 11), // hourly_wind_dirr_code
+            cursor.getString(offset + 12), // hourly_wind_dirr_name
+            cursor.getDouble(offset + 13), // hourly_wind_speed_mps
+            cursor.getString(offset + 14), // hourly_wind_speed_name
+            cursor.getString(offset + 15), // hourly_unit
+            cursor.getDouble(offset + 16), // hourly_temp_value
+            cursor.getDouble(offset + 17), // hourly_min_temp
+            cursor.getDouble(offset + 18), // hourly_max_temp
+            cursor.getString(offset + 19), // hourly_pressure_unit
+            cursor.getDouble(offset + 20), // hourly_pressure_value
+            cursor.getLong(offset + 21), // hourly_humidity_val
+            cursor.getString(offset + 22), // hourly_humidity_unit
+            cursor.getString(offset + 23), // hourly_clouds_val
+            cursor.getLong(offset + 24), // hourly_clouds_all
+            cursor.getString(offset + 25) // hourly_clouds_unit
         );
         return entity;
     }
@@ -127,17 +179,30 @@ public class HourlyWeatherInfoTableDao extends AbstractDao<HourlyWeatherInfoTabl
     public void readEntity(Cursor cursor, HourlyWeatherInfoTable entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setCity_id(cursor.getLong(offset + 1));
-        entity.setHourly_weather_date(cursor.getLong(offset + 2));
-        entity.setHourly_cloud_pert(cursor.getDouble(offset + 3));
-        entity.setHourly_humidity(cursor.getDouble(offset + 4));
-        entity.setHourly_max_temp(cursor.getDouble(offset + 5));
-        entity.setHourly_min_temp(cursor.getDouble(offset + 6));
-        entity.setHourly_pressure(cursor.getDouble(offset + 7));
-        entity.setHourly_temp(cursor.getDouble(offset + 8));
-        entity.setHourly_sea_level(cursor.getDouble(offset + 9));
-        entity.setHourly_gnd_level(cursor.getDouble(offset + 10));
-        entity.setHourly_wind_deg(cursor.getDouble(offset + 11));
-        entity.setHourly_wind_speed(cursor.getDouble(offset + 12));
+        entity.setHourly_from_weather_date(cursor.getLong(offset + 2));
+        entity.setHourly_to_weather_date(cursor.getLong(offset + 3));
+        entity.setHourly_symbol_number(cursor.getLong(offset + 4));
+        entity.setHourly_symbol_name(cursor.getString(offset + 5));
+        entity.setHourly_symbol_var(cursor.getString(offset + 6));
+        entity.setHourly_precip_unit(cursor.getString(offset + 7));
+        entity.setHourly_precip_value(cursor.getDouble(offset + 8));
+        entity.setHourly_precip_type(cursor.getString(offset + 9));
+        entity.setHourly_wind_dirr_deg(cursor.getLong(offset + 10));
+        entity.setHourly_wind_dirr_code(cursor.getString(offset + 11));
+        entity.setHourly_wind_dirr_name(cursor.getString(offset + 12));
+        entity.setHourly_wind_speed_mps(cursor.getDouble(offset + 13));
+        entity.setHourly_wind_speed_name(cursor.getString(offset + 14));
+        entity.setHourly_unit(cursor.getString(offset + 15));
+        entity.setHourly_temp_value(cursor.getDouble(offset + 16));
+        entity.setHourly_min_temp(cursor.getDouble(offset + 17));
+        entity.setHourly_max_temp(cursor.getDouble(offset + 18));
+        entity.setHourly_pressure_unit(cursor.getString(offset + 19));
+        entity.setHourly_pressure_value(cursor.getDouble(offset + 20));
+        entity.setHourly_humidity_val(cursor.getLong(offset + 21));
+        entity.setHourly_humidity_unit(cursor.getString(offset + 22));
+        entity.setHourly_clouds_val(cursor.getString(offset + 23));
+        entity.setHourly_clouds_all(cursor.getLong(offset + 24));
+        entity.setHourly_clouds_unit(cursor.getString(offset + 25));
      }
     
     /** @inheritdoc */

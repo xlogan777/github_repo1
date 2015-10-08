@@ -1,16 +1,20 @@
 package jmtechsvcs.myweatherapp.fragmentpkg;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
 import jmtechsvcs.myweatherapp.R;
+import jmtechsvcs.myweatherapp.dbpkg.BeanQueryParams;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.DailyWeatherInfoTable;
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherIconTable;
 import jmtechsvcs.myweatherapp.utilspkg.MathUtils;
 import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 
@@ -182,7 +186,24 @@ public class DailyWeatherAdapter extends ArrayAdapter<DailyWeatherInfoTable>
         else
             ((TextView)rowView.findViewById(R.id.daily_clouds_val)).setText(result);
 
-        //TODO: need to setup the image view item here.
+        //get the weather icon table with the var id.
+        WeatherIconTable weatherIconTable =
+                WeatherAppUtils.getWeatherIconTable
+                        (item_row.getDaily_symbol_var(), context);
+
+        //load the weather icon.
+        if(weatherIconTable != null)
+        {
+            //load the bitmap.
+            Bitmap bitmap = WeatherAppUtils.loadCityWeatherIcon(weatherIconTable);
+
+            //if not null, then display it.
+            if(bitmap != null)
+            {
+                //set the image bit map here.
+                ((ImageView)rowView.findViewById(R.id.imageDailyView)).setImageBitmap(bitmap);
+            }
+        }
 
         //return the row view for this inflated item.
         return rowView;

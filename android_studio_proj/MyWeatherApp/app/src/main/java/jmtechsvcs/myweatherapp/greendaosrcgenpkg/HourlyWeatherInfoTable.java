@@ -11,17 +11,42 @@ public class HourlyWeatherInfoTable {
 
     private Long id;
     private long city_id;
-    private long hourly_weather_date;
-    private double hourly_cloud_pert;
-    private double hourly_humidity;
-    private double hourly_max_temp;
+    private long hourly_from_weather_date;
+    private long hourly_to_weather_date;
+    private long hourly_symbol_number;
+    /** Not-null value. */
+    private String hourly_symbol_name;
+    /** Not-null value. */
+    private String hourly_symbol_var;
+    /** Not-null value. */
+    private String hourly_precip_unit;
+    private double hourly_precip_value;
+    /** Not-null value. */
+    private String hourly_precip_type;
+    private long hourly_wind_dirr_deg;
+    /** Not-null value. */
+    private String hourly_wind_dirr_code;
+    /** Not-null value. */
+    private String hourly_wind_dirr_name;
+    private double hourly_wind_speed_mps;
+    /** Not-null value. */
+    private String hourly_wind_speed_name;
+    /** Not-null value. */
+    private String hourly_unit;
+    private double hourly_temp_value;
     private double hourly_min_temp;
-    private double hourly_pressure;
-    private double hourly_temp;
-    private double hourly_sea_level;
-    private double hourly_gnd_level;
-    private double hourly_wind_deg;
-    private double hourly_wind_speed;
+    private double hourly_max_temp;
+    /** Not-null value. */
+    private String hourly_pressure_unit;
+    private double hourly_pressure_value;
+    private long hourly_humidity_val;
+    /** Not-null value. */
+    private String hourly_humidity_unit;
+    /** Not-null value. */
+    private String hourly_clouds_val;
+    private long hourly_clouds_all;
+    /** Not-null value. */
+    private String hourly_clouds_unit;
 
     // KEEP FIELDS - put your custom fields here
     // KEEP FIELDS END
@@ -33,20 +58,33 @@ public class HourlyWeatherInfoTable {
         this.id = id;
     }
 
-    public HourlyWeatherInfoTable(Long id, long city_id, long hourly_weather_date, double hourly_cloud_pert, double hourly_humidity, double hourly_max_temp, double hourly_min_temp, double hourly_pressure, double hourly_temp, double hourly_sea_level, double hourly_gnd_level, double hourly_wind_deg, double hourly_wind_speed) {
+    public HourlyWeatherInfoTable(Long id, long city_id, long hourly_from_weather_date, long hourly_to_weather_date, long hourly_symbol_number, String hourly_symbol_name, String hourly_symbol_var, String hourly_precip_unit, double hourly_precip_value, String hourly_precip_type, long hourly_wind_dirr_deg, String hourly_wind_dirr_code, String hourly_wind_dirr_name, double hourly_wind_speed_mps, String hourly_wind_speed_name, String hourly_unit, double hourly_temp_value, double hourly_min_temp, double hourly_max_temp, String hourly_pressure_unit, double hourly_pressure_value, long hourly_humidity_val, String hourly_humidity_unit, String hourly_clouds_val, long hourly_clouds_all, String hourly_clouds_unit) {
         this.id = id;
         this.city_id = city_id;
-        this.hourly_weather_date = hourly_weather_date;
-        this.hourly_cloud_pert = hourly_cloud_pert;
-        this.hourly_humidity = hourly_humidity;
-        this.hourly_max_temp = hourly_max_temp;
+        this.hourly_from_weather_date = hourly_from_weather_date;
+        this.hourly_to_weather_date = hourly_to_weather_date;
+        this.hourly_symbol_number = hourly_symbol_number;
+        this.hourly_symbol_name = hourly_symbol_name;
+        this.hourly_symbol_var = hourly_symbol_var;
+        this.hourly_precip_unit = hourly_precip_unit;
+        this.hourly_precip_value = hourly_precip_value;
+        this.hourly_precip_type = hourly_precip_type;
+        this.hourly_wind_dirr_deg = hourly_wind_dirr_deg;
+        this.hourly_wind_dirr_code = hourly_wind_dirr_code;
+        this.hourly_wind_dirr_name = hourly_wind_dirr_name;
+        this.hourly_wind_speed_mps = hourly_wind_speed_mps;
+        this.hourly_wind_speed_name = hourly_wind_speed_name;
+        this.hourly_unit = hourly_unit;
+        this.hourly_temp_value = hourly_temp_value;
         this.hourly_min_temp = hourly_min_temp;
-        this.hourly_pressure = hourly_pressure;
-        this.hourly_temp = hourly_temp;
-        this.hourly_sea_level = hourly_sea_level;
-        this.hourly_gnd_level = hourly_gnd_level;
-        this.hourly_wind_deg = hourly_wind_deg;
-        this.hourly_wind_speed = hourly_wind_speed;
+        this.hourly_max_temp = hourly_max_temp;
+        this.hourly_pressure_unit = hourly_pressure_unit;
+        this.hourly_pressure_value = hourly_pressure_value;
+        this.hourly_humidity_val = hourly_humidity_val;
+        this.hourly_humidity_unit = hourly_humidity_unit;
+        this.hourly_clouds_val = hourly_clouds_val;
+        this.hourly_clouds_all = hourly_clouds_all;
+        this.hourly_clouds_unit = hourly_clouds_unit;
     }
 
     public Long getId() {
@@ -65,36 +103,140 @@ public class HourlyWeatherInfoTable {
         this.city_id = city_id;
     }
 
-    public long getHourly_weather_date() {
-        return hourly_weather_date;
+    public long getHourly_from_weather_date() {
+        return hourly_from_weather_date;
     }
 
-    public void setHourly_weather_date(long hourly_weather_date) {
-        this.hourly_weather_date = hourly_weather_date;
+    public void setHourly_from_weather_date(long hourly_from_weather_date) {
+        this.hourly_from_weather_date = hourly_from_weather_date;
     }
 
-    public double getHourly_cloud_pert() {
-        return hourly_cloud_pert;
+    public long getHourly_to_weather_date() {
+        return hourly_to_weather_date;
     }
 
-    public void setHourly_cloud_pert(double hourly_cloud_pert) {
-        this.hourly_cloud_pert = hourly_cloud_pert;
+    public void setHourly_to_weather_date(long hourly_to_weather_date) {
+        this.hourly_to_weather_date = hourly_to_weather_date;
     }
 
-    public double getHourly_humidity() {
-        return hourly_humidity;
+    public long getHourly_symbol_number() {
+        return hourly_symbol_number;
     }
 
-    public void setHourly_humidity(double hourly_humidity) {
-        this.hourly_humidity = hourly_humidity;
+    public void setHourly_symbol_number(long hourly_symbol_number) {
+        this.hourly_symbol_number = hourly_symbol_number;
     }
 
-    public double getHourly_max_temp() {
-        return hourly_max_temp;
+    /** Not-null value. */
+    public String getHourly_symbol_name() {
+        return hourly_symbol_name;
     }
 
-    public void setHourly_max_temp(double hourly_max_temp) {
-        this.hourly_max_temp = hourly_max_temp;
+    /** Not-null value; ensure this value is available before it is saved to the database. */
+    public void setHourly_symbol_name(String hourly_symbol_name) {
+        this.hourly_symbol_name = hourly_symbol_name;
+    }
+
+    /** Not-null value. */
+    public String getHourly_symbol_var() {
+        return hourly_symbol_var;
+    }
+
+    /** Not-null value; ensure this value is available before it is saved to the database. */
+    public void setHourly_symbol_var(String hourly_symbol_var) {
+        this.hourly_symbol_var = hourly_symbol_var;
+    }
+
+    /** Not-null value. */
+    public String getHourly_precip_unit() {
+        return hourly_precip_unit;
+    }
+
+    /** Not-null value; ensure this value is available before it is saved to the database. */
+    public void setHourly_precip_unit(String hourly_precip_unit) {
+        this.hourly_precip_unit = hourly_precip_unit;
+    }
+
+    public double getHourly_precip_value() {
+        return hourly_precip_value;
+    }
+
+    public void setHourly_precip_value(double hourly_precip_value) {
+        this.hourly_precip_value = hourly_precip_value;
+    }
+
+    /** Not-null value. */
+    public String getHourly_precip_type() {
+        return hourly_precip_type;
+    }
+
+    /** Not-null value; ensure this value is available before it is saved to the database. */
+    public void setHourly_precip_type(String hourly_precip_type) {
+        this.hourly_precip_type = hourly_precip_type;
+    }
+
+    public long getHourly_wind_dirr_deg() {
+        return hourly_wind_dirr_deg;
+    }
+
+    public void setHourly_wind_dirr_deg(long hourly_wind_dirr_deg) {
+        this.hourly_wind_dirr_deg = hourly_wind_dirr_deg;
+    }
+
+    /** Not-null value. */
+    public String getHourly_wind_dirr_code() {
+        return hourly_wind_dirr_code;
+    }
+
+    /** Not-null value; ensure this value is available before it is saved to the database. */
+    public void setHourly_wind_dirr_code(String hourly_wind_dirr_code) {
+        this.hourly_wind_dirr_code = hourly_wind_dirr_code;
+    }
+
+    /** Not-null value. */
+    public String getHourly_wind_dirr_name() {
+        return hourly_wind_dirr_name;
+    }
+
+    /** Not-null value; ensure this value is available before it is saved to the database. */
+    public void setHourly_wind_dirr_name(String hourly_wind_dirr_name) {
+        this.hourly_wind_dirr_name = hourly_wind_dirr_name;
+    }
+
+    public double getHourly_wind_speed_mps() {
+        return hourly_wind_speed_mps;
+    }
+
+    public void setHourly_wind_speed_mps(double hourly_wind_speed_mps) {
+        this.hourly_wind_speed_mps = hourly_wind_speed_mps;
+    }
+
+    /** Not-null value. */
+    public String getHourly_wind_speed_name() {
+        return hourly_wind_speed_name;
+    }
+
+    /** Not-null value; ensure this value is available before it is saved to the database. */
+    public void setHourly_wind_speed_name(String hourly_wind_speed_name) {
+        this.hourly_wind_speed_name = hourly_wind_speed_name;
+    }
+
+    /** Not-null value. */
+    public String getHourly_unit() {
+        return hourly_unit;
+    }
+
+    /** Not-null value; ensure this value is available before it is saved to the database. */
+    public void setHourly_unit(String hourly_unit) {
+        this.hourly_unit = hourly_unit;
+    }
+
+    public double getHourly_temp_value() {
+        return hourly_temp_value;
+    }
+
+    public void setHourly_temp_value(double hourly_temp_value) {
+        this.hourly_temp_value = hourly_temp_value;
     }
 
     public double getHourly_min_temp() {
@@ -105,52 +247,76 @@ public class HourlyWeatherInfoTable {
         this.hourly_min_temp = hourly_min_temp;
     }
 
-    public double getHourly_pressure() {
-        return hourly_pressure;
+    public double getHourly_max_temp() {
+        return hourly_max_temp;
     }
 
-    public void setHourly_pressure(double hourly_pressure) {
-        this.hourly_pressure = hourly_pressure;
+    public void setHourly_max_temp(double hourly_max_temp) {
+        this.hourly_max_temp = hourly_max_temp;
     }
 
-    public double getHourly_temp() {
-        return hourly_temp;
+    /** Not-null value. */
+    public String getHourly_pressure_unit() {
+        return hourly_pressure_unit;
     }
 
-    public void setHourly_temp(double hourly_temp) {
-        this.hourly_temp = hourly_temp;
+    /** Not-null value; ensure this value is available before it is saved to the database. */
+    public void setHourly_pressure_unit(String hourly_pressure_unit) {
+        this.hourly_pressure_unit = hourly_pressure_unit;
     }
 
-    public double getHourly_sea_level() {
-        return hourly_sea_level;
+    public double getHourly_pressure_value() {
+        return hourly_pressure_value;
     }
 
-    public void setHourly_sea_level(double hourly_sea_level) {
-        this.hourly_sea_level = hourly_sea_level;
+    public void setHourly_pressure_value(double hourly_pressure_value) {
+        this.hourly_pressure_value = hourly_pressure_value;
     }
 
-    public double getHourly_gnd_level() {
-        return hourly_gnd_level;
+    public long getHourly_humidity_val() {
+        return hourly_humidity_val;
     }
 
-    public void setHourly_gnd_level(double hourly_gnd_level) {
-        this.hourly_gnd_level = hourly_gnd_level;
+    public void setHourly_humidity_val(long hourly_humidity_val) {
+        this.hourly_humidity_val = hourly_humidity_val;
     }
 
-    public double getHourly_wind_deg() {
-        return hourly_wind_deg;
+    /** Not-null value. */
+    public String getHourly_humidity_unit() {
+        return hourly_humidity_unit;
     }
 
-    public void setHourly_wind_deg(double hourly_wind_deg) {
-        this.hourly_wind_deg = hourly_wind_deg;
+    /** Not-null value; ensure this value is available before it is saved to the database. */
+    public void setHourly_humidity_unit(String hourly_humidity_unit) {
+        this.hourly_humidity_unit = hourly_humidity_unit;
     }
 
-    public double getHourly_wind_speed() {
-        return hourly_wind_speed;
+    /** Not-null value. */
+    public String getHourly_clouds_val() {
+        return hourly_clouds_val;
     }
 
-    public void setHourly_wind_speed(double hourly_wind_speed) {
-        this.hourly_wind_speed = hourly_wind_speed;
+    /** Not-null value; ensure this value is available before it is saved to the database. */
+    public void setHourly_clouds_val(String hourly_clouds_val) {
+        this.hourly_clouds_val = hourly_clouds_val;
+    }
+
+    public long getHourly_clouds_all() {
+        return hourly_clouds_all;
+    }
+
+    public void setHourly_clouds_all(long hourly_clouds_all) {
+        this.hourly_clouds_all = hourly_clouds_all;
+    }
+
+    /** Not-null value. */
+    public String getHourly_clouds_unit() {
+        return hourly_clouds_unit;
+    }
+
+    /** Not-null value; ensure this value is available before it is saved to the database. */
+    public void setHourly_clouds_unit(String hourly_clouds_unit) {
+        this.hourly_clouds_unit = hourly_clouds_unit;
     }
 
     // KEEP METHODS - put your custom methods here

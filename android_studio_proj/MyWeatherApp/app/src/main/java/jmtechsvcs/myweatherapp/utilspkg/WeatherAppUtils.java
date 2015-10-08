@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.widget.ImageView;
 
 import org.json.JSONObject;
 
@@ -22,6 +23,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import jmtechsvcs.myweatherapp.R;
+import jmtechsvcs.myweatherapp.dbpkg.BeanQueryParams;
+import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherIconTable;
 
 /**
  * Created by jimmy on 7/23/2015.
@@ -364,5 +370,46 @@ public class WeatherAppUtils
         boolean sameDay = calendar1.get(Calendar.DAY_OF_MONTH) == calendar2.get(Calendar.DAY_OF_MONTH);
 
         return (sameDay && sameMonth && sameYear);
+    }
+
+    //return the bit map using the weather icon table.
+    public static Bitmap loadCityWeatherIcon(WeatherIconTable weatherIconTable)
+    {
+        Bitmap bitmap = null;
+
+        try
+        {
+            //get the image path from the bean obj.
+            String img_path = weatherIconTable.getImage_path();
+
+            if(img_path != null && img_path.length() > 0)
+            {
+                bitmap = WeatherAppUtils.readPngFile(img_path, 150, 150);
+            }
+        }
+        catch(Exception e)
+        {
+            Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
+        }
+
+        return bitmap;
+    }
+
+    public static WeatherIconTable getWeatherIconTable(String iconId, Context context)
+    {
+        //create bean query param.
+        BeanQueryParams qp = new BeanQueryParams();
+
+        //get the image icon and allow to have it loaded to the image view.
+        //setup the query params for access to the icon data.
+        qp.setQueryParamType(BeanQueryParams.T_Query_Param_Type.E_IMG_ICON_TABLE_TYPE);
+        qp.setCityId(-1);
+        qp.setIconId(iconId);
+
+        //create obj ref here to be used by the generic method for query params.
+        WeatherIconTable weatherIconTable = new WeatherIconTable();
+        weatherIconTable = WeatherDbProcessing.getBeanByQueryParams(qp, context, weatherIconTable);
+
+        return weatherIconTable;
     }
 }

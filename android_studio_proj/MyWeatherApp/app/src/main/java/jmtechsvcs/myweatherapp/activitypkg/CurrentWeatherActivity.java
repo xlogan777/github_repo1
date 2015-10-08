@@ -64,19 +64,22 @@ public class CurrentWeatherActivity extends Activity
             Log.d(LOGTAG,"load data, city id = "+curr_weather_data.getCity_id()+
                     ", temp = "+curr_weather_data.getCurr_main_temp());
 
-            //get the image icon and allow to have it loaded to the image view.
-            //setup the query params for access to the icon data.
-            qp.setQueryParamType(BeanQueryParams.T_Query_Param_Type.E_IMG_ICON_TABLE_TYPE);
-            qp.setCityId(-1);
-            qp.setIconId(curr_weather_data.getCurr_weather_icon());
-
-            WeatherIconTable weatherIconTable = new WeatherIconTable();
-            weatherIconTable = WeatherDbProcessing.getBeanByQueryParams(qp, context, weatherIconTable);
+            WeatherIconTable weatherIconTable =
+                    WeatherAppUtils.getWeatherIconTable
+                            (curr_weather_data.getCurr_weather_icon(), context);
 
             //load the weather icon.
             if(weatherIconTable != null)
             {
-                loadCityWeatherIcon(weatherIconTable);
+                //load the bitmap.
+                Bitmap bitmap = WeatherAppUtils.loadCityWeatherIcon(weatherIconTable);
+
+                //if not null, then display it.
+                if(bitmap != null)
+                {
+                    //set the image bit map here.
+                    ((ImageView)findViewById(R.id.weather_icon)).setImageBitmap(bitmap);
+                }
 
                 //load city info to ui
                 loadCityInfo(city_info_table);
@@ -332,32 +335,6 @@ public class CurrentWeatherActivity extends Activity
 //            );
 //        else
 //            ((TextView)findViewById(R.id.snowlast3h_val)).setText(result);
-    }
-
-    //this will load the weather icon.
-    private void loadCityWeatherIcon(WeatherIconTable weatherIconTable)
-    {
-        try
-        {
-            //get the image path from the bean obj.
-            String img_path = weatherIconTable.getImage_path();
-
-            if(img_path != null && img_path.length() > 0)
-            {
-                Bitmap bitmap = WeatherAppUtils.readPngFile(img_path, 150, 150);
-
-                if(bitmap != null)
-                {
-                    //set the image bit map here.
-                    ((ImageView)findViewById(R.id.weather_icon)).setImageBitmap(bitmap);
-                    Log.d(LOGTAG,"loaded the image bit map...bit map file = "+img_path);
-                }
-            }
-        }
-        catch(Exception e)
-        {
-            Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
-        }
     }
 
 //    @Override
