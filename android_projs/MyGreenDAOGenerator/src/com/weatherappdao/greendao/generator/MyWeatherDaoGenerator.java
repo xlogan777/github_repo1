@@ -45,8 +45,8 @@ public class MyWeatherDaoGenerator
 			DaoGenerator dao_generator = new DaoGenerator();
 			
 			//generate code based on schema and place in outdir.			
-			dao_generator.generateAll(schema, "c:/users/jimmy/desktop");
-			//dao_generator.generateAll(schema, "c:/users/menaj/desktop");
+			//dao_generator.generateAll(schema, "c:/users/jimmy/desktop");
+			dao_generator.generateAll(schema, "c:/users/menaj/desktop");
 			
 			System.out.println("JM...generated the tables from green dao.");
 		}
@@ -264,15 +264,16 @@ public class MyWeatherDaoGenerator
       //<precipitation value="0.91" type="rain"/>
       daily_weather_entity.addDoubleProperty("daily_precip_value").notNull();//done
       daily_weather_entity.addStringProperty("daily_precip_type").notNull();//done
+      daily_weather_entity.addStringProperty("daily_precip_unit").notNull();//done
       
       //<windDirection deg="306" code="NW" name="Northwest"/>
-      daily_weather_entity.addLongProperty("wind_dirr_deg").notNull();//done
-      daily_weather_entity.addStringProperty("wind_dirr_code").notNull();//done
-      daily_weather_entity.addStringProperty("wind_dirr_name").notNull();//done
+      daily_weather_entity.addLongProperty("daily_wind_dirr_deg").notNull();//done
+      daily_weather_entity.addStringProperty("daily_wind_dirr_code").notNull();//done
+      daily_weather_entity.addStringProperty("daily_wind_dirr_name").notNull();//done
       
       //<windSpeed mps="15.68" name="High wind, near gale"/>
-      daily_weather_entity.addDoubleProperty("wind_speed_mps").notNull();//done
-      daily_weather_entity.addStringProperty("wind_speed_name").notNull();//done
+      daily_weather_entity.addDoubleProperty("daily_wind_speed_mps").notNull();//done
+      daily_weather_entity.addStringProperty("daily_wind_speed_name").notNull();//done
       
       //<temperature day="37.78" min="27.99" max="39.45" night="33.04" eve="37" morn="27.99"/>
       daily_weather_entity.addDoubleProperty("daily_temp").notNull();//done
@@ -283,17 +284,17 @@ public class MyWeatherDaoGenerator
       daily_weather_entity.addDoubleProperty("daily_morning_temp").notNull();//done
       
       //<pressure unit="hPa" value="1008.27"/>
-      daily_weather_entity.addStringProperty("pressure_unit").notNull();//not needed
-      daily_weather_entity.addDoubleProperty("pressure_value").notNull();//done
+      daily_weather_entity.addStringProperty("daily_pressure_unit").notNull();//not needed
+      daily_weather_entity.addDoubleProperty("daily_pressure_value").notNull();//done
       
       //<humidity value="92" unit="%"/>
-      daily_weather_entity.addLongProperty("humidity_val").notNull();//done
-      daily_weather_entity.addStringProperty("humidity_unit").notNull();//not needed
+      daily_weather_entity.addLongProperty("daily_humidity_val").notNull();//done
+      daily_weather_entity.addStringProperty("daily_humidity_unit").notNull();//not needed
       
       //<clouds value="broken clouds" all="64" unit="%"/>
-      daily_weather_entity.addStringProperty("clouds_val").notNull();
-      daily_weather_entity.addLongProperty("clouds_all").notNull();//done
-      daily_weather_entity.addStringProperty("clouds_unit").notNull();//not needed
+      daily_weather_entity.addStringProperty("daily_clouds_val").notNull();
+      daily_weather_entity.addDoubleProperty("daily_clouds_all").notNull();//done
+      daily_weather_entity.addStringProperty("daily_clouds_unit").notNull();//not needed
       
       //<time day="2015-10-08">
       daily_weather_entity.addLongProperty("daily_weather_date").notNull();//done
@@ -327,46 +328,46 @@ public class MyWeatherDaoGenerator
 	      hourly_weather_entity.addLongProperty("city_id").notNull();
 	      
 	      //<time from="2015-10-08T00:00:00" to="2015-10-08T03:00:00">
-	      hourly_weather_entity.addLongProperty("hourly_from_weather_date").notNull();
-	      hourly_weather_entity.addLongProperty("hourly_to_weather_date").notNull();
+	      hourly_weather_entity.addLongProperty("hourly_from_weather_date").notNull();//done
+	      hourly_weather_entity.addLongProperty("hourly_to_weather_date").notNull();//done
 	      
 	      //<symbol number="500" name="light rain" var="10n"/>
-	      hourly_weather_entity.addLongProperty("hourly_symbol_number").notNull();
-	      hourly_weather_entity.addStringProperty("hourly_symbol_name").notNull();
-	      hourly_weather_entity.addStringProperty("hourly_symbol_var").notNull();
+	      hourly_weather_entity.addLongProperty("hourly_symbol_number").notNull();//done
+	      hourly_weather_entity.addStringProperty("hourly_symbol_name").notNull();//done
+	      hourly_weather_entity.addStringProperty("hourly_symbol_var").notNull();//done
 	      
 	      //<precipitation unit="3h" value="0.015" type="rain"/>
-	      hourly_weather_entity.addStringProperty("hourly_precip_unit").notNull();//not needed
-	      hourly_weather_entity.addDoubleProperty("hourly_precip_value").notNull();
-	      hourly_weather_entity.addStringProperty("hourly_precip_type").notNull();
+	      hourly_weather_entity.addStringProperty("hourly_precip_unit").notNull();//done
+	      hourly_weather_entity.addDoubleProperty("hourly_precip_value").notNull();//done
+	      hourly_weather_entity.addStringProperty("hourly_precip_type").notNull();//done
 	      
 	      //<windDirection deg="146.004" code="SE" name="SouthEast"/>
-	      hourly_weather_entity.addLongProperty("hourly_wind_dirr_deg").notNull();
-	      hourly_weather_entity.addStringProperty("hourly_wind_dirr_code").notNull();
-	      hourly_weather_entity.addStringProperty("hourly_wind_dirr_name").notNull();
+	      hourly_weather_entity.addDoubleProperty("hourly_wind_dirr_deg").notNull();//done
+	      hourly_weather_entity.addStringProperty("hourly_wind_dirr_code").notNull();//done
+	      hourly_weather_entity.addStringProperty("hourly_wind_dirr_name").notNull();//done
 	      
 	      //<windSpeed mps="1.34" name="Calm"/>
-	      hourly_weather_entity.addDoubleProperty("hourly_wind_speed_mps").notNull();
-	      hourly_weather_entity.addStringProperty("hourly_wind_speed_name").notNull();
+	      hourly_weather_entity.addDoubleProperty("hourly_wind_speed_mps").notNull();//done
+	      hourly_weather_entity.addStringProperty("hourly_wind_speed_name").notNull();//done
 	      
 	      //<temperature unit="imperial" value="42.17" min="42.17" max="47.11"/>
-	      hourly_weather_entity.addStringProperty("hourly_unit").notNull();//not needed
-	      hourly_weather_entity.addDoubleProperty("hourly_temp_value").notNull();
-	      hourly_weather_entity.addDoubleProperty("hourly_min_temp").notNull();
-	      hourly_weather_entity.addDoubleProperty("hourly_max_temp").notNull();
+	      hourly_weather_entity.addStringProperty("hourly_unit").notNull();//done
+	      hourly_weather_entity.addDoubleProperty("hourly_temp_value").notNull();//done
+	      hourly_weather_entity.addDoubleProperty("hourly_min_temp").notNull();//done
+	      hourly_weather_entity.addDoubleProperty("hourly_max_temp").notNull();//done
 	      
 	      //<pressure unit="hPa" value="711.83"/>
-	      hourly_weather_entity.addStringProperty("hourly_pressure_unit").notNull();//not needed
-	      hourly_weather_entity.addDoubleProperty("hourly_pressure_value").notNull();
+	      hourly_weather_entity.addStringProperty("hourly_pressure_unit").notNull();//done
+	      hourly_weather_entity.addDoubleProperty("hourly_pressure_value").notNull();//done
 	      
 	      //<humidity value="96" unit="%"/>
-	      hourly_weather_entity.addLongProperty("hourly_humidity_val").notNull();
-	      hourly_weather_entity.addStringProperty("hourly_humidity_unit").notNull();//not needed
+	      hourly_weather_entity.addLongProperty("hourly_humidity_val").notNull();//done
+	      hourly_weather_entity.addStringProperty("hourly_humidity_unit").notNull();//done
 	      
 	      //<clouds value="broken clouds" all="56" unit="%"/>
-	      hourly_weather_entity.addStringProperty("hourly_clouds_val").notNull();
-	      hourly_weather_entity.addLongProperty("hourly_clouds_all").notNull();
-	      hourly_weather_entity.addStringProperty("hourly_clouds_unit").notNull();//not needed
+	      hourly_weather_entity.addStringProperty("hourly_clouds_val").notNull();//done
+	      hourly_weather_entity.addDoubleProperty("hourly_clouds_all").notNull();//done
+	      hourly_weather_entity.addStringProperty("hourly_clouds_unit").notNull();//done
 	      
 	      return hourly_weather_entity;
 	  }
