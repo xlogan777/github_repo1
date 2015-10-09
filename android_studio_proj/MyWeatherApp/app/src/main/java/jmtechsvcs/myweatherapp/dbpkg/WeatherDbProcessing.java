@@ -426,6 +426,13 @@ public class WeatherDbProcessing
                     weather_station_bean.setStation_name(station_name);
                     weather_station_bean.setStation_id(station_id);
 
+                    //get the lat/long for this weather station
+                    JSONObject station_coord_obj = station_obj.getJSONObject("coord");
+                    double lat_coord = WeatherAppUtils.getDoubleVal(station_coord_obj, "lat");
+                    double lon_coord = WeatherAppUtils.getDoubleVal(station_coord_obj, "lon");
+                    weather_station_bean.setStation_lat(lat_coord);
+                    weather_station_bean.setStation_lon(lon_coord);
+
                     //must have the last obj
                     JSONObject last_station_obj = array_obj.getJSONObject("last");
 

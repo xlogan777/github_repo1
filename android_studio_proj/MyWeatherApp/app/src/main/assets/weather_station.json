@@ -2,7 +2,11 @@
     {
         "station": {
             "name": "KORD",
-            "id": 962            
+            "id": 962,
+            "coord": {
+                "lon": -87.9067,
+                "lat": 41.9816
+            }
         },
         "distance": 9.482,
         "last": {

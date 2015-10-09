@@ -53,10 +53,10 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="tempature"
         android:id="@+id/tempature"
-        android:layout_marginTop="27dp"
-        android:layout_below="@+id/station_id"
+        android:layout_marginTop="34dp"
+        android:layout_below="@+id/station_lon"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -290,5 +290,45 @@
         android:layout_below="@+id/station_id_val"
         android:layout_alignLeft="@+id/station_id_val"
         android:layout_alignStart="@+id/station_id_val"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="station_lat"
+        android:id="@+id/station_lat"
+        android:layout_below="@+id/station_time"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="station_lon"
+        android:id="@+id/station_lon"
+        android:layout_below="@+id/station_lat"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="station_lat_val"
+        android:id="@+id/station_lat_val"
+        android:layout_below="@+id/station_time_val"
+        android:layout_alignLeft="@+id/station_time_val"
+        android:layout_alignStart="@+id/station_time_val" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="station_lon_val"
+        android:id="@+id/station_lon_val"
+        android:layout_below="@+id/station_lat_val"
+        android:layout_alignLeft="@+id/station_lat_val"
+        android:layout_alignStart="@+id/station_lat_val" />
 
 </RelativeLayout>

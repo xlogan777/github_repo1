@@ -11,6 +11,8 @@ public class WeatherStationInfoTable {
 
     private long station_id;
     private long city_id;
+    private double station_lat;
+    private double station_lon;
     /** Not-null value. */
     private String station_name;
     private double station_temp;
@@ -40,9 +42,11 @@ public class WeatherStationInfoTable {
         this.station_id = station_id;
     }
 
-    public WeatherStationInfoTable(long station_id, long city_id, String station_name, double station_temp, long station_pressure, long station_humidity, double station_wind_speed, long station_wind_deg, double station_wind_gust, long station_visibility_dist, double station_calc_dewpt, double station_calc_humidex, long station_clouds_dist, String station_clouds_cond, double station_rain_1h, double station_rain_24h, double station_rain_today, long last_update_time) {
+    public WeatherStationInfoTable(long station_id, long city_id, double station_lat, double station_lon, String station_name, double station_temp, long station_pressure, long station_humidity, double station_wind_speed, long station_wind_deg, double station_wind_gust, long station_visibility_dist, double station_calc_dewpt, double station_calc_humidex, long station_clouds_dist, String station_clouds_cond, double station_rain_1h, double station_rain_24h, double station_rain_today, long last_update_time) {
         this.station_id = station_id;
         this.city_id = city_id;
+        this.station_lat = station_lat;
+        this.station_lon = station_lon;
         this.station_name = station_name;
         this.station_temp = station_temp;
         this.station_pressure = station_pressure;
@@ -75,6 +79,22 @@ public class WeatherStationInfoTable {
 
     public void setCity_id(long city_id) {
         this.city_id = city_id;
+    }
+
+    public double getStation_lat() {
+        return station_lat;
+    }
+
+    public void setStation_lat(double station_lat) {
+        this.station_lat = station_lat;
+    }
+
+    public double getStation_lon() {
+        return station_lon;
+    }
+
+    public void setStation_lon(double station_lon) {
+        this.station_lon = station_lon;
     }
 
     /** Not-null value. */

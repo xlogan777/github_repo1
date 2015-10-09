@@ -162,6 +162,18 @@ public class WeatherStationSimpleArrayAdapter extends ArrayAdapter<WeatherStatio
         else
             ((TextView)rowView.findViewById(R.id.rain_today_val)).setText(result);
 
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getStation_lat());
+        if(result.length() == 0)
+            ((TextView)rowView.findViewById(R.id.station_lat_val)).setText(item_row.getStation_lat() + "");
+        else
+            ((TextView)rowView.findViewById(R.id.station_lat_val)).setText(result);
+
+        result = WeatherAppUtils.getDefaultStringDisplayDouble(item_row.getStation_lon());
+        if(result.length() == 0)
+            ((TextView)rowView.findViewById(R.id.station_lon_val)).setText(item_row.getStation_lon() + "");
+        else
+            ((TextView)rowView.findViewById(R.id.station_lon_val)).setText(result);
+
         //return the row view for this inflated item.
         return rowView;
     }
