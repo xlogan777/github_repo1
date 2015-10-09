@@ -211,6 +211,8 @@ public class MyWeatherDaoGenerator
       //add non pk fields
       weather_station_entity.addLongProperty("city_id").notNull();
       
+      weather_station_entity.addDoubleProperty("station_lat").notNull();
+      weather_station_entity.addDoubleProperty("station_lon").notNull();
       weather_station_entity.addStringProperty("station_name").notNull();
       weather_station_entity.addDoubleProperty("station_temp").notNull();
       weather_station_entity.addLongProperty("station_pressure").notNull();
