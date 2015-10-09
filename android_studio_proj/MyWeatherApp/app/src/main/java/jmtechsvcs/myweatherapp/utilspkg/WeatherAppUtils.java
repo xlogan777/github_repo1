@@ -297,7 +297,8 @@ public class WeatherAppUtils
     public static String getDefaultStringDisplayString(String data)
     {
         String rv = "No Data Available";
-        if(data != null && !data.equals(DEFAULT_STRING_VAL))
+        //check for valid obj ref, data > 0 at ref, and not equal to default string.
+        if(data != null && data.length() > 0 && !data.equals(DEFAULT_STRING_VAL))
             rv = "";
 
         return rv;

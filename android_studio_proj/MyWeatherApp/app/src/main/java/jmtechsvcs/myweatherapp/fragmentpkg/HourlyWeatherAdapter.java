@@ -107,9 +107,9 @@ public class HourlyWeatherAdapter extends ArrayAdapter<HourlyWeatherInfoTable>
 
         result = WeatherAppUtils.getDefaultStringDisplayString(item_row.getHourly_wind_dirr_code());
         if(result.length() == 0)
-            ((TextView)rowView.findViewById(R.id.HrWindDeg_val)).setText(item_row.getHourly_wind_dirr_code());
+            ((TextView)rowView.findViewById(R.id.HrWindCode_val)).setText(item_row.getHourly_wind_dirr_code());
         else
-            ((TextView)rowView.findViewById(R.id.HrWindDeg_val)).setText(result);
+            ((TextView)rowView.findViewById(R.id.HrWindCode_val)).setText(result);
 
         result = WeatherAppUtils.getDefaultStringDisplayString(item_row.getHourly_wind_dirr_name());
         if(result.length() == 0)
