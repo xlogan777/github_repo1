@@ -1,21 +1,8 @@
 <resources>
-    <!--
-    TODO: Before you run your application, you need a Google Maps API key.
 
-    To get one, follow this link, follow the directions and press "Create" at the end:
+    <!--https://developers.google.com/maps/documentation/android-api/signup -->
 
-    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=03:14:97:90:C9:75:A7:74:82:B2:38:82:CC:3A:0A:E2:60:CE:D3:92%3Bjmtechsvcs.myweatherapp.activitypkg
-
-    You can also add your credentials to an existing key, using this line:
-    03:14:97:90:C9:75:A7:74:82:B2:38:82:CC:3A:0A:E2:60:CE:D3:92;jmtechsvcs.myweatherapp.activitypkg
-
-    Alternatively, follow the directions here:
-    https://developers.google.com/maps/documentation/android/start#get-key
-
-    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
-    string in this file.
-    -->
     <string name="google_maps_key" translatable="false" templateMergeStrategy="preserve">
-        YOUR_KEY_HERE
+        AIzaSyDq7tg5QaHH_P4ENxqAVxjVyojh1QqBnZE
     </string>
 </resources>
