@@ -2,8 +2,8 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="jmtechsvcs.myweatherapp.activitypkg.WeatherStationDisplayActivity">
-    <item android:id="@+id/action_settings"
-          android:title="@string/action_settings"
+    <item android:id="@+id/weather_station_id_menu_item"
+          android:title="@string/map_weather_stations"
           android:orderInCategory="100"
           app:showAsAction="never"/>
 </menu>
