@@ -122,6 +122,9 @@ public class WeatherStationDisplayActivity extends AppCompatActivity
             Log.d(LOGTAG,"clicked the menu item settings, item id = "+
                     item.getItemId()+", title = "+item.getTitle());
 
+            //launch the weather maps activity
+            this.startActivity(new Intent(this, WeatherStationMapsActivity.class));
+
             return true;
         }
 
