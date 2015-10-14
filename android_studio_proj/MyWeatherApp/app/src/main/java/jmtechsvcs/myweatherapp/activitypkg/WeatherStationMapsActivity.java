@@ -1,5 +1,6 @@
 package jmtechsvcs.myweatherapp.activitypkg;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -8,19 +9,36 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.List;
+
 import jmtechsvcs.myweatherapp.R;
+import jmtechsvcs.myweatherapp.dbpkg.BeanQueryParams;
+import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherStationInfoTable;
 
 public class WeatherStationMapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private long cityId;
+    private double lat;
+    private double lon;
+    private String cityName;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather_station_maps);
+
+        //get intent and get city id from bundle obj.
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        cityId = bundle.getLong("city_id");
+        lat = bundle.getDouble("lat");
+        lon = bundle.getDouble("lon");
+        cityName = bundle.getString("cn");
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment =
@@ -29,43 +47,50 @@ public class WeatherStationMapsActivity extends FragmentActivity implements OnMa
         mapFragment.getMapAsync(this);
     }
 
-
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
      */
     @Override
     public void onMapReady(GoogleMap googleMap)
     {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        //LatLng sydney = new LatLng(-34, 151);
-        //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        BeanQueryParams qp = new BeanQueryParams();
+        qp.setCityId(cityId);//city id is used for weather station data.
 
-        LatLng HAMBURG = new LatLng(53.558, 9.927);
-        LatLng KIEL = new LatLng(53.551, 9.993);
+        qp.setQueryParamType(BeanQueryParams.T_Query_Param_Type.E_WEATHER_STATION_TABLE_LIST_TYPE);
 
-        Marker hamburg = mMap.addMarker(new MarkerOptions().position(HAMBURG)
-                .title("Hamburg"));
-        Marker kiel = mMap.addMarker(new MarkerOptions()
-                .position(KIEL)
-                .title("Kiel")
-                .snippet("Kiel is cool")
-//                .icon(BitmapDescriptorFactory
-//                        .fromResource(R.drawable.ic_launcher))
-        );
+        //get list of weather stations based on the query params.
+        List<WeatherStationInfoTable> weather_station_list =
+                WeatherDbProcessing.getBeanByQueryParamsList
+                        (qp, getApplicationContext(), new WeatherStationInfoTable());
 
-        // Move the camera instantly to hamburg with a zoom of 15.
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(HAMBURG, 15));
+        //city location
+        LatLng city_pos =
+                new LatLng(lat, lon);
+
+        //map the city id with lat/lon
+        mMap.addMarker(new MarkerOptions()
+                .position(city_pos)
+                .title(cityName));
+
+        int station_num = 1;
+        for(WeatherStationInfoTable weather_station_obj : weather_station_list)
+        {
+            //create lat long obj with values from pojo.
+            LatLng weather_station_lat_lon =
+                    new LatLng(weather_station_obj.getStation_lat(), weather_station_obj.getStation_lon());
+
+            mMap.addMarker(new MarkerOptions()
+                    .position(weather_station_lat_lon)
+                    .title("WeatherStation_"+station_num++));
+        }
+
+        // Move the camera instantly to city id with a zoom of 10.
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(city_pos, 7));
 
         // Zoom in, animating the camera.
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+        //mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
     }
 }

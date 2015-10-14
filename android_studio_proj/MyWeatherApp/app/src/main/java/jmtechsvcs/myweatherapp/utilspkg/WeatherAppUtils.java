@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.widget.ImageView;
 
+import org.joda.time.LocalDate;
 import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
@@ -363,17 +364,15 @@ public class WeatherAppUtils
 
     public static boolean isSameDay(Date date1, Date date2)
     {
-        Calendar calendar1 = Calendar.getInstance();
-        calendar1.setTime(date1);
+        //use local date, to compare dates.
+        LocalDate date_1 = new LocalDate(date1);
+        LocalDate date_2 = new LocalDate(date2);
 
-        Calendar calendar2 = Calendar.getInstance();
-        calendar2.setTime(date2);
+        boolean is_equal = date_1.isEqual(date_2);
+        Log.d(LOGTAG, "date 1 equals to date 2 = "+is_equal);
 
-        boolean sameYear = calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR);
-        boolean sameMonth = calendar1.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH);
-        boolean sameDay = calendar1.get(Calendar.DAY_OF_MONTH) == calendar2.get(Calendar.DAY_OF_MONTH);
-
-        return (sameDay && sameMonth && sameYear);
+        //return if local date 1 is equal to date 2.
+        return is_equal;
     }
 
     //return the bit map using the weather icon table.

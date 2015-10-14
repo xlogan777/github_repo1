@@ -25,6 +25,10 @@ import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherStationInfoTable;
 public class WeatherStationDisplayActivity extends AppCompatActivity
 {
     private static final String LOGTAG = "WeathtationDispActivity";
+    private long cityId;
+    private double lat;
+    private double lon;
+    private String cityName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,29 +41,32 @@ public class WeatherStationDisplayActivity extends AppCompatActivity
         Bundle bundle = intent.getExtras();
 
         //this is the city id needed to ge the current weather data.
-        long city_id = bundle.getLong("cityId");
+        cityId = bundle.getLong("cityId");
+        lat = bundle.getDouble("lat");
+        lon = bundle.getDouble("lon");
+        cityName = bundle.getString("cn");
 
         //get the city id from the item row for the text view.
         TextView textView = (TextView)findViewById(R.id.city_id_vals);
-        textView.setText(bundle.getLong("cityId")+"");
+        textView.setText(cityId+"");
 
         //get the city name and country code, and add it to the text view.
         textView = (TextView)findViewById(R.id.cn_cc_vals);
-        textView.setText(bundle.getString("cn")+", "+bundle.getString("cc"));
+        textView.setText(cityName + ", "+ bundle.getString("cc"));
 
         //get the lat from item row and add it to the text view.
         textView = (TextView)findViewById(R.id.lat_vals);
-        textView.setText(bundle.getDouble("lat")+"");
+        textView.setText(lat+"");
 
         //get the long from the item row and add it to the text view.
         textView = (TextView)findViewById(R.id.lon_vals);
-        textView.setText(bundle.getDouble("lon")+"");
+        textView.setText(lon+"");
 
         //get the application context.
         Context context = getApplicationContext();
 
         //load the weather stations for this curr city data.
-        loadWeatherStations(city_id, context);
+        loadWeatherStations(cityId, context);
     }
 
     //get the weather station data via dao, and create fragment for this to display.
@@ -119,12 +126,19 @@ public class WeatherStationDisplayActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if(id == R.id.weather_station_id_menu_item)
         {
-            Log.d(LOGTAG,"clicked the menu item settings, item id = "+
-                    item.getItemId()+", title = "+item.getTitle());
+            //create intent and save city id and save bundle to intent.
+            Intent intent = new Intent(this, WeatherStationMapsActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putLong("city_id", cityId);
+            bundle.putDouble("lat", lat);
+            bundle.putDouble("lon", lon);
+            bundle.putString("cn",cityName);
+            intent.putExtras(bundle);
 
             //launch the weather maps activity
-            this.startActivity(new Intent(this, WeatherStationMapsActivity.class));
+            this.startActivity(intent);
 
+            //return true
             return true;
         }
 

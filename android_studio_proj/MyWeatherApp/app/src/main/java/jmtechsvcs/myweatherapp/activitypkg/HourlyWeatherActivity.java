@@ -80,7 +80,7 @@ public class HourlyWeatherActivity extends Activity
             Date current_date = new Date();
 
             //check to see if the are the same day.
-            boolean status = WeatherAppUtils.isSameDay(item_date,current_date);
+            boolean status = WeatherAppUtils.isSameDay(item_date, current_date);
 
             //add to list for current day.
             if(status)
@@ -90,7 +90,7 @@ public class HourlyWeatherActivity extends Activity
         }
 
         //need to check to see if we have items to display..if we dont
-        //then we need to copy 1 days worth of data to the display list.
+        //then we need to copy 1 days worth of data to the display list for the next day.
         if(current_date_list.size() == 0 && hourly_weather_param.size() >= 8 )
         {
             //take the next day items from the main list and copy that to the
