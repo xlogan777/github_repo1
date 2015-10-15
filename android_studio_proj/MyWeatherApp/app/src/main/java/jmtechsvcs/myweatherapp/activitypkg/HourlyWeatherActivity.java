@@ -6,7 +6,10 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -20,7 +23,7 @@ import jmtechsvcs.myweatherapp.fragmentpkg.HourlyWeatherFragment;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.HourlyWeatherInfoTable;
 import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 
-public class HourlyWeatherActivity extends Activity
+public class HourlyWeatherActivity extends AppCompatActivity
 {
     private long cityId = 0;
     private static final String LOGTAG = "HourlyWthrForecastAct";
@@ -124,25 +127,41 @@ public class HourlyWeatherActivity extends Activity
         }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_hourly_weather, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_hourly_weather, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.hourly_menu_item)
+        {
+            Log.d(LOGTAG,"got the item clicked for hourly");
+
+            Intent intent = new Intent(this, HourlyGraphActivity.class);
+//            Bundle bundle = new Bundle();
+//            bundle.putLong("city_id", cityId);
+//            bundle.putDouble("lat", lat);
+//            bundle.putDouble("lon", lon);
+//            bundle.putString("cn",cityName);
+//            intent.putExtras(bundle);
+
+            //launch the weather maps activity
+            this.startActivity(intent);
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

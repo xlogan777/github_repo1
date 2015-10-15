@@ -47,7 +47,6 @@
             android:label="@string/title_activity_current_weather"
             android:screenOrientation="portrait" >
         </activity>
-
         <activity
             android:name=".activitypkg.WeatherStationDisplayActivity"
             android:label="@string/title_activity_weather_station_display"
@@ -76,8 +75,10 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/. 
         -->
-        <!--api key being used here is for google maps debug api key..for release use
-            release/res/value/google_maps_api.xml with that key..for publishing to app store.-->
+        <!--
+            api key being used here is for google maps debug api key..for release use
+            release/res/value/google_maps_api.xml with that key..for publishing to app store.
+        -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAJ7QO_CLPM3-kfAx1R_SJ3fOgOruiTKg4" />
@@ -85,6 +86,8 @@
         <activity
             android:name=".activitypkg.WeatherStationMapsActivity"
             android:label="@string/title_activity_weather_station_maps" >
+        </activity>
+        <activity android:name=".activitypkg.HourlyGraphActivity" >
         </activity>
     </application>
 

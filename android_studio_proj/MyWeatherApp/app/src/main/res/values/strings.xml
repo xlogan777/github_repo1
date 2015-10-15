@@ -4,6 +4,7 @@
     <!--section for action bar strings menu items displays. -->
     <string name="action_settings">Settings</string>
     <string name="map_weather_stations">MapWeatherStations</string>
+    <string name="graph_hourly">GraphHourly</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_current_weather">CurrentWeatherActivity</string>
