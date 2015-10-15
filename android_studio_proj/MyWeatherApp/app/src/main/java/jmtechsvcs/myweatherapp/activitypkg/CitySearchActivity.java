@@ -53,38 +53,38 @@ public class CitySearchActivity extends Activity implements CityListFragment.OnF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_search);
 
-                //get google analytics tracker.
-        // Obtain the shared Tracker instance by way of the application class.
-        MyWeatherApplication application = (MyWeatherApplication)getApplication();
-        mTracker = application.getDefaultTracker();
-
-        //NOTE
-        /*
-        All activity recorded on the shared tracker sends the most recent screen
-        name until replaced or cleared (set to null).
-
-        info on using google analytics.
-        https://developers.google.com/analytics/devguides/collection/ios/v3/mobile-implementation-guide
-        https://developers.google.com/android/reference/com/google/android/gms/analytics/GoogleAnalytics
-         */
-
-        //use the name of this activity to be the name for the tracker
-        String name = LOGTAG;
-        Log.d(LOGTAG, "Setting screen name: " + name);
-        Log.d(LOGTAG, "Testing: " + name);
-        Log.d(LOGTAG, "hahahaha");
-
-        //set the name of the tracker here for this activity.
-        mTracker.setScreenName(null);
-
-        //set the analytics hit here.
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-
-        //set the name of the tracker here for this activity.
-        mTracker.setScreenName("MyScreenView-" + name);
-
-        //set the analytics hit here.
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+//        //get google analytics tracker.
+//        // Obtain the shared Tracker instance by way of the application class.
+//        MyWeatherApplication application = (MyWeatherApplication)getApplication();
+//        mTracker = application.getDefaultTracker();
+//
+//        //NOTE
+//        /*
+//        All activity recorded on the shared tracker sends the most recent screen
+//        name until replaced or cleared (set to null).
+//
+//        info on using google analytics.
+//        https://developers.google.com/analytics/devguides/collection/ios/v3/mobile-implementation-guide
+//        https://developers.google.com/android/reference/com/google/android/gms/analytics/GoogleAnalytics
+//         */
+//
+//        //use the name of this activity to be the name for the tracker
+//        String name = LOGTAG;
+//        Log.d(LOGTAG, "Setting screen name: " + name);
+//        Log.d(LOGTAG, "Testing: " + name);
+//        Log.d(LOGTAG, "hahahaha");
+//
+//        //set the name of the tracker here for this activity.
+//        mTracker.setScreenName(null);
+//
+//        //set the analytics hit here.
+//        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+//
+//        //set the name of the tracker here for this activity.
+//        mTracker.setScreenName("MyScreenView-" + name);
+//
+//        //set the analytics hit here.
+//        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
         //NOTE: do this code in the application context..at the application level.
         //for $$$ purposes.
