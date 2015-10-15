@@ -28,6 +28,10 @@ import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherIconTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherStationInfoTableDao;
 import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Logger;
+import com.google.android.gms.analytics.Tracker;
+
 /**
  * Created by jimmy on 7/21/2015.
  */
@@ -50,6 +54,9 @@ import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 //this is a test.
 public class MyWeatherApplication extends Application
 {
+    //google analytics tracker.
+    private Tracker mTracker;
+
     private static String LOGTAG = "MyWeatherApplication";
 
     private static final String DB_PATH = "/data/data/jmtechsvcs.myweatherapp/databases/";
@@ -91,6 +98,21 @@ public class MyWeatherApplication extends Application
     public void onLowMemory()
     {
         super.onLowMemory();
+    }
+
+    //get the tracker from this class here.
+    public synchronized Tracker getDefaultTracker()
+    {
+        //create default tracker if it hasnt been created.
+        if (mTracker == null)
+        {
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+
+            // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
+            mTracker = analytics.newTracker(R.xml.global_tracker);
+        }
+
+        return mTracker;
     }
 
     public DaoSession getDaoSession()
