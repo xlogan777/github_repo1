@@ -44,6 +44,9 @@ import com.google.android.gms.analytics.Tracker;
 //core initialization for green dao.
 //http://greendao-orm.com/documentation/introduction/
 
+//google analytics
+//https://developers.google.com/analytics/devguides/collection/android/v4/
+
 /**
  * this is to provide the main application a way to access from all activities
  * common services.
@@ -54,8 +57,8 @@ import com.google.android.gms.analytics.Tracker;
 //this is a test.
 public class MyWeatherApplication extends Application
 {
-//    //google analytics tracker.
-//    private Tracker mTracker;
+    //google analytics tracker.
+    private Tracker mTracker;
 
     private static String LOGTAG = "MyWeatherApplication";
 
@@ -100,20 +103,20 @@ public class MyWeatherApplication extends Application
         super.onLowMemory();
     }
 
-//    //get the tracker from this class here.
-//    public synchronized Tracker getDefaultTracker()
-//    {
-//        //create default tracker if it hasnt been created.
-//        if (mTracker == null)
-//        {
-//            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-//
-//            // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
-//            mTracker = analytics.newTracker(R.xml.global_tracker);
-//        }
-//
-//        return mTracker;
-//    }
+    //get the tracker from this class here.
+    public synchronized Tracker getDefaultTracker()
+    {
+        //create default tracker if it hasnt been created.
+        if (mTracker == null)
+        {
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+
+            // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
+            mTracker = analytics.newTracker(R.xml.global_tracker);
+        }
+
+        return mTracker;
+    }
 
     public DaoSession getDaoSession()
     {
