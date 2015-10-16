@@ -63,43 +63,12 @@ public class HourlyWeatherActivity extends AppCompatActivity
         //get the application context.
         Context context = getApplicationContext();
 
-        BeanQueryParams qp = new BeanQueryParams();
-        qp.setCityId(city_id);
-
-        qp.setQueryParamType(BeanQueryParams.T_Query_Param_Type.E_HOURLY_WEATHER_TABLE_LIST_TYPE);
-
-        //get list of weather stations based on the query params.
-        List<HourlyWeatherInfoTable> hourly_weather_param =
-                WeatherDbProcessing.getBeanByQueryParamsList(qp, context, new HourlyWeatherInfoTable());
-
-        //save only the current dates here.
+        //create an empty list to be used for population by apu call
         List<HourlyWeatherInfoTable> current_date_list = new ArrayList<HourlyWeatherInfoTable>();
 
-        for(HourlyWeatherInfoTable items : hourly_weather_param)
-        {
-            //create a new date obj from the date seconds.
-            //use the from date as the time test.
-            Date item_date = new Date(items.getHourly_from_weather_date());
-            Date current_date = new Date();
-
-            //check to see if the are the same day.
-            boolean status = WeatherAppUtils.isSameDay(item_date, current_date);
-
-            //add to list for current day.
-            if(status)
-            {
-                current_date_list.add(items);
-            }
-        }
-
-        //need to check to see if we have items to display..if we dont
-        //then we need to copy 1 days worth of data to the display list for the next day.
-        if(current_date_list.size() == 0 && hourly_weather_param.size() >= 8 )
-        {
-            //take the next day items from the main list and copy that to the
-            //list to be used here.
-            current_date_list.addAll(hourly_weather_param.subList(0,8));
-        }
+        //fill in the data to the array list if conditions are good.
+        WeatherAppUtils.getHourlyWeatherData
+                (city_id, current_date_list, WeatherAppUtils.HOURLY_FILL_LIST_SIZE, context);
 
         //check to see if we have data to show.
         if(current_date_list != null && current_date_list.size() > 0)
@@ -148,15 +117,15 @@ public class HourlyWeatherActivity extends AppCompatActivity
         {
             Log.d(LOGTAG,"got the item clicked for hourly");
 
+            //create intent to call another activity.
             Intent intent = new Intent(this, HourlyGraphActivity.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putLong("city_id", cityId);
-//            bundle.putDouble("lat", lat);
-//            bundle.putDouble("lon", lon);
-//            bundle.putString("cn",cityName);
-//            intent.putExtras(bundle);
 
-            //launch the weather maps activity
+            //create bundle to provide data to activity.
+            Bundle bundle = new Bundle();
+            bundle.putLong("city_id", cityId);
+            intent.putExtras(bundle);
+
+            //launch the hourly graph activity.
             this.startActivity(intent);
 
             return true;

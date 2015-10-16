@@ -59,7 +59,7 @@
         </activity>
         <activity
             android:name=".activitypkg.HourlyWeatherActivity"
-            android:label="@string/title_activity_hourly_weather" >
+            android:label="@string/title_activity_hourly_graph" >
         </activity>
 
         <!--google admob specifics -->
@@ -93,7 +93,10 @@
             android:name=".activitypkg.WeatherStationMapsActivity"
             android:label="@string/title_activity_weather_station_maps" >
         </activity>
-        <activity android:name=".activitypkg.HourlyGraphActivity" >
+
+        <activity android:name=".activitypkg.HourlyGraphActivity"
+                  android:label="@string/graph_hourly"
+                  android:screenOrientation="landscape">
         </activity>
 
         <!--google analytics specific services -->

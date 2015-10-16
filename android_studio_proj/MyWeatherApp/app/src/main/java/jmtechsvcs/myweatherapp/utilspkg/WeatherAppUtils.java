@@ -21,13 +21,16 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import jmtechsvcs.myweatherapp.R;
 import jmtechsvcs.myweatherapp.dbpkg.BeanQueryParams;
 import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
+import jmtechsvcs.myweatherapp.greendaosrcgenpkg.HourlyWeatherInfoTable;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherIconTable;
 import jmtechsvcs.myweatherapp.networkpkg.DataPayload;
 import jmtechsvcs.myweatherapp.networkpkg.NetworkProcessing;
@@ -65,6 +68,9 @@ public class WeatherAppUtils
 
     public static final String START_CURRENT_HOURLY_FORECAST_ACTIVITY_ACTION =
             "START_CURRENT_HOURLY_FORECAST_ACTIVITY_ACTION";
+
+    //used to show how much to allow to fill for hourly data.
+    public static final int HOURLY_FILL_LIST_SIZE = 8;
 
     //returns a json string from the input stream or empty string if something went wrong.
     //it does not close the input stream..that is left to the caller.
@@ -270,7 +276,7 @@ public class WeatherAppUtils
         String [] weather_opts =
                 {"Current Weather Info",
                  "5 Day Forecast",
-                 "Current Day, 3 hourly forecast",
+                 "1 Day, 3 hourly forecast",
                  "Current Weather From Stations"};
 
         return weather_opts;
@@ -435,6 +441,52 @@ public class WeatherAppUtils
             //save the icon data into the DB.
             WeatherDbProcessing.updateWeatherIcon
                     (iconId, weather_icon_url, payload.getBytePayload(), context);
+        }
+    }
+
+    //this will take the city id and do a search, and from there
+    //save into the provided list the data u need for it based on the param passed as
+    //a control mechanism.
+    public static void getHourlyWeatherData
+    (
+     long cityId,
+     List<HourlyWeatherInfoTable> hourlyWeatherList,
+     int fillSize,
+     Context context
+    )
+    {
+        BeanQueryParams qp = new BeanQueryParams();
+        qp.setCityId(cityId);
+
+        qp.setQueryParamType(BeanQueryParams.T_Query_Param_Type.E_HOURLY_WEATHER_TABLE_LIST_TYPE);
+
+        //get list of weather stations based on the query params.
+        List<HourlyWeatherInfoTable> hourly_weather_param =
+                WeatherDbProcessing.getBeanByQueryParamsList(qp, context, new HourlyWeatherInfoTable());
+
+        //track the size to copy.
+        int end_size = 0;
+
+        //get the first 8 items and display it to the user.
+        if(hourly_weather_param.size() >= fillSize)
+        {
+
+            end_size = fillSize;
+        }
+        else
+        {
+            end_size = hourly_weather_param.size();
+        }
+
+        //only if we have a valid ref list and its empty will we add data to it.
+        if(hourlyWeatherList != null && hourlyWeatherList.size() == 0)
+        {
+            //copy sublist from list of dao to list to display.
+            hourlyWeatherList.addAll(hourly_weather_param.subList(0,end_size));
+        }
+        else
+        {
+            Log.d(LOGTAG,"we have a either null or filled in list for hourly weather...this is an issue.");
         }
     }
 }
