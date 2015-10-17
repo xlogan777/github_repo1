@@ -17,6 +17,7 @@ import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityWeatherCurrCondTable;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherIconTable;
 import jmtechsvcs.myweatherapp.dbpkg.BeanQueryParams;
 import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
+import jmtechsvcs.myweatherapp.utilspkg.AnalyticsTracking;
 import jmtechsvcs.myweatherapp.utilspkg.MathUtils;
 import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 
@@ -32,6 +33,9 @@ public class CurrentWeatherActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_weather);
+
+        //send the tracking ofthe viewing of this screen.
+        AnalyticsTracking.sendScreenViewEvents(CurrentWeatherActivity.class.getSimpleName());
 
         //get the intent to use the data from the parent activity.
         Intent intent = getIntent();

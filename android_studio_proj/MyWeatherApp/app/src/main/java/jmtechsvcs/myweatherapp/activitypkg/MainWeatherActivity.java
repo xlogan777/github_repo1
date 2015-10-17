@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.webkit.WebView;
 
 import jmtechsvcs.myweatherapp.R;
+import jmtechsvcs.myweatherapp.utilspkg.AnalyticsTracking;
 
 //test
 public class MainWeatherActivity extends Activity {
@@ -21,6 +22,9 @@ public class MainWeatherActivity extends Activity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_weather);
+
+        //send the tracking ofthe viewing of this screen.
+        AnalyticsTracking.sendScreenViewEvents(MainWeatherActivity.class.getSimpleName());
 
         //add the webview here.
         webView = (WebView)findViewById(R.id.webView1);

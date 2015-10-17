@@ -21,6 +21,7 @@ import jmtechsvcs.myweatherapp.dbpkg.BeanQueryParams;
 import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
 import jmtechsvcs.myweatherapp.fragmentpkg.HourlyWeatherFragment;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.HourlyWeatherInfoTable;
+import jmtechsvcs.myweatherapp.utilspkg.AnalyticsTracking;
 import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 
 public class HourlyWeatherActivity extends AppCompatActivity
@@ -33,6 +34,9 @@ public class HourlyWeatherActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hourly_weather);
+
+        //send the tracking ofthe viewing of this screen.
+        AnalyticsTracking.sendScreenViewEvents(HourlyWeatherActivity.class.getSimpleName());
 
         //get the bundle from the intent.
         Intent data = getIntent();
@@ -115,6 +119,10 @@ public class HourlyWeatherActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.hourly_menu_item)
         {
+            //send analytics event when picking the event to show the weather station maps.
+            AnalyticsTracking.sendAnalyticsEvent
+                    ("Hourly_Weather_Category", "Hourly_Weather_Graph_Clicked", "HourlyWeatherGraphDisplay");
+
             Log.d(LOGTAG,"got the item clicked for hourly");
 
             //create intent to call another activity.

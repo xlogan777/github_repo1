@@ -21,6 +21,7 @@ import jmtechsvcs.myweatherapp.dbpkg.BeanQueryParams;
 import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
 import jmtechsvcs.myweatherapp.fragmentpkg.WeatherStationFragment;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherStationInfoTable;
+import jmtechsvcs.myweatherapp.utilspkg.AnalyticsTracking;
 
 public class WeatherStationDisplayActivity extends AppCompatActivity
 {
@@ -35,6 +36,9 @@ public class WeatherStationDisplayActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather_station_display);
+
+        //send the tracking ofthe viewing of this screen.
+        AnalyticsTracking.sendScreenViewEvents(WeatherStationDisplayActivity.class.getSimpleName());
 
         //get the intent to use the data from the parent activity.
         Intent intent = getIntent();
@@ -126,6 +130,10 @@ public class WeatherStationDisplayActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if(id == R.id.weather_station_id_menu_item)
         {
+            //send analytics event when picking the event to show the weather station maps.
+            AnalyticsTracking.sendAnalyticsEvent
+                    ("Weather_Map_Category", "Weather_Map_Clicked", "ShowWeatherStationMaps");
+
             //create intent and save city id and save bundle to intent.
             Intent intent = new Intent(this, WeatherStationMapsActivity.class);
             Bundle bundle = new Bundle();

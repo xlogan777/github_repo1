@@ -20,12 +20,9 @@ import android.widget.EditText;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
 import java.util.List;
 
-import jmtechsvcs.myweatherapp.MyWeatherApplication;
 import jmtechsvcs.myweatherapp.R;
 import jmtechsvcs.myweatherapp.fragmentpkg.CityListFragment;
 import jmtechsvcs.myweatherapp.fragmentpkg.SpinnerDialog;
@@ -33,15 +30,13 @@ import jmtechsvcs.myweatherapp.fragmentpkg.WeatherOptionsFragment;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTable;
 import jmtechsvcs.myweatherapp.dbpkg.BeanQueryParams;
 import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
+import jmtechsvcs.myweatherapp.utilspkg.AnalyticsTracking;
 import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 
 public class CitySearchActivity extends Activity implements CityListFragment.OnFragmentInteractionListener
 {
     private static String LOGTAG = "CitySearchActivity";
     private List<CityInfoTable> cityList;
-
-    //google analytics tracker.
-    private Tracker mTracker;
 
     //acces the city list of data here.
     public List<CityInfoTable> getCityList(){
@@ -53,38 +48,8 @@ public class CitySearchActivity extends Activity implements CityListFragment.OnF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_search);
 
-        //get google analytics tracker.
-        // Obtain the shared Tracker instance by way of the application class.
-        MyWeatherApplication application = (MyWeatherApplication)getApplication();
-        mTracker = application.getDefaultTracker();
-
-        //NOTE
-        /*
-        All activity recorded on the shared tracker sends the most recent screen
-        name until replaced or cleared (set to null).
-
-        info on using google analytics.
-        https://developers.google.com/analytics/devguides/collection/android/v4/
-        https://developers.google.com/android/reference/com/google/android/gms/analytics/GoogleAnalytics
-         */
-
-        //use the name of this activity to be the name for the tracker
-        String name = LOGTAG;
-        Log.d(LOGTAG, "Setting screen name: " + name);
-        Log.d(LOGTAG, "Testing: " + name);
-        Log.d(LOGTAG, "hahahaha");
-
-        //set the name of the tracker here for this activity.
-        mTracker.setScreenName(null);
-
-        //set the analytics hit here.
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-
-        //set the name of the tracker here for this activity.
-        mTracker.setScreenName("MyScreenView-" + name);
-
-        //set the analytics hit here.
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        //send the tracking ofthe viewing of this screen.
+        AnalyticsTracking.sendScreenViewEvents(CitySearchActivity.class.getSimpleName());
 
         //NOTE: do this code in the application context..at the application level.
         //for $$$ purposes.
@@ -150,6 +115,11 @@ public class CitySearchActivity extends Activity implements CityListFragment.OnF
                              WeatherDbProcessing.getBeanByQueryParamsList(bqp, getApplicationContext(), new CityInfoTable());
 
                      if (list_city_info != null && list_city_info.size() > 0) {
+
+                         //send analytics event with city name as the label.
+                         AnalyticsTracking.sendAnalyticsEvent
+                                 ("Search_Category", "Search_Clicked", city_name);
+
                          //assign the city list to the list used by the fragment.
                          cityList = list_city_info;
 

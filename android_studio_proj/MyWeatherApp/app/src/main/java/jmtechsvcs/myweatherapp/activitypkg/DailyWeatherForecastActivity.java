@@ -19,6 +19,7 @@ import jmtechsvcs.myweatherapp.dbpkg.BeanQueryParams;
 import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
 import jmtechsvcs.myweatherapp.fragmentpkg.DailyWeatherFragment;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.DailyWeatherInfoTable;
+import jmtechsvcs.myweatherapp.utilspkg.AnalyticsTracking;
 
 public class DailyWeatherForecastActivity extends Activity
 {
@@ -32,6 +33,9 @@ public class DailyWeatherForecastActivity extends Activity
 
         //inflate the content layout.
         setContentView(R.layout.activity_daily_weather_forecast);
+
+        //send the tracking ofthe viewing of this screen.
+        AnalyticsTracking.sendScreenViewEvents(DailyWeatherForecastActivity.class.getSimpleName());
 
         //get the bundle from the intent.
         Intent data = getIntent();

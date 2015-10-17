@@ -26,11 +26,8 @@ import jmtechsvcs.myweatherapp.greendaosrcgenpkg.DaoSession;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.HourlyWeatherInfoTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherIconTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherStationInfoTableDao;
+import jmtechsvcs.myweatherapp.utilspkg.AnalyticsTracking;
 import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
-
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Logger;
-import com.google.android.gms.analytics.Tracker;
 
 /**
  * Created by jimmy on 7/21/2015.
@@ -44,9 +41,6 @@ import com.google.android.gms.analytics.Tracker;
 //core initialization for green dao.
 //http://greendao-orm.com/documentation/introduction/
 
-//google analytics
-//https://developers.google.com/analytics/devguides/collection/android/v4/
-
 /**
  * this is to provide the main application a way to access from all activities
  * common services.
@@ -57,9 +51,6 @@ import com.google.android.gms.analytics.Tracker;
 //this is a test.
 public class MyWeatherApplication extends Application
 {
-    //google analytics tracker.
-    private Tracker mTracker;
-
     private static String LOGTAG = "MyWeatherApplication";
 
     private static final String DB_PATH = "/data/data/jmtechsvcs.myweatherapp/databases/";
@@ -88,7 +79,10 @@ public class MyWeatherApplication extends Application
         //call this to load all the weather data for cities
         //preloadWeatherData();
 
-        Log.d(LOGTAG,"onCreate called for WeatherApplication class");
+        Log.d(LOGTAG, "onCreate called for WeatherApplication class");
+
+        //init the google analytics tracker and use the application ctx.
+        AnalyticsTracking.intializeTracker(this);
     }
 
     @Override
@@ -101,21 +95,6 @@ public class MyWeatherApplication extends Application
     public void onLowMemory()
     {
         super.onLowMemory();
-    }
-
-    //get the tracker from this class here.
-    public synchronized Tracker getDefaultTracker()
-    {
-        //create default tracker if it hasnt been created.
-        if (mTracker == null)
-        {
-            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-
-            // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
-            mTracker = analytics.newTracker(R.xml.global_tracker);
-        }
-
-        return mTracker;
     }
 
     public DaoSession getDaoSession()
