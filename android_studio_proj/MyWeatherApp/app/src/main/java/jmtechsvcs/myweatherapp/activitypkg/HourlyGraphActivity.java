@@ -104,9 +104,9 @@ public class HourlyGraphActivity extends Activity
                 graph.getViewport().setXAxisBoundsManual(true);
 
                 // legend code
-                series.setTitle("temp");
-                graph.getLegendRenderer().setVisible(true);
-                graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.BOTTOM);
+//                series.setTitle("temp");
+//                graph.getLegendRenderer().setVisible(true);
+//                graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.BOTTOM);
             }
             else
             {
