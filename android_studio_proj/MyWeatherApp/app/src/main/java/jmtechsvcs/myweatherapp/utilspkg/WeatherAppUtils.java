@@ -70,7 +70,7 @@ public class WeatherAppUtils
             "START_CURRENT_HOURLY_FORECAST_ACTIVITY_ACTION";
 
     //used to show how much to allow to fill for hourly data.
-    public static final int HOURLY_FILL_LIST_SIZE = 8;
+    public static final int HOURLY_FILL_LIST_SIZE = 7;
 
     //returns a json string from the input stream or empty string if something went wrong.
     //it does not close the input stream..that is left to the caller.

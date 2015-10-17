@@ -96,7 +96,7 @@
 
         <activity android:name=".activitypkg.HourlyGraphActivity"
                   android:label="@string/graph_hourly"
-                  android:screenOrientation="landscape">
+                  android:screenOrientation="portrait">
         </activity>
 
         <!--google analytics specific services -->
