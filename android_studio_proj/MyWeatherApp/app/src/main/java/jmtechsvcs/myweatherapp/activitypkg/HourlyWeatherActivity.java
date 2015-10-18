@@ -1,6 +1,5 @@
 package jmtechsvcs.myweatherapp.activitypkg;
 
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -13,15 +12,12 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import jmtechsvcs.myweatherapp.R;
-import jmtechsvcs.myweatherapp.dbpkg.BeanQueryParams;
-import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
 import jmtechsvcs.myweatherapp.fragmentpkg.HourlyWeatherFragment;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.HourlyWeatherInfoTable;
-import jmtechsvcs.myweatherapp.utilspkg.AnalyticsTracking;
+import jmtechsvcs.myweatherapp.utilspkg.GoogleAnalyticsTracking;
 import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 
 public class HourlyWeatherActivity extends AppCompatActivity
@@ -36,7 +32,7 @@ public class HourlyWeatherActivity extends AppCompatActivity
         setContentView(R.layout.activity_hourly_weather);
 
         //send the tracking ofthe viewing of this screen.
-        AnalyticsTracking.sendScreenViewEvents(HourlyWeatherActivity.class.getSimpleName());
+        GoogleAnalyticsTracking.sendScreenViewEvents(HourlyWeatherActivity.class.getSimpleName());
 
         //get the bundle from the intent.
         Intent data = getIntent();
@@ -120,7 +116,7 @@ public class HourlyWeatherActivity extends AppCompatActivity
         if (id == R.id.hourly_menu_item)
         {
             //send analytics event when picking the event to show the weather station maps.
-            AnalyticsTracking.sendAnalyticsEvent
+            GoogleAnalyticsTracking.sendAnalyticsEvent
                     ("Hourly_Weather_Category", "Hourly_Weather_Graph_Clicked", "HourlyWeatherGraphDisplay");
 
             Log.d(LOGTAG,"got the item clicked for hourly");

@@ -26,7 +26,8 @@ import jmtechsvcs.myweatherapp.greendaosrcgenpkg.DaoSession;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.HourlyWeatherInfoTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherIconTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherStationInfoTableDao;
-import jmtechsvcs.myweatherapp.utilspkg.AnalyticsTracking;
+import jmtechsvcs.myweatherapp.utilspkg.GoogleAdMob;
+import jmtechsvcs.myweatherapp.utilspkg.GoogleAnalyticsTracking;
 import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 
 /**
@@ -81,8 +82,11 @@ public class MyWeatherApplication extends Application
 
         Log.d(LOGTAG, "onCreate called for WeatherApplication class");
 
-        //init the google analytics tracker and use the application ctx.
-        AnalyticsTracking.intializeTracker(this);
+        //init the google analytics tracker with the application context.
+        GoogleAnalyticsTracking.intializeTracker(this);
+
+        //init the google ad mob requests for city search.
+        GoogleAdMob.initCitySearchAdRequest();
     }
 
     @Override

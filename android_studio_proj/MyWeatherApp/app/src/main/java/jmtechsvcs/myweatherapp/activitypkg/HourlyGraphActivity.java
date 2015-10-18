@@ -6,12 +6,11 @@ import android.util.Log;
 
 import jmtechsvcs.myweatherapp.R;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.HourlyWeatherInfoTable;
-import jmtechsvcs.myweatherapp.utilspkg.AnalyticsTracking;
+import jmtechsvcs.myweatherapp.utilspkg.GoogleAnalyticsTracking;
 import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 
 import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
@@ -37,7 +36,7 @@ public class HourlyGraphActivity extends Activity
         setContentView(R.layout.activity_hourly_graph);
 
         //send the tracking ofthe viewing of this screen.
-        AnalyticsTracking.sendScreenViewEvents(HourlyGraphActivity.class.getSimpleName());
+        GoogleAnalyticsTracking.sendScreenViewEvents(HourlyGraphActivity.class.getSimpleName());
 
         //get the bundle data from the intent
         Bundle bundle = getIntent().getExtras();

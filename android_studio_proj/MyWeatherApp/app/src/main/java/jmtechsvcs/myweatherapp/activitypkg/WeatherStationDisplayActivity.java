@@ -1,13 +1,10 @@
 package jmtechsvcs.myweatherapp.activitypkg;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -21,7 +18,7 @@ import jmtechsvcs.myweatherapp.dbpkg.BeanQueryParams;
 import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
 import jmtechsvcs.myweatherapp.fragmentpkg.WeatherStationFragment;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherStationInfoTable;
-import jmtechsvcs.myweatherapp.utilspkg.AnalyticsTracking;
+import jmtechsvcs.myweatherapp.utilspkg.GoogleAnalyticsTracking;
 
 public class WeatherStationDisplayActivity extends AppCompatActivity
 {
@@ -38,7 +35,7 @@ public class WeatherStationDisplayActivity extends AppCompatActivity
         setContentView(R.layout.activity_weather_station_display);
 
         //send the tracking ofthe viewing of this screen.
-        AnalyticsTracking.sendScreenViewEvents(WeatherStationDisplayActivity.class.getSimpleName());
+        GoogleAnalyticsTracking.sendScreenViewEvents(WeatherStationDisplayActivity.class.getSimpleName());
 
         //get the intent to use the data from the parent activity.
         Intent intent = getIntent();
@@ -131,7 +128,7 @@ public class WeatherStationDisplayActivity extends AppCompatActivity
         if(id == R.id.weather_station_id_menu_item)
         {
             //send analytics event when picking the event to show the weather station maps.
-            AnalyticsTracking.sendAnalyticsEvent
+            GoogleAnalyticsTracking.sendAnalyticsEvent
                     ("Weather_Map_Category", "Weather_Map_Clicked", "ShowWeatherStationMaps");
 
             //create intent and save city id and save bundle to intent.

@@ -28,9 +28,9 @@ import jmtechsvcs.myweatherapp.R;
 /**
  * Created by jimmy on 10/17/2015.
  */
-public class AnalyticsTracking
+public class GoogleAnalyticsTracking
 {
-    private static final String LOGTAG = "AnalyticsTracking";
+    private static final String LOGTAG = "GoogleAnalyticsTracking";
 
     //google analytics tracker. keep 1 tracker for now for all types of events.
     private static Tracker mTracker;

@@ -17,7 +17,7 @@ import jmtechsvcs.myweatherapp.R;
 import jmtechsvcs.myweatherapp.dbpkg.BeanQueryParams;
 import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherStationInfoTable;
-import jmtechsvcs.myweatherapp.utilspkg.AnalyticsTracking;
+import jmtechsvcs.myweatherapp.utilspkg.GoogleAnalyticsTracking;
 
 public class WeatherStationMapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -34,7 +34,7 @@ public class WeatherStationMapsActivity extends FragmentActivity implements OnMa
         setContentView(R.layout.activity_weather_station_maps);
 
         //send the tracking ofthe viewing of this screen.
-        AnalyticsTracking.sendScreenViewEvents(WeatherStationMapsActivity.class.getSimpleName());
+        GoogleAnalyticsTracking.sendScreenViewEvents(WeatherStationMapsActivity.class.getSimpleName());
 
         //get intent and get city id from bundle obj.
         Intent intent = getIntent();

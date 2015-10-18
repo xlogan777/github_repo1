@@ -11,14 +11,11 @@ import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 import java.util.List;
@@ -30,7 +27,8 @@ import jmtechsvcs.myweatherapp.fragmentpkg.WeatherOptionsFragment;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTable;
 import jmtechsvcs.myweatherapp.dbpkg.BeanQueryParams;
 import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
-import jmtechsvcs.myweatherapp.utilspkg.AnalyticsTracking;
+import jmtechsvcs.myweatherapp.utilspkg.GoogleAdMob;
+import jmtechsvcs.myweatherapp.utilspkg.GoogleAnalyticsTracking;
 import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
 
 public class CitySearchActivity extends Activity implements CityListFragment.OnFragmentInteractionListener
@@ -48,19 +46,21 @@ public class CitySearchActivity extends Activity implements CityListFragment.OnF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_search);
 
-        //send the tracking ofthe viewing of this screen.
-        AnalyticsTracking.sendScreenViewEvents(CitySearchActivity.class.getSimpleName());
-
-        //NOTE: do this code in the application context..at the application level.
-        //for $$$ purposes.
         //add the google admob view for add display.
-        //https://developers.google.com/admob/android/quick-start
-//        AdView mAdView = (AdView)findViewById(R.id.adView);
-//        AdRequest request = new AdRequest.Builder()
-//                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-//                .addTestDevice("CA21EF673EA1B4FDE2DBBC38FFA4DFE")  // LG G2 phone md5 hash id.
-//                .build();
-//        mAdView.loadAd(request);
+        //check to make sure the ad exists before you load to the
+        //adview.
+        if(GoogleAdMob.getCitySearchAdRequest() != null)
+        {
+            //find the ad view by id.
+            AdView mAdView = (AdView)findViewById(R.id.adView);
+
+            //load the add from the google add obj storage.
+            mAdView.loadAd(GoogleAdMob.getCitySearchAdRequest());
+
+        }
+
+        //send the tracking ofthe viewing of this screen.
+        GoogleAnalyticsTracking.sendScreenViewEvents(CitySearchActivity.class.getSimpleName());
 
         final Button search_button = (Button)findViewById(R.id.performsearch);
         final Button clear_button = (Button)findViewById(R.id.cleardata);
@@ -117,7 +117,7 @@ public class CitySearchActivity extends Activity implements CityListFragment.OnF
                      if (list_city_info != null && list_city_info.size() > 0) {
 
                          //send analytics event with city name as the label.
-                         AnalyticsTracking.sendAnalyticsEvent
+                         GoogleAnalyticsTracking.sendAnalyticsEvent
                                  ("Search_Category", "Search_Clicked", city_name);
 
                          //assign the city list to the list used by the fragment.
