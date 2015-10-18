@@ -11,7 +11,7 @@
         android:text="hourly_from_date"
         android:id="@+id/HourlyFromDate"
         android:layout_marginTop="41dp"
-        android:layout_below="@+id/imageView"
+        android:layout_below="@+id/imageViewHourly"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
