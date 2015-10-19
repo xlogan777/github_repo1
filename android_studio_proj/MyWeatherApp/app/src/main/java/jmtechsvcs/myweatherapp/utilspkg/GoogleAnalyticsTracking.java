@@ -55,28 +55,33 @@ public class GoogleAnalyticsTracking
     //enhancement is to have different trackers for each screen.
     public static synchronized void sendScreenViewEvents(String screenName)
     {
-        //set the name of the tracker here for this activity.
-        mTracker.setScreenName(screenName);
+        if(mTracker != null) {
+            //set the name of the tracker here for this activity.
+            mTracker.setScreenName(screenName);
 
-        //set the analytics hit here. for screens.
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+            //set the analytics hit here. for screens.
+            mTracker.send(new HitBuilders.ScreenViewBuilder().build());
 
-        //clear the screen name.
-        mTracker.setScreenName(null);
+            //clear the screen name.
+            mTracker.setScreenName(null);
 
-        Log.d(LOGTAG,"sent screen view for analytics = "+screenName);
+            Log.d(LOGTAG, "sent screen view for analytics = " + screenName);
+        }
     }
 
     public static synchronized void sendAnalyticsEvent(String categoryId, String actionId, String labelId)
     {
-        // Build and send an Event from user params.
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory(categoryId)
-                .setAction(actionId)
-                .setLabel(labelId)
-                .build());
+        if(mTracker != null) {
 
-        Log.d(LOGTAG,"analytics event category_id = "+categoryId+
-                ", action_id = "+actionId+", label_id = "+labelId);
+            // Build and send an Event from user params.
+            mTracker.send(new HitBuilders.EventBuilder()
+                    .setCategory(categoryId)
+                    .setAction(actionId)
+                    .setLabel(labelId)
+                    .build());
+
+            Log.d(LOGTAG, "analytics event category_id = " + categoryId +
+                    ", action_id = " + actionId + ", label_id = " + labelId);
+        }
     }
 }

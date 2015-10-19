@@ -10,7 +10,11 @@ public class WeatherMapUrls
     private static String LOGTAG = "WeatherMapUrls";
 
     //api key from open weather map api.
-    public final static String API_KEY = "22ecf4a075718bdfcd5657156e3272b5";
+    //public final static String API_KEY = "22ecf4a075718bdfcd5657156e3272b5";
+
+    //new api key at this location
+    //http://home.openweathermap.org/users/sign_in
+    public final static String API_KEY = "0beb3d307c8b73836c9ce5490e120405";
 
     //api key used for all http calls.
     private final static String APP_ID = "APPID="+API_KEY;//weather app id.
