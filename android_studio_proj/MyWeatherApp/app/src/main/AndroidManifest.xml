@@ -84,9 +84,10 @@
             api key being used here is for google maps debug api key..for release use
             release/res/value/google_maps_api.xml with that key..for publishing to app store.
         -->
+        <!--using the release api key for google maps. -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAJ7QO_CLPM3-kfAx1R_SJ3fOgOruiTKg4" />
+            android:value="AIzaSyDq7tg5QaHH_P4ENxqAVxjVyojh1QqBnZE" />
         <!--google maps specifics -->
 
         <activity
