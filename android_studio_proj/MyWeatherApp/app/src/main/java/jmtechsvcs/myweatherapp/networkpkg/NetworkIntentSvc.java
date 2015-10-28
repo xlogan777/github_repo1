@@ -168,41 +168,47 @@ public class NetworkIntentSvc extends IntentService
 
         Log.d(LOGTAG,"city id = "+cityId);
 
-        //create the weather url with city id
-        String curr_weather_url = WeatherMapUrls.getCurrentWeatherByCityId("" + cityId);
+        //get the network connection status
+        boolean valid_net_connection = NetworkProcessing.checkInternetConnection(getApplicationContext());
 
-        //get more weather data with xml based url.
-        String curr_weather_url_xml = WeatherMapUrls.getCurrentWeatherByCityIdXml("" + cityId);
-
-        //get the payload from the http get for the current weather json data
-        DataPayload payload = NetworkProcessing.httpGetProcessing(curr_weather_url, DataPayload.T_Payload_Type.E_JSON_PAYLOAD_TYPE);
-
-        //get the payload from the http get for this current weather as a stream.
-        DataPayload stream_payload =
-                NetworkProcessing.httpGetProcessing(
-                        curr_weather_url_xml, DataPayload.T_Payload_Type.E_BYTE_STREAM_PAYLOAD_TYPE
-                );
-
-        //print json string if not null and
-        if(payload.getStringPayload() != null && stream_payload.getInputStreamPayload() != null)
+        if(valid_net_connection)
         {
-            Log.d(LOGTAG, payload.getStringPayload());
+            //create the weather url with city id
+            String curr_weather_url = WeatherMapUrls.getCurrentWeatherByCityId("" + cityId);
 
-            //save to the db using this json input.
-            CityWeatherCurrCondTable curr_cond =
-                    WeatherDbProcessing.updateCurrWeatherToDb
-                            (payload.getStringPayload(), stream_payload.getInputStreamPayload(), getApplicationContext());
+            //get more weather data with xml based url.
+            String curr_weather_url_xml = WeatherMapUrls.getCurrentWeatherByCityIdXml("" + cityId);
 
-            //confirm that we have a valid bean and its icon data is not null and > 0
-            if(curr_cond != null &&
-               curr_cond.getCurr_weather_icon() != null &&
-               curr_cond.getCurr_weather_icon().length() > 0)
+            //get the payload from the http get for the current weather json data
+            DataPayload payload = NetworkProcessing.httpGetProcessing(curr_weather_url, DataPayload.T_Payload_Type.E_JSON_PAYLOAD_TYPE);
+
+            //get the payload from the http get for this current weather as a stream.
+            DataPayload stream_payload =
+                    NetworkProcessing.httpGetProcessing(
+                            curr_weather_url_xml, DataPayload.T_Payload_Type.E_BYTE_STREAM_PAYLOAD_TYPE
+                    );
+
+            //print json string if not null and
+            if(payload.getStringPayload() != null && stream_payload.getInputStreamPayload() != null)
             {
-                WeatherAppUtils.getAndSaveIconData(curr_cond.getCurr_weather_icon(), getApplicationContext());
-            }
-            else
-            {
-                Log.d(LOGTAG,"issue with the weather icon from the java bean returned back from the update current weather dao.");
+                Log.d(LOGTAG, payload.getStringPayload());
+
+                //save to the db using this json input.
+                CityWeatherCurrCondTable curr_cond =
+                        WeatherDbProcessing.updateCurrWeatherToDb
+                                (payload.getStringPayload(), stream_payload.getInputStreamPayload(), getApplicationContext());
+
+                //confirm that we have a valid bean and its icon data is not null and > 0
+                if(curr_cond != null &&
+                        curr_cond.getCurr_weather_icon() != null &&
+                        curr_cond.getCurr_weather_icon().length() > 0)
+                {
+                    WeatherAppUtils.getAndSaveIconData(curr_cond.getCurr_weather_icon(), getApplicationContext());
+                }
+                else
+                {
+                    Log.d(LOGTAG,"issue with the weather icon from the java bean returned back from the update current weather dao.");
+                }
             }
         }
 
@@ -218,19 +224,25 @@ public class NetworkIntentSvc extends IntentService
 
         Log.d(LOGTAG,"lat = "+lat+", lon = "+lon);
 
-        //create the weather station url with geo location.
-        String curr_weather_station_geo_url = WeatherMapUrls.getWeatherStationInfoByGeo("" + lat, "" + lon, "4");//get 4 station entries.
+        //get the network connection status
+        boolean valid_net_connection = NetworkProcessing.checkInternetConnection(getApplicationContext());
 
-        //get the payload from the http get for the current weather station json data
-        DataPayload payload = NetworkProcessing.httpGetProcessing(curr_weather_station_geo_url, DataPayload.T_Payload_Type.E_JSON_PAYLOAD_TYPE);
-
-        //check if payload is not null.
-        if(payload.getStringPayload() != null)
+        if(valid_net_connection)
         {
-            Log.d(LOGTAG, payload.getStringPayload());
+            //create the weather station url with geo location.
+            String curr_weather_station_geo_url = WeatherMapUrls.getWeatherStationInfoByGeo("" + lat, "" + lon, "4");//get 4 station entries.
 
-            //update the dao using the json string and providing the app context.
-            WeatherDbProcessing.updateCurrentWeatherStationInfoGeo(payload.getStringPayload(), getApplicationContext(), cityId);
+            //get the payload from the http get for the current weather station json data
+            DataPayload payload = NetworkProcessing.httpGetProcessing(curr_weather_station_geo_url, DataPayload.T_Payload_Type.E_JSON_PAYLOAD_TYPE);
+
+            //check if payload is not null.
+            if(payload.getStringPayload() != null)
+            {
+                Log.d(LOGTAG, payload.getStringPayload());
+
+                //update the dao using the json string and providing the app context.
+                WeatherDbProcessing.updateCurrentWeatherStationInfoGeo(payload.getStringPayload(), getApplicationContext(), cityId);
+            }
         }
 
         //send intents via android system.
@@ -241,25 +253,31 @@ public class NetworkIntentSvc extends IntentService
     {
         long cityId = bundle.getLong("cityId");
 
-        String daily_forecast_end_pt = WeatherMapUrls.getDailyWeatherForecastEndPt(cityId + "");
+        //get the network connection status
+        boolean valid_net_connection = NetworkProcessing.checkInternetConnection(getApplicationContext());
 
-        //get the payload from the http get for this current weather as a stream.
-        DataPayload stream_payload =
-                NetworkProcessing.httpGetProcessing(
-                        daily_forecast_end_pt, DataPayload.T_Payload_Type.E_BYTE_STREAM_PAYLOAD_TYPE
-                );
-
-        if(stream_payload.getInputStreamPayload() != null)
+        if(valid_net_connection)
         {
-            //update the weather data with the data stream.
-            Map<String,String> icon_map =
-                    WeatherDbProcessing.updateDailyCityWeatherForecast
-                    (getApplicationContext(), stream_payload.getInputStreamPayload(), cityId);
+            String daily_forecast_end_pt = WeatherMapUrls.getDailyWeatherForecastEndPt(cityId + "");
 
-            //loop over all the keys..and get and update the DB if needed.
-            for(String data : icon_map.keySet())
+            //get the payload from the http get for this current weather as a stream.
+            DataPayload stream_payload =
+                    NetworkProcessing.httpGetProcessing(
+                            daily_forecast_end_pt, DataPayload.T_Payload_Type.E_BYTE_STREAM_PAYLOAD_TYPE
+                    );
+
+            if(stream_payload.getInputStreamPayload() != null)
             {
-                WeatherAppUtils.getAndSaveIconData(data, getApplicationContext());
+                //update the weather data with the data stream.
+                Map<String,String> icon_map =
+                        WeatherDbProcessing.updateDailyCityWeatherForecast
+                                (getApplicationContext(), stream_payload.getInputStreamPayload(), cityId);
+
+                //loop over all the keys..and get and update the DB if needed.
+                for(String data : icon_map.keySet())
+                {
+                    WeatherAppUtils.getAndSaveIconData(data, getApplicationContext());
+                }
             }
         }
 
@@ -271,25 +289,31 @@ public class NetworkIntentSvc extends IntentService
     {
         long cityId = bundle.getLong("cityId");
 
-        String hourly_forecast_end_pt = WeatherMapUrls.getHourlyWeatherForecastEndPt(cityId + "");
+        //get the network connection status
+        boolean valid_net_connection = NetworkProcessing.checkInternetConnection(getApplicationContext());
 
-        //get the payload from the http get for this current weather as a stream.
-        DataPayload stream_payload =
-                NetworkProcessing.httpGetProcessing(
-                        hourly_forecast_end_pt, DataPayload.T_Payload_Type.E_BYTE_STREAM_PAYLOAD_TYPE
-                );
-
-        if(stream_payload.getInputStreamPayload() != null)
+        if(valid_net_connection)
         {
-            //process these lists accordingly.
-            Map<String,String> icon_map =
-                    WeatherDbProcessing.updateyHourlyCityWeatherForecast
-                            (getApplicationContext(), stream_payload.getInputStreamPayload(), cityId);
+            String hourly_forecast_end_pt = WeatherMapUrls.getHourlyWeatherForecastEndPt(cityId + "");
 
-            //loop over all the keys..and get and update the DB if needed.
-            for(String data : icon_map.keySet())
+            //get the payload from the http get for this current weather as a stream.
+            DataPayload stream_payload =
+                    NetworkProcessing.httpGetProcessing(
+                            hourly_forecast_end_pt, DataPayload.T_Payload_Type.E_BYTE_STREAM_PAYLOAD_TYPE
+                    );
+
+            if(stream_payload.getInputStreamPayload() != null)
             {
-                WeatherAppUtils.getAndSaveIconData(data, getApplicationContext());
+                //process these lists accordingly.
+                Map<String,String> icon_map =
+                        WeatherDbProcessing.updateyHourlyCityWeatherForecast
+                                (getApplicationContext(), stream_payload.getInputStreamPayload(), cityId);
+
+                //loop over all the keys..and get and update the DB if needed.
+                for(String data : icon_map.keySet())
+                {
+                    WeatherAppUtils.getAndSaveIconData(data, getApplicationContext());
+                }
             }
         }
 

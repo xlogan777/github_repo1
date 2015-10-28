@@ -29,13 +29,13 @@ public class GoogleAdMob
         {
             //this is used for testing but use it with the ad unit id in the res/strings.xml
             //with the commented out section.
-//            citySearchAdRequest = new AdRequest.Builder()
-//                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
-//                    .addTestDevice("CA21EF673EA1B4FDE2DBBC38FFA4DFE")  // LG G2 phone md5 hash id.
-//                    .build();
+            citySearchAdRequest = new AdRequest.Builder()
+                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)        // All emulators
+                    .addTestDevice("CA21EF673EA1B4FDE2DBBC38FFA4DFE")  // LG G2 phone md5 hash id.
+                    .build();
 
             //request add from google ad mob
-            citySearchAdRequest = new AdRequest.Builder().build();
+//            citySearchAdRequest = new AdRequest.Builder().build();
             Log.d(LOGTAG,"loaded ad request now.");
         }
     }

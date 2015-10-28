@@ -223,32 +223,39 @@ public class WeatherAppUtils
     /*
         this will create a png file in the specified images dir, and compress the bit map
         thats was generated from the byte array and save this bitmap as a png compressed
-        file to the images dir.
+        file to the images dir. returns null if path is not received when created from byte array
      */
     public static String saveByteToPngFile(Context context, String iconId, byte [] rawImage)
     throws IOException
     {
-        // path to /data/data/yourapp/app_data/weather_imgs
-        //create app directory here if it doesnt exist, or get the path to the
-        //directory.
-        File directory = context.getDir("weather_imgs", Context.MODE_PRIVATE);
+        String path = null;
 
-        //file to create as a png file using the image icon id.
-        //attach the file output stream to it.
-        File image_path = new File(directory, iconId+".png");
-        FileOutputStream fos = new FileOutputStream(image_path);
+        if(rawImage != null && rawImage.length > 0)
+        {
+            // path to /data/data/yourapp/app_data/weather_imgs
+            //create app directory here if it doesnt exist, or get the path to the
+            //directory.
+            File directory = context.getDir("weather_imgs", Context.MODE_PRIVATE);
 
-        //create a bitmap obj here.
-        Bitmap bitmap = BitmapFactory.decodeByteArray(rawImage, 0, rawImage.length);
+            //file to create as a png file using the image icon id.
+            //attach the file output stream to it.
+            File image_path = new File(directory, iconId+".png");
+            FileOutputStream fos = new FileOutputStream(image_path);
 
-        // Use the compress method on the BitMap object to write image to the OutputStream
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0, fos);
+            //create a bitmap obj here.
+            Bitmap bitmap = BitmapFactory.decodeByteArray(rawImage, 0, rawImage.length);
 
-        //close the output stream.
-        fos.close();
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmap.compress(Bitmap.CompressFormat.PNG, 0, fos);
 
-        //returns the file path to this newly created image file.
-        return image_path.getAbsolutePath();
+            //close the output stream.
+            fos.close();
+
+            //returns the file path to this newly created image file.
+            path = image_path.getAbsolutePath();
+        }
+
+        return path;
     }
 
     /*

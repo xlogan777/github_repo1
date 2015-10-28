@@ -5,6 +5,9 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
@@ -135,5 +138,31 @@ public class NetworkProcessing
 
 		//return input stream.
 		return dataPayload;
+	}
+
+	//this will check if a connection exists before making a conneciton.
+	public static boolean checkInternetConnection(Context context)
+	{
+        boolean rv = false;
+
+        //get the connectivity mgr here from the context.
+		ConnectivityManager con_manager =
+				(ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        //get the network info obj from the connection mgr.
+        NetworkInfo net_info = con_manager.getActiveNetworkInfo();
+
+        //check to see if we have a valid net info obj and that we have an avaible network
+        //wifi or data, and that we are connected.
+		if(net_info != null	&& net_info.isAvailable() && net_info.isConnected())
+        {
+			rv = true;
+		}
+        else
+        {
+            Log.d(LOGTAG,"either null net info obj, or not available network, or not connected..no network conn!");
+        }
+
+        return rv;
 	}
 }
