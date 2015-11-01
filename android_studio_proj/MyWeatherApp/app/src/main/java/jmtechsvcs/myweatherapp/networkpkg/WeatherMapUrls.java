@@ -39,7 +39,7 @@ public class WeatherMapUrls
 
     public static String getHourlyWeatherForecastEndPt(String cityId)
     {
-        String rv = HOURLY_WEATHER_FORECAST_END_PT+cityId+"&mode=xml&units=imperial&"+APP_ID;
+        String rv = HOURLY_WEATHER_FORECAST_END_PT+cityId+"&mode=xml&cnt=7&units=imperial&"+APP_ID;
         Log.d(LOGTAG,rv);
 
         return rv;
@@ -81,10 +81,10 @@ public class WeatherMapUrls
         return rv;
     }
 
-    public static String getWeatherStationInfoById(String stationId)
-    {
-        String rv = CURRENT_WEATHER_STATION_END_PT+stationId+"&"+APP_ID;
-        Log.d(LOGTAG,"url => "+rv);
-        return rv;
-    }
+//    public static String getWeatherStationInfoById(String stationId)
+//    {
+//        String rv = CURRENT_WEATHER_STATION_END_PT+stationId+"&"+APP_ID;
+//        Log.d(LOGTAG,"url => "+rv);
+//        return rv;
+//    }
 }

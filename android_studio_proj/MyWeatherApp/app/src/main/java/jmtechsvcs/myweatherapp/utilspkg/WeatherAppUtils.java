@@ -438,6 +438,8 @@ public class WeatherAppUtils
         //only try to get the data if the icon doesnt exists in the db.
         if(!iconFound)
         {
+            Log.d(LOGTAG,"make network request for weather img icon = "+iconId);
+
             //create the weather icon url.
             String weather_icon_url = WeatherMapUrls.getWeatherIconByIconId(iconId);
 

@@ -17,6 +17,7 @@ import java.io.OutputStream;
 
 import de.greenrobot.dao.query.QueryBuilder;
 import jmtechsvcs.myweatherapp.dbpkg.WeatherDbHelper;
+import jmtechsvcs.myweatherapp.dbpkg.WeatherDbProcessing;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTable;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityInfoTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.CityWeatherCurrCondTableDao;
@@ -26,6 +27,7 @@ import jmtechsvcs.myweatherapp.greendaosrcgenpkg.DaoSession;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.HourlyWeatherInfoTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherIconTableDao;
 import jmtechsvcs.myweatherapp.greendaosrcgenpkg.WeatherStationInfoTableDao;
+import jmtechsvcs.myweatherapp.networkpkg.WeatherMapUrls;
 import jmtechsvcs.myweatherapp.utilspkg.GoogleAdMob;
 import jmtechsvcs.myweatherapp.utilspkg.GoogleAnalyticsTracking;
 import jmtechsvcs.myweatherapp.utilspkg.WeatherAppUtils;
@@ -215,6 +217,60 @@ public class MyWeatherApplication extends Application
         }// end if else dbExist
     }
 
+    private void loadWeatherIconFromAssets()
+    {
+        //get all image from from the asset mgr folder.
+        //never close the asset manager.
+        AssetManager assetManager = getAssets();
+
+        try
+        {
+            String icon_folder = "weather_icons";
+
+            //list of asset files from this folder.
+            String[] files = assetManager.list(icon_folder);
+
+            for(String filename : files)
+            {
+                //skip over anything that isnt a .png exention.
+                Log.d(LOGTAG, "fname  = " + filename);
+
+                if(!filename.contains(".png"))
+                    continue;
+
+                //file input stream from asset mgr.
+                InputStream is = assetManager.open(icon_folder+"/"+filename);
+
+                //get the byte array from the input stream.
+                byte [] binary_file = WeatherAppUtils.getByteArrayFromStream(is);
+
+                if(binary_file != null)
+                {
+                    //split the fname with "."
+                    String [] split_str = filename.split("\\.");
+
+                    //use the file name with no extension for the icon id.
+                    String icon_id = split_str[0];
+
+                    //create the weather icon url.
+                    String weather_icon_url = WeatherMapUrls.getWeatherIconByIconId(icon_id);
+
+                    //save the icon data into the DB, with the icon url.
+                    WeatherDbProcessing.updateWeatherIcon
+                            (icon_id, weather_icon_url, binary_file, this);
+                }
+                else
+                {
+                    Log.d(LOGTAG,"got empty binary file for fname = "+filename);
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            Log.d(LOGTAG, WeatherAppUtils.getStackTrace(e));
+        }
+    }
+
     private void weatherDbSetup()
     {
         //load db from asset folder if it doesnt exist
@@ -225,6 +281,9 @@ public class MyWeatherApplication extends Application
 
         //get a new session from this dao master.
         daoSession = daoMaster.newSession();
+
+        //load the weather icon from the assets folder.
+        loadWeatherIconFromAssets();
 
         //enable logging of sql statements for
         //enableSqlDebugging();

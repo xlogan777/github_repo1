@@ -105,8 +105,8 @@ public class CurrentWeatherActivity extends Activity
 
     public void setDefaultView()
     {
-        ((TextView)findViewById(R.id.cityname)).setText("no city data available");
-        ((TextView)findViewById(R.id.countrycode)).setText("no city data available");
+        ((TextView)findViewById(R.id.cityname)).setText("no data");
+        ((TextView)findViewById(R.id.countrycode)).setText("no data");
 
         ((TextView)findViewById(R.id.lat_val)).setText("");
         ((TextView)findViewById(R.id.lon_val)).setText("");
