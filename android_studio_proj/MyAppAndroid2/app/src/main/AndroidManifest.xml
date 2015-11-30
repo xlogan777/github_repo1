@@ -30,6 +30,7 @@
     <uses-permission android:name="com.android.browser.permission.WRITE_HISTORY_BOOKMARKS" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <!-- allow to recv sms txt msgs -->
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
@@ -49,7 +50,8 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:name=".MyApplication">
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation"

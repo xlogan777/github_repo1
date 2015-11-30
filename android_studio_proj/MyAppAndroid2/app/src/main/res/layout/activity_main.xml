@@ -77,5 +77,10 @@
             android:text="Start MM"
             android:id="@+id/button5" />
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/myImageView"/>
+
     </LinearLayout>
 </RelativeLayout>

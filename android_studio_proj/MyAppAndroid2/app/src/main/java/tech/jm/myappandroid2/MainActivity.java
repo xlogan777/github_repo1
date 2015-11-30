@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.media.Image;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Environment;
@@ -22,9 +24,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndFeed;
+import com.google.code.rome.android.repackaged.com.sun.syndication.io.SyndFeedInput;
+import com.google.code.rome.android.repackaged.com.sun.syndication.io.XmlReader;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
+
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.GsonHttpMessageConverter;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -34,6 +48,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.lang.ref.WeakReference;
+import java.net.URL;
 
 //http://www.androiddesignpatterns.com/2013/01/inner-class-handler-memory-leak.html
 public class MainActivity extends ActionBarActivity {
@@ -59,6 +74,75 @@ public class MainActivity extends ActionBarActivity {
 
     private final MyHandler mHandler = new MyHandler(this);
 
+    public static void testRomeRss()
+    {
+        try
+        {
+            //rss 1.0
+            URL feedUrl = new URL("http://rss.cnn.com/rss/cnn_topstories.rss");
+
+            //rss 2.0
+            //URL feedUrl = new URL("http://rss.ireport.com/feeds/oncnn.rss");
+
+            Log.d("MainActivity","testing****************");
+
+            SyndFeedInput input = new SyndFeedInput();
+            SyndFeed feed = input.build(new XmlReader(feedUrl));
+
+            Log.d("Main activity",feed.toString());
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+            Log.d("Main Activity","ERROR: "+ex.getMessage());
+        }
+    }
+
+    public static void testSpringRestWithGson()
+    {
+        try
+        {
+            String url = "http://rest-service.guides.spring.io/greeting";
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
+            Greeting greeting = restTemplate.getForObject(url, Greeting.class);
+            Log.d("MainActivity",greeting.toString());
+            int x = 10;
+            //return greeting;
+        } catch (Exception e) {
+            Log.e("MainActivity", e.getMessage(), e);
+        }
+    }
+
+    public void testAndroidUIL()
+    {
+        try{
+            //this singleton was set up in the application class.
+            ImageLoader imageLoader = ImageLoader.getInstance(); // Get singleton instance
+            ImageSize size_img = new ImageSize(100, 100);//fit the downloaded image to this size.
+
+            //load image synchronously, with size
+            final Bitmap bit_map =
+                    imageLoader.loadImageSync
+                            ("http://javatechig.com/wp-content/uploads/2014/05/UniversalImageLoader-620x405.png", size_img);
+
+            Log.d("MainActivity","display mage file.");
+            MainActivity.this.runOnUiThread(new Runnable(){
+                                                public void run(){
+
+                                                    ImageView iv = (ImageView)findViewById(R.id.myImageView);
+                                                    iv.setImageBitmap(bit_map);//set image map.
+
+                                                }
+                                            }
+                                           );
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -67,6 +151,11 @@ public class MainActivity extends ActionBarActivity {
 
         //set the content view
         setContentView(R.layout.activity_main);
+
+        //test spring fw.
+        //testSpringFw();
+
+        //testRomeRss();
 
         mProgress = (ProgressBar) findViewById(R.id.progressBar);
 
@@ -85,11 +174,14 @@ public class MainActivity extends ActionBarActivity {
                                 @Override
                                 public void run()
                                 {
-                                    while (mProgressStatus < 100) {
+                                    //while (mProgressStatus < 100) {
                                         mProgressStatus += 10;
 
                                         try
                                         {
+                                            testAndroidUIL();
+                                            testSpringRestWithGson();
+                                            testRomeRss();
                                             //do fake work by sleeping
                                             Thread.sleep(3000);
 
@@ -112,7 +204,7 @@ public class MainActivity extends ActionBarActivity {
                                                 mProgress.setProgress(mProgressStatus);
                                             }
                                         });
-                                    }
+                                    //}
                                 }
                             }
                     );

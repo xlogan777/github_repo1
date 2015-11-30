@@ -18,9 +18,19 @@ android {
     }
     productFlavors {
     }
+
+    packagingOptions {
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/notice.txt'
+    }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:21.0.3'
+    compile files('src/libs/android-rome-feed-reader-1.0.0.jar')
+    compile files('src/libs/jdom-1.0.jar')
+    compile 'org.springframework.android:spring-android-rest-template:2.0.0.M1'
+    compile 'com.google.code.gson:gson:1.7.2'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 }
