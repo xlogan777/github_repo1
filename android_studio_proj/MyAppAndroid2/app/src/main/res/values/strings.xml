@@ -10,5 +10,6 @@
     <string name="title_activity_main_activity3">MainActivity3Activity</string>
     <string name="title_activity_main_activity32">MainActivity32Activity</string>
     <string name="title_activity_main_activity33">MainActivity33Activity</string>
+    <string name="title_activity_utblank">UTBlankActivity</string>
 
 </resources>

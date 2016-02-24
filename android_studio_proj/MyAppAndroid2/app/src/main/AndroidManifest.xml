@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="tech.jm.myappandroid2" >
+    package="tech.jm.myappandroid2">
 
     <!--
         application permission level. at this level it says any component trying to
@@ -28,34 +28,33 @@
     <!-- allows to read and write to book marks. -->
     <uses-permission android:name="com.android.browser.permission.READ_HISTORY_BOOKMARKS" />
     <uses-permission android:name="com.android.browser.permission.WRITE_HISTORY_BOOKMARKS" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <!-- allow to recv sms txt msgs -->
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <!-- needed for ringtone mgr to play.-->
+    <!-- needed for ringtone mgr to play. -->
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
-    <!-- allows for bluetooth permissions and data xref-->
+    <!-- allows for bluetooth permissions and data xref -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
-    <!-- turn on blue tooth device.-->
+    <!-- turn on blue tooth device. -->
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
-    <!-- used for location and gps for permissions.-->
+    <!-- used for location and gps for permissions. -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:name=".MyApplication">
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
 
                 <!--
@@ -72,7 +71,7 @@
         </activity>
         <activity
             android:name=".ReconfigActivity"
-            android:label="@string/title_activity_reconfig" >
+            android:label="@string/title_activity_reconfig">
 
             <!--
                  these are the items that this activity will respond to if it detects
@@ -98,33 +97,29 @@
         </activity>
         <activity
             android:name=".MainActivity2"
-            android:label="@string/title_activity_main_activity2" >
-        </activity>
+            android:label="@string/title_activity_main_activity2"></activity>
         <activity
             android:name=".MainActivity3Activity"
-            android:label="@string/title_activity_main_activity3" >
-        </activity>
+            android:label="@string/title_activity_main_activity3"></activity>
         <activity
             android:name=".MainActivity32Activity"
-            android:label="@string/title_activity_main_activity32" >
-        </activity>
+            android:label="@string/title_activity_main_activity32"></activity>
 
         <service
             android:name=".MyService"
             android:enabled="true"
-            android:exported="true" >
-        </service>
+            android:exported="true"></service>
         <service
             android:name=".MyIntentService"
-            android:exported="false" >
-        </service>
+            android:exported="false"></service>
 
         <receiver
             android:name=".MyReceiver"
             android:enabled="true"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
-                <action android:name="tech.jm.BR_ACTION_1" /> <!-- defined action for this intent. -->
+                <action android:name="tech.jm.BR_ACTION_1" />
+                <!-- defined action for this intent. -->
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
@@ -141,13 +136,14 @@
             android:name=".MyContentProvider"
             android:authorities="tech.jm.myappandroid2.mycontentprovider"
             android:enabled="true"
-            android:exported="true" >
-        </provider>
+            android:exported="true"></provider>
 
         <activity
             android:name=".MainActivity33Activity"
-            android:label="@string/title_activity_main_activity33" >
-        </activity>
+            android:label="@string/title_activity_main_activity33"></activity>
+        <activity
+            android:name=".UTBlankActivity"
+            android:label="@string/title_activity_utblank"></activity>
     </application>
 
 </manifest>

@@ -34,6 +34,11 @@ import com.google.code.rome.android.repackaged.com.sun.syndication.io.SyndFeedIn
 import com.google.code.rome.android.repackaged.com.sun.syndication.io.XmlReader;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
+import com.parse.GetCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
@@ -42,12 +47,15 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.lang.ref.WeakReference;
+import java.net.HttpURLConnection;
 import java.net.URL;
 
 //http://www.androiddesignpatterns.com/2013/01/inner-class-handler-memory-leak.html
@@ -143,6 +151,167 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    public byte[] getByteArrayFromStream(InputStream inputStream)
+    {
+        byte [] data = null;
+
+        try
+        {
+            //create byte array obj.
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+            //create buff to hold bytes read.
+            byte [] buff = new byte[1024];//1kb buff
+            int bytes_read = 0;
+
+            //read raw bytes to buff, and track bytes read
+            while( (bytes_read = inputStream.read(buff,0,buff.length)) >0 )
+            {
+                //save bytes reads to output stream
+                bos.write(buff,0,bytes_read);
+            }
+
+            //get byte array from outstream
+            data = bos.toByteArray();
+
+            //close the output stream.
+            bos.close();
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
+
+    public void urlTesting()
+    {
+        final int TIMEOUT = 60000;//timeout for http call.
+        //return the input stream.
+        InputStream rv = null;
+
+        //http connection.
+        HttpURLConnection conn = null;
+        try
+        {
+            //create url obj
+            URL url_get = new URL("http://10.20.1.54:1337");
+            //URL url_get = new URL("http://10.150.30.174:1337/parse");
+
+            //cast to http conn type
+            conn = (HttpURLConnection)url_get.openConnection();
+
+            //set the timeouts to be for this url connection before we make
+            //a new connection.
+            conn.setConnectTimeout(TIMEOUT);
+            conn.setReadTimeout(TIMEOUT);
+
+            //setup as a Get request.
+            conn.setRequestMethod("GET");
+
+            //connect to the url.
+            conn.connect();
+
+            //this will access the url, and get back a status code.
+            int status_code = conn.getResponseCode();
+
+            //if we have a valid status get the data.
+            if(status_code == HttpURLConnection.HTTP_OK)
+            {
+                //get the input stream.
+                rv = conn.getInputStream();
+
+                byte [] data = getByteArrayFromStream(rv);
+                String my_data = new String(data);
+                Log.d("MainActivity","data = "+my_data);
+            }
+
+            Log.d("MainActivity","http status code = "+status_code);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            //close http conn here
+            if(conn != null)
+            {
+                conn.disconnect();
+            }
+
+            //close the stream.
+            if(rv != null)
+            {
+                try
+                {
+                    rv.close();
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void ParseTesting()
+    {
+        //testing parse
+        Log.d("MainActivity", "testing parse");
+
+        //set the logging level.
+        Parse.setLogLevel(Parse.LOG_LEVEL_VERBOSE);
+        Log.d("MainActivity", "level = " + Parse.getLogLevel() + ", set to level = " + Parse.LOG_LEVEL_VERBOSE);
+
+//        Parse.initialize(new Parse.Configuration.Builder(this)
+//                .applicationId("myAppId")
+//                .clientKey("myClientKey")
+//                .server("http://10.20.1.54:1337/parse").build());
+
+        //Parse.initialize(Parse.Configuration.Builder(this));
+
+//        Parse.initialize(this,"myAppId","myClientKey");
+
+        Log.d("MainActivity", "setup parser client calls.");
+
+        ParseObject gameScore = new ParseObject("GameScore");
+        gameScore.put("score", 1337);
+        gameScore.put("playerName", "Sean Plott");
+        gameScore.put("cheatMode", false);
+
+        try
+        {
+            gameScore.save();//save data in the foreground.
+            //gameScore.saveInBackground();//saves data in the background.
+
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("GameScore");
+            query.getInBackground("xWMyZ4YEGZ", new GetCallback<ParseObject>() {
+                public void done(ParseObject gameScore, ParseException e) {
+                    if (e == null) {
+                        // object will be your game score
+                        int score = gameScore.getInt("score");
+                        String playerName = gameScore.getString("playerName");
+                        boolean cheatMode = gameScore.getBoolean("cheatMode");
+
+                        Log.d("MainActivity","score = "+score+", playerName = "+
+                                playerName+", cheatMode = "+cheatMode);
+
+                    } else {
+                        // something went wrong
+                      Log.d("MainActivity","got an exception = "+e.getMessage());
+                    }
+                }
+            });
+        }
+        catch(ParseException e)
+        {
+            Log.d("MainActivity","error code = "+e.getCode()+", msg = "+e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -151,11 +320,6 @@ public class MainActivity extends ActionBarActivity {
 
         //set the content view
         setContentView(R.layout.activity_main);
-
-        //test spring fw.
-        //testSpringFw();
-
-        //testRomeRss();
 
         mProgress = (ProgressBar) findViewById(R.id.progressBar);
 
@@ -179,6 +343,12 @@ public class MainActivity extends ActionBarActivity {
 
                                         try
                                         {
+                                            //testing parse
+                                            //ParseTesting();
+
+                                            //url testing
+                                            urlTesting();
+
                                             testAndroidUIL();
                                             testSpringRestWithGson();
                                             testRomeRss();
