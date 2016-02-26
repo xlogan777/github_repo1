@@ -1,5 +1,6 @@
 package com.algm_code;
 
+//test
 public class ArrayQueue extends StackQueueBase 
 {
 	private int head, tail;
