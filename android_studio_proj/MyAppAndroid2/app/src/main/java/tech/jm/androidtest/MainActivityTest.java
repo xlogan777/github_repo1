@@ -170,31 +170,14 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<UTBlankAc
 //        String data = urlTesting();
 
         //set the logging level.
-        Parse.setLogLevel(Parse.LOG_LEVEL_DEBUG);
-        Log.d("MainActivity", "level = " + Parse.getLogLevel() + ", set to level = " + Parse.LOG_LEVEL_DEBUG);
-
-        //create parse config builder obj, set client key to null
-//        Parse.Configuration.Builder my_builder = new Parse.Configuration.Builder(mContext);
-//        my_builder.applicationId("myAppId");
-//        my_builder.clientKey(null);
-//        my_builder.server("http://10.0.2.2:1337/parse");
-//        Parse.initialize(my_builder.build());
-
-//        Parse.initialize(new Parse.Configuration.Builder(mContext)
-//                .applicationId("myAppId")
-//                .clientKey("myClientKey")
-//                .server("http://10.0.2.2:1337/parse").build());
-
-//        Parse.initialize(new Parse.Configuration.Builder(mContext)
-//                .applicationId("myAppId")
-//                .clientKey(null)
-//                .server("http://10.0.2.2:1337/parse").build());
+        Parse.setLogLevel(Parse.LOG_LEVEL_VERBOSE);
+        Log.d("MainActivity", "level = " + Parse.getLogLevel() + ", set to level = " + Parse.LOG_LEVEL_VERBOSE);
 
         Parse.initialize(new Parse.Configuration.Builder(mContext)
                 .applicationId("myAppId")
-                .clientKey("myClientKey")//this is needed.
-                        //.clientKey(null)
+                .clientKey("myClientKey")
                 .server("http://10.0.2.2:1337/parse/classes").build());
+                //.server("http://192.168.1.4:1337/parse/classes").build());
 
         Log.d("MainActivity", "setup parser client calls.");
 
