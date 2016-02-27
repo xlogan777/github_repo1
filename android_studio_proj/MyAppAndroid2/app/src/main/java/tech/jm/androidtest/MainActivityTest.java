@@ -1,7 +1,9 @@
 package tech.jm.androidtest;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
@@ -13,6 +15,7 @@ import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.http.ParseHttpResponse;
@@ -22,6 +25,8 @@ import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -205,6 +210,39 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<UTBlankAc
 
                 Log.d("MainActivity", "score = "+score+", name = "+name+", cheatMode = "+cm);
                 Log.d("MainActivity",parseObject.toString());
+            }
+
+            //File file_path = new File("");
+
+            Bitmap bitmap;
+            ByteArrayOutputStream blob = new ByteArrayOutputStream();
+
+            //get a bitmap from the image path and decoded for bitmap.
+
+            try
+            {
+                InputStream is =
+                        getInstrumentation().getTargetContext().getResources().getAssets().open("ic_launcher-web.png");
+
+                bitmap = BitmapFactory.decodeStream(is);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 0 ,blob);
+            }
+            catch(Exception e)
+            {
+
+            }
+
+            ParseFile parseImagefile = new ParseFile("test1_pic.png",blob.toByteArray());
+            parseImagefile.save();
+            String url = parseImagefile.getUrl();
+            Log.d("MainActivity","url = "+url);
+
+            query = ParseQuery.getQuery("test1_pic.png");
+            query.setLimit(10);
+            parseObjectList = query.find();
+            for(ParseObject obj1 : parseObjectList)
+            {
+                int xx = 1;
             }
 
 //            query.getInBackground("xWMyZ4YEGZ", new GetCallback<ParseObject>() {
