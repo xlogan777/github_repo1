@@ -169,11 +169,6 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<UTBlankAc
 
     public void myParseTesting()
     {
-        //testing parse
-//        Log.d("MainActivity", "testing parse");
-//
-//        String data = urlTesting();
-
         //set the logging level.
         Parse.setLogLevel(Parse.LOG_LEVEL_VERBOSE);
         Log.d("MainActivity", "level = " + Parse.getLogLevel() + ", set to level = " + Parse.LOG_LEVEL_VERBOSE);
@@ -181,18 +176,17 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<UTBlankAc
         Parse.initialize(new Parse.Configuration.Builder(mContext)
                 .applicationId("myAppId")
                 .clientKey("myClientKey")
-                .server("http://10.0.2.2:1337/parse/classes").build());
-                //.server("http://192.168.1.4:1337/parse/classes").build());
+                .server("http://10.0.2.2:1337/parse/").build());
 
         Log.d("MainActivity", "setup parser client calls.");
 
-        ParseObject gameScore = new ParseObject("GameScore");
-        gameScore.put("score", 1337);
-        gameScore.put("playerName", "Sean Plott");
-        gameScore.put("cheatMode", false);
-
         try
         {
+            ParseObject gameScore = new ParseObject("GameScore");
+            gameScore.put("score", 1337);
+            gameScore.put("playerName", "Sean Plott");
+            gameScore.put("cheatMode", false);
+
             gameScore.save();//save data in the foreground.
             //gameScore.saveInBackground();//saves data in the background.
 
@@ -212,12 +206,8 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<UTBlankAc
                 Log.d("MainActivity",parseObject.toString());
             }
 
-            //File file_path = new File("");
-
             Bitmap bitmap;
             ByteArrayOutputStream blob = new ByteArrayOutputStream();
-
-            //get a bitmap from the image path and decoded for bitmap.
 
             try
             {
@@ -229,7 +219,8 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<UTBlankAc
             }
             catch(Exception e)
             {
-
+                Log.d("MainActivity","error = "+e.getMessage());
+                e.printStackTrace();
             }
 
             ParseFile parseImagefile = new ParseFile("test1_pic.png",blob.toByteArray());
@@ -237,13 +228,13 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<UTBlankAc
             String url = parseImagefile.getUrl();
             Log.d("MainActivity","url = "+url);
 
-            query = ParseQuery.getQuery("test1_pic.png");
-            query.setLimit(10);
-            parseObjectList = query.find();
-            for(ParseObject obj1 : parseObjectList)
-            {
-                int xx = 1;
-            }
+//            query = ParseQuery.getQuery("96d5b00ec2021f1e348dbbd5e8549d4c_test1_pic.png");
+//            query.setLimit(10);
+//            parseObjectList = query.find();
+//            for(ParseObject obj1 : parseObjectList)
+//            {
+//                int xx = 1;
+//            }
 
 //            query.getInBackground("xWMyZ4YEGZ", new GetCallback<ParseObject>() {
 //                public void done(ParseObject gameScore, ParseException e) {
