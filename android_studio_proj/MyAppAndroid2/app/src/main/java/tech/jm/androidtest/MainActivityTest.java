@@ -176,7 +176,8 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<UTBlankAc
         Parse.initialize(new Parse.Configuration.Builder(mContext)
                 .applicationId("myAppId")
                 .clientKey("myClientKey")
-                .server("http://10.0.2.2:1337/parse/").build());
+                        //.server("http://10.0.2.2:1337/parse/").build());
+                .server("http://192.168.1.18:1337/parse/").build());
 
         Log.d("MainActivity", "setup parser client calls.");
 
