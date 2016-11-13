@@ -177,7 +177,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<UTBlankAc
                 .applicationId("myAppId")
                 .clientKey("myClientKey")
                         //.server("http://10.0.2.2:1337/parse/").build());
-                .server("http://192.168.1.18:1337/parse/").build());
+                .server("http://ec2-54-237-158-13.compute-1.amazonaws.com:1337/parse/").build());
 
         Log.d("MainActivity", "setup parser client calls.");
 
