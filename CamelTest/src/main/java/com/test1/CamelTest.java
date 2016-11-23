@@ -92,9 +92,9 @@ public class CamelTest
                MyProcessor processor = new MyProcessor();
                log.info("file path = "+file_path);
                
-               from("file://C:/Users/menaj/Desktop/mars_workspace/CamelTest/doc/?fileName=test.txt&charset=utf-8&noop=true")
+               from("file://C:/github_repo1/CamelTest/doc/?fileName=test.txt&charset=utf-8&noop=true")
                .unmarshal(new SampleDataConverter())
-               .to("file://C:/Users/menaj/Desktop/mars_workspace/CamelTest/doc/?fileName=myout.dat")
+               .to("file://C:/github_repo1/CamelTest/doc/?fileName=myout.dat")
                .process(processor);
                //.to("stream:out");
                //.to("file://C:/out/?fileName=MyFile.txt&charset=utf-8");
