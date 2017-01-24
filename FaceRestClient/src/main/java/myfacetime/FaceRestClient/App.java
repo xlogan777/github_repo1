@@ -151,7 +151,7 @@ public class App
       String url2 = "https://api.facematica.vocord.ru/v1/face/detect";
       
       //add file to request body for images
-      LinkedMultiValueMap<String, Object> map_request_body = new LinkedMultiValueMap<>();
+      LinkedMultiValueMap<String, Object> map_request_body = new LinkedMultiValueMap<String, Object>();
       String file1 = "C:/Users/jimmy/Desktop/test1.jpg";
       String file3 = "C:/Users/jimmy/Desktop/test3.jpg";
       map_request_body.add("file1", new FileSystemResource(file1));
