@@ -5,6 +5,8 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.Arrays;
+
 import javax.net.ssl.SSLContext;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -17,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -71,10 +74,10 @@ public class FaceRestController
 
       // create http message converter. setup diff media types to convert. add
       // the converter to the resttemplate converter list.
-//      MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
-//      mappingJackson2HttpMessageConverter
-//            .setSupportedMediaTypes(Arrays.asList(MediaType.TEXT_HTML, MediaType.APPLICATION_JSON, MediaType.APPLICATION_OCTET_STREAM));
-//      restTemplate.getMessageConverters().add(mappingJackson2HttpMessageConverter);
+      MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
+      mappingJackson2HttpMessageConverter
+            .setSupportedMediaTypes(Arrays.asList(MediaType.TEXT_HTML, MediaType.APPLICATION_JSON, MediaType.APPLICATION_OCTET_STREAM));
+      restTemplate.getMessageConverters().add(mappingJackson2HttpMessageConverter);
 
       // make request for token.
       ResponseEntity<LoginResponse> resp_ent = restTemplate.postForEntity(url, log_in, LoginResponse.class);
@@ -116,6 +119,13 @@ public class FaceRestController
       HttpEntity<LinkedMultiValueMap<String, Object>> requestEntity = new HttpEntity<>(map_request_body, headers);
       
       RestTemplate restTemplate = new RestTemplate();
+      
+      // create http message converter. setup diff media types to convert. add
+      // the converter to the resttemplate converter list.
+      MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
+      mappingJackson2HttpMessageConverter
+            .setSupportedMediaTypes(Arrays.asList(MediaType.TEXT_HTML, MediaType.APPLICATION_JSON, MediaType.APPLICATION_OCTET_STREAM));
+      restTemplate.getMessageConverters().add(mappingJackson2HttpMessageConverter);
       
       //get http post response for this post request for image upload
       String response = restTemplate.postForObject(url2, requestEntity, String.class);
