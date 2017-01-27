@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.google.gson.Gson;
+
 @RestController
 public class FaceRestController
 {
@@ -34,12 +36,22 @@ public class FaceRestController
    
    public FaceRestController()
    {
-      log.debug("started rest controller.");
+      log.info("started rest controller.");
    }
    
    @RequestMapping(value = "/myTest1", method = RequestMethod.GET, produces="application/json")
    public String myTest1()
    {
+      Gson gson = new Gson();
+      ImageRequest img_request = new ImageRequest();
+      
+      img_request.setToken("asdfa");
+      img_request.setType("adsfsdrgwert");
+      img_request.setImage(new byte[]{20,30,50,100});
+      
+      String val = gson.toJson(img_request);
+      log.info(val);
+      
       return "Running face rest MS";
    }
    
@@ -90,9 +102,9 @@ public class FaceRestController
       LoginResponse login_resp = resp_ent.getBody();
 
       // print login response for token
-      log.debug(resp_ent.getStatusCode());
-      log.debug(resp_ent.getBody());
-      log.debug(login_resp);
+      log.info(resp_ent.getStatusCode());
+      log.info(resp_ent.getBody());
+      log.info(login_resp);
       
       ResponseEntity<LoginResponse> login_resp_entity = 
             new ResponseEntity<LoginResponse>(login_resp, HttpStatus.OK);
@@ -118,12 +130,13 @@ public class FaceRestController
       
       //setup http header with authorization and multi part form.
       HttpHeaders headers = new HttpHeaders();
-      headers.set("Authorization", imageRequest.getLoginInfo().getType() + " " + imageRequest.getLoginInfo().getToken());
+      headers.set("Authorization", imageRequest.getType() + " " + imageRequest.getToken());
       headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
       //create http entity with header and request body.
       HttpEntity<LinkedMultiValueMap<String, Object>> requestEntity = new HttpEntity<>(map_request_body, headers);
       
+      //create rest template
       RestTemplate restTemplate = new RestTemplate();
       
       // create http message converter. setup diff media types to convert. add
@@ -137,7 +150,7 @@ public class FaceRestController
       String response = restTemplate.postForObject(url2, requestEntity, String.class);
       
       //print response
-      log.debug(response);
+      log.info(response);
       
       ResponseEntity<String> upload_resp_entity = 
             new ResponseEntity<String>(response, HttpStatus.OK);

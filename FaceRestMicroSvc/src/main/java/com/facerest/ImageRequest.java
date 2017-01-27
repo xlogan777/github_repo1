@@ -2,7 +2,8 @@ package com.facerest;
 
 public class ImageRequest
 {
-   private LoginResponse loginInfo;
+   private String token;
+   private String type;  
    private byte [] image;
    
    public ImageRequest()
@@ -10,14 +11,24 @@ public class ImageRequest
      
    }
 
-   public LoginResponse getLoginInfo()
+   public String getToken()
    {
-      return loginInfo;
+      return token;
    }
 
-   public void setLoginInfo(LoginResponse loginInfo)
+   public void setToken(String token)
    {
-      this.loginInfo = loginInfo;
+      this.token = token;
+   }
+
+   public String getType()
+   {
+      return type;
+   }
+
+   public void setType(String type)
+   {
+      this.type = type;
    }
 
    public byte[] getImage()
