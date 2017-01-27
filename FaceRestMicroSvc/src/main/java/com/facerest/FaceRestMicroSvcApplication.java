@@ -1,0 +1,12 @@
+package com.facerest;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class FaceRestMicroSvcApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(FaceRestMicroSvcApplication.class, args);
+	}
+}
