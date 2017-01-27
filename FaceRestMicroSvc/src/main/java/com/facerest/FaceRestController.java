@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,6 +40,7 @@ public class FaceRestController
       log.info("started rest controller.");
    }
    
+   @CrossOrigin
    @RequestMapping(value = "/myTest1", method = RequestMethod.GET, produces="application/json")
    public String myTest1()
    {
@@ -55,6 +57,7 @@ public class FaceRestController
       return "Running face rest MS";
    }
    
+   @CrossOrigin
    @RequestMapping(value = "/faceRestLogin", method = RequestMethod.GET, produces="application/json")
    public ResponseEntity<LoginResponse> faceRestLogin() throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException 
    {
@@ -112,6 +115,7 @@ public class FaceRestController
       return login_resp_entity;
    }
    
+   @CrossOrigin
    @RequestMapping(value = "/faceUploadImage", method = RequestMethod.POST, produces="application/json")
    public ResponseEntity<String> faceUploadImage
    (
