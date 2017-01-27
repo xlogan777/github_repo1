@@ -11,7 +11,7 @@
          <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} -> %c %t %-5p: %m%n"/>
       </layout>
       <filter class="org.apache.log4j.varia.LevelRangeFilter">
-         <param name="LevelMin" value="debug" />
+         <param name="LevelMin" value="info" />
          <param name="LevelMax" value="fatal" />
       </filter>
    </appender>
@@ -24,7 +24,7 @@
          <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} -> %c %t %-5p: %m%n"/>
       </layout>
       <filter class="org.apache.log4j.varia.LevelRangeFilter">
-         <param name="LevelMin" value="debug" />
+         <param name="LevelMin" value="info" />
          <param name="LevelMax" value="fatal" />
       </filter>
    </appender>

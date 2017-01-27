@@ -37,6 +37,12 @@ public class FaceRestController
       log.debug("started rest controller.");
    }
    
+   @RequestMapping(value = "/myTest1", method = RequestMethod.GET, produces="application/json")
+   public String myTest1()
+   {
+      return "Running face rest MS";
+   }
+   
    @RequestMapping(value = "/faceRestLogin", method = RequestMethod.GET, produces="application/json")
    public ResponseEntity<LoginResponse> faceRestLogin() throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException 
    {
