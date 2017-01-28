@@ -1,5 +1,7 @@
 package com.facerest;
 
+import java.util.Arrays;
+
 public class ImageRequest
 {
    private String token;
@@ -39,5 +41,11 @@ public class ImageRequest
    public void setImage(byte[] image)
    {
       this.image = image;
+   }
+
+   @Override
+   public String toString()
+   {
+      return "ImageRequest [token=" + token + ", type=" + type + ", image=" + Arrays.toString(image) + "]";
    }
 }

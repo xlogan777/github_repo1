@@ -93,6 +93,8 @@ public class FaceRestController
     @RequestBody ImageRequest imageRequest
    ) throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException, IOException
    {
+      //log.info(imageRequest);
+      
       String url2 = "https://api.facematica.vocord.ru/v1/face/detect";
       
       //create image file from array of byes
