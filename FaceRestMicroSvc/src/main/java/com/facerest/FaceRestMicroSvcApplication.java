@@ -28,10 +28,10 @@ public class FaceRestMicroSvcApplication
 //      Gson gson = new Gson();
 //      ImageRequest img_request = new ImageRequest();
 //      
-//      img_request.setToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcGkuZmFjZW1hdGljYS52b2NvcmQucnUiLCJpYXQiOjE0ODU2MjgwMTgsImV4cCI6MTQ4NjIzMjgxOCwidXNlcmRhdGEiOnsiaWQiOiIxMTE0In19.VRKhwTB0huvfL_f-wM1aXleq2aPZkA6tp9e65r00jPI");
+//      img_request.setToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcGkuZmFjZW1hdGljYS52b2NvcmQucnUiLCJpYXQiOjE0ODU3OTAwNDksImV4cCI6MTQ4NjM5NDg0OSwidXNlcmRhdGEiOnsiaWQiOiIxMTE0In19.X0SZix2I4slgPfNQJtkekqWRjOak189F3jqdQya_vIY");
 //      img_request.setType("bearer");
 //      
-//      String file1 = "C:/Users/jimmy/Desktop/test1.jpg";
+//      String file1 = "C:/Users/menaj/Desktop/mera_jar/test1.jpg";
 //      Path path = Paths.get(file1);
 //      byte[] data = Files.readAllBytes(path);
 //      

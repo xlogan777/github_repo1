@@ -8,9 +8,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 
 import javax.net.ssl.SSLContext;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
@@ -100,12 +98,10 @@ public class FaceRestController
       String url2 = "https://api.facematica.vocord.ru/v1/face/detect";
       
       //create date as string to support multiple calls via clients.
-      Date date = new Date();
-      SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-      String my_date =  date_format.format(date);
+      String time_millis = System.currentTimeMillis()+"";
       
       //create image file from array of byes
-      File someFile = new File(my_date+"_tmp.jpeg");
+      File someFile = new File("tmp_"+ time_millis +".jpeg");
       FileOutputStream fos = new FileOutputStream(someFile);
       fos.write(imageRequest.getImage());
       fos.flush();
@@ -143,7 +139,7 @@ public class FaceRestController
    
    public static RestTemplate getRestTemplate() throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException
    {
-   // create a 509 certificate for SSL processing
+      // create a 509 certificate for SSL processing
       TrustStrategy acceptingTrustStrategy = new TrustStrategy()
       {
          @Override
