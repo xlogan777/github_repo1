@@ -79,6 +79,7 @@ public class FaceRestController
       log.info(resp_ent.getStatusCode());
       log.info(resp_ent.getBody());
       log.info(login_resp);
+      log.info("jimbo1");
       
       ResponseEntity<LoginResponse> login_resp_entity = 
             new ResponseEntity<LoginResponse>(login_resp, HttpStatus.OK);
