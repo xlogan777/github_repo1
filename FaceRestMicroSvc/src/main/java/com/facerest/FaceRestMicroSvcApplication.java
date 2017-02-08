@@ -25,37 +25,37 @@ public class FaceRestMicroSvcApplication
    
    public static void main(String[] args) throws KeyManagementException, NoSuchAlgorithmException, KeyStoreException, IOException
    {
-      Gson gson = new Gson();
-      ImageRequest img_request = new ImageRequest();
-      
-      img_request.setToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcGkuZmFjZW1hdGljYS52b2NvcmQucnUiLCJpYXQiOjE0ODY1MjM5MTcsImV4cCI6MTQ4NzEyODcxNywidXNlcmRhdGEiOnsiaWQiOiIxMTE0In19.9mGh-sWRBkyCtHO-mRv575HFB3xeGuk2SaANs2g7u8E");
-      img_request.setType("bearer");
-      
-      String file1 = "C:/Users/jimmy/Desktop/test.jpg";
-      Path path = Paths.get(file1);
-      byte[] data = Files.readAllBytes(path);
-      
-      img_request.setImage(data);
-      
-      //String val = gson.toJson(img_request);
-      //log.info(val);
-      
-      RestTemplate restTemplate = FaceRestController.getRestTemplate();
-      
-      long start = System.currentTimeMillis();
-      
-      //get http post response for this post request for image upload
-      String response = 
-            restTemplate.postForObject
-               ("http://ec2-52-90-152-134.compute-1.amazonaws.com:8080/faceUploadImage", 
-                     img_request, String.class);
-      
-      log.info("diff = "+(System.currentTimeMillis() - start));
-      
-      //print response
-      log.info(response);
+//      Gson gson = new Gson();
+//      ImageRequest img_request = new ImageRequest();
+//      
+//      img_request.setToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcGkuZmFjZW1hdGljYS52b2NvcmQucnUiLCJpYXQiOjE0ODY1MjM5MTcsImV4cCI6MTQ4NzEyODcxNywidXNlcmRhdGEiOnsiaWQiOiIxMTE0In19.9mGh-sWRBkyCtHO-mRv575HFB3xeGuk2SaANs2g7u8E");
+//      img_request.setType("bearer");
+//      
+//      String file1 = "C:/Users/jimmy/Desktop/test.jpg";
+//      Path path = Paths.get(file1);
+//      byte[] data = Files.readAllBytes(path);
+//      
+//      img_request.setImage(data);
+//      
+//      //String val = gson.toJson(img_request);
+//      //log.info(val);
+//      
+//      RestTemplate restTemplate = FaceRestController.getRestTemplate();
+//      
+//      long start = System.currentTimeMillis();
+//      
+//      //get http post response for this post request for image upload
+//      String response = 
+//            restTemplate.postForObject
+//               ("http://ec2-52-90-152-134.compute-1.amazonaws.com:8080/faceUploadImage", 
+//                     img_request, String.class);
+//      
+//      log.info("diff = "+(System.currentTimeMillis() - start));
+//      
+//      //print response
+//      log.info(response);
       
 
-//       SpringApplication.run(FaceRestMicroSvcApplication.class, args);
+       SpringApplication.run(FaceRestMicroSvcApplication.class, args);
    }
 }
