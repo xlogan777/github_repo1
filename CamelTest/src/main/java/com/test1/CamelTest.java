@@ -41,7 +41,6 @@ public class CamelTest
    
    public static class SampleDataConverter implements DataFormat
    {
-      @Override
       public void marshal(Exchange exchange, Object obj, OutputStream outStream) throws Exception
       {
          // Instead, use Camel type converters like this:
@@ -55,7 +54,6 @@ public class CamelTest
          // Don't close output stream here
       }
 
-      @Override
       public Object unmarshal(Exchange exchange, InputStream inStream) throws Exception
       {
          byte[] bytes = IOUtils.toByteArray(inStream);
