@@ -10,4 +10,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="tech.jm.myappandroid2.Main3Activity">
 
+    <Spinner
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="14pt"
+        android:textColor="#FF8B1500"
+        android:gravity="center"
+        android:id="@+id/spinner" />
 </RelativeLayout>

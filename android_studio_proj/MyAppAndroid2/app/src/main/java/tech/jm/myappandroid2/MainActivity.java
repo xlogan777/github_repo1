@@ -430,9 +430,9 @@ public class MainActivity extends ActionBarActivity {
         cursor.close();
 
 
-        Cursor managedCursor = Browser.getAllBookmarks(this.getContentResolver());
-        //Browser.saveBookmark(this, "hahaha","www.jimbo.com");//save a book mark.
-        Browser.deleteFromHistory(this.getContentResolver(),"www.jimbo.com");
+//        Cursor managedCursor = Browser.getAllBookmarks(this.getContentResolver());
+//        //Browser.saveBookmark(this, "hahaha","www.jimbo.com");//save a book mark.
+//        Browser.deleteFromHistory(this.getContentResolver(),"www.jimbo.com");
 
 
 //        //bookmarks lab example
@@ -449,19 +449,19 @@ public class MainActivity extends ActionBarActivity {
 //                null,      // Selection arguments (none)
 //                null);
 
-        if(managedCursor.getCount() > 0)
-        {
-            while(managedCursor.moveToNext())
-            {
-                String url = managedCursor.getString(managedCursor.getColumnIndex(Browser.BookmarkColumns.URL));
-                Log.d("","url  = "+url);
-            }
-        }
-
-        //closed the cursor.
-        //doing another test
-        //final test
-        managedCursor.close();
+//        if(managedCursor.getCount() > 0)
+//        {
+//            while(managedCursor.moveToNext())
+//            {
+//                String url = managedCursor.getString(managedCursor.getColumnIndex(Browser.BookmarkColumns.URL));
+//                Log.d("","url  = "+url);
+//            }
+//        }
+//
+//        //closed the cursor.
+//        //doing another test
+//        //final test
+//        managedCursor.close();
 
         ContentResolver cr2 = this.getContentResolver();
         //content:// => content provider protocol..similar to http:// concept
