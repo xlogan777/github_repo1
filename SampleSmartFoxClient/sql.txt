@@ -1,0 +1,60 @@
+CREATE TABLE tutorials_tbl(
+tutorial_id INT NOT NULL AUTO_INCREMENT,
+tutorial_title VARCHAR(100) NOT NULL,
+tutorial_author VARCHAR(40) NOT NULL,
+submission_date DATE,
+PRIMARY KEY ( tutorial_id )
+);
+
+CREATE TABLE tcount_tbl(
+tutorial_author VARCHAR(40) NOT NULL,
+tutorial_count INT NOT NULL
+);
+
+INSERT INTO tutorials_tbl (tutorial_title, tutorial_author, submission_date) VALUES ("Learn PHP", "John Poul", NOW());
+
+INSERT INTO tutorials_tbl (tutorial_title, tutorial_author, submission_date) VALUES ("Learn MySQL", "Abdul S", NOW());
+INSERT INTO tutorials_tbl (tutorial_title, tutorial_author, submission_date) VALUES ("JAVA Tutorial", "Sanjay", '2007-05-06');
+
+UPDATE tutorials_tbl SET tutorial_title = 'Learning JAVA' WHERE tutorial_id = 3;
+
+SELECT * from tutorials_tbl WHERE tutorial_author LIKE '%jay';
+
+INSERT INTO tcount_tbl (tutorial_author, tutorial_count) VALUES ("Sanjay", 1);
+INSERT INTO tcount_tbl (tutorial_author, tutorial_count) VALUES ("John Poul", 1);
+INSERT INTO tcount_tbl (tutorial_author, tutorial_count) VALUES ("Gil", 20);
+
+
+SELECT a.tutorial_id, a.tutorial_author, b.tutorial_count FROM tutorials_tbl a, tcount_tbl b WHERE a.tutorial_author = b.tutorial_author;
+
+SELECT a.tutorial_id, a.tutorial_author, b.tutorial_count FROM tutorials_tbl a LEFT JOIN tcount_tbl b ON a.tutorial_author = b.tutorial_author;
+
+ALTER TABLE tcount_tbl ADD age INT;
+
+CREATE TEMPORARY TABLE SalesSummary (
+product_name VARCHAR(50) NOT NULL,
+total_sales DECIMAL(12,2) NOT NULL DEFAULT 0.00,
+avg_unit_price DECIMAL(7,2) NOT NULL DEFAULT 0.00,
+total_units_sold INT UNSIGNED NOT NULL DEFAULT 0
+);
+
+INSERT INTO SalesSummary
+   (product_name, total_sales, avg_unit_price, total_units_sold)
+   VALUES
+   ('cucumber', 100.25, 90, 2);
+
+
+CREATE TABLE `clone_tbl` (
+  `tutorial_id` int(11) NOT NULL AUTO_INCREMENT,
+  `tutorial_title` varchar(100) NOT NULL,
+  `tutorial_author` varchar(40) NOT NULL,
+  `submission_date` date DEFAULT NULL,
+  PRIMARY KEY (`tutorial_id`),
+  UNIQUE KEY `AUTHOR_INDEX` (`tutorial_author`)
+)
+
+INSERT INTO clone_tbl (tutorial_id,
+                        tutorial_title,
+                        tutorial_author,
+                        submission_date)
+SELECT tutorial_id,tutorial_title, tutorial_author,submission_date FROM tutorials_tbl;
