@@ -1,0 +1,21 @@
+Game Development learning
+1. mysql admin and usage via tutorialspoint. setup correct accs for users. => DONE
+2. try sample smartfox server setup.
+3. setup google cloud free acc to use and setup with ubuntu 16.04 LTS. => DONE
+4. connect to ubuntu remotely and allow for db access to it for google cloud. =>
+5. setup cassandra and follow tutorialspoint for it.
+
+machine learning
+1. finish the python tutorialspoint for the sample code.
+
+new tools
+1. learn docker for sample usage.
+
+how to setup google cloud usage with putty.
+https://www.youtube.com/watch?v=oHNfeFmiTAM
+
+username = jimmy_user
+passwd = jimmy123
+
+//add users to mysql
+GRANT ALL PRIVILEGES ON jimbo_db1.* TO 'jimmy'@'localhost' IDENTIFIED BY 'jimmy123';

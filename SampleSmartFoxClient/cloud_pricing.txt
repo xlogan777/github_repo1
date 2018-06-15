@@ -1,0 +1,49 @@
+smart fox server min hardward reqs
+For production environments we recommend a machine with at least 512MB of physical RAM and a 2.0Ghz processor.
+
+mysql db minimum reqs
+4 CPU Cores or more
+8 GB RAM or more
+
+cassandra db minimum reqs
+minimal production server requires at least 2 cores, and at least 8GB of RAM
+
+
+hardware minimum reqs for the cloud server instances.
+4 cpu cores
+8GB ram
+alot of disk space
+
+prices for 1 Instance only 
+	AWS pricing
+	t2.large	2CPU	Variable	8 GiB	EBS Only	$0.0928 per Hour, location US North Virginia
+	30 days = 30 * 24 * 0.0928 = 66.816
+	for 8 months = 66.816 * 8 = 534.528
+----------------------------------------------	
+	google cloud pricing
+	1 x
+	730 total hours per month
+	VM class: regular
+	Instance type: n1-standard-2(2 vCPU, 7.5 RAM)
+	Region: Northern Virginia
+	Sustained Use Discount: 30% 
+	Effective Hourly Rate: $0.075
+	Estimated Component Cost: $54.68 per 1 month
+	Total Estimated Cost: $54.68 per 1 month (USD) (30 days)
+	for 8 months = 54.68 * 8 = 437.44
+
+	
+-------------
+Settings used based on Cassandra/Mysql/SmartFox server production requirements.
+2 vCPU with 8GB ram.
+
+aws pricing for 3 servers
+	for 3 servers = 534(for 8 months) * 3 = 1602
+        1 server for 1 month = 534/8 = 66.75
+	I have used AWS before so i have experience on it.
+
+google cloud pricing for 3 servers 
+	for 3 servers = 437 * 3= 1311
+        1 server for 1 month = 437/8 = 54.62
+	Should be similar stuff to AWS but never setup anything here.
+
