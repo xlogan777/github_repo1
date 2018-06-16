@@ -17,5 +17,18 @@ https://www.youtube.com/watch?v=oHNfeFmiTAM
 username = jimmy_user
 passwd = jimmy123
 
-//add users to mysql
+//add users to mysql for local host only
 GRANT ALL PRIVILEGES ON jimbo_db1.* TO 'jimmy'@'localhost' IDENTIFIED BY 'jimmy123';
+
+//this allows any ip address access to mysql which allows to connect from outside the server
+GRANT ALL PRIVILEGES ON yourDBname.* TO username@'%' IDENTIFIED BY 'password';
+
+//sample, this gives user=jimmy full access and to be connected via any ip address.
+GRANT ALL PRIVILEGES ON *.* TO jimmy@'%' IDENTIFIED BY 'password';
+
+//this gives full access to only db=jimbo_db1 user=jimmy
+GRANT ALL PRIVILEGES ON jimbo_db1.* TO jimmy@'%' IDENTIFIED BY 'password';
+
+//this is to drop a user from the user table of the mysql db. only to be used by admin.
+drop user 'jimmy'@'%';
+#the 'jimmy' and the '%' has to match what is in the user table.

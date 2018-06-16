@@ -12,17 +12,18 @@ tutorial_count INT NOT NULL
 );
 
 INSERT INTO tutorials_tbl (tutorial_title, tutorial_author, submission_date) VALUES ("Learn PHP", "John Poul", NOW());
-
 INSERT INTO tutorials_tbl (tutorial_title, tutorial_author, submission_date) VALUES ("Learn MySQL", "Abdul S", NOW());
 INSERT INTO tutorials_tbl (tutorial_title, tutorial_author, submission_date) VALUES ("JAVA Tutorial", "Sanjay", '2007-05-06');
+INSERT INTO tcount_tbl (tutorial_author, tutorial_count) VALUES ("Sanjay", 1);
+INSERT INTO tcount_tbl (tutorial_author, tutorial_count) VALUES ("John Poul", 1);
+INSERT INTO tcount_tbl (tutorial_author, tutorial_count) VALUES ("Gil", 20);
+
 
 UPDATE tutorials_tbl SET tutorial_title = 'Learning JAVA' WHERE tutorial_id = 3;
 
 SELECT * from tutorials_tbl WHERE tutorial_author LIKE '%jay';
 
-INSERT INTO tcount_tbl (tutorial_author, tutorial_count) VALUES ("Sanjay", 1);
-INSERT INTO tcount_tbl (tutorial_author, tutorial_count) VALUES ("John Poul", 1);
-INSERT INTO tcount_tbl (tutorial_author, tutorial_count) VALUES ("Gil", 20);
+
 
 
 SELECT a.tutorial_id, a.tutorial_author, b.tutorial_count FROM tutorials_tbl a, tcount_tbl b WHERE a.tutorial_author = b.tutorial_author;
