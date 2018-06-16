@@ -1,8 +1,8 @@
 Game Development learning
 1. mysql admin and usage via tutorialspoint. setup correct accs for users. => DONE
-2. try sample smartfox server setup.
+2. try sample smartfox server setup. => DONE
 3. setup google cloud free acc to use and setup with ubuntu 16.04 LTS. => DONE
-4. connect to ubuntu remotely and allow for db access to it for google cloud. =>
+4. connect to ubuntu remotely and allow for db access to it for google cloud. => DONE
 5. setup cassandra and follow tutorialspoint for it.
 
 machine learning
