@@ -5,6 +5,25 @@ Game Development learning
 4. connect to ubuntu remotely and allow for db access to it for google cloud. => DONE
 5. setup cassandra and follow tutorialspoint for it.
 
+	edit cassandra.yaml file to be the following cassandra_home/conf
+	//follows these steps below for cassandra 3.11.
+	https://gist.github.com/andykuszyk/7644f334586e8ce29eaf8b93ec6418c4
+	
+			Make these changes in the cassandra.yaml config file:
+
+			start_rpc: true
+
+			rpc_address: 0.0.0.0
+
+			broadcast_rpc_address: [node-ip]
+
+			listen_address: [node-ip]
+
+			seed_provider:
+			  - class_name: ...
+				- seeds: "[node-ip]"	
+
+
 machine learning
 1. finish the python tutorialspoint for the sample code.
 
