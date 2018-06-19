@@ -59,3 +59,38 @@ INSERT INTO clone_tbl (tutorial_id,
                         tutorial_author,
                         submission_date)
 SELECT tutorial_id,tutorial_title, tutorial_author,submission_date FROM tutorials_tbl;
+
+------------
+NO SQL CASSANDRA SECTION
+
+CREATE TABLE emp(emp_id int PRIMARY KEY, emp_name text, emp_city text, emp_sal varint, emp_phone varint );
+
+ALTER TABLE emp ADD emp_email text;
+
+BEGIN BATCH
+INSERT INTO emp (emp_id, emp_city, emp_name, emp_phone, emp_sal) values(  1,'Pune','rajeev',9848022331, 30000);
+INSERT INTO emp (emp_id, emp_city, emp_name, emp_phone, emp_sal) values(  2,'nyc','jim',12345, 40000);
+INSERT INTO emp (emp_id, emp_city, emp_name, emp_phone, emp_sal) values(  3,'pa','lala',678, 60000);
+UPDATE emp SET emp_sal = 10 WHERE emp_id =1;
+DELETE emp_city FROM emp WHERE emp_id = 2;
+APPLY BATCH;
+
+INSERT INTO emp (emp_id, emp_name, emp_city, emp_phone, emp_sal) VALUES(1,'ram', 'Hyderabad', 9848022338, 50000);
+INSERT INTO emp (emp_id, emp_name, emp_city, emp_phone, emp_sal) VALUES(2,'robin', 'Hyderabad', 9848022339, 40000);
+INSERT INTO emp (emp_id, emp_name, emp_city, emp_phone, emp_sal) VALUES(3,'rahman', 'Chennai', 9848022330, 45000);
+
+UPDATE emp SET emp_city='Delhi',emp_sal=50000 WHERE emp_id=2;
+
+INSERT INTO data(name, email) VALUES ('ramu',['abc@gmail.com','cba@yahoo.com']);
+
+UPDATE data SET email = email +['xyz@tutorialspoint.com'] where name = 'ramu';
+
+UPDATE data2 SET phone = phone + {9848022330} where name = 'rahman';
+
+CREATE TABLE data3 (name text PRIMARY KEY, address map<text, text>);
+
+INSERT INTO data3 (name, address) VALUES ('robin', {'home' : 'hyderabad' , 'office' : 'Delhi' } );
+
+UPDATE data3 SET address = address+{'office':'mumbai'} WHERE name = 'robin';
+
+CREATE TYPE card_details ( num int, pin int, name text, cvv int, phone set<int> );
