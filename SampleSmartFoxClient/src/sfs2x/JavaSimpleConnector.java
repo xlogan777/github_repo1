@@ -13,7 +13,7 @@ import sfs2x.client.core.BaseEvent;
 import sfs2x.client.core.IEventListener;
 import sfs2x.client.core.SFSEvent;
 import sfs2x.client.requests.LoginRequest;
-import sfs2x.client.util.ConfigData;
+//import sfs2x.client.util.ConfigData;
 
 /**
  * Basic SFS2X client, performing connection and login to a 'localhost' server
@@ -21,7 +21,7 @@ import sfs2x.client.util.ConfigData;
 public class JavaSimpleConnector implements IEventListener
 {
     private final SmartFox sfs;
-    private final ConfigData cfg;
+//    private final ConfigData cfg;
     
     private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -42,13 +42,18 @@ public class JavaSimpleConnector implements IEventListener
          * the basic parameters such as host, TCP port number and Zone name
          * that will be used for logging in.
          */
-        cfg = new ConfigData();
-        //cfg.setHost("localhost");
-        cfg.setHost("192.168.0.14");//JM
-        cfg.setPort(9933);
-        cfg.setZone("BasicExamples");
+//        cfg = new ConfigData();
+//        cfg.setHost("localhost");
+//        cfg.setPort(9933);
+//        cfg.setZone("BasicExamples");
+//        sfs.connect(cfg);
         
-        sfs.connect(cfg);
+        //this loads the config obj via a config file, xml that is passed in
+        //the false doesnt auto connect to the sfs server.
+        sfs.loadConfig(System.getProperty("confPath"), false);
+        
+        //this forces the connection to the server with the loaded xml file.
+        sfs.connect();
     }
 
     /**
