@@ -5,7 +5,7 @@
     <!-- <zone>BasicExamples</zone> -->
     <zone>NewZone</zone>
     
-    <debug>false</debug>
+    <!-- <debug>true</debug> -->
     <udpIp>127.0.0.1</udpIp>
     <udpPort>9934</udpPort>
 <!--     <httpPort>8080</httpPort>

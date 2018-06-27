@@ -12,7 +12,11 @@ import sfs2x.client.SmartFox;
 import sfs2x.client.core.BaseEvent;
 import sfs2x.client.core.IEventListener;
 import sfs2x.client.core.SFSEvent;
+import sfs2x.client.entities.SFSRoom;
+import sfs2x.client.requests.CreateRoomRequest;
+import sfs2x.client.requests.JoinRoomRequest;
 import sfs2x.client.requests.LoginRequest;
+import sfs2x.client.requests.RoomSettings;
 //import sfs2x.client.util.ConfigData;
 
 /**
@@ -36,6 +40,14 @@ public class JavaSimpleConnector implements IEventListener
         sfs.addEventListener(SFSEvent.CONNECTION_LOST, this);
         sfs.addEventListener(SFSEvent.LOGIN, this);
         sfs.addEventListener(SFSEvent.LOGIN_ERROR, this);
+        
+        //code in events for joining rooms.
+        sfs.addEventListener(SFSEvent.ROOM_JOIN, this);
+        sfs.addEventListener(SFSEvent.ROOM_JOIN_ERROR, this);
+        
+        //create a room dynamically
+        sfs.addEventListener(SFSEvent.ROOM_ADD, this);
+        sfs.addEventListener(SFSEvent.ROOM_CREATION_ERROR, this);
         
         /**
          * Create a configuration for the connection passing
@@ -105,9 +117,21 @@ public class JavaSimpleConnector implements IEventListener
         {
             log.info("Logged in as: " + sfs.getMySelf().getName());
             
-            //log.info(""+sfs.getRoomManager().getRoomList());
+            //print the number of rooms i get after successful login.
             log.info(""+sfs.getRoomList());
             
+            //join another room.
+            //sfs.send(new JoinRoomRequest("MyRoom1"));
+            //sfs.send(new JoinRoomRequest("MyRoom2"));
+            //sfs.send(new JoinRoomRequest("The Lobby"));
+            
+            //create new room and add settings to it.
+            RoomSettings rs = new RoomSettings("Piggy Chat Room");
+            rs.setMaxUsers(3);
+            rs.setGroupId("ChatGroup");
+
+            //send the create room request.
+            sfs.send(new CreateRoomRequest(rs));
         }
         
         /**
@@ -116,6 +140,31 @@ public class JavaSimpleConnector implements IEventListener
         else if (evt.getType().equals(SFSEvent.LOGIN_ERROR))
         {
             log.warn("Login error:  " + evt.getArguments().get("errorMessage"));
+        }
+        /**
+         * handle ROOM_JOIN
+         */
+        else if (evt.getType().equals(SFSEvent.ROOM_JOIN))
+        {
+        	SFSRoom tmp = (SFSRoom)evt.getArguments().get("room");
+            log.info("Joined Room: " + tmp.getName());
+            log.info("Last Joined Room : "+sfs.getLastJoinedRoom().getName());
+            log.info("List of currently Joined Rooms : "+sfs.getJoinedRooms());
+        }
+        
+        else if (evt.getType().equals(SFSEvent.ROOM_JOIN_ERROR))
+        {
+            log.warn("Join failed: " + evt.getArguments().get("errorMessage"));
+        }
+        
+        else if (evt.getType().equals(SFSEvent.ROOM_ADD))
+        {
+        	log.info("A new Room was added: " + evt.getArguments().get("room"));
+        }
+        
+        else if (evt.getType().equals(SFSEvent.ROOM_CREATION_ERROR))
+        {
+        	log.warn("An error occurred while attempting to create the Room: " + evt.getArguments().get("errorMessage"));
         }
     }
 
@@ -127,5 +176,4 @@ public class JavaSimpleConnector implements IEventListener
     {
         new JavaSimpleConnector();
     }
-    
 }
