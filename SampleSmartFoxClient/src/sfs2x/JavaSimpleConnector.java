@@ -81,7 +81,13 @@ public class JavaSimpleConnector implements IEventListener
              * Send a guest login request (no name, no password)
              * The server will auto-assign a guest user name
              */
-            sfs.send(new LoginRequest("", "", sfs.getCurrentZone()));
+            //sfs.send(new LoginRequest("", "", sfs.getCurrentZone()));
+            
+            //since we have loaded the config file the zone name is going to be used.
+            //since we are using the system controller and not custom controller.
+            //no username/passwd is needed.
+            //but i provided a username for now.
+            sfs.send(new LoginRequest("JimboUser"));
         }
         
         /**
@@ -98,6 +104,10 @@ public class JavaSimpleConnector implements IEventListener
         else if (evt.getType().equals(SFSEvent.LOGIN))
         {
             log.info("Logged in as: " + sfs.getMySelf().getName());
+            
+            //log.info(""+sfs.getRoomManager().getRoomList());
+            log.info(""+sfs.getRoomList());
+            
         }
         
         /**
