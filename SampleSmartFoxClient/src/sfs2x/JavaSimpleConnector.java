@@ -250,6 +250,7 @@ public class JavaSimpleConnector implements IEventListener
      */
     public static void main(String[] args) throws InterruptedException 
     {
+       log.info("hello");
        JavaSimpleConnector jsc = new JavaSimpleConnector();
        jsc.connect();
 //       Thread.sleep(2000);
