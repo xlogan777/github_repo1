@@ -4,12 +4,12 @@
     <port>9933</port>
     <!-- <zone>BasicExamples</zone> -->
     <zone>NewZone</zone>
-    
-    <!-- <debug>true</debug> -->
     <udpIp>127.0.0.1</udpIp>
     <udpPort>9934</udpPort>
-<!--     <httpPort>8080</httpPort>
-    <useBlueBox>true</useBlueBox>
-    <blueBoxPollingRate>500</blueBoxPollingRate> -->
     
+<!--     <debug>true</debug>
+    <httpPort>8080</httpPort>
+    <useBlueBox>true</useBlueBox>
+    <blueBoxPollingRate>500</blueBoxPollingRate>
+     -->
 </SmartFoxConfig>

@@ -51,3 +51,35 @@ GRANT ALL PRIVILEGES ON jimbo_db1.* TO jimmy@'%' IDENTIFIED BY 'password';
 //this is to drop a user from the user table of the mysql db. only to be used by admin.
 drop user 'jimmy'@'%';
 #the 'jimmy' and the '%' has to match what is in the user table.
+
+//when installing mysql on ubuntu, u also need to update this file when installed via apt-get
+"/etc/mysql/mysql.conf.d"
+
+//NOTE
+//find this param and change it from 127.0.0.1 to 0.0.0.0, which allows to connect externally from any ip address.
+bind-address            = 0.0.0.0
+
+#for linux start and stop
+service mysql [status|stop|start]
+
+//this also created a DB my sql user first with a password, then is grants all access to jimbo_db1 db to the jimmy user.
+CREATE USER 'jimmy'@'%' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON jimbo_db1.* TO 'jimmy'@'%' WITH GRANT OPTION;
+
+//for windows non MSI install, installing the .zip file version
+issue command below where u unzipped the zip file of mysql.
+mysqld.exe --initialize --console
+
+#this will show u the default password for root mysql acc. change that on ur login.
+mysql -u root -p => then enter default password.
+
+#then issue this on the mysql prompt
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_password'; //to change the password.
+
+//after you changed root password, you start mysql on windows like this
+mysqld.exe --console
+
+//this will remove the strong encryption passwd from mysql server and go to legacy password strength test. then restart the mysql server.
+//this is for windows only.
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+ALTER USER 'jimmy'@'%' IDENTIFIED WITH mysql_native_password BY 'password';

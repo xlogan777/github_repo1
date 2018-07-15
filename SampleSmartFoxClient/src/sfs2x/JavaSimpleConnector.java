@@ -9,6 +9,11 @@ import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.exceptions.SFSException;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -123,7 +128,9 @@ public class JavaSimpleConnector implements IEventListener
             //since we are using the system controller and not custom controller.
             //no username/passwd is needed.
             //but i provided a username for now.
-            sfs.send(new LoginRequest("Administrator"));
+            //sfs.send(new LoginRequest("Administrator"));
+            sfs.send(new LoginRequest("Kermit", "thefrog"));
+            
             //sfs.send(new LoginRequest("JimboUser"));
             //sfs.send(new LoginRequest("", ""));
         }
@@ -146,26 +153,26 @@ public class JavaSimpleConnector implements IEventListener
             //print the number of rooms i get after successful login.
             log.info(""+sfs.getRoomList());
             
-            //create new room and add settings to it.
-            RoomSettings rs = new RoomSettings("Jimbo_Chat_Room");
-            rs.setMaxUsers(3);
-            rs.setGroupId("default");
-
-            //send the create room request.
-            sfs.send(new CreateRoomRequest(rs));
-            log.info("finished login");
-            
-            //join another room.
-            sfs.send(new JoinRoomRequest("MyRoom1"));
-            //sfs.send(new JoinRoomRequest("MyRoom2"));
-            //sfs.send(new JoinRoomRequest("The Lobby"));
-            
-            //code for extension request
-            ISFSObject sfso = new SFSObject();
-            sfso.putInt("n1", 25);
-            sfso.putInt("n2", 17);
-         
-            sfs.send( new ExtensionRequest("sum", sfso) );            
+//            //create new room and add settings to it.
+//            RoomSettings rs = new RoomSettings("Jimbo_Chat_Room");
+//            rs.setMaxUsers(3);
+//            rs.setGroupId("default");
+//
+//            //send the create room request.
+//            sfs.send(new CreateRoomRequest(rs));
+//            log.info("finished login");
+//            
+//            //join another room.
+//            sfs.send(new JoinRoomRequest("MyRoom1"));
+//            //sfs.send(new JoinRoomRequest("MyRoom2"));
+//            //sfs.send(new JoinRoomRequest("The Lobby"));
+//            
+//            //code for extension request
+//            ISFSObject sfso = new SFSObject();
+//            sfso.putInt("n1", 25);
+//            sfso.putInt("n2", 17);
+//         
+//            sfs.send( new ExtensionRequest("sum", sfso) );            
         }
         
         /**
@@ -247,9 +254,38 @@ public class JavaSimpleConnector implements IEventListener
     /**
      * @param args the command line arguments
     * @throws InterruptedException 
+     * @throws ClassNotFoundException 
+     * @throws SQLException 
      */
-    public static void main(String[] args) throws InterruptedException 
+    public static void main(String[] args) throws InterruptedException, ClassNotFoundException, SQLException 
     {
+    	Connection con = null;
+    	Statement stmt = null;
+    	ResultSet rs = null;
+    	try
+    	{
+    		//driver class = com.mysql.jdbc.Driver
+	    	Class.forName("com.mysql.cj.jdbc.Driver");
+	    	con=DriverManager.getConnection(  
+	    	"jdbc:mysql://localhost:3306/jimbo_db1?useSSL=false","jimmy","jimmy123");  
+	    	//here sonoo is database name, root is username and password  
+	    	stmt=con.createStatement();  
+	    	rs=stmt.executeQuery("select * from muppets");  
+	    	while(rs.next())  
+	    		System.out.println(rs.getString(2)+"  "+rs.getString(3));  
+	    	
+    	}
+    	catch(Exception e)
+    	{
+    		log.error(e,e);
+    		if(rs !=null)
+    			rs.close();
+    		if(stmt !=null)
+    			stmt.close();
+    		if(con !=null)
+    			con.close();
+    	}
+    	
        log.info("hello");
        JavaSimpleConnector jsc = new JavaSimpleConnector();
        jsc.connect();

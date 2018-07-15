@@ -12,5 +12,6 @@
 	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
 	<classpathentry kind="lib" path="lib/sfs2x-core.jar"/>
 	<classpathentry kind="lib" path="lib/sfs2x.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-8.0.11.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
