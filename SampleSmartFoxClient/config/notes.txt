@@ -1,0 +1,5 @@
+#go to this folder.
+C:\github_repo1\SampleSmartFoxClient\bin>
+
+#enter java command line args.
+java -cp ".;../lib/*" -Dlog4j.configuration=file:///C:/github_repo1/SampleSmartFoxClient/config/log4j.xml -DconfPath=C:/github_repo1/SampleSmartFoxClient/config/sfs-config.xml sfs2x.JavaSimpleConnector
