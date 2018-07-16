@@ -272,7 +272,7 @@ public class JavaSimpleConnector implements IEventListener
 	    	stmt=con.createStatement();  
 	    	rs=stmt.executeQuery("select * from muppets");  
 	    	while(rs.next())  
-	    		System.out.println(rs.getString(2)+"  "+rs.getString(3));  
+	    		log.info(rs.getString(2)+"  "+rs.getString(3));
 	    	
     	}
     	catch(Exception e)
