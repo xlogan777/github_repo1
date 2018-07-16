@@ -31,7 +31,7 @@ public class ZoneJoinEventHandler extends BaseServerEventHandler
 		getApi().setUserVariables(theUser, vars);
 		
 		// Join the user
-		Room lobby = getParentExtension().getParentZone().getRoomByName("The Lobby");
+		Room lobby = getParentExtension().getParentZone().getRoomByName("MyRoom1");
 		
 		if (lobby == null)
 			throw new SFSException("The Lobby Room was not found! Make sure a Room called 'The Lobby' exists in the Zone to make this example work correctly.");
