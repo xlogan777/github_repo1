@@ -265,7 +265,8 @@ public class JavaSimpleConnector implements IEventListener
     	try
     	{
     		//driver class = com.mysql.jdbc.Driver
-	    	Class.forName("com.mysql.cj.jdbc.Driver");
+    		Class.forName("com.mysql.jdbc.Driver");
+	    	//Class.forName("com.mysql.cj.jdbc.Driver");
 	    	con=DriverManager.getConnection(  
 	    	"jdbc:mysql://localhost:3306/jimbo_db1?useSSL=false","jimmy","jimmy123");  
 	    	//here sonoo is database name, root is username and password  

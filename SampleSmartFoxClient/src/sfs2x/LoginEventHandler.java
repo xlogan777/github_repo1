@@ -27,8 +27,7 @@ public class LoginEventHandler extends BaseServerEventHandler
 
       // Get password from DB
       // TODO
-      // IDBManager dbManager =
-      // getParentExtension().getParentZone().getDBManager();
+      IDBManager dbManager = getParentExtension().getParentZone().getDBManager();
       Connection connection = null;
       PreparedStatement stmt = null;
       ResultSet rs = null;
@@ -37,11 +36,11 @@ public class LoginEventHandler extends BaseServerEventHandler
       {
          // Grab a connection from the DBManager connection pool
          // TODO
-         // connection = dbManager.getConnection();
-
+          connection = dbManager.getConnection();
+/*
          Class.forName("com.mysql.cj.jdbc.Driver");
          connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/jimbo_db1?useSSL=false", "jimmy", "jimmy123");
-
+*/
          // Build a prepared statement
          stmt = connection.prepareStatement("SELECT pword,id FROM muppets WHERE name=?");
          stmt.setString(1, userName);
@@ -77,7 +76,7 @@ public class LoginEventHandler extends BaseServerEventHandler
       }
 
       // User name was not found
-      catch (SQLException | ClassNotFoundException e)
+      catch (SQLException /*| ClassNotFoundException*/ e)
       {
          SFSErrorData errData = new SFSErrorData(SFSErrorCode.GENERIC_ERROR);
          errData.addParameter("SQL Error: " + e.getMessage());
