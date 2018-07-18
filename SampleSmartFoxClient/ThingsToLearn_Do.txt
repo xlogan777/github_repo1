@@ -87,3 +87,6 @@ ALTER USER 'jimmy'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
 
 //after you changed root password, you start mysql on windows like this
 mysqld.exe --console
+
+//link to show diff test sql to be used by diff DB
+https://stackoverflow.com/questions/3668506/efficient-sql-test-query-or-validation-query-that-will-work-across-all-or-most
