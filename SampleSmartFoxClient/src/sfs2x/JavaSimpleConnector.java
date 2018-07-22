@@ -259,33 +259,33 @@ public class JavaSimpleConnector implements IEventListener
      */
     public static void main(String[] args) throws InterruptedException, ClassNotFoundException, SQLException 
     {
-    	Connection con = null;
-    	Statement stmt = null;
-    	ResultSet rs = null;
-    	try
-    	{
-    		//driver class = com.mysql.jdbc.Driver
-    		Class.forName("com.mysql.jdbc.Driver");
-	    	//Class.forName("com.mysql.cj.jdbc.Driver");
-	    	con=DriverManager.getConnection(  
-	    	"jdbc:mysql://localhost:3306/jimbo_db1?useSSL=false","jimmy","jimmy123");  
-	    	//here sonoo is database name, root is username and password  
-	    	stmt=con.createStatement();  
-	    	rs=stmt.executeQuery("select * from muppets");  
-	    	while(rs.next())  
-	    		log.info(rs.getString(2)+"  "+rs.getString(3));
-	    	
-    	}
-    	catch(Exception e)
-    	{
-    		log.error(e,e);
-    		if(rs !=null)
-    			rs.close();
-    		if(stmt !=null)
-    			stmt.close();
-    		if(con !=null)
-    			con.close();
-    	}
+//    	Connection con = null;
+//    	Statement stmt = null;
+//    	ResultSet rs = null;
+//    	try
+//    	{
+//    		//driver class = com.mysql.jdbc.Driver
+//    		Class.forName("com.mysql.jdbc.Driver");
+//	    	//Class.forName("com.mysql.cj.jdbc.Driver");
+//	    	con=DriverManager.getConnection(  
+//	    	"jdbc:mysql://localhost:3306/jimbo_db1?useSSL=false","jimmy","jimmy123");  
+//	    	//here sonoo is database name, root is username and password  
+//	    	stmt=con.createStatement();  
+//	    	rs=stmt.executeQuery("select * from muppets");  
+//	    	while(rs.next())  
+//	    		log.info(rs.getString(2)+"  "+rs.getString(3));
+//	    	
+//    	}
+//    	catch(Exception e)
+//    	{
+//    		log.error(e,e);
+//    		if(rs !=null)
+//    			rs.close();
+//    		if(stmt !=null)
+//    			stmt.close();
+//    		if(con !=null)
+//    			con.close();
+//    	}
     	
        log.info("hello");
        JavaSimpleConnector jsc = new JavaSimpleConnector();
