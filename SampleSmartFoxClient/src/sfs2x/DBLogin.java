@@ -21,5 +21,4 @@ public class DBLogin extends SFSExtension
 	    super.destroy();
 	    trace("Database Login Extension -- stopped");
 	}
-	
 }

@@ -30,12 +30,12 @@ public class ZoneJoinEventHandler extends BaseServerEventHandler
 		List<UserVariable> vars = Arrays.asList(uv_dbId, uv_avatar);
 		getApi().setUserVariables(theUser, vars);
 		
-		// Join the user
-		Room lobby = getParentExtension().getParentZone().getRoomByName("MyRoom1");
+		// Join the room
+		Room my_room_1 = getParentExtension().getParentZone().getRoomByName("MyRoom1");
 		
-		if (lobby == null)
-			throw new SFSException("The Lobby Room was not found! Make sure a Room called 'The Lobby' exists in the Zone to make this example work correctly.");
+		if (my_room_1 == null)
+			throw new SFSException("The MyRoom1 was not found! Make sure a Room called 'MyRoom1' exists in the Zone to make this example work correctly.");
 		
-		getApi().joinRoom(theUser, lobby);
+		getApi().joinRoom(theUser, my_room_1);
 	}
 }

@@ -1,7 +1,6 @@
 package sfs2x;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,7 +25,6 @@ public class LoginEventHandler extends BaseServerEventHandler
       ISession session = (ISession) event.getParameter(SFSEventParam.SESSION);
 
       // Get password from DB
-      // TODO
       IDBManager dbManager = getParentExtension().getParentZone().getDBManager();
       Connection connection = null;
       PreparedStatement stmt = null;
@@ -35,12 +33,8 @@ public class LoginEventHandler extends BaseServerEventHandler
       try
       {
          // Grab a connection from the DBManager connection pool
-         // TODO
           connection = dbManager.getConnection();
-/*
-         Class.forName("com.mysql.cj.jdbc.Driver");
-         connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/jimbo_db1?useSSL=false", "jimmy", "jimmy123");
-*/
+
          // Build a prepared statement
          stmt = connection.prepareStatement("SELECT pword,id FROM muppets WHERE name=?");
          stmt.setString(1, userName);
@@ -76,7 +70,7 @@ public class LoginEventHandler extends BaseServerEventHandler
       }
 
       // User name was not found
-      catch (SQLException /*| ClassNotFoundException*/ e)
+      catch (SQLException  e)
       {
          SFSErrorData errData = new SFSErrorData(SFSErrorCode.GENERIC_ERROR);
          errData.addParameter("SQL Error: " + e.getMessage());
