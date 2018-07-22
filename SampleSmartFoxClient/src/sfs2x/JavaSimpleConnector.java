@@ -5,34 +5,16 @@
  */
 package sfs2x;
 
-import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.exceptions.SFSException;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import org.apache.log4j.Logger;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
 import sfs2x.client.SmartFox;
 import sfs2x.client.core.BaseEvent;
 import sfs2x.client.core.IEventListener;
 import sfs2x.client.core.SFSEvent;
 import sfs2x.client.entities.SFSRoom;
-import sfs2x.client.entities.variables.SFSRoomVariable;
-import sfs2x.client.requests.CreateRoomRequest;
-import sfs2x.client.requests.ExtensionRequest;
-import sfs2x.client.requests.JoinRoomRequest;
 import sfs2x.client.requests.LoginRequest;
-import sfs2x.client.requests.RoomSettings;
-//import sfs2x.client.util.ConfigData;
-import sfs2x.client.requests.SetRoomVariablesRequest;
 
 /**
  * Basic SFS2X client, performing connection and login to a 'localhost' server
@@ -129,7 +111,7 @@ public class JavaSimpleConnector implements IEventListener
             //no username/passwd is needed.
             //but i provided a username for now.
             //sfs.send(new LoginRequest("Administrator"));
-            sfs.send(new LoginRequest("Kermit", "thefrog"));
+            sfs.send(new LoginRequest("kermit@muppets.net", "thefrog"));
             
             //sfs.send(new LoginRequest("JimboUser"));
             //sfs.send(new LoginRequest("", ""));
