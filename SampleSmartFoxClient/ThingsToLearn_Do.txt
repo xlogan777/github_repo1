@@ -3,7 +3,8 @@ Game Development learning
 2. try sample smartfox server setup. => DONE
 3. setup google cloud free acc to use and setup with ubuntu 16.04 LTS. => DONE
 4. connect to ubuntu remotely and allow for db access to it for google cloud. => DONE
-5. setup cassandra and follow tutorialspoint for it.
+5. setup cassandra and follow tutorialspoint for it. => DONE
+6. setup node.js latest 8.11.3, setup npm. => DONE
 
 	edit cassandra.yaml file to be the following cassandra_home/conf
 	//follows these steps below for cassandra 3.11.
@@ -23,6 +24,17 @@ Game Development learning
 				  - class_name: ...
 					- seeds: "[node-ip]"	
 
+node.js install and npm
+1. download node.js from here for ubuntu 16lts
+https://nodejs.org/en/download/
+2. untar node.js
+tar -xvJf node.tar.xz file.
+3. setup .profile NODE_HOME and path vars for user to be run on command line.
+4. re-enter shell to pick up .profile changes.
+5. to install npm => "sudo apt-get install npm", and say yes to install.
+6. type for version test 
+	node -v => v8.11.3
+	npm -v => 3.5.2
 
 machine learning
 1. finish the python tutorialspoint for the sample code.
