@@ -10,7 +10,7 @@ public class DBLogin extends SFSExtension
 	@Override
 	public void init()
 	{
-		trace("Database Login Extension -- started");
+		trace("Database Login Extension -- started, LATEST");
 		addEventHandler(SFSEventType.USER_LOGIN, LoginEventHandler.class);
 		addEventHandler(SFSEventType.USER_JOIN_ZONE, ZoneJoinEventHandler.class);
 	}

@@ -111,7 +111,7 @@ public class JavaSimpleConnector implements IEventListener
             //no username/passwd is needed.
             //but i provided a username for now.
             //sfs.send(new LoginRequest("Administrator"));
-            sfs.send(new LoginRequest("kermit@muppets.net", "thefrog"));
+            sfs.send(new LoginRequest("kermit", "thefrog"));
             
             //sfs.send(new LoginRequest("JimboUser"));
             //sfs.send(new LoginRequest("", ""));
