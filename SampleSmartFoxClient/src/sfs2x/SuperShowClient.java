@@ -5,7 +5,13 @@
  */
 package sfs2x;
 
+import com.smartfoxserver.v2.entities.data.ISFSObject;
+import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.exceptions.SFSException;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.SQLException;
 import org.apache.log4j.Logger;
 import sfs2x.client.SmartFox;
@@ -13,6 +19,7 @@ import sfs2x.client.core.BaseEvent;
 import sfs2x.client.core.IEventListener;
 import sfs2x.client.core.SFSEvent;
 import sfs2x.client.entities.SFSRoom;
+import sfs2x.client.requests.ExtensionRequest;
 import sfs2x.client.requests.LoginRequest;
 
 /**
@@ -122,13 +129,6 @@ public class SuperShowClient implements IEventListener
             
             //print the number of rooms i get after successful login.
             log.info(""+sfs.getRoomList());
-            
-//            //code for extension request
-//            ISFSObject sfso = new SFSObject();
-//            sfso.putInt("n1", 25);
-//            sfso.putInt("n2", 17);
-//         
-//            sfs.send( new ExtensionRequest("sum", sfso) );            
         }
         
         /**
@@ -145,8 +145,6 @@ public class SuperShowClient implements IEventListener
         {
         	   SFSRoom tmp = (SFSRoom)evt.getArguments().get("room");
             log.info("Joined Room: " + tmp.getName());
-            log.info("Last Joined Room : "+sfs.getLastJoinedRoom().getName());
-            log.info("List of currently Joined Rooms : "+sfs.getJoinedRooms());
         }
         
         else if (evt.getType().equals(SFSEvent.ROOM_JOIN_ERROR))
@@ -166,15 +164,50 @@ public class SuperShowClient implements IEventListener
         
         else if (evt.getType().equals(SFSEvent.EXTENSION_RESPONSE))
         {
-//           String val = (String)evt.getArguments().get("cmd");
-//           if("sum".equalsIgnoreCase(val))
-//           {              
-//              SFSObject res = (SFSObject)evt.getArguments().get("params");
-//              log.info("Result: "+res.getInt("res"));   
-//           }
+           //get the command from the response.
+           String val = (String)evt.getArguments().get("cmd");
            
+           if("game.practice.lobby.success".equalsIgnoreCase(val))
+           {              
+              log.info("processing the [game.practice.lobby.success]");
+              log.info(""+sfs.getRoomList());//print rooms i have joined.
+           }
+           else if("game.practice.competitorlist".equalsIgnoreCase(val))
+           {
+              SFSObject res = (SFSObject)evt.getArguments().get("params");
+              log.info("Result competitor int array: "+res.getIntArray("competitor_id_array"));
+           }
+           else if("game.practice.ready".equalsIgnoreCase(val))
+           {
+              SFSObject res = (SFSObject)evt.getArguments().get("params");
+              log.info("Result room id: "+res.getInt("room_id"));
+           }
         }
-        
+    }
+    
+    public void sendGamePracticeStartCmd()
+    {
+       //code for extension request
+       ISFSObject sfso = new SFSObject();
+       sfs.send( new ExtensionRequest("game.practice.start", sfso));
+    }
+    
+    public void sendGamePracticeCompetitorListCmd()
+    {
+       //code for extension request
+       ISFSObject sfso = new SFSObject();
+       sfs.send( new ExtensionRequest("game.practice.competitorlist", sfso));
+    }
+    
+    public void sendGamePracticeCompetitorCmd()
+    {
+       //code for extension request
+       ISFSObject sfso = new SFSObject();
+       
+       sfso.putInt("player_id", 1);
+       sfso.putInt("competitor_id", 2);
+       
+       sfs.send( new ExtensionRequest("game.practice.competitor", sfso));
     }
 
     /**
@@ -182,10 +215,51 @@ public class SuperShowClient implements IEventListener
     * @throws InterruptedException 
      * @throws ClassNotFoundException 
      * @throws SQLException 
+    * @throws IOException 
      */
-    public static void main(String[] args) throws InterruptedException, ClassNotFoundException, SQLException 
-    {    	
+    public static void main(String[] args) throws InterruptedException, ClassNotFoundException, SQLException, IOException 
+    {    
+       BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
        SuperShowClient jsc = new SuperShowClient();
+       
+       //this will connect to smartfox and login as a guest to a zone 
+       //specific by the sfs-config.xml file. 
        jsc.connect();
+       Thread.sleep(3000);
+       
+       String cmd = "";
+       while(true)
+       {
+          System.out.println("0 = end this client");
+          System.out.println("1 = game.practice");
+          System.out.println("2 = game.competitorlist");
+          System.out.println("3 = game.competitor");
+          System.out.println("enter command");
+          cmd = br.readLine();
+          
+          if(cmd.equals("1"))
+          {
+             //sends the game practice cmd to sfs dev zone1 extension.
+             jsc.sendGamePracticeStartCmd();             
+          }
+          else if(cmd.equals("2"))
+          {
+             //send the game practice competitor list cmd.
+             jsc.sendGamePracticeCompetitorListCmd();             
+          }
+          else if(cmd.equals("3"))
+          {
+             //send the game practice competitor cmd.
+             jsc.sendGamePracticeCompetitorCmd();             
+          }
+          else
+          {
+             log.info("end client");
+             jsc.close();
+             break;
+          }
+          
+          cmd = "";
+       }
     }
 }
