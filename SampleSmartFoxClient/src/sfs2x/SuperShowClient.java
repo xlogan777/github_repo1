@@ -181,6 +181,10 @@ public class SuperShowClient implements IEventListener
            {
               SFSObject res = (SFSObject)evt.getArguments().get("params");
               log.info("Result room id: "+res.getInt("room_id"));
+              log.info("Result room name: "+res.getUtfString("room_name"));
+              
+              //print current room list.
+              log.info(""+sfs.getRoomList());//print rooms i have joined.
            }
         }
     }
@@ -230,6 +234,7 @@ public class SuperShowClient implements IEventListener
        String cmd = "";
        while(true)
        {
+          Thread.sleep(3000);
           System.out.println("0 = end this client");
           System.out.println("1 = game.practice");
           System.out.println("2 = game.competitorlist");

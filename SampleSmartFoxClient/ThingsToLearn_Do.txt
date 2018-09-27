@@ -102,3 +102,16 @@ mysqld.exe --console
 
 //link to show diff test sql to be used by diff DB
 https://stackoverflow.com/questions/3668506/efficient-sql-test-query-or-validation-query-that-will-work-across-all-or-most
+
+//"sampletest1" is the sample database used for testing now.
+//https://www.tutorialspoint.com/mysql/mysql-database-export.htm
+
+//command to export mysql database with tables and data.
+mysqldump -u root -p sampletest1 > database_dump.txt
+
+//command to import the database_dump.txt file to another DB
+//before running this command make sure of a few things
+1. create the database as root db user "create database sampletest1"
+2. assign all privileges for user to make changes, see line 90-93 from above.
+3. copy database_dump.txt file to location of other database for import.
+mysql -u root -p sampletest1 < database_dump.txt
