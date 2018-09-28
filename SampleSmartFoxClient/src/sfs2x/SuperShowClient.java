@@ -18,6 +18,7 @@ import sfs2x.client.SmartFox;
 import sfs2x.client.core.BaseEvent;
 import sfs2x.client.core.IEventListener;
 import sfs2x.client.core.SFSEvent;
+import sfs2x.client.entities.Room;
 import sfs2x.client.entities.SFSRoom;
 import sfs2x.client.requests.ExtensionRequest;
 import sfs2x.client.requests.LoginRequest;
@@ -29,6 +30,8 @@ public class SuperShowClient implements IEventListener
 {
     private SmartFox sfs;
     private final static Logger log = Logger.getLogger(SuperShowClient.class.getSimpleName());
+    
+    private String practiceRoomName = "";
 
     public SuperShowClient() 
     {
@@ -182,6 +185,7 @@ public class SuperShowClient implements IEventListener
               SFSObject res = (SFSObject)evt.getArguments().get("params");
               log.info("Result room id: "+res.getInt("room_id"));
               log.info("Result room name: "+res.getUtfString("room_name"));
+              this.practiceRoomName = res.getUtfString("room_name");
               
               //print current room list.
               log.info(""+sfs.getRoomList());//print rooms i have joined.
@@ -213,6 +217,21 @@ public class SuperShowClient implements IEventListener
        
        sfs.send( new ExtensionRequest("game.practice.competitor", sfso));
     }
+    
+    public void sendAiCmd()
+    {
+       log.info(""+sfs.getRoomList());
+       
+       //get the room with the name needed for the extension call.
+       Room room = sfs.getRoomByName(practiceRoomName);
+       
+       //code for extension request
+       ISFSObject sfso = new SFSObject();
+       
+       sfso.putUtfString("ai", "ai");
+       
+       sfs.send( new ExtensionRequest("ai.cmds", sfso, room));
+    }
 
     /**
      * @param args the command line arguments
@@ -239,6 +258,8 @@ public class SuperShowClient implements IEventListener
           System.out.println("1 = game.practice");
           System.out.println("2 = game.competitorlist");
           System.out.println("3 = game.competitor");
+          System.out.println("4 = ai.cmd");
+          
           System.out.println("enter command");
           cmd = br.readLine();
           
@@ -256,6 +277,11 @@ public class SuperShowClient implements IEventListener
           {
              //send the game practice competitor cmd.
              jsc.sendGamePracticeCompetitorCmd();             
+          }
+          else if(cmd.equals("4"))
+          {
+             //send the game practice competitor cmd.
+             jsc.sendAiCmd();
           }
           else
           {
