@@ -230,7 +230,7 @@ public class SuperShowClient implements IEventListener
        
        sfso.putUtfString("ai", "ai");
        
-       sfs.send( new ExtensionRequest("ai.cmds", sfso, room));
+       sfs.send( new ExtensionRequest("ai.cmds.start", sfso, room));
     }
 
     /**

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <SmartFoxConfig>
-    <ip>127.0.0.1</ip>
+    <!-- <ip>127.0.0.1</ip>-->
+    <ip>35.236.207.41</ip>
     <port>9933</port>
     <zone>DevZone1</zone>
-    <udpIp>127.0.0.1</udpIp>
+    <!-- <udpIp>127.0.0.1</udpIp> -->
+    <udpIp>35.236.207.41</udpIp>
     <udpPort>9934</udpPort>
     
 <!--     <debug>true</debug>
