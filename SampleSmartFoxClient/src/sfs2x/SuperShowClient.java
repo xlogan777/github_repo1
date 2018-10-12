@@ -13,6 +13,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import sfs2x.client.SmartFox;
 import sfs2x.client.core.BaseEvent;
@@ -20,6 +22,7 @@ import sfs2x.client.core.IEventListener;
 import sfs2x.client.core.SFSEvent;
 import sfs2x.client.entities.Room;
 import sfs2x.client.entities.SFSRoom;
+import sfs2x.client.entities.variables.RoomVariable;
 import sfs2x.client.requests.ExtensionRequest;
 import sfs2x.client.requests.LoginRequest;
 
@@ -187,6 +190,15 @@ public class SuperShowClient implements IEventListener
               log.info("Result room name: "+res.getUtfString("room_name"));
               this.practiceRoomName = res.getUtfString("room_name");
               
+              //get the room via the id
+              Room room = sfs.getRoomById(res.getInt("room_id"));
+              
+              //get the room vars for this room
+              List<RoomVariable> room_vars = room.getVariables();
+              
+              //print the room vars.
+              log.info(room_vars);
+              
               //print current room list.
               log.info(""+sfs.getRoomList());//print rooms i have joined.
            }
@@ -212,7 +224,6 @@ public class SuperShowClient implements IEventListener
        //code for extension request
        ISFSObject sfso = new SFSObject();
        
-       sfso.putInt("player_id", 1);
        sfso.putInt("competitor_id", 2);
        
        sfs.send( new ExtensionRequest("game.practice.competitor", sfso));
