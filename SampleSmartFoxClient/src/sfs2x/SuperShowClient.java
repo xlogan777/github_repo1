@@ -8,13 +8,11 @@ package sfs2x;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
 import com.smartfoxserver.v2.entities.data.SFSObject;
 import com.smartfoxserver.v2.exceptions.SFSException;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.List;
-
 import org.apache.log4j.Logger;
 import sfs2x.client.SmartFox;
 import sfs2x.client.core.BaseEvent;
@@ -209,6 +207,7 @@ public class SuperShowClient implements IEventListener
     {
        //code for extension request
        ISFSObject sfso = new SFSObject();
+       sfso.putInt("competitor_id", 0);
        sfs.send( new ExtensionRequest("game.practice.start", sfso));
     }
     
@@ -252,7 +251,7 @@ public class SuperShowClient implements IEventListener
     * @throws IOException 
      */
     public static void main(String[] args) throws InterruptedException, ClassNotFoundException, SQLException, IOException 
-    {    
+    {
        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
        SuperShowClient jsc = new SuperShowClient();
        
