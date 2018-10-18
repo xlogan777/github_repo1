@@ -179,17 +179,17 @@ public class SuperShowClient implements IEventListener
            else if("game.practice.competitorlist".equalsIgnoreCase(val))
            {
               SFSObject res = (SFSObject)evt.getArguments().get("params");
-              log.info("Result competitor int array: "+res.getIntArray("competitor_id_array"));
+              log.info("Result competitor int array: "+res.getIntArray("competitor_list_id"));
            }
            else if("game.practice.ready".equalsIgnoreCase(val))
            {
               SFSObject res = (SFSObject)evt.getArguments().get("params");
-              log.info("Result room id: "+res.getInt("room_id"));
-              log.info("Result room name: "+res.getUtfString("room_name"));
-              this.practiceRoomName = res.getUtfString("room_name");
+              log.info("Result room id: "+res.getUtfString("roomid"));
               
               //get the room via the id
-              Room room = sfs.getRoomById(res.getInt("room_id"));
+              Room room = sfs.getRoomById(Integer.parseInt(res.getUtfString("roomid")));
+              
+              log.info("user_vars = "+sfs.getMySelf().getVariables());
               
               //get the room vars for this room
               List<RoomVariable> room_vars = room.getVariables();
