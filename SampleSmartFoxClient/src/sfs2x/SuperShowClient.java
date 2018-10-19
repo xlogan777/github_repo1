@@ -51,14 +51,6 @@ public class SuperShowClient implements IEventListener
        sfs.addEventListener(SFSEvent.LOGIN, this);
        sfs.addEventListener(SFSEvent.LOGIN_ERROR, this);
        
-       //code in events for joining rooms.
-       sfs.addEventListener(SFSEvent.ROOM_JOIN, this);
-       sfs.addEventListener(SFSEvent.ROOM_JOIN_ERROR, this);
-       
-       //create a room dynamically
-       sfs.addEventListener(SFSEvent.ROOM_ADD, this);
-       sfs.addEventListener(SFSEvent.ROOM_CREATION_ERROR, this);
-       
        //extension response.
        sfs.addEventListener(SFSEvent.EXTENSION_RESPONSE, this);
        
@@ -142,30 +134,6 @@ public class SuperShowClient implements IEventListener
         {
             log.warn("Login error:  " + evt.getArguments().get("errorMessage"));
         }
-        /**
-         * handle ROOM_JOIN
-         */
-        else if (evt.getType().equals(SFSEvent.ROOM_JOIN))
-        {
-        	   SFSRoom tmp = (SFSRoom)evt.getArguments().get("room");
-            log.info("Joined Room: " + tmp.getName());
-        }
-        
-        else if (evt.getType().equals(SFSEvent.ROOM_JOIN_ERROR))
-        {
-            log.warn("Join failed: " + evt.getArguments().get("errorMessage"));
-        }
-        
-        else if (evt.getType().equals(SFSEvent.ROOM_ADD))
-        {
-           log.info("A new Room was added: " + evt.getArguments().get("room"));
-        }
-        
-        else if (evt.getType().equals(SFSEvent.ROOM_CREATION_ERROR))
-        {
-        	  log.warn("An error occurred while attempting to create the Room: " + evt.getArguments().get("errorMessage"));
-        }
-        
         else if (evt.getType().equals(SFSEvent.EXTENSION_RESPONSE))
         {
            //get the command from the response.
