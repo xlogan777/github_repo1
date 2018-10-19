@@ -191,7 +191,7 @@ public class SuperShowClient implements IEventListener
        //code for extension request
        ISFSObject sfso = new SFSObject();
        
-       sfso.putInt("competitor_id", 2);
+       sfso.putInt("competitor_id", 1);
        
        sfs.send( new ExtensionRequest("game.practice.competitor", sfso));
     }
