@@ -152,10 +152,10 @@ public class SuperShowClient implements IEventListener
            else if("game.practice.ready".equalsIgnoreCase(val))
            {
               SFSObject res = (SFSObject)evt.getArguments().get("params");
-              log.info("Result room id: "+res.getUtfString("roomid"));
+              log.info("Result room id: "+res.getUtfString("room_id"));
               
               //get the room via the id
-              Room room = sfs.getRoomById(Integer.parseInt(res.getUtfString("roomid")));
+              Room room = sfs.getRoomById(Integer.parseInt(res.getUtfString("room_id")));
               
               log.info("user_vars = "+sfs.getMySelf().getVariables());
               
@@ -191,7 +191,7 @@ public class SuperShowClient implements IEventListener
        //code for extension request
        ISFSObject sfso = new SFSObject();
        
-       sfso.putInt("competitor_id", 1);
+       sfso.putInt("opponent_competitor_id", 1);
        
        sfs.send( new ExtensionRequest("game.practice.competitor", sfso));
     }
@@ -220,6 +220,9 @@ public class SuperShowClient implements IEventListener
      */
     public static void main(String[] args) throws InterruptedException, ClassNotFoundException, SQLException, IOException 
     {
+//       String tmp = "1|2|3";
+//       String [] tt = tmp.split("\\|");
+       
        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
        SuperShowClient jsc = new SuperShowClient();
        
