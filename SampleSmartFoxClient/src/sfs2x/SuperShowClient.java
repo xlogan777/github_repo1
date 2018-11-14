@@ -168,6 +168,25 @@ public class SuperShowClient implements IEventListener
               //print current room list.
               log.info(""+sfs.getRoomList());//print rooms i have joined.
            }
+           else if("match.game.setactive".equalsIgnoreCase(val))
+           {
+              SFSObject res = (SFSObject)evt.getArguments().get("params");
+              log.info("active player: "+res.getInt("player_id"));
+              
+              //get the room via the id
+              Room room = sfs.getLastJoinedRoom();
+              
+              log.info("user_vars = "+sfs.getMySelf().getVariables());
+              
+              //get the room vars for this room
+              List<RoomVariable> room_vars = room.getVariables();
+              
+              //print the room vars.
+              log.info(room_vars);
+              
+              //print current room list.
+              log.info(""+sfs.getRoomList());//print rooms i have joined.
+           }
         }
     }
     
@@ -201,7 +220,7 @@ public class SuperShowClient implements IEventListener
        log.info(""+sfs.getRoomList());
        
        //get the room with the name needed for the extension call.
-       Room room = sfs.getRoomByName(practiceRoomName);
+       Room room = sfs.getLastJoinedRoom();
        
        //code for extension request
        ISFSObject sfso = new SFSObject();
@@ -209,6 +228,14 @@ public class SuperShowClient implements IEventListener
        sfso.putUtfString("ai", "ai");
        
        sfs.send( new ExtensionRequest("ai.cmds.start", sfso, room));
+    }
+    
+    public void sendMatchPracticeReady()
+    {
+       //code for extension request
+       ISFSObject sfso = new SFSObject();
+       
+       sfs.send( new ExtensionRequest("match.practice.ready", sfso));
     }
 
     /**
@@ -240,6 +267,7 @@ public class SuperShowClient implements IEventListener
           System.out.println("2 = game.competitorlist");
           System.out.println("3 = game.competitor");
           System.out.println("4 = ai.cmd");
+          System.out.println("5 = match.practice.ready");
           
           System.out.println("enter command");
           cmd = br.readLine();
@@ -263,6 +291,10 @@ public class SuperShowClient implements IEventListener
           {
              //send the game practice competitor cmd.
              jsc.sendAiCmd();
+          }
+          else if(cmd.equals("5"))
+          {
+             jsc.sendMatchPracticeReady();
           }
           else
           {
