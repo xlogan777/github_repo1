@@ -12,6 +12,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.apache.log4j.Logger;
 import sfs2x.client.SmartFox;
@@ -187,6 +189,12 @@ public class SuperShowClient implements IEventListener
               //print current room list.
               log.info(""+sfs.getRoomList());//print rooms i have joined.
            }
+           else if("match.deck.shuffle".equalsIgnoreCase(val))
+           {
+              SFSObject res = (SFSObject)evt.getArguments().get("params");
+              log.info("player_id: "+res.getInt("player_id"));
+              log.info("player_deck_array: "+res.getUtfStringArray("player_deck_array"));
+           }
         }
     }
     
@@ -247,9 +255,6 @@ public class SuperShowClient implements IEventListener
      */
     public static void main(String[] args) throws InterruptedException, ClassNotFoundException, SQLException, IOException 
     {
-//       String tmp = "1|2|3";
-//       String [] tt = tmp.split("\\|");
-       
        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
        SuperShowClient jsc = new SuperShowClient();
        
