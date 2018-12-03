@@ -195,6 +195,11 @@ public class SuperShowClient implements IEventListener
               log.info("player_id: "+res.getInt("player_id"));
               log.info("player_deck_array: "+res.getUtfStringArray("player_deck_array"));
            }
+           else if("match.draw.deck".equalsIgnoreCase(val))
+           {
+              SFSObject res = (SFSObject)evt.getArguments().get("params");
+              log.info("player_id: "+res.getInt("player_id"));
+           }
         }
     }
     
@@ -245,6 +250,19 @@ public class SuperShowClient implements IEventListener
        
        sfs.send( new ExtensionRequest("match.practice.ready", sfso));
     }
+    
+    public void printLastJoinedRoomVariables()
+    {
+       Room room = sfs.getLastJoinedRoom();
+       
+       //get the room vars for this room
+       List<RoomVariable> room_vars = room.getVariables();
+       
+       //print the room vars.
+       log.info("Rooms vars = \n"+room_vars);
+       
+       log.info("user_vars = "+sfs.getMySelf().getVariables());
+    }
 
     /**
      * @param args the command line arguments
@@ -273,6 +291,7 @@ public class SuperShowClient implements IEventListener
           System.out.println("3 = game.competitor");
           System.out.println("4 = ai.cmd");
           System.out.println("5 = match.practice.ready");
+          System.out.println("6 = print last joined RV");
           
           System.out.println("enter command");
           cmd = br.readLine();
@@ -300,6 +319,10 @@ public class SuperShowClient implements IEventListener
           else if(cmd.equals("5"))
           {
              jsc.sendMatchPracticeReady();
+          }
+          else if(cmd.equals("6"))
+          {
+             jsc.printLastJoinedRoomVariables();
           }
           else
           {
