@@ -12,8 +12,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import org.apache.log4j.Logger;
 import sfs2x.client.SmartFox;
@@ -21,7 +19,6 @@ import sfs2x.client.core.BaseEvent;
 import sfs2x.client.core.IEventListener;
 import sfs2x.client.core.SFSEvent;
 import sfs2x.client.entities.Room;
-import sfs2x.client.entities.SFSRoom;
 import sfs2x.client.entities.variables.RoomVariable;
 import sfs2x.client.requests.ExtensionRequest;
 import sfs2x.client.requests.LoginRequest;
@@ -33,8 +30,6 @@ public class SuperShowClient implements IEventListener
 {
     private SmartFox sfs;
     private final static Logger log = Logger.getLogger(SuperShowClient.class.getSimpleName());
-    
-    private String practiceRoomName = "";
 
     public SuperShowClient() 
     {
@@ -148,11 +143,13 @@ public class SuperShowClient implements IEventListener
            }
            else if("game.practice.competitorlist".equalsIgnoreCase(val))
            {
+              log.info("processing the [game.practice.competitorlist]");
               SFSObject res = (SFSObject)evt.getArguments().get("params");
               log.info("Result competitor int array: "+res.getIntArray("competitor_list_id"));
            }
            else if("game.practice.ready".equalsIgnoreCase(val))
            {
+              log.info("processing the [game.practice.ready]");
               SFSObject res = (SFSObject)evt.getArguments().get("params");
               log.info("Result room id: "+res.getUtfString("room_id"));
               
@@ -172,6 +169,7 @@ public class SuperShowClient implements IEventListener
            }
            else if("match.game.setactive".equalsIgnoreCase(val))
            {
+              log.info("processing the [match.game.setactive]");
               SFSObject res = (SFSObject)evt.getArguments().get("params");
               log.info("active player: "+res.getInt("player_id"));
               
@@ -191,14 +189,29 @@ public class SuperShowClient implements IEventListener
            }
            else if("match.deck.shuffle".equalsIgnoreCase(val))
            {
+              log.info("processing the [match.deck.shuffle]");
               SFSObject res = (SFSObject)evt.getArguments().get("params");
               log.info("player_id: "+res.getInt("player_id"));
               log.info("player_deck_array: "+res.getUtfStringArray("player_deck_array"));
            }
            else if("match.draw.deck".equalsIgnoreCase(val))
            {
+              log.info("processing the [match.draw.deck]");
               SFSObject res = (SFSObject)evt.getArguments().get("params");
               log.info("player_id: "+res.getInt("player_id"));
+           }
+           else if("match.hand.mustdiscard".equalsIgnoreCase(val))
+           {
+              log.info("processing the [match.hand.mustdiscard]");
+              //SFSObject res = (SFSObject)evt.getArguments().get("params");
+              log.info("client got the discard msg from server");
+           }
+           else if("match.hand.discard".equalsIgnoreCase(val))
+           {
+              log.info("processing the [match.hand.discard]");
+              SFSObject res = (SFSObject)evt.getArguments().get("params");
+              log.info("player_id: "+res.getInt("player_id"));
+              log.info("card_id: "+res.getInt("card_id"));
            }
         }
     }
