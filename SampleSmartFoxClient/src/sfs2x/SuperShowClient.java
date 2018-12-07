@@ -203,8 +203,8 @@ public class SuperShowClient implements IEventListener
            else if("match.hand.mustdiscard".equalsIgnoreCase(val))
            {
               log.info("processing the [match.hand.mustdiscard]");
-              //SFSObject res = (SFSObject)evt.getArguments().get("params");
-              log.info("client got the discard msg from server");
+              SFSObject res = (SFSObject)evt.getArguments().get("params");
+              log.info("player_name: "+res.getUtfString("player_name"));
            }
            else if("match.hand.discard".equalsIgnoreCase(val))
            {
@@ -276,6 +276,17 @@ public class SuperShowClient implements IEventListener
        
        log.info("user_vars = "+sfs.getMySelf().getVariables());
     }
+    
+    public void sendMatchHandDiscard(String playerName, int cardId)
+    {
+       //code for extension request
+       ISFSObject sfso = new SFSObject();
+       
+       sfso.putUtfString("player_name", playerName);
+       sfso.putInt("card_id", cardId);
+       
+       sfs.send( new ExtensionRequest("match.hand.discard", sfso));
+    }
 
     /**
      * @param args the command line arguments
@@ -305,6 +316,8 @@ public class SuperShowClient implements IEventListener
           System.out.println("4 = ai.cmd");
           System.out.println("5 = match.practice.ready");
           System.out.println("6 = print last joined RV");
+          System.out.println("7 = match.hand.discard");
+          
           
           System.out.println("enter command");
           cmd = br.readLine();
@@ -336,6 +349,13 @@ public class SuperShowClient implements IEventListener
           else if(cmd.equals("6"))
           {
              jsc.printLastJoinedRoomVariables();
+          }
+          else if(cmd.equals("7"))
+          {
+             System.out.println("enter discard params");
+             cmd = br.readLine();
+             String [] args_discard = cmd.split(",");
+             jsc.sendMatchHandDiscard(args_discard[0], Integer.parseInt(args_discard[1]));
           }
           else
           {
