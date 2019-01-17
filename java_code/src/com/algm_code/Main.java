@@ -298,6 +298,16 @@ public class Main
 	public static void test5()
 	{
 		ArraysAndStrings aaa = new ArraysAndStrings();
+		
+		aaa.test(null);
+		
+		aaa.matchingBrackets("[sadf]sadf[sd]");
+		aaa.matchingBrackets("[asdf]sdf[");
+		aaa.matchingBrackets("sdf]sadf");
+		
+		String input1 = "bbbaacddcjbbaed";
+		aaa.findFirstNoneRepeatedLetter(input1.toCharArray());
+		
 		boolean status = aaa.allUniqueChars2Loops("abc");
 		System.out.println("abc is "+(status ? "unique" : "not unique"));
 		status = aaa.allUniqueChars2Loops("j456j6");
@@ -786,10 +796,10 @@ public class Main
 	{
 	   //test0(); //math algms
 	   //test1(); //basic stack and queue with arrays and LL implementations
-	   test2(); //Sll class with test cases.
+	   //test2(); //Sll class with test cases.
 	   //test3(); //Dll class with test cases
 	   //test4(); //BST class with test cases and algms
-	   //test5(); //arrays and strings algm cases
+	   test5(); //arrays and strings algm cases
 	   //test6(); //linked list algms cases
 	   //test7(); //stack and queue algms cases
 	   //test8(); //trees and graph algms cases

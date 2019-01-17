@@ -1,5 +1,8 @@
 package com.algm_code;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
 
 
 public class ArraysAndStrings 
@@ -681,18 +684,81 @@ public class ArraysAndStrings
 		}
 	}
 	
+	public void findFirstNoneRepeatedLetter(char [] input)
+	{
+	   Map<Character, Integer> letter_cnt = new HashMap<Character, Integer>();
+	   
+	   char first_non_repeat = ' ';
+	   
+	   for(char in : input)
+	   {
+	      if(letter_cnt.get(in) == null)
+	      {
+	         letter_cnt.put(in, 1);
+	      }
+	      else
+	      {
+	         letter_cnt.put(in, letter_cnt.get(in)+1);
+	      }
+	   }
+	   
+	   for(char in : input)
+	   {
+	      if(letter_cnt.get(in) == 1)
+	      {
+	         first_non_repeat = in;
+	         break;
+	      }
+	   }
+	   
+	   System.out.println(input);
+	   System.out.println(first_non_repeat);
+	}
 	
+	public boolean matchingBrackets(String input)
+	{
+	   Stack<Character> stack = new Stack<Character>();
+	   
+	   char [] char_in = input.toCharArray();
+	   
+	   boolean rv = false;
+	   boolean error_raised = false;
+	   
+	   for(char in : char_in)
+	   {
+	      if(in == '[')
+	      {
+	         stack.push(in);
+	      }
+	      else if(in == ']')
+	      {
+	         if(stack.size() == 0)
+	         {
+	            error_raised = true;
+	            break;
+	         }
+	         else
+	         {
+	            stack.pop();   
+	         }
+	      }
+	   }
+	   
+	   if(stack.size() == 0 && error_raised == false)
+	   {
+	      rv = true;
+	   }
+	   
+	   return rv;
+	}
 	
+	public void test(String s)
+	{
+	   System.out.println(s);
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public void test(Object s)
+	{
+	   System.out.println(s);
+	}
 }
