@@ -299,6 +299,10 @@ public class Main
 	{
 		ArraysAndStrings aaa = new ArraysAndStrings();
 		
+		int arr1[] = {1, 3, 4, 5, 7};
+      int arr2[] = {2, 3, 5, 6};
+		aaa.printIntersectionSortedArrays(arr1, arr2);
+		
 		aaa.test(null);
 		
 		aaa.matchingBrackets("[sadf]sadf[sd]");

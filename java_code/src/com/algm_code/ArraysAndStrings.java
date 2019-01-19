@@ -715,6 +715,8 @@ public class ArraysAndStrings
 	   System.out.println(first_non_repeat);
 	}
 	
+	//find matching brackets in the string input.
+	//returns true if matching brackets, false otherwise.
 	public boolean matchingBrackets(String input)
 	{
 	   Stack<Character> stack = new Stack<Character>();
@@ -750,6 +752,37 @@ public class ArraysAndStrings
 	   }
 	   
 	   return rv;
+	}
+	
+	public void printIntersectionSortedArrays(int [] input1, int [] input2)
+	{
+	   int index1 = 0;
+	   int index2 = 0;
+	   
+	   //check for index to not pass length of either array.
+	   //which ever ends first stops the array.
+	   while(index1 < input1.length && index2 < input2.length)
+	   {
+	      //if elem in first array is smaller then
+	      //increase that index by 1
+	      if(input1[index1] < input2[index2])
+	      {
+	         index1++;
+	      }
+	      //if elem in 2nd array is smaller than increase index 2 by 1
+	      else if(input2[index2] < input1[index1])
+	      {
+	         index2++;
+	      }
+	      else
+	      {
+	         //if both elements are equal then pring the intersection/common elem
+	         //and increase both indexes.
+	         System.out.print(input1[index1]+",");
+	         index1++;
+	         index2++;
+	      }
+	   }
 	}
 	
 	public void test(String s)
