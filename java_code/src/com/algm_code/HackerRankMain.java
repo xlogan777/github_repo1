@@ -330,6 +330,28 @@ public class HackerRankMain
       System.out.println(ans);
    }
    
+   public String twoStrings(String s1, String s2) 
+   {
+      String ans = "NO";
+      HashMap<Character,String> s1_map = new HashMap<Character, String>();
+
+      for(int i = 0; i < s1.length(); i++)
+      {
+          s1_map.put(s1.charAt(i), "");
+      }
+
+      for(int i = 0; i < s2.length(); i++)
+      {
+          if(s1_map.containsKey(s2.charAt(i)))
+          {
+              ans = "YES";
+              break;
+          }
+      }
+
+      return ans;
+   }
+   
    public static void main(String [] args)
    {
       HackerRankMain hr = new HackerRankMain();
@@ -377,9 +399,10 @@ public class HackerRankMain
       
       String [] magazine = {"two", "times", "three", "is", "not", "four"};
       String [] note = {"two", "times", "two", "is", "four"};
-//      String [] note = {"give", "give", "give", "give"};
       
       hr.checkMagazine(magazine, note);
+      
+      hr.twoStrings("hello", "world");
 //arrays interview prep kit.
 
    }
