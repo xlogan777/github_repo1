@@ -238,24 +238,50 @@ public class HackerRankMain
    public int minimumSwaps(int[] arr) 
    {
       int min_swaps = 0;
+      int begin_idx = 0;
+      int end_idx = arr.length-1;
       
-      for(int i = 0; i < arr.length-1; i++)
+      while(begin_idx < end_idx)
       {
-         int tmp = -1;
+         while(begin_idx == arr[begin_idx]-1 && begin_idx < end_idx)
+         {
+            begin_idx++;
+         }
          
-         int val = arr[0];
-         int swap_idx = val-1;
+         while(end_idx == arr[end_idx]-1 && begin_idx < end_idx)
+         {
+            end_idx--;
+         }
          
-         tmp = arr[0];
-         arr[0] = arr[swap_idx];
-         arr[swap_idx] = tmp;
-         min_swaps++;
+         //perform swap
+         if(arr[begin_idx]-1 != begin_idx)
+         {
+            int found_idx = 0;
+            //now need to scan from begin to end
+            //where the correct value for the
+            //begin_idx is, once that is found then swap with that one.
+            for(int i = begin_idx; i <= end_idx; i++)
+            {
+               if(begin_idx+1 == arr[i])
+               {
+                  found_idx = i;
+                  break;
+               }
+            }
+            
+            //swap begin idx with found index.
+            int tmp = arr[begin_idx];
+            arr[begin_idx] = arr[found_idx];
+            arr[found_idx] = tmp;
+            
+            //increment swaps.
+            min_swaps++;
+         }
       }
       
       return min_swaps;
    }
 
-   
    public static void main(String [] args)
    {
       HackerRankMain hr = new HackerRankMain();
@@ -296,10 +322,11 @@ public class HackerRankMain
       int [] a = {1,2,3,4,5};
       hr.rotLeft(a, 4);
       
-      int [] arr = {1, 3, 5, 2, 4, 6, 7};
+      int [] arr = {4, 3, 1, 2};
+      int [] arr2 = {1, 3, 5, 2, 4, 6, 7};
       hr.minimumSwaps(arr);
+      hr.minimumSwaps(arr2);
 //arrays interview prep kit.
-
 
    }
 }
