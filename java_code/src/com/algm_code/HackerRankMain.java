@@ -2,6 +2,7 @@ package com.algm_code;
 
 import java.lang.reflect.Array;
 import java.util.HashMap;
+import java.util.Map;
 
 public class HackerRankMain
 {
@@ -282,6 +283,53 @@ public class HackerRankMain
       return min_swaps;
    }
 
+   public void checkMagazine(String[] magazine, String[] note) 
+   {
+      HashMap<String, Integer> magazine_map = new HashMap<String,Integer>();
+
+      //keep track of all words in the magazine in the map with a count.
+      for(String s : magazine)
+      {
+         if(magazine_map.get(s) == null)
+         {
+            magazine_map.put(s, 1);
+         }
+         else
+         {
+            magazine_map.put(s, magazine_map.get(s)+1);
+         }
+      }
+      
+      String ans = "Yes";
+      
+      //go over note and check if note words exists in the magazine map.
+      for(String s : note)
+      {
+         //if word is not there then stop and say no
+         if(magazine_map.get(s) == null)
+         {
+            ans = "No";
+            break;
+         }
+         else
+         {
+            //subtract 1 from magazine map and save it back to map.
+            int val = magazine_map.get(s)-1;
+            magazine_map.put(s, val);
+            
+            //if the word does exists, subtract 1 and check if we went < 0
+            //then stop cause we dont have the words there in the map.
+            if(val < 0)
+            {
+               ans = "No";
+               break;
+            }
+         }
+      }
+      
+      System.out.println(ans);
+   }
+   
    public static void main(String [] args)
    {
       HackerRankMain hr = new HackerRankMain();
@@ -326,6 +374,12 @@ public class HackerRankMain
       int [] arr2 = {1, 3, 5, 2, 4, 6, 7};
       hr.minimumSwaps(arr);
       hr.minimumSwaps(arr2);
+      
+      String [] magazine = {"two", "times", "three", "is", "not", "four"};
+      String [] note = {"two", "times", "two", "is", "four"};
+//      String [] note = {"give", "give", "give", "give"};
+      
+      hr.checkMagazine(magazine, note);
 //arrays interview prep kit.
 
    }
