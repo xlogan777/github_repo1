@@ -1,8 +1,16 @@
 package com.algm_code;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
 import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class HackerRankMain
 {
@@ -352,6 +360,123 @@ public class HackerRankMain
       return ans;
    }
    
+   public int sherlockAndAnagrams(String s) 
+   {
+      int rv = 0;
+      
+      ArrayList<String> tmp_str = new ArrayList<String>();
+      
+      int len = s.length();
+      
+      //get all substrings from the string.
+      for(int i = 0; i < len; i++)
+      {
+         for(int j = i; j < len; j++)
+         {
+            tmp_str.add(s.substring(i, j+1));
+         }
+      }
+      
+      //in list use first one and find a len match.
+      //if found sort both strings and match if they do then increase rv.
+      for(int i = 0; i < tmp_str.size(); i++)
+      {     
+         String input1 = tmp_str.get(i);
+         
+         //test first string with 2nd string
+         for(int j = i+1; j < tmp_str.size(); j++)
+         {
+            String input2 = tmp_str.get(j);
+            
+            //only if we have same size str match for str1 and str2
+            if(input1.length() == input2.length())
+            {
+               //sort 1 string
+               char [] tmp1 = input1.toCharArray();
+               Arrays.sort(tmp1);
+               String sorted_a = new String(tmp1);
+               
+               //sort 2 string
+               char [] tmp2 = input2.toCharArray();
+               Arrays.sort(tmp2);
+               String sorted_b = new String(tmp2);
+               
+               //of they match then increase count.
+               if(sorted_a.equals(sorted_b))
+               {
+                  rv++;
+               }
+            }
+         }
+      }
+      
+      return rv;
+   }
+   
+   public List<Integer> freqQuery(int [][] queries) 
+   {
+      Map<Integer, Integer> valueToFreq = new HashMap<>();
+      Map<Integer, Integer> freqToOccurrence = new HashMap<>();
+      List<Integer> frequencies = new ArrayList<>();
+
+      int key;
+      int value;
+      Integer oldFreq;
+      Integer newFreq;
+      Integer oldOccurrence;
+      Integer newOccurrence;
+      for( int i = 0; i < queries.length; i++) 
+      {
+          key = queries[i][0];
+          value = queries[i][1];
+          
+          if (key == 3) 
+          {
+              frequencies.add(freqToOccurrence.get(value) == null ? 0 : 1);
+          } 
+          else 
+          {
+              oldFreq = valueToFreq.get(value);
+              oldFreq = oldFreq == null ? 0 : oldFreq;
+              oldOccurrence = freqToOccurrence.get(oldFreq);
+              oldOccurrence = oldOccurrence == null ? 0 : oldOccurrence;
+
+              if (key == 1) 
+              {
+                  newFreq = oldFreq + 1;
+              } 
+              else 
+              {
+                  newFreq = oldFreq - 1;
+              }
+              newOccurrence = freqToOccurrence.get(newFreq);
+              newOccurrence = newOccurrence == null ? 0 : newOccurrence;
+
+              if (newFreq < 1) 
+              {
+                  valueToFreq.remove(value);
+              } 
+              else 
+              {
+                  valueToFreq.put(value, newFreq);
+              }
+
+              if ((oldOccurrence - 1) < 1) 
+              {
+                  freqToOccurrence.remove(oldFreq);
+              } 
+              else 
+              {
+                  freqToOccurrence.put(oldFreq, oldOccurrence - 1);
+              }
+              
+              freqToOccurrence.put(newFreq, newOccurrence + 1);
+          }
+      }
+      
+      return frequencies;
+  }   
+   
    public static void main(String [] args)
    {
       HackerRankMain hr = new HackerRankMain();
@@ -403,7 +528,54 @@ public class HackerRankMain
       hr.checkMagazine(magazine, note);
       
       hr.twoStrings("hello", "world");
+      
+      hr.sherlockAndAnagrams("abba");
+      hr.sherlockAndAnagrams("ifailuhkqq");
+      hr.sherlockAndAnagrams("kkkk");
 //arrays interview prep kit.
-
+      
+      int [][] queries1 =
+         {
+               {1, 4},
+               {1, 5},
+               {1, 5},
+               {1, 4},
+               {2, 4},
+               {2, 5},
+               {2, 5},
+               {2, 4}
+         };
+      
+      int [][] queries2 = 
+         {
+               {1, 3},
+               {2, 3},
+               {3, 2},
+               {1, 4},
+               {1, 5},
+               {1, 5},
+               {1, 4},
+               {3, 2},
+               {2, 4},
+               {3, 2}
+         };
+      
+      int [][] queries3 = 
+         {
+               {1, 5},
+               {1, 6},
+               {3, 2},
+               {1, 10},
+               {1, 10},
+               {1, 6},
+               {2, 5},
+               {3, 2}
+         };
+      
+      
+      
+      //hr.freqQuery(queries1);
+      hr.freqQuery(queries2);
+      hr.freqQuery(queries3);
    }
 }
