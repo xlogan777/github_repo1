@@ -202,48 +202,6 @@ public class HackerRankMain
       return a;
    }
    
-   public void minimumBribes(int[] q) 
-   {
-
-   }
-   
-   //sort array in ascending order with min set of swaps
-   //given an unordered array.
-   //my solution is to use selection sort, since it 
-   //always finds the min/max by scanning entire array
-   //and does least amt of swaps always.
-//   public int minimumSwaps(int[] arr) 
-//   {
-//      int min_swaps = 0;
-//      
-//      for(int i = 0; i < arr.length; i++)
-//      {
-//         boolean swap_required = false;
-//         int min_index = 0;
-//         int min_val = arr[i];
-//         
-//         for(int j = i+1; j < arr.length; j++)
-//         {
-//            if(arr[j] < min_val)
-//            {
-//               min_index = j;
-//               min_val = arr[j];
-//               swap_required = true;
-//            }
-//         }
-//         
-//         if(swap_required)
-//         {
-//            int tmp = arr[i];
-//            arr[i] = arr[min_index];
-//            arr[min_index] = tmp;
-//            min_swaps++;
-//         }
-//      }
-//      
-//      return min_swaps;
-//   }
-
    public int minimumSwaps(int[] arr) 
    {
       int min_swaps = 0;
@@ -475,7 +433,114 @@ public class HackerRankMain
       }
       
       return frequencies;
-  }   
+  }
+   
+   public int alternatingCharacters(String s) 
+   {
+      int rv = 0;
+      for(int i = 0; i < s.length(); i++)
+      {
+         char val1 = s.charAt(i);
+         
+         for(int j = i+1; j < s.length(); j++)
+         {
+            if(val1 == s.charAt(j))
+            {
+               rv++;
+               i++;
+            }
+            else
+            {
+               break;
+            }
+         }
+      }
+
+      return rv;
+   }
+   
+   public int makeAnagram(String a, String b) 
+   {
+      int min_count = 0;
+      
+      int [] char_count = new int[26];
+      
+      for(int i = 0; i < a.length(); i++)
+      {
+         int idx = a.charAt(i)-'a';
+         char_count[idx]++;
+      }
+      
+      for(int i = 0; i < b.length(); i++)
+      {
+         int idx = b.charAt(i)-'a';
+         char_count[idx]--;
+      }
+      
+      for(int i = 0; i < char_count.length; i++)
+      {
+         min_count += Math.abs(char_count[i]);
+      }
+      
+//      HashMap<Character, Integer> map_a = new HashMap<Character, Integer>();
+//      HashMap<Character, Integer> map_b = new HashMap<Character, Integer>();
+//      HashMap<Character, Integer> map_cmn = new HashMap<Character, Integer>();
+//            
+//      int len_a = a.length();
+//      for(int i = 0; i < len_a; i++)
+//      {
+//         char tmp = a.charAt(i);
+//         int tmp_val = (map_a.get(tmp) == null) ? 0 : map_a.get(tmp); 
+//         map_a.put(tmp, tmp_val+1);
+//      }
+//      
+//      int len_b = b.length();
+//      for(int i = 0; i < len_b; i++)
+//      {
+//         char tmp = b.charAt(i);
+//         int tmp_val = (map_b.get(tmp) == null) ? 0 : map_b.get(tmp);
+//         map_b.put(tmp, tmp_val+1);
+//      }
+//
+//      for(Map.Entry<Character, Integer> entry : map_a.entrySet())
+//      {
+//         char key_a = entry.getKey();
+//         int val_a = entry.getValue();
+//         
+//         if(map_b.get(key_a) != null)
+//         {
+//            int val_b = map_b.get(key_a);
+//            int sub = Math.abs(val_a-val_b);
+//            if(sub == 0)
+//            {
+//               map_cmn.put(key_a, 1);
+//            }
+//            else
+//            {
+//               min_count += sub;
+//               map_cmn.put(key_a, 1);
+//            }
+//         }
+//      }
+//      
+//      for(Map.Entry<Character, Integer> entry : map_cmn.entrySet())
+//      {
+//         map_a.remove(entry.getKey());
+//         map_b.remove(entry.getKey());
+//      }
+//      
+//      for(Map.Entry<Character, Integer> entry : map_a.entrySet())
+//      {
+//         min_count += entry.getValue();
+//      }
+//      
+//      for(Map.Entry<Character, Integer> entry : map_b.entrySet())
+//      {
+//         min_count += entry.getValue();
+//      }
+
+      return min_count;
+   }
    
    public static void main(String [] args)
    {
@@ -577,5 +642,11 @@ public class HackerRankMain
       //hr.freqQuery(queries1);
       hr.freqQuery(queries2);
       hr.freqQuery(queries3);
+      
+      hr.alternatingCharacters("AABAAB");
+      hr.alternatingCharacters("AAAA");
+      
+      hr.makeAnagram("cde", "abc");
+      hr.makeAnagram("fcrxzwscanmligyxyvym", "jxwtrhvujlmrpdoqbisbwhmgpmeoke");
    }
 }
