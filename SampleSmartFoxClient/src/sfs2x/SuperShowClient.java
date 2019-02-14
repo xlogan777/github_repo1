@@ -213,6 +213,13 @@ public class SuperShowClient implements IEventListener
               log.info("player_id: "+res.getInt("player_id"));
               log.info("card_id: "+res.getInt("card_id"));
            }
+           else if("match.rolldice.initiative".equalsIgnoreCase(val))
+           {
+              log.info("processing the [match.rolldice.initiative]");
+              SFSObject res = (SFSObject)evt.getArguments().get("params");
+              log.info("player_id: "+res.getInt("player_id"));
+              log.info("die_result: "+res.getInt("die_result"));
+           }
         }
     }
     
