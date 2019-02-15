@@ -278,10 +278,18 @@ public class SuperShowClient implements IEventListener
        //get the room vars for this room
        List<RoomVariable> room_vars = room.getVariables();
        
-       //print the room vars.
-       log.info("Rooms vars = \n"+room_vars);
+       for(RoomVariable var : room_vars)
+       {
+          //print the room vars.
+          log.info("Rooms vars = \n"+var);          
+       }
        
-       log.info("user_vars = "+sfs.getMySelf().getVariables());
+       List<sfs2x.client.entities.variables.UserVariable> user_vars = sfs.getMySelf().getVariables();
+       
+       for(sfs2x.client.entities.variables.UserVariable uservar : user_vars)
+       {
+          log.info("user_vars = "+uservar);   
+       }
     }
     
     public void sendMatchHandDiscard(String playerName, int cardId)
