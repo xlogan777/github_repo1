@@ -152,40 +152,12 @@ public class SuperShowClient implements IEventListener
               log.info("processing the [game.practice.ready]");
               SFSObject res = (SFSObject)evt.getArguments().get("params");
               log.info("Result room id: "+res.getUtfString("room_id"));
-              
-              //get the room via the id
-              Room room = sfs.getRoomById(Integer.parseInt(res.getUtfString("room_id")));
-              
-              log.info("user_vars = "+sfs.getMySelf().getVariables());
-              
-              //get the room vars for this room
-              List<RoomVariable> room_vars = room.getVariables();
-              
-              //print the room vars.
-              log.info(room_vars);
-              
-              //print current room list.
-              log.info(""+sfs.getRoomList());//print rooms i have joined.
            }
            else if("match.game.setactive".equalsIgnoreCase(val))
            {
               log.info("processing the [match.game.setactive]");
               SFSObject res = (SFSObject)evt.getArguments().get("params");
               log.info("active player: "+res.getInt("player_id"));
-              
-              //get the room via the id
-              Room room = sfs.getLastJoinedRoom();
-              
-              log.info("user_vars = "+sfs.getMySelf().getVariables());
-              
-              //get the room vars for this room
-              List<RoomVariable> room_vars = room.getVariables();
-              
-              //print the room vars.
-              log.info(room_vars);
-              
-              //print current room list.
-              log.info(""+sfs.getRoomList());//print rooms i have joined.
            }
            else if("match.deck.shuffle".equalsIgnoreCase(val))
            {
@@ -219,6 +191,24 @@ public class SuperShowClient implements IEventListener
               SFSObject res = (SFSObject)evt.getArguments().get("params");
               log.info("player_id: "+res.getInt("player_id"));
               log.info("die_result: "+res.getInt("die_result"));
+           }
+           else if("match.initiative.result".equalsIgnoreCase(val))
+           {
+              log.info("processing the [match.initiative.result]");
+              SFSObject res = (SFSObject)evt.getArguments().get("params");
+              log.info("player_id: "+res.getInt("player_id"));
+           }
+           else if("match.initiative.playable".equalsIgnoreCase(val))
+           {
+              log.info("processing the [match.initiative.playable]");
+              SFSObject res = (SFSObject)evt.getArguments().get("params");
+              log.info("card_ids: "+res.getIntArray("card_ids"));
+           }
+           else if("match.turn.activeplayer".equalsIgnoreCase(val))
+           {
+              log.info("processing the [match.turn.activeplayer]");
+              SFSObject res = (SFSObject)evt.getArguments().get("params");
+              log.info("player_id: "+res.getInt("player_id"));
            }
         }
     }
