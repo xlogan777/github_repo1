@@ -1,0 +1,4 @@
+GET http://localhost:8080/getProductById?productId=544
+content-type: application/json
+
+

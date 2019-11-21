@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:mvc="http://www.springframework.org/schema/mvc"
+   xmlns:task="http://www.springframework.org/schema/task"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.2.xsd">
+   
+     <!-- <task:scheduler id="CharadesTaskScheduler" pool-size="2"/>
+     <task:scheduled-tasks scheduler="CharadesTaskScheduler">        
+         <task:scheduled ref="DelCharadesGames" method="removeCharadesGames" cron="*/5 * * * * *"/>
+     	   <task:scheduled ref="PublishToFcmPN" method="processPushNotificationsToFcm" cron="*/10 * * * * *"/>     	 
+     </task:scheduled-tasks>
+   <bean id="DelCharadesGames" class="com.test1.RemovedGamesJob"/>     
+   <bean id="PublishToFcmPN" class="com.test1.SendPnFcmJob"/> -->
+
+   <!-- t2 environment db connection pool with c3p0 -->
+	<bean id="c3p0DataSourceT2" class = "com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+	
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@cascbbd02.bxxi.com:1524:CENRT2" />
+		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="user" value="CDB" />
+		<property name="password" value="CDB" />
+
+		<!-- these are C3P0 properties from the same settings of the etl hibernate_ac.cfgxml files -->
+		<property name="initialPoolSize" value="10"/>
+		<property name="minPoolSize" value="10" />
+		<property name="maxPoolSize" value="10" />
+		<property name="maxStatements" value="25" />
+		<property name="numHelperThreads" value="1" />
+		<property name="idleConnectionTestPeriod" value="100" />
+		<property name="maxIdleTime" value="200" />
+	</bean>
+</beans>

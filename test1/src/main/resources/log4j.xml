@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration debug="false" xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+   <!-- Logger Levels- TRACE->DEBUG->INFO->WARN->ERROR->FATAL -->
+   
+   <!-- define appender and level that it should handle -->
+   <appender name="consoleAppender" class="org.apache.log4j.ConsoleAppender">
+      <param name="Threshold" value="ALL"/>
+      <layout class="org.apache.log4j.PatternLayout">
+         <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} -> %c %t %-5p: %m%n"/>
+      </layout>
+      <filter class="org.apache.log4j.varia.LevelRangeFilter">
+         <param name="LevelMin" value="error" />
+         <param name="LevelMax" value="fatal" />
+      </filter>
+   </appender>
+	
+   <appender name="fileAppender" class="org.apache.log4j.DailyRollingFileAppender">
+      <param name="Threshold" value="ALL"/>
+      <param name="append" value="false"/>
+      <param name="file" value="log/out.log"/>
+      <layout class="org.apache.log4j.PatternLayout">
+         <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} -> %c %t %-5p: %m%n"/>
+      </layout>
+      <filter class="org.apache.log4j.varia.LevelRangeFilter">
+         <param name="LevelMin" value="error" />
+         <param name="LevelMax" value="fatal" />
+      </filter>
+   </appender>
+
+   <appender name="emailAppender" class="org.apache.log4j.net.SMTPAppender">
+		<param name="Threshold" value="ALL"/>
+		<param name="BufferSize" value="50" />
+		<param name="SMTPHost" value="mailrelay.gbimbo.com" />
+		<param name="From" value="ApplyJob_do_not_reply@grupobimbo.com" />
+		<param name="To" value="WLAPPLICATIONERRORS@grupobimbo.com" />
+		<param name="Subject" value="DataSearch Helper notification" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} -> %c %t %-5p: %m%n"/>
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="fatal" />
+			<param name="LevelMax" value="fatal" />
+		</filter>
+	</appender>
+      
+	<root>
+      <level value="ALL"/>
+      <appender-ref ref="consoleAppender"/>
+      <appender-ref ref="fileAppender"/>
+      <appender-ref ref="emailAppender"/>
+   </root>
+	
+</log4j:configuration>
