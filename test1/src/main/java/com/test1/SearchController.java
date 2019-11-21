@@ -58,9 +58,7 @@ public class SearchController
 
       // dataSource = (DataSource) DemoAppContext.getContext().getBean("c3p0DataSourceT2");
       // log.error("testing");
-   }
-
-
+   }//controller
 
    /**
     * this method is to test if the micro svc is working.
